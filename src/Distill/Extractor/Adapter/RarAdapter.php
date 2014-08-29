@@ -31,7 +31,7 @@ class RarAdapter extends AbstractAdapter
     }
 
     /**
-     * Extracts the exe file using the unzip command.
+     * Extracts the rar file using the unzip command.
      * @param File   $file Compressed file
      * @param string $path Destination path
      *
@@ -47,6 +47,27 @@ class RarAdapter extends AbstractAdapter
         $command = 'unrar e '.escapeshellarg($file->getPath()).' '.escapeshellarg($path);
 
         return $this->executeCommand($command);
+    }
+
+    /**
+     * Extracts the rar file using the Rar extension.
+     * @param File   $file Compressed file
+     * @param string $path Destination path
+     *
+     * @return bool Returns TRUE when successful, FALSE otherwise
+     */
+    protected function extractRarExtension(File $file, $path)
+    {
+        @mkdir($path);
+        $rar = \RarArchive::open($file->getPath());
+
+        foreach ($rar->getEntries() as $entry) {
+            $entry->extract($path);
+        }
+
+        $rar->close();
+
+        return true;
     }
 
 }
