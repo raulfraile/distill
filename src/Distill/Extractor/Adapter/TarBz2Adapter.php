@@ -46,7 +46,7 @@ class TarBz2Adapter extends AbstractAdapter
         }
 
         @mkdir($path);
-        $command = sprintf("tar -zxvf %s -C %s", escapeshellarg($file->getPath()), escapeshellarg($path));
+        $command = sprintf("tar -jxvf %s -C %s", escapeshellarg($file->getPath()), escapeshellarg($path));
 
         return $this->executeCommand($command);
     }
