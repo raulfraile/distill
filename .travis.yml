@@ -16,6 +16,7 @@ before_script:
   - sudo apt-get install -y unrar
   - sudo apt-get install -y p7zip-full
   - pecl install zip
+  - pecl install rar
   - phpenv rehash
   - composer install --prefer-source
 
