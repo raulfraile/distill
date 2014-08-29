@@ -1,0 +1,26 @@
+{
+    "name": "raulfraile/distill",
+    "description": "Smart compressed files extractor",
+    "keywords": ["compression", "zip", "gzip", "phar", "rar"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Raul Fraile",
+            "email": "raulfraile@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Distill\\": "src/" }
+    },
+    "require": {
+        "ext-zip": "*",
+        "guzzlehttp/guzzle": "~4.0",
+        "guzzlehttp/progress-subscriber": "~1.1",
+        "raulfraile/ladybug": "~1.0",
+        "symfony/process": "2.5.3"
+    },
+    "require-dev": {
+        "symfony/finder": "2.5.3"
+    },
+    "minimum-stability": "stable"
+}
