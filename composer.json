@@ -13,14 +13,11 @@
         "psr-0": { "Distill\\": "src/" }
     },
     "require": {
-        "ext-zip": "*",
-        "guzzlehttp/guzzle": "~4.0",
-        "guzzlehttp/progress-subscriber": "~1.1",
-        "raulfraile/ladybug": "~1.0",
         "symfony/process": "2.5.3"
     },
     "require-dev": {
-        "symfony/finder": "2.5.3"
+        "symfony/finder": "2.5.3",
+        "raulfraile/ladybug": "~1.0"
     },
     "minimum-stability": "stable"
 }
