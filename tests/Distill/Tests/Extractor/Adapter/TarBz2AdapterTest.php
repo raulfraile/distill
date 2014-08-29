@@ -9,7 +9,7 @@ use Distill\Format\TarBz2;
 class TarBz2AdapterTest extends AbstractAdapterTest
 {
 
-    public function testExtractCorrectTarGzFileWithTarCommand()
+    public function testExtractCorrectTarBz2FileWithTarCommand()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
@@ -25,7 +25,7 @@ class TarBz2AdapterTest extends AbstractAdapterTest
         $this->clearTemporaryPath();
     }
 
-    public function testExtractCorrectTarGzFileWithArchiveTar()
+    public function testExtractCorrectTarBz2FileWithArchiveTar()
     {
         if (!class_exists('\Archive_Tar')) {
             $this->markTestSkipped('Archive_Tar not installed');

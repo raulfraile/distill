@@ -45,7 +45,7 @@ abstract class AbstractAdapter implements AdapterInterface
         $process = new Process($command);
         $process->run();
 
-        //ld($command, $process->getOutput(), $process->getErrorOutput());
+        ld($command, $process->getOutput(), $process->getErrorOutput());
 
         return $process->isSuccessful();
     }
