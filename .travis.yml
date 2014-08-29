@@ -11,4 +11,8 @@ matrix:
   allow_failures:
     - php: hhvm-nightly
 
-before_script: composer install --prefer-source
+before_script:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y unrar
+  - sudo apt-get install -y 7zip
+  - composer install --prefer-source
