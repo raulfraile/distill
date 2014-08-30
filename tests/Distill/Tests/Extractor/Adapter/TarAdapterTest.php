@@ -45,4 +45,20 @@ class TarAdapterTest extends AbstractAdapterTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractCorrectTarFileWithPharData()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new TarAdapter(array(
+            array('self', 'extractPharData')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_ok.tar', new Tar()), $target);
+        $this->assertTrue($response);
+
+        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->clearTemporaryPath();
+    }
+
 }

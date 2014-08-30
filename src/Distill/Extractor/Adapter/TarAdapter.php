@@ -79,4 +79,19 @@ class TarAdapter extends AbstractAdapter
         return $tar->extract($path);
     }
 
+    /**
+     * Extracts the tar file using the PharData class.
+     * @param File   $file Compressed file
+     * @param string $path Destination path
+     *
+     * @return bool Returns TRUE when successful, FALSE otherwise
+     */
+    protected function extractPharData(File $file, $path)
+    {
+        $archive = new \PharData($file->getPath(), null, null, \Phar::TAR);
+        $archive->extractTo($path, null, true);
+
+        return true;
+    }
+
 }
