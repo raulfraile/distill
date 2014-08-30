@@ -77,5 +77,4 @@ class Extractor implements ExtractorInterface
         return $success;
     }
 
-
 }

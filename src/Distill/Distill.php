@@ -47,7 +47,6 @@ class Distill
      */
     protected $files;
 
-
     /**
      * Constructor.
      * @param ExtractorInterface     $extractor
@@ -114,7 +113,6 @@ class Distill
 
         return file_put_contents($destination, $response->getBody()) !== false;
     }
-
 
     public function downloadPreferredFileAndExtract($destination)
     {

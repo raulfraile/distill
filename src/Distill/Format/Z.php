@@ -11,7 +11,6 @@
 
 namespace Distill\Format;
 
-
 class Z implements FormatInterface
 {
 

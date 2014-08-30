@@ -18,7 +18,7 @@ interface FormatGuesserInterface
 
     /**
      * Guesses the file format based on features of the path (e.g. extension)
-     * @param string $path File path
+     * @param  string                         $path File path
      * @throws ExtensionNotSupportedException
      *
      * @return FormatInterface File format

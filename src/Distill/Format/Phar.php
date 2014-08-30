@@ -11,7 +11,6 @@
 
 namespace Distill\Format;
 
-
 class Phar implements FormatInterface
 {
 

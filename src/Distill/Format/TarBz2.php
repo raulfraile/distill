@@ -11,7 +11,6 @@
 
 namespace Distill\Format;
 
-
 class TarBz2 implements FormatInterface
 {
 

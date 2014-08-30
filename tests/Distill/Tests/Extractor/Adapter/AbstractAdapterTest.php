@@ -2,7 +2,6 @@
 
 namespace Distill\Tests;
 
-use Distill\Extractor\Adapter\ZipAdapter;
 use Distill\File;
 use Distill\Format\Zip;
 use Symfony\Component\Finder\Finder;
@@ -14,7 +13,6 @@ abstract class AbstractAdapterTest extends \PHPUnit_Framework_TestCase
     protected $adapter;
 
     protected $filesPath;
-
 
     public function setUp()
     {
@@ -51,6 +49,5 @@ abstract class AbstractAdapterTest extends \PHPUnit_Framework_TestCase
 
         return hash_final($hash);
     }
-
 
 }

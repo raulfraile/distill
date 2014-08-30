@@ -11,7 +11,6 @@
 
 namespace Distill\Format;
 
-
 class X7z implements FormatInterface
 {
 

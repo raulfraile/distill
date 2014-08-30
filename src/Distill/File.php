@@ -85,5 +85,4 @@ class File
         return $this->format;
     }
 
-
 }
