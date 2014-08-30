@@ -2,7 +2,6 @@
 
 namespace Distill\Format;
 
-
 use Distill\Exception\ExtensionNotSupportedException;
 
 class FormatGuesser implements FormatGuesserInterface
@@ -34,7 +33,7 @@ class FormatGuesser implements FormatGuesserInterface
     public function guess($path)
     {
         $extension = pathinfo($path, PATHINFO_EXTENSION);
-ld($extension);
+
         if (!array_key_exists($extension, $this->extensionMap)) {
             throw new ExtensionNotSupportedException($extension);
         }
