@@ -21,7 +21,6 @@ class GzAdapterTest extends AbstractAdapterTest
         $response = $this->adapter->extract(new File($this->filesPath . 'file_ok.gz', new Gz()), $target);
         $this->assertTrue($response);
 
-        //$this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
         $this->clearTemporaryPath();
     }
 

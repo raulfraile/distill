@@ -37,6 +37,12 @@ abstract class AbstractAdapter implements AdapterInterface
         return $success;
     }
 
+    /**
+     * Checks whether the command exists in the system.
+     * @param string $command Command
+     *
+     * @return bool Returns TRUE when successful, FALSE otherwise
+     */
     protected function existsCommand($command)
     {
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
@@ -49,6 +55,12 @@ abstract class AbstractAdapter implements AdapterInterface
         return $process->isSuccessful();
     }
 
+    /**
+     * Executes a command.
+     * @param string $command Command
+     *
+     * @return bool Returns TRUE when successful, FALSE otherwise
+     */
     protected function executeCommand($command)
     {
         $process = new Process($command);
@@ -56,7 +68,5 @@ abstract class AbstractAdapter implements AdapterInterface
 
         return $process->isSuccessful();
     }
-
-
 
 }

@@ -26,7 +26,8 @@ class ZipAdapter extends AbstractAdapter
         if (null === $methods) {
             $methods = array(
                 array('self', 'extractUnzipCommand'),
-                array('self', 'extractZipArchive')
+                array('self', 'extractZipArchive'),
+                array('self', 'extractPharData')
             );
         }
 
@@ -78,6 +79,21 @@ class ZipAdapter extends AbstractAdapter
         $archive->open($file->getPath());
         $archive->extractTo($path);
         $archive->close();
+
+        return true;
+    }
+
+    /**
+     * Extracts the zip file using the ZipArchive class.
+     * @param File   $file Compressed file
+     * @param string $path Destination path
+     *
+     * @return bool Returns TRUE when successful, FALSE otherwise
+     */
+    protected function extractPharData(File $file, $path)
+    {
+        $archive = new \PharData($file->getPath(), null, null, \Phar::ZIP);
+        $archive->extractTo($path, null, true);
 
         return true;
     }
