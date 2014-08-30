@@ -11,4 +11,4 @@ $extractor->addFile('test.zip');
 
 $preferredFile = $extractor->getPreferredFile();
 
-echo $preferredFile->getPath();
+echo $preferredFile->getPath() . "\n";

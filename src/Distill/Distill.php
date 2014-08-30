@@ -18,6 +18,7 @@ use Distill\Strategy\MinimumSize;
 use Distill\Strategy\StrategyInterface;
 use Distill\Format\FormatInterface;
 use Distill\Format\FormatGuesserInterface;
+use GuzzleHttp\Client;
 
 class Distill
 {
@@ -35,6 +36,7 @@ class Distill
     protected $strategy;
 
     /**
+     * Format guesser.
      * @var FormatGuesserInterface
      */
     protected $formatGuesser;
@@ -104,10 +106,26 @@ class Distill
         return $this->strategy->getPreferredFile($this->files);
     }
 
-
-    public function downloadAndExtract($path)
+    public function downloadPreferredFile($destination)
     {
-        return $this->extract($this->getPreferredFile(), $path);
+        $client = new Client();
+
+        $response = $client->get($this->getPreferredFile()->getPath());
+
+        return file_put_contents($destination, $response) !== false;
+    }
+
+
+    public function downloadPreferredFileAndExtract($destination)
+    {
+        $preferredFile = $this->getPreferredFile();
+        $downloadPath = sys_get_temp_dir() . '/' . basename($preferredFile->getPath());
+
+        $this->downloadPreferredFile($downloadPath);
+
+        $downloadedFile = new File($downloadPath, $preferredFile->getFormat());
+
+        return $this->extract($downloadedFile, $destination);
     }
 
     /**
