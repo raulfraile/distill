@@ -27,7 +27,7 @@ class TarGzAdapterTest extends AbstractAdapterTest
 
     public function testExtractCorrectTarGzFileWithArchiveTar()
     {
-        if (!class_exists('\Archive_Tar')) {
+        if (!class_exists('\\Archive_Tar')) {
             $this->markTestSkipped('Archive_Tar not installed');
         }
 
