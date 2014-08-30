@@ -6,9 +6,20 @@ namespace Distill\Format;
 class Zip implements FormatInterface
 {
 
-    public function getPriority()
+    /**
+     * {@inheritdoc}
+     */
+    public function getCompressionRatioLevel()
     {
-        return 1;
+        return FormatInterface::LEVEL_LOW;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUncompressionSpeedLevel()
+    {
+        return FormatInterface::LEVEL_MIDDLE;
     }
 
 }

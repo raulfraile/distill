@@ -6,9 +6,20 @@ namespace Distill\Format;
 class TarBz2 implements FormatInterface
 {
 
-    public function getPriority()
+    /**
+     * {@inheritdoc}
+     */
+    public function getCompressionRatioLevel()
     {
-        return 3;
+        return FormatInterface::LEVEL_HIGH;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUncompressionSpeedLevel()
+    {
+        return FormatInterface::LEVEL_HIGH;
     }
 
 }

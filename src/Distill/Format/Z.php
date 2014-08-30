@@ -6,9 +6,20 @@ namespace Distill\Format;
 class Z implements FormatInterface
 {
 
-    public function getPriority()
+    /**
+     * {@inheritdoc}
+     */
+    public function getCompressionRatioLevel()
     {
-        return 1;
+        return FormatInterface::LEVEL_MIDDLE;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUncompressionSpeedLevel()
+    {
+        return FormatInterface::LEVEL_MIDDLE;
     }
 
 }

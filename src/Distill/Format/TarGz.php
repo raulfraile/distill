@@ -6,9 +6,20 @@ namespace Distill\Format;
 class TarGz implements FormatInterface
 {
 
-    public function getPriority()
+    /**
+     * {@inheritdoc}
+     */
+    public function getCompressionRatioLevel()
     {
-        return 2;
+        return FormatInterface::LEVEL_MIDDLE;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUncompressionSpeedLevel()
+    {
+        return FormatInterface::LEVEL_HIGHEST;
     }
 
 }
