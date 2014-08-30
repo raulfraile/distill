@@ -20,6 +20,10 @@ based on minimizing bandwidth or optimizing uncompression speed.
 The recommended way to install Distill is through [Composer](http://packagist.org/about-composer). Just
 create a `composer.json` file for your project:
 
+[![Latest Stable Version](https://poser.pugx.org/raulfraile/distill/v/stable.png)](https://packagist.org/packages/raulfraile/ladybug)
+[![Latest Unstable Version](https://poser.pugx.org/raulfraile/distill/v/unstable.png)](https://packagist.org/packages/raulfraile/ladybug)
+
+
 ``` json
 {
     "require": {
@@ -37,19 +41,22 @@ curl -O http://getcomposer.org/composer.phar
 php composer.phar install
 ```
 
-After running the `install` command, a new directory called 'vendor' will contain the Distill code, as well as all
-the required dependencies.
+## Formats
 
-Once added the autoloader you will have access to the library:
+### Format support
 
-``` php
-<?php
+* `bz2`: `bzip2` unix command.
+* `gz`: `gzip` unix command.
+* `phar`: `PHAR` extension.
+* `rar`: `unrar` unix command and `rar` extension.
+* `tar`: `tar` unix command, `Archive_Tar` package and `PHAR` extension.
+* `tar.bz2`: `tar` unix command, `Archive_Tar` package and `PHAR` extension.
+* `tar.gz`: `tar` unix command, `Archive_Tar` package and `PHAR` extension.
+* `tar.xz`: `tar` unix command.
+* `7z`: `7z` unix command
+* `xz`: `xz` unix command
+* `zip`: `tar` unix command and `zip` extension.
 
-require 'vendor/autoload.php';
-```
-
-[![Latest Stable Version](https://poser.pugx.org/raulfraile/distill/v/stable.png)](https://packagist.org/packages/raulfraile/ladybug)
-[![Latest Unstable Version](https://poser.pugx.org/raulfraile/distill/v/unstable.png)](https://packagist.org/packages/raulfraile/ladybug)
 
 ## Credits
 
