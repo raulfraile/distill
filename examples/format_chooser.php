@@ -6,7 +6,7 @@ use Distill\Distill;
 
 $extractor = new Distill();
 
-$extractor->addFile('test.tgz');
+$extractor->addFile('test.tar.gz');
 $extractor->addFile('test.zip');
 
 $preferredFile = $extractor->getPreferredFile();

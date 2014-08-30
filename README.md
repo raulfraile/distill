@@ -12,7 +12,7 @@ Features:
 * Extract files from `bz2`, `gz`, `phar`, `rar`, `tar`, `tar.bz2`, `tar.gz`, `tar.xz`, `7z`, `xz`
 and `zip` archives.
 * Different uncompression methods under the hood: PHP extensions and command line binaries.
-* Strategy to choose the right file in case there are more than 1 format available. Strategies can be
+* Strategy to choose the right file in case there are more than one available format. Strategies can be
 based on minimizing bandwidth or optimizing uncompression speed.
 
 ## Installation
@@ -57,6 +57,46 @@ php composer.phar install
 * `xz`: `xz` unix command
 * `zip`: `tar` unix command and `zip` extension.
 
+## Strategies
+
+Distill allows to choose one format in case there are many available. For example, it can be
+useful for installers that want to reduce the bandwidth usage trying to choose compression formats
+with higher compression ratio and available in the client machine.
+
+The library provides two strategies (more can be added):
+
+* Minimum size (default): Choose files with higher compression ratio.
+* Uncompression speed: Choose files which are faster to uncompress.
+
+```php
+use Distill\Distill;
+
+$extractor = new Distill();
+
+$extractor->addFile('test.tar.gz');
+$extractor->addFile('test.zip');
+$extractor->addFile('test.tar.xz');
+
+$preferredFile = $extractor->getPreferredFile();
+
+echo $preferredFile->getPath(); // test.tar.xz
+```
+
+```php
+use Distill\Distill;
+use Distill\Strategy\UncompressionSpeed;
+
+$strategy = new UncompressionSpeed();
+$extractor = new Distill(null, $strategy);
+
+$extractor->addFile('test.tar.gz');
+$extractor->addFile('test.zip');
+$extractor->addFile('test.tar.xz');
+
+$preferredFile = $extractor->getPreferredFile();
+
+echo $preferredFile->getPath(); // test.tar.gz
+```
 
 ## Credits
 
