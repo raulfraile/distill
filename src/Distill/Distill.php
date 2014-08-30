@@ -57,33 +57,9 @@ class Distill
      */
     public function getPreferredFile()
     {
-        usort($this->files, 'self::order');
-
-        if (empty($this->files)) {
-            return null;
-        }
-
-        return $this->files[0];
+        return $this->strategy->getPreferredFile($this->files);
     }
 
-    /**
-     * Order files based on the strategy.
-     * @param File $file1 File 1
-     * @param File $file2 File 2
-     *
-     * @return int
-     */
-    protected function order(File $file1, File $file2)
-    {
-        $priority1 = $file1->getFormat()->getPriority($this->strategy);
-        $priority2 = $file2->getFormat()->getPriority($this->strategy);
-
-        if ($priority1 == $priority2) {
-            return 0;
-        }
-
-        return ($priority1 > $priority2) ? -1 : 1;
-    }
 
     public function downloadAndExtract($path)
     {
