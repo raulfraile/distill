@@ -39,7 +39,7 @@ class TarGzAdapter extends AbstractAdapter
     public function supports(File $file)
     {
         return $file->getFormat() instanceof TarGz &&
-            (class_exists('\Archive_Tar') || $this->existsCommand('tar'));
+            (class_exists('\Archive_Tar') || $this->existsCommand('tar') || class_exists('\\PharData'));
     }
 
     /**

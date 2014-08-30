@@ -112,7 +112,7 @@ class Distill
 
         $response = $client->get($this->getPreferredFile()->getPath());
 
-        return file_put_contents($destination, $response) !== false;
+        return file_put_contents($destination, $response->getBody()) !== false;
     }
 
 
