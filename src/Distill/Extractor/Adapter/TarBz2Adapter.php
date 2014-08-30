@@ -25,7 +25,8 @@ class TarBz2Adapter extends AbstractAdapter
         if (null === $methods) {
             $methods = array(
                 array('self', 'extractTarCommand'),
-                array('self', 'extractArchiveTar')
+                array('self', 'extractArchiveTar'),
+                array('self', 'extractPharData')
             );
         }
 
@@ -76,6 +77,21 @@ class TarBz2Adapter extends AbstractAdapter
         $tar = new \Archive_Tar($file->getPath(), true);
 
         return $tar->extract($path);
+    }
+
+    /**
+     * Extracts the tar.bz2 file using the PharData class.
+     * @param File   $file Compressed file
+     * @param string $path Destination path
+     *
+     * @return bool Returns TRUE when successful, FALSE otherwise
+     */
+    protected function extractPharData(File $file, $path)
+    {
+        $archive = new \PharData($file->getPath(), null, null, \Phar::BZ2);
+        $archive->extractTo($path, null, true);
+
+        return true;
     }
 
 }

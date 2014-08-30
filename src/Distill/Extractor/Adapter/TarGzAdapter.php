@@ -25,7 +25,8 @@ class TarGzAdapter extends AbstractAdapter
         if (null === $methods) {
             $methods = array(
                 array('self', 'extractTarCommand'),
-                array('self', 'extractArchiveTar')
+                array('self', 'extractArchiveTar'),
+                array('self', 'extractPharData')
             );
         }
 
