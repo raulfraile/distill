@@ -79,4 +79,19 @@ class TarGzAdapter extends AbstractAdapter
         return $tar->extract($path);
     }
 
+    /**
+     * Extracts the tar.gz file using the PharData class.
+     * @param File   $file Compressed file
+     * @param string $path Destination path
+     *
+     * @return bool Returns TRUE when successful, FALSE otherwise
+     */
+    protected function extractPharData(File $file, $path)
+    {
+        $archive = new \PharData($file->getPath(), null, null, \Phar::GZ);
+        $archive->extractTo($path, null, true);
+
+        return true;
+    }
+
 }

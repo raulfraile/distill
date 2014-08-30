@@ -41,7 +41,23 @@ class TarGzAdapterTest extends AbstractAdapterTest
         $response = $this->adapter->extract(new File($this->filesPath . 'file_ok.tar.gz', new TarGz()), $target);
         $this->assertTrue($response);
 
-        //$this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractCorrectTarGzFileWithPharData()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new TarGzAdapter(array(
+            array('self', 'extractPharData')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_ok.tar.gz', new TarGz()), $target);
+        $this->assertTrue($response);
+
+        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
         $this->clearTemporaryPath();
     }
 

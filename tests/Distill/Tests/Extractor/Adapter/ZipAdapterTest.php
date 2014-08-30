@@ -53,8 +53,6 @@ class ZipAdapterTest extends AbstractAdapterTest
         $response = $this->adapter->extract(new File($this->filesPath . 'file_ok.zip', new Zip()), $target);
         $this->assertTrue($response);
 
-        ld('--------------**-');
-        //ldd($target);
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
 
         $this->clearTemporaryPath();
