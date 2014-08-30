@@ -13,6 +13,7 @@
         "psr-0": { "Distill\\": "src/" }
     },
     "require": {
+        "php": ">=5.4.0",
         "symfony/process": "~2.5",
         "guzzlehttp/guzzle": "~4.0"
     },
