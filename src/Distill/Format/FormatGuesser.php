@@ -5,7 +5,7 @@ namespace Distill\Format;
 
 use Distill\Exception\ExtensionNotSupportedException;
 
-class FormatGuesser
+class FormatGuesser implements FormatGuesserInterface
 {
 
     protected $extensionMap = array(

@@ -5,6 +5,8 @@ namespace Distill;
 use Distill\Extractor\ExtractorInterface;
 use Distill\Strategy\MinimumSize;
 use Distill\Strategy\StrategyInterface;
+use Distill\Format\FormatInterface;
+use Distill\Format\FormatGuesserInterface;
 
 class Distill
 {
@@ -16,20 +18,34 @@ class Distill
     protected $extractor;
 
     /**
-     *
+     * Strategy.
      * @var StrategyInterface
      */
     protected $strategy;
 
+    /**
+     * @var FormatGuesserInterface
+     */
+    protected $formatGuesser;
+
+    /**
+     * Files.
+     * @var File[]
+     */
     protected $files;
 
 
     /**
      * Constructor.
-     * @param ExtractorInterface $extractor
-     * @param StrategyInterface $strategy
+     * @param ExtractorInterface     $extractor
+     * @param StrategyInterface      $strategy
+     * @param FormatGuesserInterface $formatGuesser
      */
-    public function __construct(ExtractorInterface $extractor, StrategyInterface $strategy = null)
+    public function __construct(
+        ExtractorInterface $extractor,
+        StrategyInterface $strategy = null,
+        FormatGuesserInterface $formatGuesser
+    )
     {
         $this->extractor = $extractor;
 
@@ -38,16 +54,26 @@ class Distill
         }
 
         $this->strategy = $strategy;
+        $this->formatGuesser = $formatGuesser;
         $this->files = array();
     }
 
     /**
      * Adds a new file.
-     * @param File $file
+     * @param string               $filename File name
+     * @param FormatInterface|null $format   Format
+     *
+     * @return Distill
      */
-    public function addFile(File $file)
+    public function addFile($filename, FormatInterface $format = null)
     {
-        $this->files[] = $file;
+        if (null === $format) {
+            $format = $this->formatGuesser->guess($filename);
+        }
+
+        $this->files[] = new File($filename, $format);
+
+        return $this;
     }
 
     /**

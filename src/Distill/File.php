@@ -13,7 +13,6 @@ class File
      */
     protected $path;
 
-
     /**
      * File format.
      * @var FormatInterface
