@@ -41,21 +41,4 @@ class ZipAdapterTest extends AbstractAdapterTest
         $this->clearTemporaryPath();
     }
 
-    public function testExtractCorrectZipFileWithPharData()
-    {
-        $target = $this->getTemporaryPath();
-        $this->clearTemporaryPath();
-
-        $this->adapter = new ZipAdapter(array(
-            array('self', 'extractPharData')
-        ));
-
-        $response = $this->adapter->extract(new File($this->filesPath . 'file_ok.zip', new Zip()), $target);
-        $this->assertTrue($response);
-
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
-
-        $this->clearTemporaryPath();
-    }
-
 }
