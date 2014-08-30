@@ -2,7 +2,9 @@
 
 namespace Distill;
 
+use Distill\Extractor\Extractor;
 use Distill\Extractor\ExtractorInterface;
+use Distill\Format\FormatGuesser;
 use Distill\Strategy\MinimumSize;
 use Distill\Strategy\StrategyInterface;
 use Distill\Format\FormatInterface;
@@ -42,19 +44,26 @@ class Distill
      * @param FormatGuesserInterface $formatGuesser
      */
     public function __construct(
-        ExtractorInterface $extractor,
+        ExtractorInterface $extractor = null,
         StrategyInterface $strategy = null,
-        FormatGuesserInterface $formatGuesser
+        FormatGuesserInterface $formatGuesser = null
     )
     {
+        if (null === $extractor) {
+            $extractor = new Extractor();
+        }
         $this->extractor = $extractor;
 
         if (null === $strategy) {
             $strategy = new MinimumSize();
         }
-
         $this->strategy = $strategy;
+
+        if (null === $formatGuesser) {
+            $formatGuesser = new FormatGuesser();
+        }
         $this->formatGuesser = $formatGuesser;
+
         $this->files = array();
     }
 

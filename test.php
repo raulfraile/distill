@@ -4,7 +4,6 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Distill\Distill;
 use Distill\File;
-
 use Distill\Format;
 
 $extractor = new Distill(new \Distill\Extractor\Extractor());
