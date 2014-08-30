@@ -19,6 +19,7 @@ class FormatGuesser implements FormatGuesserInterface
         'tar.bz2' => 'TarBz2',
         'tar.gz'  => 'TarGz',
         'tar.xz'  => 'TarXz',
+        'tgz'     => 'TarGz',
         '7z'      => 'X7z',
         'xz'      => 'Xz',
         'Z'       => 'BZz2',
