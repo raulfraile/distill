@@ -1,7 +1,7 @@
 {
     "name": "raulfraile/distill",
     "description": "Smart compressed files extractor",
-    "keywords": ["compression", "extractor," "zip", "gzip", "phar", "rar", "tar.gz", "xz", "tar.xz", "bzip2", "bzip", "7zip"],
+    "keywords": ["compression", "extractor", "zip", "gzip", "phar", "rar", "tar.gz", "xz", "tar.xz", "bzip2", "bzip", "7zip"],
     "license": "MIT",
     "authors": [
         {
