@@ -25,6 +25,7 @@ class Extractor implements ExtractorInterface
 
     /**
      * Constructor
+     *
      */
     public function __construct($adapters = null)
     {

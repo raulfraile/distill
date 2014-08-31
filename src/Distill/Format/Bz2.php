@@ -11,6 +11,17 @@
 
 namespace Distill\Format;
 
+/**
+ * A BZIP2 file.
+ *
+ * A .bz2 stream consists of a 4-byte header, followed by zero or more compressed blocks,
+ * immediately followed by an end-of-stream marker containing a 32-bit CRC for the plaintext
+ * whole stream processed. The compressed blocks are bit-aligned and no padding occurs.
+ *
+ * @see https://en.wikipedia.org/wiki/Bzip2
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class Bz2 implements FormatInterface
 {
 

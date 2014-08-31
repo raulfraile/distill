@@ -10,6 +10,11 @@
  */
 namespace Distill\Format;
 
+/**
+ * A GZIP file.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class Gz implements FormatInterface
 {
 
