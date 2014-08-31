@@ -43,7 +43,16 @@ class FormatGuesser implements FormatGuesserInterface
      */
     public function guess($path)
     {
-        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        $filename  = pathinfo($path, PATHINFO_FILENAME);
+
+        if (in_array($extension, array('bz', 'bz2', 'gz', 'xz'))) {
+            $subextension = pathinfo($filename, PATHINFO_EXTENSION);
+
+            if ("" !== $subextension) {
+                $extension = sprintf('%s.%s', $subextension, strtolower($extension));
+            }
+        }
 
         if (!array_key_exists($extension, $this->extensionMap)) {
             throw new ExtensionNotSupportedException($extension);
