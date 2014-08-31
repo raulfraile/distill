@@ -30,4 +30,12 @@ class TarXz implements FormatInterface
         return FormatInterface::LEVEL_HIGH;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getCompressionSpeedLevel()
+    {
+        return FormatInterface::LEVEL_MIDDLE;
+    }
+
 }

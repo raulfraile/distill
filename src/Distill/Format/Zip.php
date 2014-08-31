@@ -30,4 +30,12 @@ class Zip implements FormatInterface
         return FormatInterface::LEVEL_MIDDLE;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getCompressionSpeedLevel()
+    {
+        return FormatInterface::LEVEL_MIDDLE;
+    }
+
 }

@@ -34,4 +34,11 @@ interface FormatInterface
      */
     public function getUncompressionSpeedLevel();
 
+    /**
+     * Gets the compression speed level for the format.
+     *
+     * @return integer Compression speed level (0: low, 10: high)
+     */
+    public function getCompressionSpeedLevel();
+
 }

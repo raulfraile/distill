@@ -30,4 +30,11 @@ class Tar implements FormatInterface
         return FormatInterface::LEVEL_HIGHEST;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getCompressionSpeedLevel()
+    {
+        return FormatInterface::LEVEL_MIDDLE;
+    }
 }
