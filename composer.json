@@ -1,7 +1,10 @@
 {
     "name": "raulfraile/distill",
     "description": "Smart compressed files extractor",
-    "keywords": ["compression", "extractor", "zip", "gzip", "phar", "rar", "tar.gz", "xz", "tar.xz", "bzip2", "bzip", "7zip"],
+    "keywords": [
+        "compression", "extractor", "zip", "gzip", "phar", "rar",
+        "tar.gz", "xz", "tar.xz", "bzip2", "bzip", "7zip"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -20,6 +23,10 @@
     "require-dev": {
         "symfony/finder": "2.5.3",
         "raulfraile/ladybug": "~1.0"
+    },
+    "suggest": {
+        "ext-zip": "Allows to uncompress zip files using ZipArchive",
+        "ext-rar": "Allows to uncompress zip files using RarArchive"
     },
     "minimum-stability": "stable"
 }
