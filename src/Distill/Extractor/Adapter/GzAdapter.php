@@ -14,6 +14,11 @@ namespace Distill\Extractor\Adapter;
 use Distill\File;
 use Distill\Format\Gz;
 
+/**
+ * Extracts files from gzip archives.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class GzAdapter extends AbstractAdapter
 {
 

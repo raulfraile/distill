@@ -14,6 +14,11 @@ namespace Distill\Extractor\Adapter;
 use Distill\File;
 use Distill\Format\Xz;
 
+/**
+ * Extracts files from xz archives.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class XzAdapter extends AbstractAdapter
 {
 

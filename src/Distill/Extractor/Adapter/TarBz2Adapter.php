@@ -14,6 +14,11 @@ namespace Distill\Extractor\Adapter;
 use Distill\File;
 use Distill\Format\TarBz2;
 
+/**
+ * Extracts files from tar.bz2 archives.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class TarBz2Adapter extends AbstractAdapter
 {
 

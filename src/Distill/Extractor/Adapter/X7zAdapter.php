@@ -14,6 +14,11 @@ namespace Distill\Extractor\Adapter;
 use Distill\File;
 use Distill\Format\X7z;
 
+/**
+ * Extracts files from 7z archives.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class X7zAdapter extends AbstractAdapter
 {
 

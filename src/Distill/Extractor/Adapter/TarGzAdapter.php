@@ -14,6 +14,11 @@ namespace Distill\Extractor\Adapter;
 use Distill\File;
 use Distill\Format\TarGz;
 
+/**
+ * Extracts files from tar.gz archives.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class TarGzAdapter extends AbstractAdapter
 {
 

@@ -14,6 +14,11 @@ namespace Distill\Extractor\Adapter;
 use Distill\File;
 use Distill\Format\Phar;
 
+/**
+ * Extracts files from phar archives.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class PharAdapter extends AbstractAdapter
 {
 

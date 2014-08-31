@@ -14,6 +14,11 @@ namespace Distill\Extractor\Adapter;
 use Distill\File;
 use Distill\Format\Rar;
 
+/**
+ * Extracts files from rar archives.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class RarAdapter extends AbstractAdapter
 {
 

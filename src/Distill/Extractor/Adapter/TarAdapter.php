@@ -14,6 +14,11 @@ namespace Distill\Extractor\Adapter;
 use Distill\File;
 use Distill\Format\Tar;
 
+/**
+ * Extracts files from tar archives.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class TarAdapter extends AbstractAdapter
 {
 

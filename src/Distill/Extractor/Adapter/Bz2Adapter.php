@@ -14,6 +14,11 @@ namespace Distill\Extractor\Adapter;
 use Distill\File;
 use Distill\Format\Bz2;
 
+/**
+ * Extracts files from bzip2 archives.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class Bz2Adapter extends AbstractAdapter
 {
 

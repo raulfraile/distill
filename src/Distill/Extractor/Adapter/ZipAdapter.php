@@ -15,6 +15,11 @@ use Distill\File;
 use Distill\Format\Zip;
 use ZipArchive;
 
+/**
+ * Extracts files from zip archives.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class ZipAdapter extends AbstractAdapter
 {
 
