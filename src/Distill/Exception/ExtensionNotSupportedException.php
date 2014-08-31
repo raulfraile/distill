@@ -15,7 +15,7 @@ class ExtensionNotSupportedException extends \Exception
 {
     protected $extension;
 
-    public function __construct($extension, $code = 0, Exception $previous = null)
+    public function __construct($extension, $code = 0, \Exception $previous = null)
     {
         $message = sprintf('Extension "%s" not supported', $extension);
 
