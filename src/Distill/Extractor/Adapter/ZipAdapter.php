@@ -56,7 +56,7 @@ class ZipAdapter extends AbstractAdapter
      */
     protected function extractUnzipCommand(File $file, $path)
     {
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+        if ($this->isWindows()) {
             return false;
         }
 

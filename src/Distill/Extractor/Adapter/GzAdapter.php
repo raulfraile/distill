@@ -53,7 +53,7 @@ class GzAdapter extends AbstractAdapter
      */
     protected function extractGzipCommand(File $file, $path)
     {
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+        if ($this->isWindows()) {
             return false;
         }
 

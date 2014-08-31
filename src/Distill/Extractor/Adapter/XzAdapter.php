@@ -53,7 +53,7 @@ class XzAdapter extends AbstractAdapter
      */
     protected function extractXzCommand(File $file, $path)
     {
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+        if ($this->isWindows()) {
             return false;
         }
 

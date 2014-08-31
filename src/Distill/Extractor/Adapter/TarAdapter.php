@@ -56,7 +56,7 @@ class TarAdapter extends AbstractAdapter
      */
     protected function extractTarCommand(File $file, $path)
     {
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+        if ($this->isWindows()) {
             return false;
         }
 

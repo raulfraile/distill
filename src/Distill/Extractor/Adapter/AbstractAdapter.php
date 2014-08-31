@@ -45,7 +45,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     protected function existsCommand($command)
     {
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+        if ($this->isWindows()) {
             return false;
         }
 
@@ -67,6 +67,16 @@ abstract class AbstractAdapter implements AdapterInterface
         $process->run();
 
         return $process->isSuccessful();
+    }
+
+    /**
+     * Checks whether PHP is running on Windows.
+     *
+     * @return bool Returns TRUE when running on windows, FALSE otherwise
+     */
+    protected function isWindows()
+    {
+        return defined('PHP_WINDOWS_VERSION_BUILD');
     }
 
 }

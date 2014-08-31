@@ -53,7 +53,7 @@ class Bz2Adapter extends AbstractAdapter
      */
     protected function extractBzip2Command(File $file, $path)
     {
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+        if ($this->isWindows()) {
             return false;
         }
 

@@ -56,7 +56,7 @@ class TarGzAdapter extends AbstractAdapter
      */
     protected function extractTarCommand(File $file, $path)
     {
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+        if ($this->isWindows()) {
             return false;
         }
 
@@ -75,7 +75,6 @@ class TarGzAdapter extends AbstractAdapter
      */
     protected function extractArchiveTar(File $file, $path)
     {
-
         if (!class_exists('\Archive_Tar')) {
             return false;
         }
