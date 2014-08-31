@@ -26,7 +26,7 @@
     },
     "suggest": {
         "ext-zip": "Allows to uncompress zip files using ZipArchive",
-        "ext-rar": "Allows to uncompress zip files using RarArchive"
+        "ext-rar": "Allows to uncompress rar files using RarArchive"
     },
     "minimum-stability": "stable"
 }
