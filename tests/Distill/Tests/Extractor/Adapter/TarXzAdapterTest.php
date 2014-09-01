@@ -25,4 +25,19 @@ class TarXzAdapterTest extends AbstractAdapterTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractFakeTarXzFileWithTarCommand()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new TarXzAdapter(array(
+            array('self', 'extractTarCommand')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.tar.xz', new TarXz()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
 }
