@@ -13,6 +13,13 @@ namespace Distill\Strategy;
 
 use Distill\File;
 
+/**
+ * Strategy interface.
+ *
+ * Any strategy must implement this interface.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 interface StrategyInterface
 {
 

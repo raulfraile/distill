@@ -13,17 +13,27 @@ namespace Distill\Strategy;
 
 use Distill\File;
 
+/**
+ * Uncompression speed strategy.
+ *
+ * The goal of this strategy is to try to use compressed files which
+ * are faster to uncompress.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class UncompressionSpeed implements StrategyInterface
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'uncompression_speed';
     }
 
     /**
-     * @param  File[] $files
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getPreferredFile(array $files)
     {

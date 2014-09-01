@@ -13,17 +13,27 @@ namespace Distill\Strategy;
 
 use Distill\File;
 
+/**
+ * Minimum size strategy.
+ *
+ * The goal of this strategy is to try to use compressed files with better
+ * compression ratio.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class MinimumSize implements StrategyInterface
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'minimum_size';
     }
 
     /**
-     * @param  File[] $files
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getPreferredFile(array $files)
     {
