@@ -11,7 +11,6 @@
 
 namespace Distill\Extractor;
 
-use Distill\Extractor\Adapter;
 use Distill\File;
 
 class Extractor implements ExtractorInterface

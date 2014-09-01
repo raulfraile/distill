@@ -50,7 +50,7 @@ use Distill\Format\Zip;
 
 $extractor = new Distill();
 
-$file = new File(__DIR__.'/../tests/files/file_ok.zip', new Zip());
+$file = new File(__DIR__ . '/../tests/files/file_ok.zip', new Zip());
 
 $extractor->extract($file, __DIR__ . '/extract');
 ```

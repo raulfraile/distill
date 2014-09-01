@@ -78,7 +78,7 @@ class ZipAdapter extends AbstractAdapter
             return false;
         }
 
-        $archive = new ZipArchive;
+        $archive = new ZipArchive();
 
         $archive->open($file->getPath());
         $archive->extractTo($path);
