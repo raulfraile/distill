@@ -72,8 +72,13 @@ class RarAdapter extends AbstractAdapter
      */
     protected function extractRarExtension(File $file, $path)
     {
+        $rar = @\RarArchive::open($file->getPath());
+
+        if (false === $rar) {
+            return false;
+        }
+
         @mkdir($path);
-        $rar = \RarArchive::open($file->getPath());
 
         foreach ($rar->getEntries() as $entry) {
             $entry->extract($path);
