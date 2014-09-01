@@ -112,6 +112,14 @@ $preferredFile = $extractor->getPreferredFile();
 echo $preferredFile->getPath(); // test.tar.gz
 ```
 
+## Command line tool
+
+If you are looking a command line tool to extract compressed files check out [distill-cli](https://github.com/raulfraile/distill-cli), which uses this library:
+
+```
+$ distill-cli extract archive.tar.gz path/
+```
+
 ## Credits
 
 * Raul Fraile ([@raulfraile](https://twitter.com/raulfraile))
