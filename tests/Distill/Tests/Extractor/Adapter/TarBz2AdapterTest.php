@@ -61,4 +61,53 @@ class TarBz2AdapterTest extends AbstractAdapterTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractFakeTarBz2FileWithTarCommand()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new TarBz2Adapter(array(
+            array('self', 'extractTarCommand')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.tar.bz2', new TarBz2()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractFakeTarBz2FileWithArchiveTar()
+    {
+        if (!class_exists('\Archive_Tar')) {
+            $this->markTestSkipped('Archive_Tar not installed');
+        }
+
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new TarBz2Adapter(array(
+            array('self', 'extractArchiveTar')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.tar.bz2', new TarBz2()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractFakeTarBz2FileWithPharData()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new TarBz2Adapter(array(
+            array('self', 'extractPharData')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.tar.bz2', new TarBz2()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
 }

@@ -93,7 +93,12 @@ class TarBz2Adapter extends AbstractAdapter
      */
     protected function extractPharData(File $file, $path)
     {
-        $archive = new \PharData($file->getPath(), null, null, \Phar::BZ2);
+        try {
+            $archive = new \PharData($file->getPath(), null, null, \Phar::BZ2);
+        } catch (\UnexpectedValueException $e) {
+            return false;
+        }
+
         $archive->extractTo($path, null, true);
 
         return true;
