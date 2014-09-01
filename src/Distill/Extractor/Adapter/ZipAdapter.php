@@ -80,7 +80,10 @@ class ZipAdapter extends AbstractAdapter
 
         $archive = new ZipArchive();
 
-        $archive->open($file->getPath());
+        if (true !== $archive->open($file->getPath())) {
+            return false;
+        }
+
         $archive->extractTo($path);
         $archive->close();
 

@@ -41,4 +41,34 @@ class ZipAdapterTest extends AbstractAdapterTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractFakeZipFileWithUnzipCommand()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new ZipAdapter(array(
+            array('self', 'extractUnzipCommand')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.zip', new Zip()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractFakeZipFileWithZipArchive()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new ZipAdapter(array(
+            array('self', 'extractZipArchive')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.zip', new Zip()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
 }
