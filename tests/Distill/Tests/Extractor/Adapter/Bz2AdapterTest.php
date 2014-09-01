@@ -9,7 +9,7 @@ use Distill\Format\Bz2;
 class Bz2AdapterTest extends AbstractAdapterTest
 {
 
-    public function testExtractCorrectGzFileWithBzip2Command()
+    public function testExtractCorrectBz2FileWithBzip2Command()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
@@ -20,6 +20,21 @@ class Bz2AdapterTest extends AbstractAdapterTest
 
         $response = $this->adapter->extract(new File($this->filesPath . 'file_ok.bz2', new Bz2()), $target);
         $this->assertTrue($response);
+
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractFakeBz2FileWithBzip2Command()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new Bz2Adapter(array(
+            array('self', 'extractBzip2Command')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.bz2', new Bz2()), $target);
+        $this->assertFalse($response);
 
         $this->clearTemporaryPath();
     }
