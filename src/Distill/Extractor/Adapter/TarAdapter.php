@@ -94,7 +94,16 @@ class TarAdapter extends AbstractAdapter
      */
     protected function extractPharData(File $file, $path)
     {
-        $archive = new \PharData($file->getPath(), null, null, \Phar::TAR);
+        try {
+            $archive = new \PharData($file->getPath(), null, null, \Phar::TAR);
+        } catch (\UnexpectedValueException $e) {
+            return false;
+        }
+
+        if (!$archive->isFileFormat(\Phar::TAR)) {
+            return false;
+        }
+
         $archive->extractTo($path, null, true);
 
         return true;

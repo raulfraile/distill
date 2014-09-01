@@ -61,4 +61,53 @@ class TarAdapterTest extends AbstractAdapterTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractFakeTarFileWithTarCommand()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new TarAdapter(array(
+            array('self', 'extractTarCommand')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.tar', new Tar()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractFakeTarFileWithArchiveTar()
+    {
+        if (!class_exists('\Archive_Tar')) {
+            $this->markTestSkipped('Archive_Tar not installed');
+        }
+
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new TarAdapter(array(
+            array('self', 'extractArchiveTar')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.tar', new Tar()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractFakeTarFileWithPharData()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new TarAdapter(array(
+            array('self', 'extractPharData')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.tar', new Tar()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
 }
