@@ -61,4 +61,53 @@ class TarGzAdapterTest extends AbstractAdapterTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractFakeTarGzFileWithTarCommand()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new TarGzAdapter(array(
+            array('self', 'extractTarCommand')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.tar.gz', new TarGz()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractFakeTarGzFileWithArchiveTar()
+    {
+        if (!class_exists('\\Archive_Tar')) {
+            $this->markTestSkipped('Archive_Tar not installed');
+        }
+
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new TarGzAdapter(array(
+            array('self', 'extractArchiveTar')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.tar.gz', new TarGz()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractFakeTarGzFileWithPharData()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new TarGzAdapter(array(
+            array('self', 'extractPharData')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.tar.gz', new TarGz()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
 }

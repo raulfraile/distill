@@ -93,7 +93,12 @@ class TarGzAdapter extends AbstractAdapter
      */
     protected function extractPharData(File $file, $path)
     {
-        $archive = new \PharData($file->getPath(), null, null, \Phar::GZ);
+        try {
+            $archive = new \PharData($file->getPath(), null, null, \Phar::GZ);
+        } catch (\UnexpectedValueException $e) {
+            return false;
+        }
+
         $archive->extractTo($path, null, true);
 
         return true;
