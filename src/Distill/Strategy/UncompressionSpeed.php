@@ -29,11 +29,11 @@ class UncompressionSpeed implements StrategyInterface
     {
         usort($files, 'self::order');
 
-        if (empty($this->files)) {
+        if (empty($files)) {
             return null;
         }
 
-        return $this->files[0];
+        return $files[0];
     }
 
     /**
