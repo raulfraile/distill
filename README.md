@@ -41,6 +41,20 @@ curl -O http://getcomposer.org/composer.phar
 php composer.phar install
 ```
 
+## Example
+
+```php
+use Distill\Distill;
+use Distill\File;
+use Distill\Format\Zip;
+
+$extractor = new Distill();
+
+$file = new File(__DIR__.'/../tests/files/file_ok.zip', new Zip());
+
+$extractor->extract($file, __DIR__ . '/extract');
+```
+
 ## Formats
 
 ### Format support
