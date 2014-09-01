@@ -24,4 +24,19 @@ class GzAdapterTest extends AbstractAdapterTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractFakeGzFileWithGzipCommand()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new GzAdapter(array(
+            array('self', 'extractGzipCommand')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.gz', new Gz()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
 }
