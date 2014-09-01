@@ -16,11 +16,18 @@ use Distill\File;
 interface StrategyInterface
 {
 
+    /**
+     * Gets the strategy name.
+     *
+     * @return string Strategy name
+     */
     public function getName();
 
     /**
+     * Returns the preferred file.
      * @param  File[] $files
-     * @return mixed
+     *
+     * @return null|File
      */
     public function getPreferredFile(array $files);
 
