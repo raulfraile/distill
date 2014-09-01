@@ -25,4 +25,19 @@ class PharAdapterTest extends AbstractAdapterTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractFakePharFileWithPharExtension()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new PharAdapter(array(
+            array('self', 'extractPharExtension')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.phar', new Phar()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
 }
