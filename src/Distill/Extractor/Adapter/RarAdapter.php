@@ -29,7 +29,9 @@ class RarAdapter extends AbstractAdapter
     {
         if (null === $methods) {
             $methods = array(
-                array('self', 'extractUnrarCommand')
+                array('self', 'extractUnrarCommand'),
+                array('self', 'extract7zCommand'),
+                array('self', 'extractRarExtension')
             );
         }
 
@@ -59,6 +61,25 @@ class RarAdapter extends AbstractAdapter
 
         @mkdir($path);
         $command = 'unrar e '.escapeshellarg($file->getPath()).' '.escapeshellarg($path);
+
+        return $this->executeCommand($command);
+    }
+
+    /**
+     * Extracts the zip file using the unzip command.
+     * @param File   $file Compressed file
+     * @param string $path Destination path
+     *
+     * @return bool Returns TRUE when successful, FALSE otherwise
+     */
+    protected function extract7zCommand(File $file, $path)
+    {
+        if ($this->isWindows()) {
+            return false;
+        }
+
+        @mkdir($path);
+        $command = '7z e -y '.escapeshellarg($file->getPath()).' -o'.escapeshellarg($path);
 
         return $this->executeCommand($command);
     }
