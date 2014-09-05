@@ -29,7 +29,8 @@ class Bz2Adapter extends AbstractAdapter
     {
         if (null === $methods) {
             $methods = array(
-                array('self', 'extractBzip2Command')
+                array('self', 'extractBzip2Command'),
+                array('self', 'extract7zCommand')
             );
         }
 
@@ -41,11 +42,12 @@ class Bz2Adapter extends AbstractAdapter
      */
     public function supports(File $file)
     {
-        return $file->getFormat() instanceof Bz2 && $this->existsCommand('bzip2');
+        return $file->getFormat() instanceof Bz2 &&
+            ($this->existsCommand('bzip2') || $this->existsCommand('7z'));
     }
 
     /**
-     * Extracts the gz file using the tar command.
+     * Extracts the bz2 file using the tar command.
      * @param File   $file Compressed file
      * @param string $path Destination path
      *
@@ -58,6 +60,25 @@ class Bz2Adapter extends AbstractAdapter
         }
 
         $command = sprintf("bzip2 -k -d -c %s >> %s", escapeshellarg($file->getPath()), escapeshellarg($path));
+
+        return $this->executeCommand($command);
+    }
+
+    /**
+     * Extracts the bz2 file using the unzip command.
+     * @param File   $file Compressed file
+     * @param string $path Destination path
+     *
+     * @return bool Returns TRUE when successful, FALSE otherwise
+     */
+    protected function extract7zCommand(File $file, $path)
+    {
+        if ($this->isWindows()) {
+            return false;
+        }
+
+        @mkdir($path);
+        $command = '7z e -y '.escapeshellarg($file->getPath()).' -o'.escapeshellarg($path);
 
         return $this->executeCommand($command);
     }
