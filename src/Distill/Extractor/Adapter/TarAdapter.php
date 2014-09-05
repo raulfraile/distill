@@ -86,7 +86,6 @@ class TarAdapter extends AbstractAdapter
         return $this->executeCommand($command);
     }
 
-
     /**
      * Extracts the tar.gz file using the Archive_Tar extension.
      * @param File   $file Compressed file
