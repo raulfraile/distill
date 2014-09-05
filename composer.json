@@ -3,7 +3,7 @@
     "description": "Smart compressed files extractor",
     "keywords": [
         "compression", "extractor", "zip", "gzip", "phar", "rar",
-        "tar.gz", "xz", "tar.xz", "bzip2", "bzip", "7zip"
+        "tar.gz", "xz", "tar.xz", "bzip2", "bzip", "7zip", "cab"
     ],
     "license": "MIT",
     "authors": [

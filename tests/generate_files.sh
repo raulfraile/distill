@@ -49,6 +49,10 @@ rm -f ../file_ok.7z
 rm -f ../file_ok.rar
 rar a ../file_ok.rar *.txt
 
-#phar file
+# phar file
 rm -f ../file_ok.phar
 php ../../generate_phar.php ../file_ok.phar 1.txt 2.txt 3.txt
+
+# cab file
+rm -f ../file_ok.cab
+lcab 1.txt 2.txt 3.txt ../file_ok.cab
