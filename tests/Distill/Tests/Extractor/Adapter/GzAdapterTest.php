@@ -24,6 +24,21 @@ class GzAdapterTest extends AbstractAdapterTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractCorrectGzFileWith7zCommand()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new GzAdapter(array(
+            array('self', 'extract7zCommand')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_ok.gz', new Gz()), $target);
+        $this->assertTrue($response);
+
+        $this->clearTemporaryPath();
+    }
+
     public function testExtractFakeGzFileWithGzipCommand()
     {
         $target = $this->getTemporaryPath();
@@ -31,6 +46,21 @@ class GzAdapterTest extends AbstractAdapterTest
 
         $this->adapter = new GzAdapter(array(
             array('self', 'extractGzipCommand')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.gz', new Gz()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractFakeGzFileWith7zCommand()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new GzAdapter(array(
+            array('self', 'extract7zCommand')
         ));
 
         $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.gz', new Gz()), $target);
