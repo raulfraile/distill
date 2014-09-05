@@ -85,4 +85,10 @@ class FormatGuesserTest extends \PHPUnit_Framework_TestCase
         $this->guessFormat($this->filesPath . 'file_ok.zip', '\\Distill\\Format\\Zip');
     }
 
+    public function testUnknownFileGuesser()
+    {
+        $this->setExpectedException('Distill\\Exception\\ExtensionNotSupportedException');
+        $this->formatGuesser->guess($this->filesPath . 'empty.txt');
+    }
+
 }
