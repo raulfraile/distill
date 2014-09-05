@@ -59,17 +59,17 @@ $extractor->extract($file, __DIR__ . '/extract');
 
 ### Format support
 
-* `bz2`: `bzip2` unix command.
-* `gz`: `gzip` unix command.
+* `bz2`: `bzip2` unix command and `7z` unix command.
+* `gz`: `gzip` unix command and `7z` unix command.
 * `phar`: `PHAR` extension.
-* `rar`: `unrar` unix command and `rar` extension.
-* `tar`: `tar` unix command, `Archive_Tar` package and `PHAR` extension.
+* `rar`: `unrar` unix command, `7z` unix command, and `rar` extension.
+* `tar`: `tar` unix command, `7z` unix command, `Archive_Tar` package and `PHAR` extension.
 * `tar.bz2`: `tar` unix command, `Archive_Tar` package and `PHAR` extension.
 * `tar.gz`: `tar` unix command, `Archive_Tar` package and `PHAR` extension.
 * `tar.xz`: `tar` unix command.
-* `7z`: `7z` unix command
-* `xz`: `xz` unix command
-* `zip`: `tar` unix command and `zip` extension.
+* `7z`: `7z` unix command.
+* `xz`: `xz` unix command.
+* `zip`: `tar` unix command, `7z` unix command and `zip` extension.
 
 ## Strategies
 
