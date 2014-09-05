@@ -29,6 +29,7 @@ class CabAdapter extends AbstractAdapter
     {
         if (null === $methods) {
             $methods = array(
+                array('self', 'extractCabextractCommand'),
                 array('self', 'extract7zCommand')
             );
         }
@@ -45,7 +46,26 @@ class CabAdapter extends AbstractAdapter
     }
 
     /**
-     * Extracts the exe file using the unzip command.
+     * Extracts the cab file using the cabextract command.
+     * @param File   $file Compressed file
+     * @param string $path Destination path
+     *
+     * @return bool Returns TRUE when successful, FALSE otherwise
+     */
+    protected function extractCabextractCommand(File $file, $path)
+    {
+        if ($this->isWindows()) {
+            return false;
+        }
+
+        @mkdir($path);
+        $command = 'cabextract -d '.escapeshellarg($path).' '.escapeshellarg($file->getPath());
+
+        return $this->executeCommand($command);
+    }
+
+    /**
+     * Extracts the cab file using the 7z command.
      * @param File   $file Compressed file
      * @param string $path Destination path
      *

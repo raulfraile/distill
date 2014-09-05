@@ -9,7 +9,23 @@ use Distill\Format\Cab;
 class CabAdapterTest extends AbstractAdapterTest
 {
 
-    public function testExtractCorrect7ZFileWith7zCommand()
+    public function testExtractCorrectCabFileWithCabextractCommand()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new CabAdapter(array(
+            array('self', 'extractCabextractCommand')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_ok.cab', new Cab()), $target);
+        $this->assertTrue($response);
+
+        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractCorrectCabFileWith7zCommand()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
@@ -22,6 +38,21 @@ class CabAdapterTest extends AbstractAdapterTest
         $this->assertTrue($response);
 
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractFakeCabFileWithCabextractCommand()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new CabAdapter(array(
+            array('self', 'extractCabextractCommand')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.cab', new Cab()), $target);
+        $this->assertFalse($response);
+
         $this->clearTemporaryPath();
     }
 
