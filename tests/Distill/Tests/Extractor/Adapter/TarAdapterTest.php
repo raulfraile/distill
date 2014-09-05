@@ -25,6 +25,22 @@ class TarAdapterTest extends AbstractAdapterTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractCorrectTarFileWith7zCommand()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new TarAdapter(array(
+            array('self', 'extract7zCommand')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_ok.tar', new Tar()), $target);
+        $this->assertTrue($response);
+
+        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->clearTemporaryPath();
+    }
+
     public function testExtractCorrectTarFileWithArchiveTar()
     {
         if (!class_exists('\Archive_Tar')) {
@@ -68,6 +84,21 @@ class TarAdapterTest extends AbstractAdapterTest
 
         $this->adapter = new TarAdapter(array(
             array('self', 'extractTarCommand')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.tar', new Tar()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractFakeTarFileWith7zCommand()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new TarAdapter(array(
+            array('self', 'extract7zCommand')
         ));
 
         $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.tar', new Tar()), $target);
