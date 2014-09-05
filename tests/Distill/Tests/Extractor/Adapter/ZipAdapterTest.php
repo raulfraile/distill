@@ -25,6 +25,22 @@ class ZipAdapterTest extends AbstractAdapterTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractCorrectZipFileWith7zCommand()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new ZipAdapter(array(
+            array('self', 'extract7zCommand')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_ok.zip', new Zip()), $target);
+        $this->assertTrue($response);
+
+        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->clearTemporaryPath();
+    }
+
     public function testExtractCorrectZipFileWithZipArchive()
     {
         $target = $this->getTemporaryPath();
@@ -48,6 +64,21 @@ class ZipAdapterTest extends AbstractAdapterTest
 
         $this->adapter = new ZipAdapter(array(
             array('self', 'extractUnzipCommand')
+        ));
+
+        $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.zip', new Zip()), $target);
+        $this->assertFalse($response);
+
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractFakeZipFileWith7zCommand()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->adapter = new ZipAdapter(array(
+            array('self', 'extract7zCommand')
         ));
 
         $response = $this->adapter->extract(new File($this->filesPath . 'file_fake.zip', new Zip()), $target);
