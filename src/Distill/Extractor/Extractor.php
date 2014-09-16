@@ -12,6 +12,7 @@
 namespace Distill\Extractor;
 
 use Distill\File;
+use Distill\Format\FormatInterface;
 
 class Extractor implements ExtractorInterface
 {
@@ -26,24 +27,8 @@ class Extractor implements ExtractorInterface
      * Constructor
      *
      */
-    public function __construct($adapters = null)
+    public function __construct(array $adapters = array())
     {
-        if (null === $adapters) {
-            $adapters = array(
-                new Adapter\Bz2Adapter(),
-                new Adapter\GzAdapter(),
-                new Adapter\PharAdapter(),
-                new Adapter\RarAdapter(),
-                new Adapter\TarAdapter(),
-                new Adapter\TarBz2Adapter(),
-                new Adapter\TarGzAdapter(),
-                new Adapter\TarXzAdapter(),
-                new Adapter\X7zAdapter(),
-                new Adapter\XzAdapter(),
-                new Adapter\ZipAdapter()
-            );
-        }
-
         $this->adapters = $adapters;
     }
 
@@ -60,15 +45,15 @@ class Extractor implements ExtractorInterface
     /**
      * {@inheritdoc}
      */
-    public function extract(File $file, $path)
+    public function extract($file, $path, FormatInterface $format)
     {
         $adaptersCount = count($this->adapters);
         $i = 0;
         $success = false;
 
         while (!$success && $i < $adaptersCount) {
-            if ($this->adapters[$i]->supports($file)) {
-                $success = $this->adapters[$i]->extract($file, $path);
+            if ($this->adapters[$i]->supports($format)) {
+                $success = $this->adapters[$i]->extract($file, $path, $format);
             }
 
             $i++;

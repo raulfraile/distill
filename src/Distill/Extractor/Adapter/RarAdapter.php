@@ -12,6 +12,7 @@
 namespace Distill\Extractor\Adapter;
 
 use Distill\File;
+use Distill\Format\FormatInterface;
 use Distill\Format\Rar;
 
 /**
@@ -23,91 +24,11 @@ class RarAdapter extends AbstractAdapter
 {
 
     /**
-     * Constructor.
-     */
-    public function __construct($methods = null)
-    {
-        if (null === $methods) {
-            $methods = array(
-                array('self', 'extractUnrarCommand'),
-                array('self', 'extract7zCommand'),
-                array('self', 'extractRarExtension')
-            );
-        }
-
-        $this->methods = $methods;
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function supports(File $file)
+    public function supports(FormatInterface $format)
     {
-        return $file->getFormat() instanceof Rar && $this->existsCommand('unrar');
-    }
-
-    /**
-     * Extracts the rar file using the unzip command.
-     * @param File   $file Compressed file
-     * @param string $path Destination path
-     *
-     * @return bool Returns TRUE when successful, FALSE otherwise
-     */
-    protected function extractUnrarCommand(File $file, $path)
-    {
-        if ($this->isWindows()) {
-            return false;
-        }
-
-        @mkdir($path);
-        $command = 'unrar e '.escapeshellarg($file->getPath()).' '.escapeshellarg($path);
-
-        return $this->executeCommand($command);
-    }
-
-    /**
-     * Extracts the zip file using the unzip command.
-     * @param File   $file Compressed file
-     * @param string $path Destination path
-     *
-     * @return bool Returns TRUE when successful, FALSE otherwise
-     */
-    protected function extract7zCommand(File $file, $path)
-    {
-        if ($this->isWindows()) {
-            return false;
-        }
-
-        @mkdir($path);
-        $command = '7z e -y '.escapeshellarg($file->getPath()).' -o'.escapeshellarg($path);
-
-        return $this->executeCommand($command);
-    }
-
-    /**
-     * Extracts the rar file using the Rar extension.
-     * @param File   $file Compressed file
-     * @param string $path Destination path
-     *
-     * @return bool Returns TRUE when successful, FALSE otherwise
-     */
-    protected function extractRarExtension(File $file, $path)
-    {
-        $rar = @\RarArchive::open($file->getPath());
-
-        if (false === $rar) {
-            return false;
-        }
-
-        @mkdir($path);
-
-        foreach ($rar->getEntries() as $entry) {
-            $entry->extract($path);
-        }
-
-        $rar->close();
-
-        return true;
+        return $format instanceof Rar && $this->hasSupportedMethods();
     }
 
 }

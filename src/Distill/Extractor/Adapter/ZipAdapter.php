@@ -12,7 +12,9 @@
 namespace Distill\Extractor\Adapter;
 
 use Distill\File;
+use Distill\Format\FormatInterface;
 use Distill\Format\Zip;
+use Distill\Extractor\Method\MethodInterface;
 use ZipArchive;
 
 /**
@@ -24,90 +26,11 @@ class ZipAdapter extends AbstractAdapter
 {
 
     /**
-     * Constructor.
-     */
-    public function __construct($methods = null)
-    {
-        if (null === $methods) {
-            $methods = array(
-                array('self', 'extractUnzipCommand'),
-                array('self', 'extract7zCommand'),
-                array('self', 'extractZipArchive')
-            );
-        }
-
-        $this->methods = $methods;
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function supports(File $file)
+    public function supports(FormatInterface $format)
     {
-        return $file->getFormat() instanceof Zip
-            && (class_exists('\ZipArchive') || $this->existsCommand('unzip'));
-    }
-
-    /**
-     * Extracts the zip file using the unzip command.
-     * @param File   $file Compressed file
-     * @param string $path Destination path
-     *
-     * @return bool Returns TRUE when successful, FALSE otherwise
-     */
-    protected function extractUnzipCommand(File $file, $path)
-    {
-        if ($this->isWindows()) {
-            return false;
-        }
-
-        $command = 'unzip '.escapeshellarg($file->getPath()).' -d '.escapeshellarg($path);
-
-        return $this->executeCommand($command);
-    }
-
-    /**
-     * Extracts the zip file using the unzip command.
-     * @param File   $file Compressed file
-     * @param string $path Destination path
-     *
-     * @return bool Returns TRUE when successful, FALSE otherwise
-     */
-    protected function extract7zCommand(File $file, $path)
-    {
-        if ($this->isWindows()) {
-            return false;
-        }
-
-        @mkdir($path);
-        $command = '7z e -y '.escapeshellarg($file->getPath()).' -o'.escapeshellarg($path);
-
-        return $this->executeCommand($command);
-    }
-
-    /**
-     * Extracts the zip file using the ZipArchive class.
-     * @param File   $file Compressed file
-     * @param string $path Destination path
-     *
-     * @return bool Returns TRUE when successful, FALSE otherwise
-     */
-    protected function extractZipArchive(File $file, $path)
-    {
-        if (!class_exists('\ZipArchive')) {
-            return false;
-        }
-
-        $archive = new ZipArchive();
-
-        if (true !== $archive->open($file->getPath())) {
-            return false;
-        }
-
-        $archive->extractTo($path);
-        $archive->close();
-
-        return true;
+        return $format instanceof Zip && $this->hasSupportedMethods();
     }
 
 }

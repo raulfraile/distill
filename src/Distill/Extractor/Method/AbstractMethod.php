@@ -9,48 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Extractor\Adapter;
+namespace Distill\Extractor\Method;
 
 use Distill\File;
-use Distill\Format\FormatInterface;
 use Symfony\Component\Process\Process;
-use Distill\Extractor\Method\MethodInterface;
 
-abstract class AbstractAdapter implements AdapterInterface
+abstract class AbstractMethod implements MethodInterface
 {
 
-    /**
-     * @var MethodInterface[]
-     */
-    protected $methods = array();
-
-    /**
-     * Constructor.
-     *
-     * @param MethodInterface[] $methods
-     */
-    public function __construct($methods = [])
-    {
-        $this->methods = $methods;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function extract($file, $path, FormatInterface $format)
-    {
-        $success = false;
-        $methodsCount = count($this->methods);
-        $i = 0;
-
-        while (!$success && $i < $methodsCount) {
-            $success = $this->methods[$i]->extract($file, $path, $format);
-
-            $i++;
-        }
-
-        return $success;
-    }
 
     /**
      * Checks whether the command exists in the system.
@@ -92,18 +58,6 @@ abstract class AbstractAdapter implements AdapterInterface
     protected function isWindows()
     {
         return defined('PHP_WINDOWS_VERSION_BUILD');
-    }
-
-    protected function hasSupportedMethods()
-    {
-        $i = 0;
-        $supported = false;
-        $methodsCount = count($this->methods);
-        while (!$supported && $i < $methodsCount) {
-            $supported = $this->methods[$i]->isSupported();
-        }
-
-        return $supported;
     }
 
 }

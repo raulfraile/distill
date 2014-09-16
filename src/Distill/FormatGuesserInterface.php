@@ -9,9 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Format;
+namespace Distill;
 
 use Distill\Exception\ExtensionNotSupportedException;
+use Distill\Format\FormatInterface;
 
 interface FormatGuesserInterface
 {

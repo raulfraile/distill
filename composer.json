@@ -17,6 +17,7 @@
     },
     "require": {
         "php": ">=5.4.0",
+        "pimple/pimple": "~3.0",
         "symfony/process": "~2.5",
         "guzzlehttp/guzzle": "~4.0"
     },

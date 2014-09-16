@@ -13,6 +13,7 @@ namespace Distill\Extractor;
 
 use Distill\File;
 use Distill\Extractor\Adapter\AdapterInterface;
+use Distill\Format\FormatInterface;
 
 interface ExtractorInterface
 {
@@ -24,7 +25,7 @@ interface ExtractorInterface
      *
      * @return bool Returns TRUE when successful, FALSE otherwise
      */
-    public function extract(File $file, $path);
+    public function extract($file, $path, FormatInterface $format);
 
     /**
      * Adds a new adapter.

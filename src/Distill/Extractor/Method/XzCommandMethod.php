@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Extractor\Adapter;
+namespace Distill\Extractor\Method;
 
 use Distill\File;
 use Distill\Format\Bz2;
@@ -20,15 +20,19 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class Bz2Adapter extends AbstractAdapter
+class XzCommandMethod extends AbstractMethod
 {
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supports(FormatInterface $format)
+    public function extract($file, $target, FormatInterface $format)
     {
-        return $format instanceof Bz2 && $this->hasSupportedMethods();
+        $command = sprintf("xz -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
+
+        return $this->executeCommand($command);
+    }
+
+    public function isSupported()
+    {
+        return !$this->isWindows() && $this->existsCommand('xz');
     }
 
 }

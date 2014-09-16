@@ -12,6 +12,7 @@
 namespace Distill\Extractor\Adapter;
 
 use Distill\File;
+use Distill\Format\FormatInterface;
 use Distill\Format\TarBz2;
 
 /**
@@ -23,85 +24,11 @@ class TarBz2Adapter extends AbstractAdapter
 {
 
     /**
-     * Constructor.
-     */
-    public function __construct($methods = null)
-    {
-        if (null === $methods) {
-            $methods = array(
-                array('self', 'extractTarCommand'),
-                array('self', 'extractArchiveTar'),
-                array('self', 'extractPharData')
-            );
-        }
-
-        $this->methods = $methods;
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function supports(File $file)
+    public function supports(FormatInterface $format)
     {
-        return $file->getFormat() instanceof TarBz2 &&
-        (extension_loaded('Archive_Tar') || $this->existsCommand('tar'));
-    }
-
-    /**
-     * Extracts the tar.gz file using the tar command.
-     * @param File   $file Compressed file
-     * @param string $path Destination path
-     *
-     * @return bool Returns TRUE when successful, FALSE otherwise
-     */
-    protected function extractTarCommand(File $file, $path)
-    {
-        if ($this->isWindows()) {
-            return false;
-        }
-
-        @mkdir($path);
-        $command = sprintf("tar -jxvf %s -C %s", escapeshellarg($file->getPath()), escapeshellarg($path));
-
-        return $this->executeCommand($command);
-    }
-
-    /**
-     * Extracts the tar.gz file using the Archive_Tar extension.
-     * @param File   $file Compressed file
-     * @param string $path Destination path
-     *
-     * @return bool Returns TRUE when successful, FALSE otherwise
-     */
-    protected function extractArchiveTar(File $file, $path)
-    {
-        if (!extension_loaded('Archive_Tar')) {
-            return false;
-        }
-
-        $tar = new \Archive_Tar($file->getPath(), true);
-
-        return $tar->extract($path);
-    }
-
-    /**
-     * Extracts the tar.bz2 file using the PharData class.
-     * @param File   $file Compressed file
-     * @param string $path Destination path
-     *
-     * @return bool Returns TRUE when successful, FALSE otherwise
-     */
-    protected function extractPharData(File $file, $path)
-    {
-        try {
-            $archive = new \PharData($file->getPath(), null, null, \Phar::BZ2);
-        } catch (\UnexpectedValueException $e) {
-            return false;
-        }
-
-        $archive->extractTo($path, null, true);
-
-        return true;
+        return $format instanceof TarBz2 && $this->hasSupportedMethods();
     }
 
 }

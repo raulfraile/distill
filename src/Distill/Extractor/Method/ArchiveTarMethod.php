@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Extractor\Adapter;
+namespace Distill\Extractor\Method;
 
 use Distill\File;
 use Distill\Format\Bz2;
@@ -20,15 +20,19 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class Bz2Adapter extends AbstractAdapter
+class ArchiveTarMethod extends AbstractMethod
 {
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supports(FormatInterface $format)
+    public function extract($file, $target, FormatInterface $format)
     {
-        return $format instanceof Bz2 && $this->hasSupportedMethods();
+        $tar = new \Archive_Tar($file, true);
+
+        return $tar->extract($target);
+    }
+
+    public function isSupported()
+    {
+        return !$this->isWindows() && class_exists('\\ArchiveTar');
     }
 
 }
