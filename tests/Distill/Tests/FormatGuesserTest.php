@@ -2,9 +2,7 @@
 
 namespace Distill\Tests\Format;
 
-use Distill\File;
-use Distill\Format\Zip;
-use Distill\Format\FormatGuesser;
+use Distill\FormatGuesser;
 
 class FormatGuesserTest extends \PHPUnit_Framework_TestCase
 {

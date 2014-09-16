@@ -3,20 +3,22 @@
 namespace Distill\Tests;
 
 use Distill\File;
+use Distill\Format\FormatInterface;
 use Distill\Format\Zip;
 use Symfony\Component\Finder\Finder;
+
+use Distill\Extractor\Method\MethodInterface;
 
 abstract class AbstractAdapterTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @var Zip $adapter */
-    protected $adapter;
+    /** @var MethodInterface $method */
+    protected $method;
 
     protected $filesPath;
 
     public function setUp()
     {
-        $this->adapter = new Zip();
         $this->filesPath = __DIR__ . '/../../../../files/';
     }
 
@@ -48,6 +50,11 @@ abstract class AbstractAdapterTest extends \PHPUnit_Framework_TestCase
         }
 
         return hash_final($hash);
+    }
+
+    protected function extract($file, $target, FormatInterface $format)
+    {
+        return $this->method->extract($this->filesPath . $file, $target, $format);
     }
 
 }

@@ -42,10 +42,8 @@ class PharDataMethod extends AbstractMethod
 
     protected function getPharFormat(FormatInterface $format)
     {
-        if ($format instanceof Format\Tar) {
+        if ($format instanceof Format\Tar || $format instanceof Format\TarBz2) {
             return \Phar::TAR;
-        } elseif ($format instanceof Format\TarBz2) {
-            return \Phar::BZ2;
         }
     }
 
