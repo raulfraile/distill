@@ -3,12 +3,13 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Distill\Distill;
+use Distill\Strategy\MinimumSize;
 
-$extractor = new Distill();
+$distill = new Distill();
 
-$extractor->addFile('test.tar.gz');
-$extractor->addFile('test.zip');
+$preferredFile = $distill->getChooser()
+    ->addFile('test.tar.gz')
+    ->addFile('test.zip')
+    ->getPreferredFile();
 
-$preferredFile = $extractor->getPreferredFile();
-
-echo $preferredFile->getPath() . "\n";
+echo $preferredFile . \PHP_EOL;
