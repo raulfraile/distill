@@ -27,7 +27,7 @@ class Phar implements FormatInterface
      */
     public function getUncompressionSpeedLevel()
     {
-        return FormatInterface::LEVEL_MIDDLE;
+        return FormatInterface::LEVEL_LOW;
     }
 
     /**
@@ -35,7 +35,7 @@ class Phar implements FormatInterface
      */
     public function getCompressionSpeedLevel()
     {
-        return FormatInterface::LEVEL_MIDDLE;
+        return FormatInterface::LEVEL_LOW;
     }
 
     /**

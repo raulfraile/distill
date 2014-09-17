@@ -24,13 +24,6 @@ interface StrategyInterface
 {
 
     /**
-     * Gets the strategy name.
-     *
-     * @return string Strategy name
-     */
-    public function getName();
-
-    /**
      * Returns the preferred file.
      * @param File[] $files
      *

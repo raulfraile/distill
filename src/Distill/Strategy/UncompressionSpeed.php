@@ -27,14 +27,6 @@ class UncompressionSpeed implements StrategyInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
-    {
-        return 'uncompression_speed';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getPreferredFile(array $files)
     {
         usort($files, 'self::order');
