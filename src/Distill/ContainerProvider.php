@@ -12,230 +12,250 @@
 namespace Distill;
 
 use Distill\Extractor\Adapter;
-use Distill\Extractor\Extractor;
-use Distill\Extractor\ExtractorInterface;
-use Distill\Format;
 use Distill\Extractor\Method;
-use Distill\Strategy\MinimumSize;
-use Distill\Strategy\StrategyInterface;
-use Distill\Format\FormatInterface;
-use Distill\Strategy\UncompressionSpeed;
-use GuzzleHttp\Client;
+use Distill\Extractor\Extractor;
+use Distill\Format;
+use Distill\Strategy;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
 class ContainerProvider implements ServiceProviderInterface
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function register(Container $container)
     {
-        
-        // formats
-        $container['format.bz2'] = $container->factory(function ($c) {
-            return new Format\Bz2();
-        });
-        $container['format.cab'] = $container->factory(function ($c) {
-            return new Format\Cab();
-        });
-        $container['format.gz'] = $container->factory(function ($c) {
-            return new Format\Gz();
-        });
-        $container['format.phar'] = $container->factory(function ($c) {
-            return new Format\Phar();
-        });
-        $container['format.rar'] = $container->factory(function ($c) {
-            return new Format\Rar();
-        });
-        $container['format.tar'] = $container->factory(function ($c) {
-            return new Format\Tar();
-        });
-        $container['format.tar_bz2'] = $container->factory(function ($c) {
-            return new Format\TarBz2();
-        });
-        $container['format.tar_gz'] = $container->factory(function ($c) {
-            return new Format\TarGz();
-        });
-        $container['format.tar_xz'] = $container->factory(function ($c) {
-            return new Format\TarXz();
-        });
-        $container['format.7z'] = $container->factory(function ($c) {
-            return new Format\X7z();
-        });
-        $container['format.xz'] = $container->factory(function ($c) {
-            return new Format\Xz();
-        });
-        $container['format.zip'] = $container->factory(function ($c) {
-            return new Format\Zip();
-        });
+        $this->registerFormats($container);
+        $this->registerMethods($container);
+        $this->registerAdapters($container);
+        $this->registerStrategies($container);
 
-        // methods
-        $container['method.archive_tar'] = $container->factory(function ($c) {
-            return new Method\ArchiveTarMethod();
-        });
-
-        $container['method.bzip2_command'] = $container->factory(function ($c) {
-            return new Method\Bzip2CommandMethod();
-        });
-
-        $container['method.cabextract_command'] = $container->factory(function ($c) {
-            return new Method\CabextractCommandMethod();
-        });
-
-        $container['method.gzip_command'] = $container->factory(function ($c) {
-            return new Method\GzipCommandMethod();
-        });
-
-        $container['method.phar_extension'] = $container->factory(function ($c) {
-            return new Method\PharExtensionMethod();
-        });
-
-        $container['method.phar_data'] = $container->factory(function ($c) {
-            return new Method\PharDataMethod();
-        });
-
-        $container['method.rar_extension'] = $container->factory(function ($c) {
-            return new Method\RarExtensionMethod();
-        });
-
-        $container['method.tar_command'] = $container->factory(function ($c) {
-            return new Method\TarCommandMethod();
-        });
-
-        $container['method.unrar_command'] = $container->factory(function ($c) {
-            return new Method\UnrarCommandMethod();
-        });
-
-        $container['method.unzip_command'] = $container->factory(function ($c) {
-            return new Method\UnzipCommandMethod();
-        });
-
-        $container['method.7z_command'] = $container->factory(function ($c) {
-            return new Method\X7zCommandMethod();
-        });
-
-        $container['method.xz_command'] = $container->factory(function ($c) {
-            return new Method\XzCommandMethod();
-        });
-
-        $container['method.zip_archive'] = $container->factory(function ($c) {
-            return new Method\ZipArchiveMethod();
-        });
-
-        // adapters
-        $container['adapter.bz2'] = $container->factory(function ($c) {
-            return new Adapter\Bz2Adapter([
-                $c['method.bzip2_command'],
-                $c['method.7z_command']
-            ]);
-        });
-
-        $container['adapter.cab'] = $container->factory(function ($c) {
-            return new Adapter\CabAdapter([
-                $c['method.cabextract_command'],
-                $c['method.7z_command']
-            ]);
-        });
-
-        $container['adapter.gz'] = $container->factory(function ($c) {
-            return new Adapter\GzAdapter([
-                $c['method.gzip_command'],
-                $c['method.7z_command']
-            ]);
-        });
-
-        $container['adapter.rar'] = $container->factory(function ($c) {
-            return new Adapter\RarAdapter([
-                $c['method.unrar_command'],
-                $c['method.7z_command'],
-                $c['method.archive_tar'],
-                $c['method.phar_data'],
-            ]);
-        });
-
-        $container['adapter.tar'] = $container->factory(function ($c) {
-            return new Adapter\TarAdapter([
-                $c['method.tar_command'],
-                $c['method.7z_command'],
-                $c['method.archive_tar']
-            ]);
-        });
-
-        $container['adapter.tar_bz2'] = $container->factory(function ($c) {
-            return new Adapter\TarBz2Adapter([
-                $c['method.tar_command'],
-                $c['method.7z_command'],
-                $c['method.archive_tar']
-            ]);
-        });
-
-        $container['adapter.tar_gz'] = $container->factory(function ($c) {
-            return new Adapter\TarGzAdapter([
-                $c['method.tar_command'],
-                $c['method.7z_command'],
-                $c['method.archive_tar']
-            ]);
-        });
-
-        $container['adapter.tar_xz'] = $container->factory(function ($c) {
-            return new Adapter\TarXzAdapter([
-                $c['method.tar_command']
-            ]);
-        });
-
-        $container['adapter.7z'] = $container->factory(function ($c) {
-            return new Adapter\X7zAdapter([
-                $c['method.7z_command']
-            ]);
-        });
-
-        $container['adapter.zip'] = $container->factory(function ($c) {
-            return new Adapter\ZipAdapter([
-                $c['method.unzip_command'],
-                $c['method.7z_command'],
-                $c['method.zip_archive']
-            ]);
-        });
-
-        $container['adapter.xz'] = $container->factory(function ($c) {
-            return new Adapter\XzAdapter([
-                $c['method.xz_command'],
-                $c['method.7z_command']
-            ]);
-        });
-
-        $container['adapter.phar'] = $container->factory(function ($c) {
-            return new Adapter\PharAdapter([
-                $c['method.phar_extension']
-            ]);
-        });
-
-
-        $container['format_guesser'] = $container->factory(function ($c) {
+        $container['distill.format_guesser'] = $container->factory(function ($c) {
             return new FormatGuesser();
         });
 
-        $container['extractor'] = $container->factory(function ($c) {
-            return new Extractor([
-                $c['adapter.zip']
-            ]);
-        });
-
-        // strategies
-
-        $container['distill.strategy.minimum_size'] = $container->factory(function ($c) {
-            return new MinimumSize();
-        });
-        $container['distill.strategy.uncompression_speed'] = $container->factory(function ($c) {
-            return new UncompressionSpeed();
-        });
-
-
-
         $container['distill.chooser'] = $container->factory(function ($c) {
-            return new Chooser($c['distill.strategy.minimum_size'], $c['format_guesser']);
+            return new Chooser($c['distill.strategy.minimum_size'], $c['distill.format_guesser']);
+        });
+
+        $container['distill.extractor.extractor'] = $container->factory(function ($c) {
+            return new Extractor([
+                $c['distill.extractor.adapter.bz2'],
+                $c['distill.extractor.adapter.cab'],
+                $c['distill.extractor.adapter.cab'],
+                $c['distill.extractor.adapter.gz'],
+                $c['distill.extractor.adapter.phar'],
+                $c['distill.extractor.adapter.rar'],
+                $c['distill.extractor.adapter.tar'],
+                $c['distill.extractor.adapter.tar_bz2'],
+                $c['distill.extractor.adapter.tar_gz'],
+                $c['distill.extractor.adapter.tar_xz'],
+                $c['distill.extractor.adapter.xz'],
+                $c['distill.extractor.adapter.zip']
+            ]);
         });
     }
 
+    protected function registerFormats(Container $container)
+    {
+        $container['distill.extractor.format.bz2'] = $container->factory(function ($c) {
+            return new Format\Bz2();
+        });
+        $container['distill.extractor.format.cab'] = $container->factory(function ($c) {
+            return new Format\Cab();
+        });
+        $container['distill.extractor.format.gz'] = $container->factory(function ($c) {
+            return new Format\Gz();
+        });
+        $container['distill.extractor.format.phar'] = $container->factory(function ($c) {
+            return new Format\Phar();
+        });
+        $container['distill.extractor.format.rar'] = $container->factory(function ($c) {
+            return new Format\Rar();
+        });
+        $container['distill.extractor.format.tar'] = $container->factory(function ($c) {
+            return new Format\Tar();
+        });
+        $container['distill.extractor.format.tar_bz2'] = $container->factory(function ($c) {
+            return new Format\TarBz2();
+        });
+        $container['distill.extractor.format.tar_gz'] = $container->factory(function ($c) {
+            return new Format\TarGz();
+        });
+        $container['distill.extractor.format.tar_xz'] = $container->factory(function ($c) {
+            return new Format\TarXz();
+        });
+        $container['distill.extractor.format.7z'] = $container->factory(function ($c) {
+            return new Format\X7z();
+        });
+        $container['distill.extractor.format.xz'] = $container->factory(function ($c) {
+            return new Format\Xz();
+        });
+        $container['distill.extractor.format.zip'] = $container->factory(function ($c) {
+            return new Format\Zip();
+        });
+    }
+
+    /**
+     * Register methods.
+     * @param Container $container
+     */
+    protected function registerMethods(Container $container)
+    {
+        $container['distill.extractor.method.archive_tar'] = $container->factory(function ($c) {
+            return new Method\ArchiveTarMethod();
+        });
+
+        $container['distill.extractor.method.bzip2_command'] = $container->factory(function ($c) {
+            return new Method\Bzip2CommandMethod();
+        });
+
+        $container['distill.extractor.method.cabextract_command'] = $container->factory(function ($c) {
+            return new Method\CabextractCommandMethod();
+        });
+
+        $container['distill.extractor.method.gzip_command'] = $container->factory(function ($c) {
+            return new Method\GzipCommandMethod();
+        });
+
+        $container['distill.extractor.method.phar_extension'] = $container->factory(function ($c) {
+            return new Method\PharExtensionMethod();
+        });
+
+        $container['distill.extractor.method.phar_data'] = $container->factory(function ($c) {
+            return new Method\PharDataMethod();
+        });
+
+        $container['distill.extractor.method.rar_extension'] = $container->factory(function ($c) {
+            return new Method\RarExtensionMethod();
+        });
+
+        $container['distill.extractor.method.tar_command'] = $container->factory(function ($c) {
+            return new Method\TarCommandMethod();
+        });
+
+        $container['distill.extractor.method.unrar_command'] = $container->factory(function ($c) {
+            return new Method\UnrarCommandMethod();
+        });
+
+        $container['distill.extractor.method.unzip_command'] = $container->factory(function ($c) {
+            return new Method\UnzipCommandMethod();
+        });
+
+        $container['distill.extractor.method.7z_command'] = $container->factory(function ($c) {
+            return new Method\X7zCommandMethod();
+        });
+
+        $container['distill.extractor.method.xz_command'] = $container->factory(function ($c) {
+            return new Method\XzCommandMethod();
+        });
+
+        $container['distill.extractor.method.zip_archive'] = $container->factory(function ($c) {
+            return new Method\ZipArchiveMethod();
+        });
+    }
+
+    protected function registerAdapters(Container $container)
+    {
+        $container['distill.extractor.adapter.bz2'] = $container->factory(function ($c) {
+            return new Adapter\Bz2Adapter([
+                $c['distill.extractor.method.bzip2_command'],
+                $c['distill.extractor.method.7z_command']
+            ]);
+        });
+
+        $container['distill.extractor.adapter.cab'] = $container->factory(function ($c) {
+            return new Adapter\CabAdapter([
+                $c['distill.extractor.method.cabextract_command'],
+                $c['distill.extractor.method.7z_command']
+            ]);
+        });
+
+        $container['distill.extractor.adapter.gz'] = $container->factory(function ($c) {
+            return new Adapter\GzAdapter([
+                $c['distill.extractor.method.gzip_command'],
+                $c['distill.extractor.method.7z_command']
+            ]);
+        });
+
+        $container['distill.extractor.adapter.rar'] = $container->factory(function ($c) {
+            return new Adapter\RarAdapter([
+                $c['distill.extractor.method.unrar_command'],
+                $c['distill.extractor.method.7z_command'],
+                $c['distill.extractor.method.archive_tar'],
+                $c['distill.extractor.method.phar_data'],
+            ]);
+        });
+
+        $container['distill.extractor.adapter.tar'] = $container->factory(function ($c) {
+            return new Adapter\TarAdapter([
+                $c['distill.extractor.method.tar_command'],
+                $c['distill.extractor.method.7z_command'],
+                $c['distill.extractor.method.archive_tar']
+            ]);
+        });
+
+        $container['distill.extractor.adapter.tar_bz2'] = $container->factory(function ($c) {
+            return new Adapter\TarBz2Adapter([
+                $c['distill.extractor.method.tar_command'],
+                $c['distill.extractor.method.7z_command'],
+                $c['distill.extractor.method.archive_tar']
+            ]);
+        });
+
+        $container['distill.extractor.adapter.tar_gz'] = $container->factory(function ($c) {
+            return new Adapter\TarGzAdapter([
+                $c['distill.extractor.method.tar_command'],
+                $c['distill.extractor.method.7z_command'],
+                $c['distill.extractor.method.archive_tar']
+            ]);
+        });
+
+        $container['distill.extractor.adapter.tar_xz'] = $container->factory(function ($c) {
+            return new Adapter\TarXzAdapter([
+                $c['distill.extractor.method.tar_command']
+            ]);
+        });
+
+        $container['distill.extractor.adapter.7z'] = $container->factory(function ($c) {
+            return new Adapter\X7zAdapter([
+                $c['distill.extractor.method.7z_command']
+            ]);
+        });
+
+        $container['distill.extractor.adapter.zip'] = $container->factory(function ($c) {
+            return new Adapter\ZipAdapter([
+                $c['distill.extractor.method.unzip_command'],
+                $c['distill.extractor.method.7z_command'],
+                $c['distill.extractor.method.zip_archive']
+            ]);
+        });
+
+        $container['distill.extractor.adapter.xz'] = $container->factory(function ($c) {
+            return new Adapter\XzAdapter([
+                $c['distill.extractor.method.xz_command'],
+                $c['distill.extractor.method.7z_command']
+            ]);
+        });
+
+        $container['distill.extractor.adapter.phar'] = $container->factory(function ($c) {
+            return new Adapter\PharAdapter([
+                $c['distill.extractor.method.phar_extension']
+            ]);
+        });
+    }
+
+    protected function registerStrategies(Container $container)
+    {
+        $container['distill.strategy.minimum_size'] = $container->factory(function ($c) {
+            return new Strategy\MinimumSize();
+        });
+        $container['distill.strategy.uncompression_speed'] = $container->factory(function ($c) {
+            return new Strategy\UncompressionSpeed();
+        });
+    }
 
 
 }

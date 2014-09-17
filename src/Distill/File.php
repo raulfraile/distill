@@ -39,6 +39,11 @@ class File
         $this->format = $format;
     }
 
+    public function __toString()
+    {
+        return $this->path;
+    }
+
     /**
      * Sets the file path.
      * @param string $path File path

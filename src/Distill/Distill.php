@@ -63,85 +63,33 @@ class Distill
         $this->container->register(new ContainerProvider());
     }
 
-    /**
-     * Adds a new file.
-     * @param string               $filename File name
-     * @param FormatInterface|null $format   Format
-     *
-     * @return Distill
-     */
-    public function addFile($filename, FormatInterface $format = null)
-    {
-        if (null === $format) {
-            $format = $this->formatGuesser->guess($filename);
-        }
-
-        $this->files[] = new File($filename, $format);
-
-        return $this;
-    }
-
-    /**
-     * Gets the preferred file based on the chosen strategy.
-     *
-     * @return File Preferred file
-     */
-    public function getPreferredFile(array $files = [])
-    {
-        return $this->strategy->getPreferredFile($files);
-    }
-
-    public function downloadPreferredFile($destination)
-    {
-        $client = new Client();
-
-        $response = $client->get($this->getPreferredFile()->getPath());
-
-        return file_put_contents($destination, $response->getBody()) !== false;
-    }
-
-    public function downloadPreferredFileAndExtract($destination)
-    {
-        $preferredFile = $this->getPreferredFile();
-        $downloadPath = sys_get_temp_dir() . '/' . basename($preferredFile->getPath());
-
-        $this->downloadPreferredFile($downloadPath);
-
-        $downloadedFile = new File($downloadPath, $preferredFile->getFormat());
-
-        return $this->extract($downloadedFile, $destination);
-    }
 
     /**
      * Extracts the compressed file into the given path.
-     * @param string $file         Compressed file
-     * @param string $path         Destination path
-     * @param FormatInterface|null Format (if null, it is guessed by the extension)
+     * @param string $file Compressed file
+     * @param string $path Destination path
+     * @param Format\FormatInterface $format
+     * @internal param \Distill\Format\FormatInterface|null $Format (if null, it is guessed by the extension)
      *
      * @return bool Returns TRUE when successful, FALSE otherwise
      */
     public function extract($file, $path, FormatInterface $format = null)
     {
         if (null === $format) {
-            $format = $this->container['format_guesser']->guess($file);
+            $format = $this->container['distill.format_guesser']->guess($file);
         }
 
-        return $this->container['extractor']->extract($file, $path, $format);
+        return $this->container['distill.extractor.extractor']->extract($file, $path, $format);
     }
 
-
     /**
+     * Gets the file chooser.
      *
      * @return Chooser
      */
     public function getChooser()
     {
         return $this->container['distill.chooser'];
-    }
-
-    public function getExtractor()
-    {
-        return $this->container['distill.extractor'];
     }
 
 }
