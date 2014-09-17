@@ -165,6 +165,9 @@ class ContainerProvider implements ServiceProviderInterface
         $container['distill.strategy.' . Strategy\UncompressionSpeed::getName()] = $container->factory(function ($c) {
             return new Strategy\UncompressionSpeed();
         });
+        $container['distill.strategy.' . Strategy\Random::getName()] = $container->factory(function ($c) {
+            return new Strategy\Random();
+        });
     }
 
 }
