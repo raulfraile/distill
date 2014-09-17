@@ -73,10 +73,11 @@ Distill allows to choose one format in case there are many available. For exampl
 useful for installers that want to reduce the bandwidth usage trying to choose compression formats
 with higher compression ratio and available in the client machine.
 
-The library provides two strategies (more can be added):
+The library provides three strategies (more can be added):
 
 * Minimum size (default): Choose files with higher compression ratio.
 * Uncompression speed: Choose files which are faster to uncompress.
+* Random: Gets a random file which can be uncompressed by the system.
 
 ```php
 use Distill\Distill;
