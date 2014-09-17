@@ -10,6 +10,7 @@
  */
 
 namespace Distill\Extractor\Method;
+
 use Distill\Format\FormatInterface;
 
 /**
@@ -22,6 +23,10 @@ class CabextractCommandMethod extends AbstractMethod
 
     public function extract($file, $target, FormatInterface $format)
     {
+        if (!$this->isSupported()) {
+            return false;
+        }
+
         @mkdir($target);
         $command = 'cabextract -d '.escapeshellarg($target).' '.escapeshellarg($file);
 

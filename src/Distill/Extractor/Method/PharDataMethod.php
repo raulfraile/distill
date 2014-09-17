@@ -24,6 +24,10 @@ class PharDataMethod extends AbstractMethod
 
     public function extract($file, $target, FormatInterface $format)
     {
+        if (!$this->isSupported()) {
+            return false;
+        }
+
         try {
             $pharFormat = $this->getPharFormat($format);
             $archive = new \PharData($file, null, null, $pharFormat);

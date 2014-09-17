@@ -24,6 +24,10 @@ class PharExtensionMethod extends AbstractMethod
 
     public function extract($file, $target, FormatInterface $format)
     {
+        if (!$this->isSupported()) {
+            return false;
+        }
+
         try {
             $phar = new \Phar($file);
             @mkdir($target);

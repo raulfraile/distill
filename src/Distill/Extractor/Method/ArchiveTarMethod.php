@@ -24,6 +24,10 @@ class ArchiveTarMethod extends AbstractMethod
 
     public function extract($file, $target, FormatInterface $format)
     {
+        if (!$this->isSupported()) {
+            return false;
+        }
+
         $tar = new \Archive_Tar($file, true);
 
         return $tar->extract($target);

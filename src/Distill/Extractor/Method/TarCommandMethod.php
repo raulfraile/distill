@@ -25,6 +25,10 @@ class TarCommandMethod extends AbstractMethod
 
     public function extract($file, $target, FormatInterface $format)
     {
+        if (!$this->isSupported()) {
+            return false;
+        }
+
         @mkdir($target);
 
         $tarOptions = ['x', 'v', 'f'];

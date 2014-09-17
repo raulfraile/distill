@@ -24,7 +24,7 @@ class UnzipCommandMethod extends AbstractMethod
 
     public function extract($file, $target, FormatInterface $format)
     {
-        if ($this->isWindows()) {
+        if (!$this->isSupported()) {
             return false;
         }
 

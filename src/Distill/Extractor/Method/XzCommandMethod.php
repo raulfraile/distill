@@ -24,6 +24,10 @@ class XzCommandMethod extends AbstractMethod
 
     public function extract($file, $target, FormatInterface $format)
     {
+        if (!$this->isSupported()) {
+            return false;
+        }
+        
         $command = sprintf("xz -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
 
         return $this->executeCommand($command);

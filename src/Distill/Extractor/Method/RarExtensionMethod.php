@@ -24,6 +24,10 @@ class RarExtensionMethod extends AbstractMethod
 
     public function extract($file, $target, FormatInterface $format)
     {
+        if (!$this->isSupported()) {
+            return false;
+        }
+
         $rar = @\RarArchive::open($file);
 
         if (false === $rar) {

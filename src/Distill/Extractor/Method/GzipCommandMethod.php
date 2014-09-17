@@ -10,6 +10,7 @@
  */
 
 namespace Distill\Extractor\Method;
+
 use Distill\Format\FormatInterface;
 
 /**
@@ -22,6 +23,10 @@ class GzipCommandMethod extends AbstractMethod
 
     public function extract($file, $target, FormatInterface $format)
     {
+        if (!$this->isSupported()) {
+            return false;
+        }
+
         $command = sprintf("gzip -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
 
         return $this->executeCommand($command);

@@ -24,6 +24,10 @@ class ZipArchiveMethod extends AbstractMethod
 
     public function extract($file, $target, FormatInterface $format)
     {
+        if (!$this->isSupported()) {
+            return false;
+        }
+
         $archive = new \ZipArchive();
 
         if (true !== $archive->open($file)) {

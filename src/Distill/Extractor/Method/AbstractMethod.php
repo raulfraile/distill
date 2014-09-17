@@ -29,9 +29,8 @@ abstract class AbstractMethod implements MethodInterface
             return false;
         }
 
-        $process = new Process('command ' . $command . ' > /dev/null');
+        $process = new Process('command -v ' . $command . ' > /dev/null');
         $process->run();
-
         return $process->isSuccessful();
     }
 
