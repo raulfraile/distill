@@ -2,6 +2,8 @@
 
 namespace Distill;
 
+use Distill\Exception\FormatGuesserRequiredException;
+use Distill\Exception\StrategyRequiredException;
 use Distill\Format\FormatInterface;
 use Distill\Strategy\StrategyInterface;
 
@@ -30,7 +32,9 @@ class Chooser
      * @param StrategyInterface      $strategy
      * @param FormatGuesserInterface $formatGuesser
      */
-    public function __construct(StrategyInterface $strategy, FormatGuesserInterface $formatGuesser)
+    public function __construct(
+        StrategyInterface $strategy = null,
+        FormatGuesserInterface $formatGuesser = null)
     {
         $this->strategy = $strategy;
         $this->formatGuesser = $formatGuesser;
@@ -63,6 +67,16 @@ class Chooser
     }
 
     /**
+     * Gets the strategy.
+     *
+     * @return StrategyInterface Current strategy
+     */
+    public function getStrategy()
+    {
+        return $this->strategy;
+    }
+
+    /**
      * Sets the files to choose from.
      * @param File[] $files Files
      *
@@ -70,7 +84,11 @@ class Chooser
      */
     public function setFiles($files)
     {
-        $this->files = $files;
+        $this->files = [];
+
+        foreach ($files as $file) {
+            $this->addFile($file);
+        }
 
         return $this;
     }
@@ -85,6 +103,10 @@ class Chooser
     public function addFile($filename, FormatInterface $format = null)
     {
         if (null === $format) {
+            if (null === $this->formatGuesser) {
+                throw new FormatGuesserRequiredException();
+            }
+
             $format = $this->formatGuesser->guess($filename);
         }
 
@@ -110,6 +132,10 @@ class Chooser
      */
     public function getPreferredFile()
     {
+        if (null === $this->strategy) {
+            throw new StrategyRequiredException();
+        }
+
         $preferredFile = $this->strategy->getPreferredFile($this->files);
 
         return $preferredFile->getPath();
