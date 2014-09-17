@@ -11,15 +11,10 @@
 
 namespace Distill;
 
-use Distill\Extractor\Adapter;
 use Distill\Extractor\Extractor;
 use Distill\Extractor\ExtractorInterface;
-use Distill\Format;
-use Distill\Extractor\Method;
-use Distill\Strategy\MinimumSize;
 use Distill\Strategy\StrategyInterface;
 use Distill\Format\FormatInterface;
-use GuzzleHttp\Client;
 use Pimple\Container;
 
 class Distill
@@ -49,13 +44,11 @@ class Distill
      */
     protected $files;
 
-
     /**
      *
      * @var Container
      */
     protected $container;
-
 
     public function __construct()
     {
@@ -63,11 +56,10 @@ class Distill
         $this->container->register(new ContainerProvider());
     }
 
-
     /**
      * Extracts the compressed file into the given path.
-     * @param string $file Compressed file
-     * @param string $path Destination path
+     * @param string                 $file   Compressed file
+     * @param string                 $path   Destination path
      * @param Format\FormatInterface $format
      * @internal param \Distill\Format\FormatInterface|null $Format (if null, it is guessed by the extension)
      *

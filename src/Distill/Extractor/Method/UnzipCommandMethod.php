@@ -12,7 +12,6 @@
 namespace Distill\Extractor\Method;
 
 use Distill\File;
-use Distill\Format\Bz2;
 use Distill\Format\FormatInterface;
 
 /**

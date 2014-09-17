@@ -32,7 +32,7 @@ interface StrategyInterface
 
     /**
      * Returns the preferred file.
-     * @param  File[] $files
+     * @param File[] $files
      *
      * @return null|File
      */

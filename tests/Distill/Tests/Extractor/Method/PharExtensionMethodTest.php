@@ -5,7 +5,7 @@ namespace Distill\Tests;
 use Distill\Extractor\Method;
 use Distill\Format;
 
-class PharCommandMethodTest extends AbstractAdapterTest
+class PharExtensionMethodTest extends AbstractAdapterTest
 {
 
     public function setUp()

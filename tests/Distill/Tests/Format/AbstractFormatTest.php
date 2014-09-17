@@ -3,7 +3,6 @@
 namespace Distill\Tests\Format;
 
 use Distill\Format\FormatInterface;
-use Symfony\Component\Finder\Finder;
 
 abstract class AbstractFormatTest extends \PHPUnit_Framework_TestCase
 {

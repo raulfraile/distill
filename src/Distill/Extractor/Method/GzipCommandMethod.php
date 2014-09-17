@@ -12,7 +12,6 @@
 namespace Distill\Extractor\Method;
 use Distill\Format\FormatInterface;
 
-
 /**
  * Extracts files from bzip2 archives.
  *

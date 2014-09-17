@@ -9,7 +9,7 @@ use Symfony\Component\Finder\Finder;
 
 use Distill\Extractor\Method\MethodInterface;
 
-abstract class AbstractAdapterTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractMethodTest extends \PHPUnit_Framework_TestCase
 {
 
     /** @var MethodInterface $method */

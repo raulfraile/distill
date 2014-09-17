@@ -67,6 +67,4 @@ class FormatGuesser implements FormatGuesserInterface
         return $extension;
     }
 
-
-
 }

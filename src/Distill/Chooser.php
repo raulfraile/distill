@@ -25,7 +25,6 @@ class Chooser
      */
     protected $files;
 
-
     /**
      * Constructor.
      * @param StrategyInterface      $strategy

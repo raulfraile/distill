@@ -17,7 +17,6 @@ use Symfony\Component\Process\Process;
 abstract class AbstractMethod implements MethodInterface
 {
 
-
     /**
      * Checks whether the command exists in the system.
      * @param string $command Command

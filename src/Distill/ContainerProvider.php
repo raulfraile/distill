@@ -14,8 +14,6 @@ namespace Distill;
 use Distill\Extractor\Adapter;
 use Distill\Extractor\Method;
 use Distill\Extractor\Extractor;
-use Distill\Format;
-use Distill\Strategy;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
@@ -269,6 +267,5 @@ class ContainerProvider implements ServiceProviderInterface
             return new Strategy\UncompressionSpeed();
         });
     }
-
 
 }

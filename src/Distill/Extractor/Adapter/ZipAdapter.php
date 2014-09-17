@@ -14,8 +14,6 @@ namespace Distill\Extractor\Adapter;
 use Distill\File;
 use Distill\Format\FormatInterface;
 use Distill\Format\Zip;
-use Distill\Extractor\Method\MethodInterface;
-use ZipArchive;
 
 /**
  * Extracts files from zip archives.
