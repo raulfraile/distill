@@ -11,7 +11,6 @@
 
 namespace Distill;
 
-use Distill\Extractor\Extractor;
 use Distill\Extractor\ExtractorInterface;
 use Distill\Strategy\StrategyInterface;
 use Distill\Format\FormatInterface;
@@ -45,7 +44,7 @@ class Distill
     protected $files;
 
     /**
-     *
+     * Container.
      * @var Container
      */
     protected $container;
@@ -64,7 +63,6 @@ class Distill
      * @param string                 $file   Compressed file
      * @param string                 $path   Destination path
      * @param Format\FormatInterface $format
-     * @internal param \Distill\Format\FormatInterface|null $Format (if null, it is guessed by the extension)
      *
      * @return bool Returns TRUE when successful, FALSE otherwise
      */

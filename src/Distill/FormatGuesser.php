@@ -22,6 +22,10 @@ class FormatGuesser implements FormatGuesserInterface
      */
     protected $formats;
 
+    /**
+     * Constructor.
+     * @param FormatInterface[] $formats Formats.
+     */
     public function __construct(array $formats = [])
     {
         $this->formats = $formats;
