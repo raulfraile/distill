@@ -5,7 +5,7 @@ namespace Distill\Tests;
 use Distill\Extractor\Method;
 use Distill\Format;
 
-class UnrarCommandMethodTest extends AbstractAdapterTest
+class UnrarCommandMethodTest extends AbstractMethodTest
 {
 
     public function setUp()

@@ -5,7 +5,7 @@ namespace Distill\Tests;
 use Distill\Extractor\Method;
 use Distill\Format;
 
-class TarCommandMethodTest extends AbstractAdapterTest
+class TarCommandMethodTest extends AbstractMethodTest
 {
 
     public function setUp()

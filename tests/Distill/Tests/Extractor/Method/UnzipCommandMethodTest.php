@@ -5,7 +5,7 @@ namespace Distill\Tests;
 use Distill\Extractor\Method;
 use Distill\Format;
 
-class UnzipCommandMethodTest extends AbstractAdapterTest
+class UnzipCommandMethodTest extends AbstractMethodTest
 {
 
     public function setUp()

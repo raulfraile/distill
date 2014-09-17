@@ -5,7 +5,7 @@ namespace Distill\Tests;
 use Distill\Extractor\Method;
 use Distill\Format;
 
-class ZipArchiveMethodTest extends AbstractAdapterTest
+class ZipArchiveMethodTest extends AbstractMethodTest
 {
 
     public function setUp()

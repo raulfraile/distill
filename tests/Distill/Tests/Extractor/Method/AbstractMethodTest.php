@@ -2,9 +2,7 @@
 
 namespace Distill\Tests;
 
-use Distill\File;
 use Distill\Format\FormatInterface;
-use Distill\Format\Zip;
 use Symfony\Component\Finder\Finder;
 
 use Distill\Extractor\Method\MethodInterface;

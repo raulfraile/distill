@@ -5,7 +5,7 @@ namespace Distill\Tests;
 use Distill\Extractor\Method;
 use Distill\Format;
 
-class GzipCommandMethodTest extends AbstractAdapterTest
+class GzipCommandMethodTest extends AbstractMethodTest
 {
 
     public function setUp()
