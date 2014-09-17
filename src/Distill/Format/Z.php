@@ -38,4 +38,12 @@ class Z implements FormatInterface
         return FormatInterface::LEVEL_MIDDLE;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getExtensions()
+    {
+        return ['z'];
+    }
+
 }

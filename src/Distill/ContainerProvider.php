@@ -33,7 +33,20 @@ class ContainerProvider implements ServiceProviderInterface
         $this->registerStrategies($container);
 
         $container['distill.format_guesser'] = $container->factory(function ($c) {
-            return new FormatGuesser();
+            return new FormatGuesser([
+                $c['distill.extractor.format.bz2'],
+                $c['distill.extractor.format.cab'],
+                $c['distill.extractor.format.gz'],
+                $c['distill.extractor.format.phar'],
+                $c['distill.extractor.format.rar'],
+                $c['distill.extractor.format.tar'],
+                $c['distill.extractor.format.tar_bz2'],
+                $c['distill.extractor.format.tar_gz'],
+                $c['distill.extractor.format.tar_xz'],
+                $c['distill.extractor.format.7z'],
+                $c['distill.extractor.format.xz'],
+                $c['distill.extractor.format.zip']
+            ]);
         });
 
         $container['distill.chooser'] = $container->factory(function ($c) {

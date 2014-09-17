@@ -38,4 +38,12 @@ class X7z implements FormatInterface
         return FormatInterface::LEVEL_MIDDLE;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getExtensions()
+    {
+        return ['7z'];
+    }
+
 }

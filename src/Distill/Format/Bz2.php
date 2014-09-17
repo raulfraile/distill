@@ -49,4 +49,12 @@ class Bz2 implements FormatInterface
         return FormatInterface::LEVEL_MIDDLE;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getExtensions()
+    {
+        return ['bz2', 'bz'];
+    }
+
 }

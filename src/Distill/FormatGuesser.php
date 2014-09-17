@@ -12,41 +12,51 @@
 namespace Distill;
 
 use Distill\Exception\ExtensionNotSupportedException;
+use Distill\Format\FormatInterface;
 
 class FormatGuesser implements FormatGuesserInterface
 {
 
     /**
-     * Map of extensions and file formats
-     * @var array
+     * @var FormatInterface[]
      */
-    protected $extensionMap = array(
-        'bz'      => 'Bz2',
-        'bz2'     => 'Bz2',
-        'gz'      => 'Gz',
-        'phar'    => 'Phar',
-        'rar'     => 'Rar',
-        'tar'     => 'Tar',
-        'tar.bz'  => 'TarBz2',
-        'tar.bz2' => 'TarBz2',
-        'tar.gz'  => 'TarGz',
-        'tar.xz'  => 'TarXz',
-        'tgz'     => 'TarGz',
-        '7z'      => 'X7z',
-        'xz'      => 'Xz',
-        'Z'       => 'BZz2',
-        'zip'     => 'Zip'
-    );
+    protected $formats;
+
+    public function __construct(array $formats = [])
+    {
+        $this->formats = $formats;
+    }
 
     /**
      * {@inheritdoc}
      */
-    public function guess($path)
+    public function guess($file)
     {
-        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-        $filename  = pathinfo($path, PATHINFO_FILENAME);
+        $extension = $this->getExtension($file);
+
+        $format = null;
+        $formatsNumber = count($this->formats);
+        $i = 0;
+        while (null === $format && $i < $formatsNumber) {
+            if (in_array($extension, $this->formats[$i]->getExtensions())) {
+                $format = $this->formats[$i];
+            }
+            $i++;
+        }
+
+        if (null === $format) {
+            throw new ExtensionNotSupportedException($extension);
+        }
+
+        return $format;
+    }
+
+    protected function getExtension($file)
+    {
+        $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
         if (in_array($extension, array('bz', 'bz2', 'gz', 'xz'))) {
+            $filename  = pathinfo($file, PATHINFO_FILENAME);
             $subextension = pathinfo($filename, PATHINFO_EXTENSION);
 
             if ("" !== $subextension) {
@@ -54,13 +64,9 @@ class FormatGuesser implements FormatGuesserInterface
             }
         }
 
-        if (!array_key_exists($extension, $this->extensionMap)) {
-            throw new ExtensionNotSupportedException($extension);
-        }
-
-        $className = 'Distill\\Format\\' . $this->extensionMap[$extension];
-
-        return new $className();
+        return $extension;
     }
+
+
 
 }

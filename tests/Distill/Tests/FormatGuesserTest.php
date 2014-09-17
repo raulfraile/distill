@@ -2,6 +2,7 @@
 
 namespace Distill\Tests\Format;
 
+use Distill\Format;
 use Distill\FormatGuesser;
 
 class FormatGuesserTest extends \PHPUnit_Framework_TestCase
@@ -14,7 +15,20 @@ class FormatGuesserTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->formatGuesser = new FormatGuesser();
+        $this->formatGuesser = new FormatGuesser([
+            new Format\Bz2(),
+            new Format\Cab(),
+            new Format\Gz(),
+            new Format\Phar(),
+            new Format\Rar(),
+            new Format\Tar(),
+            new Format\TarBz2(),
+            new Format\TarGz(),
+            new Format\TarXz(),
+            new Format\X7z(),
+            new Format\Xz(),
+            new Format\Zip()
+        ]);
         $this->filesPath = __DIR__ . '/../../../../files/';
     }
 

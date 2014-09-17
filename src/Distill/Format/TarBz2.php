@@ -38,4 +38,12 @@ class TarBz2 implements FormatInterface
         return FormatInterface::LEVEL_MIDDLE;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getExtensions()
+    {
+        return ['tar.bz2', 'tar.bz', 'tbz2', 'tbz'];
+    }
+
 }

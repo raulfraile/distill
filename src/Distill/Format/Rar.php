@@ -38,4 +38,12 @@ class Rar implements FormatInterface
         return FormatInterface::LEVEL_MIDDLE;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getExtensions()
+    {
+        return ['rar'];
+    }
+
 }

@@ -41,4 +41,5 @@ interface FormatInterface
      */
     public function getCompressionSpeedLevel();
 
+    public function getExtensions();
 }
