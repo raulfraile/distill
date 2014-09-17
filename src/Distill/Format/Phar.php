@@ -11,6 +11,8 @@
 
 namespace Distill\Format;
 
+use Distill\Extractor\Method;
+
 class Phar implements FormatInterface
 {
 
@@ -44,6 +46,16 @@ class Phar implements FormatInterface
     public function getExtensions()
     {
         return ['phar'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUncompressionMethods()
+    {
+        return [
+            Method\PharExtensionMethod::getName()
+        ];
     }
 
 }

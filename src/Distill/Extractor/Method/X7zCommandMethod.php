@@ -45,4 +45,12 @@ class X7zCommandMethod extends AbstractMethod
         return !$this->isWindows() && $this->existsCommand('7z');
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return '7z_command';
+    }
+
 }

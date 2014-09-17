@@ -11,6 +11,8 @@
 
 namespace Distill\Format;
 
+use Distill\Extractor\Method;
+
 class Rar implements FormatInterface
 {
 
@@ -46,4 +48,16 @@ class Rar implements FormatInterface
         return ['rar'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getUncompressionMethods()
+    {
+        return [
+            Method\UnrarCommandMethod::getName(),
+            Method\X7zCommandMethod::getName(),
+            Method\PharDataMethod::getName(),
+            Method\ArchiveTarMethod::getName()
+        ];
+    }
 }

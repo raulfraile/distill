@@ -47,4 +47,9 @@ interface FormatInterface
      * @return array List of extensions
      */
     public function getExtensions();
+
+    /**
+     * @return array List of compression methods
+     */
+    public function getUncompressionMethods();
 }

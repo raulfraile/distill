@@ -11,6 +11,8 @@
 
 namespace Distill\Format;
 
+use Distill\Extractor\Method;
+
 class Xz implements FormatInterface
 {
 
@@ -46,4 +48,14 @@ class Xz implements FormatInterface
         return ['xz'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getUncompressionMethods()
+    {
+        return [
+            Method\XzCommandMethod::getName(),
+            Method\X7zCommandMethod::getName()
+        ];
+    }
 }

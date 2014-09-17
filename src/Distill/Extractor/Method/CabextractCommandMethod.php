@@ -44,4 +44,12 @@ class CabextractCommandMethod extends AbstractMethod
         return !$this->isWindows() && $this->existsCommand('cabextract');
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return 'cabextract_command';
+    }
+
 }

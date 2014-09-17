@@ -43,4 +43,12 @@ class ArchiveTarMethod extends AbstractMethod
         return !$this->isWindows() && class_exists('\\ArchiveTar');
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return 'archive_tar';
+    }
+
 }

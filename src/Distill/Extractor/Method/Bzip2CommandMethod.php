@@ -44,4 +44,12 @@ class Bzip2CommandMethod extends AbstractMethod
         return !$this->isWindows() && $this->existsCommand('bzip2');
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return 'bzip2_command';
+    }
+
 }

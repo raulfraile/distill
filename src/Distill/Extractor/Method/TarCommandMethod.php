@@ -57,4 +57,12 @@ class TarCommandMethod extends AbstractMethod
         return !$this->isWindows() && $this->existsCommand('tar');
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return 'tar_command';
+    }
+
 }

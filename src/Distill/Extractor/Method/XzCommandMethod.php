@@ -44,4 +44,12 @@ class XzCommandMethod extends AbstractMethod
         return !$this->isWindows() && $this->existsCommand('xz');
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return 'xz_command';
+    }
+
 }

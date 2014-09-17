@@ -56,4 +56,12 @@ class RarExtensionMethod extends AbstractMethod
         return !$this->isWindows() && class_exists('\\RarArchive');
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return 'rar_extension';
+    }
+
 }

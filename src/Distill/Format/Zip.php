@@ -11,6 +11,8 @@
 
 namespace Distill\Format;
 
+use Distill\Extractor\Method;
+
 class Zip implements FormatInterface
 {
 
@@ -44,6 +46,18 @@ class Zip implements FormatInterface
     public function getExtensions()
     {
         return ['zip'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUncompressionMethods()
+    {
+        return [
+            Method\UnzipCommandMethod::getName(),
+            Method\X7zCommandMethod::getName(),
+            Method\ZipArchiveMethod::getName()
+        ];
     }
 
 }

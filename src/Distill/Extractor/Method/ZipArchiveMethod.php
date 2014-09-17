@@ -51,4 +51,12 @@ class ZipArchiveMethod extends AbstractMethod
         return class_exists('\\ZipArchive');
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return 'zip_archive';
+    }
+
 }

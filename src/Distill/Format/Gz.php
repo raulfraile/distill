@@ -10,6 +10,8 @@
  */
 namespace Distill\Format;
 
+use Distill\Extractor\Method;
+
 /**
  * A GZIP file.
  *
@@ -48,6 +50,17 @@ class Gz implements FormatInterface
     public function getExtensions()
     {
         return ['gz', 'gzip'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUncompressionMethods()
+    {
+        return [
+            Method\GzipCommandMethod::getName(),
+            Method\X7zCommandMethod::getName()
+        ];
     }
 
 }

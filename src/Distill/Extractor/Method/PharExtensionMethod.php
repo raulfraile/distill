@@ -50,4 +50,12 @@ class PharExtensionMethod extends AbstractMethod
         return !$this->isWindows() && class_exists('\\Phar');
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return 'phar_extension';
+    }
+
 }

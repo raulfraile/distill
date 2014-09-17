@@ -11,6 +11,8 @@
 
 namespace Distill\Format;
 
+use Distill\Extractor\Method;
+
 /**
  * A BZIP2 file.
  *
@@ -55,6 +57,17 @@ class Bz2 implements FormatInterface
     public function getExtensions()
     {
         return ['bz2', 'bz'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUncompressionMethods()
+    {
+        return [
+            Method\Bzip2CommandMethod::getName(),
+            Method\X7zCommandMethod::getName()
+        ];
     }
 
 }

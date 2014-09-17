@@ -11,6 +11,8 @@
 
 namespace Distill\Format;
 
+use Distill\Extractor\Method;
+
 class TarBz2 implements FormatInterface
 {
 
@@ -44,6 +46,18 @@ class TarBz2 implements FormatInterface
     public function getExtensions()
     {
         return ['tar.bz2', 'tar.bz', 'tbz2', 'tbz'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUncompressionMethods()
+    {
+        return [
+            Method\TarCommandMethod::getName(),
+            Method\X7zCommandMethod::getName(),
+            Method\ArchiveTarMethod::getName()
+        ];
     }
 
 }

@@ -11,6 +11,8 @@
 
 namespace Distill\Format;
 
+use Distill\Extractor\Method;
+
 class Cab implements FormatInterface
 {
 
@@ -44,6 +46,17 @@ class Cab implements FormatInterface
     public function getExtensions()
     {
         return ['cab'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUncompressionMethods()
+    {
+        return [
+            Method\CabextractCommandMethod::getName(),
+            Method\X7zCommandMethod::getName()
+        ];
     }
 
 }

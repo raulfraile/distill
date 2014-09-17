@@ -32,4 +32,6 @@ interface MethodInterface
      * @return bool Returns TRUE if the method can be used.
      */
     public function isSupported();
+
+    public static function getName();
 }

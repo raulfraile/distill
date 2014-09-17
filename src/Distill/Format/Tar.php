@@ -11,6 +11,8 @@
 
 namespace Distill\Format;
 
+use Distill\Extractor\Method;
+
 class Tar implements FormatInterface
 {
 
@@ -44,5 +46,17 @@ class Tar implements FormatInterface
     public function getExtensions()
     {
         return ['tar'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUncompressionMethods()
+    {
+        return [
+            Method\TarCommandMethod::getName(),
+            Method\X7zCommandMethod::getName(),
+            Method\ArchiveTarMethod::getName()
+        ];
     }
 }

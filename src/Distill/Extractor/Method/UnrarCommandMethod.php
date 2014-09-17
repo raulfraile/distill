@@ -43,4 +43,12 @@ class UnrarCommandMethod extends AbstractMethod
         return !$this->isWindows() && $this->existsCommand('unrar');
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return 'unrar_command';
+    }
+
 }

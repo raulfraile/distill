@@ -44,4 +44,12 @@ class UnzipCommandMethod extends AbstractMethod
         return !$this->isWindows() && $this->existsCommand('unzip');
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return 'unzip_command';
+    }
+
 }

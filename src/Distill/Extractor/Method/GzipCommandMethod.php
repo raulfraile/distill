@@ -43,4 +43,12 @@ class GzipCommandMethod extends AbstractMethod
         return !$this->isWindows() && $this->existsCommand('gzip');
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return 'gzip_command';
+    }
+
 }

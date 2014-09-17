@@ -11,35 +11,24 @@
 
 namespace Distill\Extractor;
 
-use Distill\File;
 use Distill\Format\FormatInterface;
+use Pimple\Container;
 
 class Extractor implements ExtractorInterface
 {
 
     /**
-     * Available adapters.
-     * @var Adapter\AdapterInterface[]
+     * @var Container
      */
-    protected $adapters;
+    protected $container;
 
     /**
      * Constructor
-     * @param Adapter\AdapterInterface[] Adapters.
+     * @param Container $container
      */
-    public function __construct(array $adapters = [])
+    public function __construct(Container $container)
     {
-        $this->adapters = $adapters;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addAdapter(Adapter\AdapterInterface $adapter)
-    {
-        $this->adapters[] = $adapter;
-
-        return $this;
+        $this->container = $container;
     }
 
     /**
@@ -47,13 +36,14 @@ class Extractor implements ExtractorInterface
      */
     public function extract($file, $path, FormatInterface $format)
     {
-        $adaptersCount = count($this->adapters);
+        $methodsKeys = $format->getUncompressionMethods();
+        $methodsCount = count($methodsKeys);
         $i = 0;
         $success = false;
-
-        while (!$success && $i < $adaptersCount) {
-            if ($this->adapters[$i]->supports($format)) {
-                $success = $this->adapters[$i]->extract($file, $path, $format);
+        while (!$success && $i < $methodsCount) {
+            $method = $this->container['distill.extractor.method.' . $methodsKeys[$i]];
+            if ($method->isSupported($format)) {
+                $success = $method->extract($file, $path, $format);
             }
 
             $i++;
