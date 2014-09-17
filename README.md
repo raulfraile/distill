@@ -106,6 +106,7 @@ $preferredFile = $distill
     ->getPreferredFile();
 
 echo $preferredFile; // test.zip
+``` 
 
 ## Command line tool
 
