@@ -11,7 +11,6 @@
 
 namespace Distill\Extractor\Method;
 
-use Distill\File;
 use Symfony\Component\Process\Process;
 
 abstract class AbstractMethod implements MethodInterface
@@ -31,6 +30,7 @@ abstract class AbstractMethod implements MethodInterface
 
         $process = new Process('command -v ' . $command . ' > /dev/null');
         $process->run();
+
         return $process->isSuccessful();
     }
 

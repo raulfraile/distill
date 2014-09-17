@@ -22,6 +22,9 @@ use Distill\Format\FormatInterface;
 class ZipArchiveMethod extends AbstractMethod
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function extract($file, $target, FormatInterface $format)
     {
         if (!$this->isSupported()) {
@@ -40,6 +43,9 @@ class ZipArchiveMethod extends AbstractMethod
         return true;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSupported()
     {
         return class_exists('\\ZipArchive');

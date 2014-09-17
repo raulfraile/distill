@@ -11,7 +11,6 @@
 
 namespace Distill\Extractor\Method;
 
-use Distill\File;
 use Distill\Format\FormatInterface;
 
 /**
@@ -22,6 +21,9 @@ use Distill\Format\FormatInterface;
 class ArchiveTarMethod extends AbstractMethod
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function extract($file, $target, FormatInterface $format)
     {
         if (!$this->isSupported()) {
@@ -33,6 +35,9 @@ class ArchiveTarMethod extends AbstractMethod
         return $tar->extract($target);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSupported()
     {
         return !$this->isWindows() && class_exists('\\ArchiveTar');

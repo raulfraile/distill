@@ -16,7 +16,20 @@ use Distill\Format\FormatInterface;
 interface MethodInterface
 {
 
+    /**
+     * Extracts the compressed file into the given path.
+     * @param string          $file   Compressed file
+     * @param string          $path   Destination path
+     * @param FormatInterface $format Format
+     *
+     * @return bool Returns TRUE when successful, FALSE otherwise
+     */
     public function extract($file, $path, FormatInterface $format);
 
+    /**
+     * Checks whether the method is supported in the current system.
+     *
+     * @return bool Returns TRUE if the method can be used.
+     */
     public function isSupported();
 }

@@ -41,5 +41,10 @@ interface FormatInterface
      */
     public function getCompressionSpeedLevel();
 
+    /**
+     * Gets the list of extensions associated to the format.
+     *
+     * @return array List of extensions
+     */
     public function getExtensions();
 }

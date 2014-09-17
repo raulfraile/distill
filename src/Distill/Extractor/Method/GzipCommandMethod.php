@@ -21,6 +21,9 @@ use Distill\Format\FormatInterface;
 class GzipCommandMethod extends AbstractMethod
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function extract($file, $target, FormatInterface $format)
     {
         if (!$this->isSupported()) {
@@ -32,6 +35,9 @@ class GzipCommandMethod extends AbstractMethod
         return $this->executeCommand($command);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSupported()
     {
         return !$this->isWindows() && $this->existsCommand('gzip');

@@ -11,10 +11,9 @@
 
 namespace Distill\Extractor\Adapter;
 
-use Distill\File;
 use Distill\Format\FormatInterface;
-use Symfony\Component\Process\Process;
 use Distill\Extractor\Method\MethodInterface;
+use Symfony\Component\Process\Process;
 
 abstract class AbstractAdapter implements AdapterInterface
 {

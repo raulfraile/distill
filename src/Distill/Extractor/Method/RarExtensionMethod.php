@@ -22,6 +22,9 @@ use Distill\Format\FormatInterface;
 class RarExtensionMethod extends AbstractMethod
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function extract($file, $target, FormatInterface $format)
     {
         if (!$this->isSupported()) {
@@ -45,6 +48,9 @@ class RarExtensionMethod extends AbstractMethod
         return true;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSupported()
     {
         return !$this->isWindows() && class_exists('\\RarArchive');

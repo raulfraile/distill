@@ -51,6 +51,12 @@ class FormatGuesser implements FormatGuesserInterface
         return $format;
     }
 
+    /**
+     * Gets the extension of a file.
+     * @param $file File path
+     *
+     * @return string File extension
+     */
     protected function getExtension($file)
     {
         $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));

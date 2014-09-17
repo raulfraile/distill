@@ -20,6 +20,9 @@ use Distill\Format\FormatInterface;
 class UnrarCommandMethod extends AbstractMethod
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function extract($file, $target, FormatInterface $format)
     {
         if (!$this->isSupported()) {
@@ -32,6 +35,9 @@ class UnrarCommandMethod extends AbstractMethod
         return $this->executeCommand($command);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSupported()
     {
         return !$this->isWindows() && $this->existsCommand('unrar');

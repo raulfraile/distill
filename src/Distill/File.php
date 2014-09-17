@@ -39,6 +39,11 @@ class File
         $this->format = $format;
     }
 
+    /**
+     * Converts a file object into an string.
+     *
+     * @return string
+     */
     public function __toString()
     {
         return $this->path;

@@ -11,7 +11,6 @@
 
 namespace Distill\Extractor\Adapter;
 
-use Distill\File;
 use Distill\Format\Cab;
 use Distill\Format\FormatInterface;
 

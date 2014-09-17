@@ -22,6 +22,9 @@ use Distill\Format\FormatInterface;
 class PharDataMethod extends AbstractMethod
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function extract($file, $target, FormatInterface $format)
     {
         if (!$this->isSupported()) {
@@ -44,13 +47,24 @@ class PharDataMethod extends AbstractMethod
         return true;
     }
 
+    /**
+     * Gets the format of the phar file.
+     * @param FormatInterface $format
+     *
+     * @return int|null
+     */
     protected function getPharFormat(FormatInterface $format)
     {
         if ($format instanceof Format\Tar || $format instanceof Format\TarBz2) {
             return \Phar::TAR;
         }
+
+        return null;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSupported()
     {
         return !$this->isWindows() && class_exists('\\Phar');

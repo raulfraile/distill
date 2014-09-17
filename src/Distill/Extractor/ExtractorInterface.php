@@ -11,7 +11,6 @@
 
 namespace Distill\Extractor;
 
-use Distill\File;
 use Distill\Extractor\Adapter\AdapterInterface;
 use Distill\Format\FormatInterface;
 
@@ -20,8 +19,9 @@ interface ExtractorInterface
 
     /**
      * Extracts the compressed file into the given path.
-     * @param File   $file Compressed file
-     * @param string $path Destination path
+     * @param string          $file   Compressed file
+     * @param string          $path   Destination path
+     * @param FormatInterface $format Format
      *
      * @return bool Returns TRUE when successful, FALSE otherwise
      */

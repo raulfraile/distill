@@ -25,9 +25,9 @@ class Extractor implements ExtractorInterface
 
     /**
      * Constructor
-     *
+     * @param Adapter\AdapterInterface[] Adapters.
      */
-    public function __construct(array $adapters = array())
+    public function __construct(array $adapters = [])
     {
         $this->adapters = $adapters;
     }

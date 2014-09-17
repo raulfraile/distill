@@ -21,6 +21,9 @@ use Distill\Format\FormatInterface;
 class CabextractCommandMethod extends AbstractMethod
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function extract($file, $target, FormatInterface $format)
     {
         if (!$this->isSupported()) {
@@ -33,6 +36,9 @@ class CabextractCommandMethod extends AbstractMethod
         return $this->executeCommand($command);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSupported()
     {
         return !$this->isWindows() && $this->existsCommand('cabextract');

@@ -22,6 +22,9 @@ use Distill\Format\FormatInterface;
 class PharExtensionMethod extends AbstractMethod
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function extract($file, $target, FormatInterface $format)
     {
         if (!$this->isSupported()) {
@@ -39,6 +42,9 @@ class PharExtensionMethod extends AbstractMethod
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSupported()
     {
         return !$this->isWindows() && class_exists('\\Phar');

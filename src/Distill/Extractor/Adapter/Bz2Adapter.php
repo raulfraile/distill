@@ -11,7 +11,6 @@
 
 namespace Distill\Extractor\Adapter;
 
-use Distill\File;
 use Distill\Format\Bz2;
 use Distill\Format\FormatInterface;
 
