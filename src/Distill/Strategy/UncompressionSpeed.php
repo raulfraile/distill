@@ -21,7 +21,7 @@ use Distill\File;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class UncompressionSpeed implements StrategyInterface
+class UncompressionSpeed extends AbstractStrategy
 {
 
     /**
@@ -30,20 +30,6 @@ class UncompressionSpeed implements StrategyInterface
     public static function getName()
     {
         return 'uncompression_speed';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPreferredFile(array $files)
-    {
-        usort($files, 'self::order');
-
-        if (empty($files)) {
-            return null;
-        }
-
-        return $files[0];
     }
 
     /**

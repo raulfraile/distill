@@ -21,7 +21,7 @@ use Distill\File;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class MinimumSize implements StrategyInterface
+class MinimumSize extends AbstractStrategy
 {
 
     /**
@@ -30,20 +30,6 @@ class MinimumSize implements StrategyInterface
     public static function getName()
     {
         return 'minimum_size';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPreferredFile(array $files)
-    {
-        usort($files, 'self::order');
-
-        if (empty($files)) {
-            return null;
-        }
-
-        return $files[0];
     }
 
     /**
