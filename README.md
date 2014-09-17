@@ -45,14 +45,9 @@ php composer.phar install
 
 ```php
 use Distill\Distill;
-use Distill\File;
-use Distill\Format\Zip;
 
-$extractor = new Distill();
-
-$file = new File(__DIR__ . '/../tests/files/file_ok.zip', new Zip());
-
-$extractor->extract($file, __DIR__ . '/extract');
+$distill = new Distill();
+$distill->extract(__DIR__ . '/../tests/files/file_ok.zip', __DIR__ . '/extract');
 ```
 
 ## Formats
@@ -86,32 +81,31 @@ The library provides two strategies (more can be added):
 ```php
 use Distill\Distill;
 
-$extractor = new Distill();
+$distill = new Distill();
 
-$extractor->addFile('test.tar.gz');
-$extractor->addFile('test.zip');
-$extractor->addFile('test.tar.xz');
+$preferredFile = $distill
+    ->getChooser()
+    ->setStrategy(new \Distill\Strategy\MinimumSize())
+    ->addFile('http://get.symfony.com/Symfony_Standard_Vendors_2.5.3.zip')
+    ->addFile('http://get.symfony.com/Symfony_Standard_Vendors_2.5.3.tgz')
+    ->getPreferredFile();
 
-$preferredFile = $extractor->getPreferredFile();
-
-echo $preferredFile->getPath(); // test.tar.xz
+echo $preferredFile; // http://get.symfony.com/Symfony_Standard_Vendors_2.5.3.tgz
 ```
 
 ```php
 use Distill\Distill;
-use Distill\Strategy\UncompressionSpeed;
 
-$strategy = new UncompressionSpeed();
-$extractor = new Distill(null, $strategy);
+$distill = new Distill();
 
-$extractor->addFile('test.tar.gz');
-$extractor->addFile('test.zip');
-$extractor->addFile('test.tar.xz');
+$preferredFile = $distill
+    ->getChooser()
+    ->setStrategy(new \Distill\Strategy\UncompressionSpeed())
+    ->addFile('test.phar')
+    ->addFile('test.zip')
+    ->getPreferredFile();
 
-$preferredFile = $extractor->getPreferredFile();
-
-echo $preferredFile->getPath(); // test.tar.gz
-```
+echo $preferredFile; // test.zip
 
 ## Command line tool
 
