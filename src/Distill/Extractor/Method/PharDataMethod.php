@@ -38,7 +38,7 @@ class PharDataMethod extends AbstractMethod
             return false;
         }
 
-        if (!$archive->isFileFormat($pharFormat)) {
+        if (null === $pharFormat || !$archive->isFileFormat($pharFormat)) {
             return false;
         }
 

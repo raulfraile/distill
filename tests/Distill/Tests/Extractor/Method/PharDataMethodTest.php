@@ -71,4 +71,15 @@ class PharDataMethodTest extends AbstractMethodTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractTarFileWithWrongFormat()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $response = $this->extract('file_ok.tar', $target, new Format\Bz2());
+
+        $this->assertFalse($response);
+        $this->clearTemporaryPath();
+    }
+
 }
