@@ -55,7 +55,6 @@ class ContainerProvider implements ServiceProviderInterface
             return new Extractor([
                 $c['distill.extractor.adapter.bz2'],
                 $c['distill.extractor.adapter.cab'],
-                $c['distill.extractor.adapter.cab'],
                 $c['distill.extractor.adapter.gz'],
                 $c['distill.extractor.adapter.phar'],
                 $c['distill.extractor.adapter.rar'],
@@ -63,6 +62,7 @@ class ContainerProvider implements ServiceProviderInterface
                 $c['distill.extractor.adapter.tar_bz2'],
                 $c['distill.extractor.adapter.tar_gz'],
                 $c['distill.extractor.adapter.tar_xz'],
+                $c['distill.extractor.adapter.7z'],
                 $c['distill.extractor.adapter.xz'],
                 $c['distill.extractor.adapter.zip']
             ]);
