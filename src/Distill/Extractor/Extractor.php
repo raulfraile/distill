@@ -41,7 +41,7 @@ class Extractor implements ExtractorInterface
         $i = 0;
         $success = false;
         while (!$success && $i < $methodsCount) {
-            $method = $this->container['distill.extractor.method.' . $methodsKeys[$i]];
+            $method = $this->container['distill.method.' . $methodsKeys[$i]];
             if ($method->isSupported($format)) {
                 $success = $method->extract($file, $path, $format);
             }

@@ -104,55 +104,55 @@ class ContainerProvider implements ServiceProviderInterface
      */
     protected function registerMethods(Container $container)
     {
-        $container['distill.extractor.method.' . Method\ArchiveTarMethod::getName()] = $container->factory(function ($c) {
+        $container['distill.method.' . Method\ArchiveTarMethod::getName()] = $container->factory(function ($c) {
             return new Method\ArchiveTarMethod();
         });
 
-        $container['distill.extractor.method.' . Method\Bzip2CommandMethod::getName()] = $container->factory(function ($c) {
+        $container['distill.method.' . Method\Bzip2CommandMethod::getName()] = $container->factory(function ($c) {
             return new Method\Bzip2CommandMethod();
         });
 
-        $container['distill.extractor.method.' . Method\CabextractCommandMethod::getName()] = $container->factory(function ($c) {
+        $container['distill.method.' . Method\CabextractCommandMethod::getName()] = $container->factory(function ($c) {
             return new Method\CabextractCommandMethod();
         });
 
-        $container['distill.extractor.method.' . Method\GzipCommandMethod::getName()] = $container->factory(function ($c) {
+        $container['distill.method.' . Method\GzipCommandMethod::getName()] = $container->factory(function ($c) {
             return new Method\GzipCommandMethod();
         });
 
-        $container['distill.extractor.method.' . Method\PharExtensionMethod::getName()] = $container->factory(function ($c) {
+        $container['distill.method.' . Method\PharExtensionMethod::getName()] = $container->factory(function ($c) {
             return new Method\PharExtensionMethod();
         });
 
-        $container['distill.extractor.method.' . Method\PharDataMethod::getName()] = $container->factory(function ($c) {
+        $container['distill.method.' . Method\PharDataMethod::getName()] = $container->factory(function ($c) {
             return new Method\PharDataMethod();
         });
 
-        $container['distill.extractor.method.' . Method\RarExtensionMethod::getName()] = $container->factory(function ($c) {
+        $container['distill.method.' . Method\RarExtensionMethod::getName()] = $container->factory(function ($c) {
             return new Method\RarExtensionMethod();
         });
 
-        $container['distill.extractor.method.' . Method\TarCommandMethod::getName()] = $container->factory(function ($c) {
+        $container['distill.method.' . Method\TarCommandMethod::getName()] = $container->factory(function ($c) {
             return new Method\TarCommandMethod();
         });
 
-        $container['distill.extractor.method.' . Method\UnrarCommandMethod::getName()] = $container->factory(function ($c) {
+        $container['distill.method.' . Method\UnrarCommandMethod::getName()] = $container->factory(function ($c) {
             return new Method\UnrarCommandMethod();
         });
 
-        $container['distill.extractor.method.' . Method\UnzipCommandMethod::getName()] = $container->factory(function ($c) {
+        $container['distill.method.' . Method\UnzipCommandMethod::getName()] = $container->factory(function ($c) {
             return new Method\UnzipCommandMethod();
         });
 
-        $container['distill.extractor.method.' . Method\X7zCommandMethod::getName()] = $container->factory(function ($c) {
+        $container['distill.method.' . Method\X7zCommandMethod::getName()] = $container->factory(function ($c) {
             return new Method\X7zCommandMethod();
         });
 
-        $container['distill.extractor.method.' . Method\XzCommandMethod::getName()] = $container->factory(function ($c) {
+        $container['distill.method.' . Method\XzCommandMethod::getName()] = $container->factory(function ($c) {
             return new Method\XzCommandMethod();
         });
 
-        $container['distill.extractor.method.' . Method\ZipArchiveMethod::getName()] = $container->factory(function ($c) {
+        $container['distill.method.' . Method\ZipArchiveMethod::getName()] = $container->factory(function ($c) {
             return new Method\ZipArchiveMethod();
         });
     }
