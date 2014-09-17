@@ -8,7 +8,6 @@ use Distill\Format;
 class FileTest extends \PHPUnit_Framework_TestCase
 {
 
-
     public function testConstructorParameters()
     {
         $file = new File('test.zip', new Format\Zip());

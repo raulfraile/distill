@@ -156,10 +156,10 @@ class ContainerProvider implements ServiceProviderInterface
 
     protected function registerStrategies(Container $container)
     {
-        $container['distill.strategy.minimum_size'] = $container->factory(function ($c) {
+        $container['distill.strategy.' . Strategy\MinimumSize::getName()] = $container->factory(function ($c) {
             return new Strategy\MinimumSize();
         });
-        $container['distill.strategy.uncompression_speed'] = $container->factory(function ($c) {
+        $container['distill.strategy.' . Strategy\UncompressionSpeed::getName()] = $container->factory(function ($c) {
             return new Strategy\UncompressionSpeed();
         });
     }

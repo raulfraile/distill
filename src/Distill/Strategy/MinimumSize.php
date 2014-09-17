@@ -27,6 +27,14 @@ class MinimumSize implements StrategyInterface
     /**
      * {@inheritdoc}
      */
+    public static function getName()
+    {
+        return 'minimum_size';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getPreferredFile(array $files)
     {
         usort($files, 'self::order');

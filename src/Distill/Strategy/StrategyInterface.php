@@ -31,4 +31,12 @@ interface StrategyInterface
      */
     public function getPreferredFile(array $files);
 
+    /**
+     * Gets the strategy key name.
+     * @static
+     *
+     * @return mixed
+     */
+    public static function getName();
+
 }
