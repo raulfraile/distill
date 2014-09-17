@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Extractor\Method;
+namespace Distill\Method;
 
 use Distill\File;
 use Distill\Format\FormatInterface;
@@ -19,7 +19,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class X7zCommandMethod extends AbstractMethod
+class ZipArchiveMethod extends AbstractMethod
 {
 
     /**
@@ -31,10 +31,16 @@ class X7zCommandMethod extends AbstractMethod
             return false;
         }
 
-        @mkdir($target);
-        $command = '7z e -y '.escapeshellarg($file).' -o'.escapeshellarg($target);
+        $archive = new \ZipArchive();
 
-        return $this->executeCommand($command);
+        if (true !== $archive->open($file)) {
+            return false;
+        }
+
+        $archive->extractTo($target);
+        $archive->close();
+
+        return true;
     }
 
     /**
@@ -42,7 +48,7 @@ class X7zCommandMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('7z');
+        return class_exists('\\ZipArchive');
     }
 
     /**
@@ -50,7 +56,7 @@ class X7zCommandMethod extends AbstractMethod
      */
     public static function getName()
     {
-        return '7z_command';
+        return 'zip_archive';
     }
 
 }

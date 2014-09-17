@@ -1,48 +1,52 @@
 <?php
 
-namespace Distill\Tests;
+namespace Distill\Tests\Method;
 
-use Distill\Extractor\Method;
+use Distill\Method;
 use Distill\Format;
 
-class RarExtensionMethodTest extends AbstractMethodTest
+class ArchiveTarMethodTest extends AbstractMethodTest
 {
 
     public function setUp()
     {
-        $this->method = new Method\RarExtensionMethod();
+        if (!class_exists('\\ArchiveTar')) {
+            $this->markTestSkipped('Archive_Tar not installed');
+        }
+
+        $this->method = new Method\ArchiveTarMethod();
         parent::setUp();
     }
 
-    public function testExtractCorrectRarFile()
+    public function testExtractCorrectTarFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.rar', $target, new Format\Rar());
+        $response = $this->extract('file_ok.tar', $target, new Format\Tar());
 
         $this->assertTrue($response);
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
         $this->clearTemporaryPath();
     }
 
-    public function testExtractFakeRarFile()
+    public function testExtractFakeTarFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.rar', $target, new Format\Rar());
+        $response = $this->extract('file_fake.tar', $target, new Format\Tar());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 
-    public function testExtractNoRarFile()
+    public function testExtractNoTarFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.phar', $target, new Format\Phar());
+        $response = $this->extract('file_ok.cab', $target, new Format\Cab());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();

@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Extractor\Method;
+namespace Distill\Method;
 
+use Distill\File;
 use Distill\Format\FormatInterface;
 
 /**
@@ -18,7 +19,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class ArchiveTarMethod extends AbstractMethod
+class XzCommandMethod extends AbstractMethod
 {
 
     /**
@@ -30,9 +31,9 @@ class ArchiveTarMethod extends AbstractMethod
             return false;
         }
 
-        $tar = new \Archive_Tar($file, true);
+        $command = sprintf("xz -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
 
-        return $tar->extract($target);
+        return $this->executeCommand($command);
     }
 
     /**
@@ -40,7 +41,7 @@ class ArchiveTarMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && class_exists('\\ArchiveTar');
+        return !$this->isWindows() && $this->existsCommand('xz');
     }
 
     /**
@@ -48,7 +49,7 @@ class ArchiveTarMethod extends AbstractMethod
      */
     public static function getName()
     {
-        return 'archive_tar';
+        return 'xz_command';
     }
 
 }

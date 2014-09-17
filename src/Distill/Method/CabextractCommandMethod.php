@@ -9,9 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Extractor\Method;
+namespace Distill\Method;
 
-use Distill\File;
 use Distill\Format\FormatInterface;
 
 /**
@@ -19,7 +18,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class UnzipCommandMethod extends AbstractMethod
+class CabextractCommandMethod extends AbstractMethod
 {
 
     /**
@@ -31,7 +30,8 @@ class UnzipCommandMethod extends AbstractMethod
             return false;
         }
 
-        $command = 'unzip '.escapeshellarg($file).' -d '.escapeshellarg($target);
+        @mkdir($target);
+        $command = 'cabextract -d '.escapeshellarg($target).' '.escapeshellarg($file);
 
         return $this->executeCommand($command);
     }
@@ -41,7 +41,7 @@ class UnzipCommandMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('unzip');
+        return !$this->isWindows() && $this->existsCommand('cabextract');
     }
 
     /**
@@ -49,7 +49,7 @@ class UnzipCommandMethod extends AbstractMethod
      */
     public static function getName()
     {
-        return 'unzip_command';
+        return 'cabextract_command';
     }
 
 }

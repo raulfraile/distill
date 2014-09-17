@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Extractor\Method;
+namespace Distill\Method;
 
-use Distill\Format;
+use Distill\File;
 use Distill\Format\FormatInterface;
 
 /**
@@ -19,7 +19,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class PharDataMethod extends AbstractMethod
+class PharExtensionMethod extends AbstractMethod
 {
 
     /**
@@ -32,34 +32,14 @@ class PharDataMethod extends AbstractMethod
         }
 
         try {
-            $pharFormat = $this->getPharFormat($format);
-            $archive = new \PharData($file, null, null, $pharFormat);
-        } catch (\UnexpectedValueException $e) {
+            $phar = new \Phar($file);
+            @mkdir($target);
+            $phar->extractTo($target, null, true);
+
+            return true;
+        } catch (\Exception $e) {
             return false;
         }
-
-        if (null === $pharFormat || !$archive->isFileFormat($pharFormat)) {
-            return false;
-        }
-
-        $archive->extractTo($target, null, true);
-
-        return true;
-    }
-
-    /**
-     * Gets the format of the phar file.
-     * @param FormatInterface $format
-     *
-     * @return int|null
-     */
-    protected function getPharFormat(FormatInterface $format)
-    {
-        if ($format instanceof Format\Tar || $format instanceof Format\TarBz2) {
-            return \Phar::TAR;
-        }
-
-        return null;
     }
 
     /**
@@ -75,7 +55,7 @@ class PharDataMethod extends AbstractMethod
      */
     public static function getName()
     {
-        return 'phar_data';
+        return 'phar_extension';
     }
 
 }

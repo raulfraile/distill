@@ -11,7 +11,7 @@
 
 namespace Distill;
 
-use Distill\Extractor\Method;
+use Distill\Method;
 use Distill\Extractor\Extractor;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -26,7 +26,6 @@ class ContainerProvider implements ServiceProviderInterface
     {
         $this->registerFormats($container);
         $this->registerMethods($container);
-
         $this->registerStrategies($container);
 
         $container['distill.format_guesser'] = $container->factory(function ($c) {
@@ -55,6 +54,10 @@ class ContainerProvider implements ServiceProviderInterface
         });
     }
 
+    /**
+     * Registers the formats.
+     * @param Container $container Container
+     */
     protected function registerFormats(Container $container)
     {
         $container['distill.format.bz2'] = $container->factory(function ($c) {
@@ -96,7 +99,7 @@ class ContainerProvider implements ServiceProviderInterface
     }
 
     /**
-     * Register methods.
+     * Register the uncompression methods.
      * @param Container $container
      */
     protected function registerMethods(Container $container)

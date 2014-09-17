@@ -4,10 +4,10 @@ namespace Distill\Tests\Strategy;
 
 use Distill\File;
 use Distill\Format;
-use Distill\FormatGuesser;
 use Distill\Strategy\UncompressionSpeed;
+use Distill\Tests\TestCase;
 
-class UncompressionSpeedTest extends \PHPUnit_Framework_TestCase
+class UncompressionSpeedTest extends TestCase
 {
 
     /** @var UncompressionSpeed $strategy  */

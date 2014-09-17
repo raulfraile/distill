@@ -3,8 +3,9 @@
 namespace Distill\Tests\Format;
 
 use Distill\Format\FormatInterface;
+use Distill\Tests\TestCase;
 
-abstract class AbstractFormatTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractFormatTest extends TestCase
 {
 
     /** @var FormatInterface $format */

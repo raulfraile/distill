@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Extractor\Method;
+namespace Distill\Method;
 
 use Distill\Format\FormatInterface;
 
@@ -18,7 +18,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class GzipCommandMethod extends AbstractMethod
+class Bzip2CommandMethod extends AbstractMethod
 {
 
     /**
@@ -30,7 +30,7 @@ class GzipCommandMethod extends AbstractMethod
             return false;
         }
 
-        $command = sprintf("gzip -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
+        $command = sprintf("bzip2 -k -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
 
         return $this->executeCommand($command);
     }
@@ -40,7 +40,7 @@ class GzipCommandMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('gzip');
+        return !$this->isWindows() && $this->existsCommand('bzip2');
     }
 
     /**
@@ -48,7 +48,7 @@ class GzipCommandMethod extends AbstractMethod
      */
     public static function getName()
     {
-        return 'gzip_command';
+        return 'bzip2_command';
     }
 
 }

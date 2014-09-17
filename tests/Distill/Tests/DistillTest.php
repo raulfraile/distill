@@ -2,13 +2,8 @@
 
 namespace Distill\Tests;
 
-use Distill\Chooser;
 use Distill\Distill;
 use Distill\Format;
-use Distill\FormatGuesser;
-use Distill\Strategy\MinimumSize;
-use Distill\Strategy\UncompressionSpeed;
-
 use \Mockery as m;
 
 class DistillTest extends TestCase

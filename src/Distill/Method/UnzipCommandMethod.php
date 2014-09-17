@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Extractor\Method;
+namespace Distill\Method;
 
 use Distill\File;
 use Distill\Format\FormatInterface;
@@ -19,7 +19,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class RarExtensionMethod extends AbstractMethod
+class UnzipCommandMethod extends AbstractMethod
 {
 
     /**
@@ -31,21 +31,9 @@ class RarExtensionMethod extends AbstractMethod
             return false;
         }
 
-        $rar = @\RarArchive::open($file);
+        $command = 'unzip '.escapeshellarg($file).' -d '.escapeshellarg($target);
 
-        if (false === $rar) {
-            return false;
-        }
-
-        @mkdir($target);
-
-        foreach ($rar->getEntries() as $entry) {
-            $entry->extract($target);
-        }
-
-        $rar->close();
-
-        return true;
+        return $this->executeCommand($command);
     }
 
     /**
@@ -53,7 +41,7 @@ class RarExtensionMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && class_exists('\\RarArchive');
+        return !$this->isWindows() && $this->existsCommand('unzip');
     }
 
     /**
@@ -61,7 +49,7 @@ class RarExtensionMethod extends AbstractMethod
      */
     public static function getName()
     {
-        return 'rar_extension';
+        return 'unzip_command';
     }
 
 }

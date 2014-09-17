@@ -1,16 +1,16 @@
 <?php
 
-namespace Distill\Tests;
+namespace Distill\Tests\Method;
 
-use Distill\Extractor\Method;
+use Distill\Method;
 use Distill\Format;
 
-class TarCommandMethodTest extends AbstractMethodTest
+class PharDataMethodTest extends AbstractMethodTest
 {
 
     public function setUp()
     {
-        $this->method = new Method\TarCommandMethod();
+        $this->method = new Method\PharDataMethod();
         parent::setUp();
     }
 
@@ -49,7 +49,7 @@ class TarCommandMethodTest extends AbstractMethodTest
         $this->clearTemporaryPath();
     }
 
-    public function testExtractFakeTarBz2File()
+    public function testExtractFakeBz2File()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
@@ -60,58 +60,23 @@ class TarCommandMethodTest extends AbstractMethodTest
         $this->clearTemporaryPath();
     }
 
-    public function testExtractCorrectTarGzFile()
+    public function testExtractNoPharDataFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.tar.gz', $target, new Format\TarGz());
-
-        $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
-        $this->clearTemporaryPath();
-    }
-
-    public function testExtractFakeTarGzFile()
-    {
-        $target = $this->getTemporaryPath();
-        $this->clearTemporaryPath();
-
-        $response = $this->extract('file_fake.tar.gz', $target, new Format\TarGz());
+        $response = $this->extract('file_ok.cab', $target, new Format\Cab());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 
-    public function testExtractCorrectTarXzFile()
+    public function testExtractTarFileWithWrongFormat()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.tar.xz', $target, new Format\TarXz());
-
-        $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
-        $this->clearTemporaryPath();
-    }
-
-    public function testExtractFakeTarXzFile()
-    {
-        $target = $this->getTemporaryPath();
-        $this->clearTemporaryPath();
-
-        $response = $this->extract('file_fake.tar.xz', $target, new Format\TarXz());
-
-        $this->assertFalse($response);
-        $this->clearTemporaryPath();
-    }
-
-    public function testExtractNoTarFile()
-    {
-        $target = $this->getTemporaryPath();
-        $this->clearTemporaryPath();
-
-        $response = $this->extract('file_ok.phar', $target, new Format\Phar());
+        $response = $this->extract('file_ok.tar', $target, new Format\Bz2());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();

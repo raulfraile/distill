@@ -1,6 +1,6 @@
 <?php
 
-namespace Distill\Tests\Format;
+namespace Distill\Tests;
 
 use Distill\Format;
 use Distill\FormatGuesser;

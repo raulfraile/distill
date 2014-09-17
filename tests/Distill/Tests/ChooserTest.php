@@ -1,6 +1,6 @@
 <?php
 
-namespace Distill\Tests\Format;
+namespace Distill\Tests;
 
 use Distill\Chooser;
 use Distill\Format;
@@ -9,7 +9,7 @@ use Distill\Strategy\MinimumSize;
 use Distill\Strategy\UncompressionSpeed;
 use \Mockery as m;
 
-class ChooserTest extends \PHPUnit_Framework_TestCase
+class ChooserTest extends TestCase
 {
 
     /**

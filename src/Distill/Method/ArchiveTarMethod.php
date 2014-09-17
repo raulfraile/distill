@@ -9,7 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Extractor\Method;
+namespace Distill\Method;
+
 use Distill\Format\FormatInterface;
 
 /**
@@ -17,7 +18,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class UnrarCommandMethod extends AbstractMethod
+class ArchiveTarMethod extends AbstractMethod
 {
 
     /**
@@ -29,10 +30,9 @@ class UnrarCommandMethod extends AbstractMethod
             return false;
         }
 
-        @mkdir($target);
-        $command = 'unrar e '.escapeshellarg($file).' '.escapeshellarg($target);
+        $tar = new \Archive_Tar($file, true);
 
-        return $this->executeCommand($command);
+        return $tar->extract($target);
     }
 
     /**
@@ -40,7 +40,7 @@ class UnrarCommandMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('unrar');
+        return !$this->isWindows() && class_exists('\\ArchiveTar');
     }
 
     /**
@@ -48,7 +48,7 @@ class UnrarCommandMethod extends AbstractMethod
      */
     public static function getName()
     {
-        return 'unrar_command';
+        return 'archive_tar';
     }
 
 }

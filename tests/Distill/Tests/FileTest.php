@@ -1,11 +1,11 @@
 <?php
 
-namespace Distill\Tests\Format;
+namespace Distill\Tests;
 
 use Distill\File;
 use Distill\Format;
 
-class FileTest extends \PHPUnit_Framework_TestCase
+class FileTest extends TestCase
 {
 
     public function testConstructorParameters()

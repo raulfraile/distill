@@ -4,10 +4,10 @@ namespace Distill\Tests\Strategy;
 
 use Distill\File;
 use Distill\Format;
-use Distill\FormatGuesser;
 use Distill\Strategy\MinimumSize;
+use Distill\Tests\TestCase;
 
-class MinimumSizeTest extends \PHPUnit_Framework_TestCase
+class MinimumSizeTest extends TestCase
 {
 
 

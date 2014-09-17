@@ -1,8 +1,8 @@
 <?php
 
-namespace Distill\Tests;
+namespace Distill\Tests\Method;
 
-use Distill\Extractor\Method;
+use Distill\Method;
 use Distill\Format;
 
 class CabextractCommandMethodTest extends AbstractMethodTest

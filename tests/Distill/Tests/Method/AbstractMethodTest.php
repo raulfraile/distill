@@ -1,19 +1,16 @@
 <?php
 
-namespace Distill\Tests;
+namespace Distill\Tests\Method;
 
 use Distill\Format\FormatInterface;
-use Symfony\Component\Finder\Finder;
-
-use Distill\Extractor\Method\MethodInterface;
+use Distill\Method\MethodInterface;
+use Distill\Tests\TestCase;
 
 abstract class AbstractMethodTest extends TestCase
 {
 
     /** @var MethodInterface $method */
     protected $method;
-
-
 
     protected function extract($file, $target, FormatInterface $format)
     {

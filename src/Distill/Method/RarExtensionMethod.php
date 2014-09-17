@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Extractor\Method;
+namespace Distill\Method;
 
 use Distill\File;
 use Distill\Format\FormatInterface;
@@ -19,7 +19,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class ZipArchiveMethod extends AbstractMethod
+class RarExtensionMethod extends AbstractMethod
 {
 
     /**
@@ -31,14 +31,19 @@ class ZipArchiveMethod extends AbstractMethod
             return false;
         }
 
-        $archive = new \ZipArchive();
+        $rar = @\RarArchive::open($file);
 
-        if (true !== $archive->open($file)) {
+        if (false === $rar) {
             return false;
         }
 
-        $archive->extractTo($target);
-        $archive->close();
+        @mkdir($target);
+
+        foreach ($rar->getEntries() as $entry) {
+            $entry->extract($target);
+        }
+
+        $rar->close();
 
         return true;
     }
@@ -48,7 +53,7 @@ class ZipArchiveMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return class_exists('\\ZipArchive');
+        return !$this->isWindows() && class_exists('\\RarArchive');
     }
 
     /**
@@ -56,7 +61,7 @@ class ZipArchiveMethod extends AbstractMethod
      */
     public static function getName()
     {
-        return 'zip_archive';
+        return 'rar_extension';
     }
 
 }

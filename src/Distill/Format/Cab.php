@@ -11,7 +11,7 @@
 
 namespace Distill\Format;
 
-use Distill\Extractor\Method;
+use Distill\Method;
 
 class Cab implements FormatInterface
 {

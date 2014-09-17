@@ -9,9 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Extractor\Method;
+namespace Distill\Method;
 
-use Distill\File;
 use Distill\Format\FormatInterface;
 
 /**
@@ -19,7 +18,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class Bzip2CommandMethod extends AbstractMethod
+class UnrarCommandMethod extends AbstractMethod
 {
 
     /**
@@ -31,7 +30,8 @@ class Bzip2CommandMethod extends AbstractMethod
             return false;
         }
 
-        $command = sprintf("bzip2 -k -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
+        @mkdir($target);
+        $command = 'unrar e '.escapeshellarg($file).' '.escapeshellarg($target);
 
         return $this->executeCommand($command);
     }
@@ -41,7 +41,7 @@ class Bzip2CommandMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('bzip2');
+        return !$this->isWindows() && $this->existsCommand('unrar');
     }
 
     /**
@@ -49,7 +49,7 @@ class Bzip2CommandMethod extends AbstractMethod
      */
     public static function getName()
     {
-        return 'bzip2_command';
+        return 'unrar_command';
     }
 
 }

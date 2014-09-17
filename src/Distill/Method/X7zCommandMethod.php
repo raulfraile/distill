@@ -9,18 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Extractor\Method;
+namespace Distill\Method;
+
+use Distill\File;
 use Distill\Format\FormatInterface;
-use Distill\Format\TarBz2;
-use Distill\Format\TarGz;
-use Distill\Format\TarXz;
 
 /**
  * Extracts files from bzip2 archives.
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class TarCommandMethod extends AbstractMethod
+class X7zCommandMethod extends AbstractMethod
 {
 
     /**
@@ -33,18 +32,7 @@ class TarCommandMethod extends AbstractMethod
         }
 
         @mkdir($target);
-
-        $tarOptions = ['x', 'v', 'f'];
-
-        if ($format instanceof TarBz2) {
-            array_unshift($tarOptions, 'j');
-        } elseif ($format instanceof TarGz) {
-            array_unshift($tarOptions, 'z');
-        } elseif ($format instanceof TarXz) {
-            array_unshift($tarOptions, 'J');
-        }
-
-        $command = sprintf("tar -%s %s -C %s", implode('', $tarOptions), escapeshellarg($file), escapeshellarg($target));
+        $command = '7z e -y '.escapeshellarg($file).' -o'.escapeshellarg($target);
 
         return $this->executeCommand($command);
     }
@@ -54,7 +42,7 @@ class TarCommandMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('tar');
+        return !$this->isWindows() && $this->existsCommand('7z');
     }
 
     /**
@@ -62,7 +50,7 @@ class TarCommandMethod extends AbstractMethod
      */
     public static function getName()
     {
-        return 'tar_command';
+        return '7z_command';
     }
 
 }

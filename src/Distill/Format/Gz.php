@@ -10,7 +10,7 @@
  */
 namespace Distill\Format;
 
-use Distill\Extractor\Method;
+use Distill\Method;
 
 /**
  * A GZIP file.

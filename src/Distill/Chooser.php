@@ -95,10 +95,11 @@ class Chooser
 
     /**
      * Adds a new file.
-     * @param string               $filename File name
-     * @param FormatInterface|null $format   Format
+     * @param string $filename File name
+     * @param FormatInterface|null $format Format
      *
-     * @return Distill
+     * @throws Exception\FormatGuesserRequiredException
+     * @return Chooser
      */
     public function addFile($filename, FormatInterface $format = null)
     {
@@ -127,6 +128,7 @@ class Chooser
 
     /**
      * Gets the preferred file based on the chosen strategy.
+     * @throws Exception\StrategyRequiredException
      *
      * @return string Preferred file
      */
