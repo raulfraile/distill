@@ -50,6 +50,9 @@ class Distill
      */
     protected $container;
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->container = new Container();
