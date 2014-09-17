@@ -16,8 +16,8 @@ class FormatGuesserRequiredException extends \Exception
 
     /**
      * Constructor
-     * @param int        $code      Exception code
-     * @param \Exception $previous  Previous exception
+     * @param int        $code     Exception code
+     * @param \Exception $previous Previous exception
      */
     public function __construct($code = 0, \Exception $previous = null)
     {

@@ -33,5 +33,11 @@ interface MethodInterface
      */
     public function isSupported();
 
+    /**
+     * Gets the method key name.
+     * @static
+     *
+     * @return string Method name
+     */
     public static function getName();
 }

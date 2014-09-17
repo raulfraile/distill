@@ -35,7 +35,7 @@ interface StrategyInterface
      * Gets the strategy key name.
      * @static
      *
-     * @return mixed
+     * @return string Method name
      */
     public static function getName();
 
