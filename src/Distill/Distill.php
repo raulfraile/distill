@@ -76,6 +76,50 @@ class Distill
     }
 
     /**
+     * Extracts the compressed file and copies the files from the root directory.
+     * @param string                 $file   Compressed file
+     * @param string                 $path   Destination path
+     * @param Format\FormatInterface $format
+     *
+     * @return bool Returns TRUE when successful, FALSE otherwise
+     */
+    public function extractWithoutRootDirectory($file, $path, FormatInterface $format = null)
+    {
+        // extract to a temporary place
+        $tempDirectory = sys_get_temp_dir() . uniqid(time());
+        $this->extract($file, $tempDirectory, $format);
+
+        // move directory
+        $iterator = new \FilesystemIterator($tempDirectory, \FilesystemIterator::SKIP_DOTS);
+
+        $hasSingleRootDirectory = false;
+        $singleRootDirectoryName = null;
+
+        while ($iterator->valid()) {
+            $uncompressedResource = $iterator->current();
+
+            $iterator->next();
+
+            if (false === $hasSingleRootDirectory && true === $uncompressedResource->isDir()) {
+                $hasSingleRootDirectory = true;
+                $singleRootDirectoryName = $uncompressedResource->getRealPath();
+
+                continue;
+            }
+
+            $hasSingleRootDirectory = false;
+        }
+
+        if (true === $hasSingleRootDirectory) {
+            return rename($singleRootDirectoryName, $path);
+        }
+
+        // it is not a compressed file with a single directory
+
+        return false;
+    }
+
+    /**
      * Gets the file chooser.
      *
      * @return Chooser

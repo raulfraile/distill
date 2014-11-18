@@ -13,6 +13,12 @@ echo '3.txt file' > 3.txt
 rm -f ../file_ok.zip
 zip -j -T -r ../file_ok.zip *.txt
 
+# zip file (single dir)
+cd ..
+rm -f file_ok_dir.zip
+zip -T file_ok_dir.zip uncompressed/*
+cd uncompressed
+
 # zip encrypted file
 rm -f ../file_encrypted_ok.zip
 zip -j -r -e -P 123456 ../file_encrypted_ok.zip *.txt
