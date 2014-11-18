@@ -11,8 +11,6 @@
 
 namespace Distill\Strategy;
 
-use Distill\File;
-
 /**
  * Random strategy.
  *

@@ -123,6 +123,8 @@ class Distill
     /**
      * Recursively removes a directory.
      * @param string $path Directory path.
+     *
+     * @return bool
      */
     protected function rrmdir($path) {
 
