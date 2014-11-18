@@ -32,7 +32,9 @@ class Bzip2CommandMethod extends AbstractMethod
 
         $command = sprintf("bzip2 -k -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
 
-        return $this->executeCommand($command);
+        $exitCode = $this->executeCommand($command);
+
+        return $this->isExitCodeSuccessful($exitCode);
     }
 
     /**

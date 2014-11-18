@@ -45,7 +45,7 @@ abstract class AbstractMethod implements MethodInterface
         $process = new Process($command);
         $process->run();
 
-        return $process->isSuccessful();
+        return $process->getExitCode();
     }
 
     /**
@@ -56,6 +56,11 @@ abstract class AbstractMethod implements MethodInterface
     protected function isWindows()
     {
         return defined('PHP_WINDOWS_VERSION_BUILD');
+    }
+
+    protected function isExitCodeSuccessful($code)
+    {
+        return 0 === $code;
     }
 
 }

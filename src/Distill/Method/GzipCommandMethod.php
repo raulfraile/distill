@@ -32,7 +32,9 @@ class GzipCommandMethod extends AbstractMethod
 
         $command = sprintf("gzip -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
 
-        return $this->executeCommand($command);
+        $exitCode = $this->executeCommand($command);
+
+        return $this->isExitCodeSuccessful($exitCode);
     }
 
     /**

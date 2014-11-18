@@ -33,7 +33,9 @@ class XzCommandMethod extends AbstractMethod
 
         $command = sprintf("xz -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
 
-        return $this->executeCommand($command);
+        $exitCode = $this->executeCommand($command);
+
+        return $this->isExitCodeSuccessful($exitCode);
     }
 
     /**

@@ -11,6 +11,7 @@
 
 namespace Distill\Method;
 
+use Distill\Exception\CorruptFileException;
 use Distill\File;
 use Distill\Format\FormatInterface;
 
@@ -21,6 +22,8 @@ use Distill\Format\FormatInterface;
  */
 class UnzipCommandMethod extends AbstractMethod
 {
+
+    const EXIT_CODE_SEVERE_ERROR_ZIPFILE = 3;
 
     /**
      * {@inheritdoc}
@@ -33,7 +36,13 @@ class UnzipCommandMethod extends AbstractMethod
 
         $command = 'unzip '.escapeshellarg($file).' -d '.escapeshellarg($target);
 
-        return $this->executeCommand($command);
+        $exitCode = $this->executeCommand($command);
+
+        if (self::EXIT_CODE_SEVERE_ERROR_ZIPFILE === $exitCode) {
+            throw new CorruptFileException($file);
+        }
+
+        return $this->isExitCodeSuccessful($exitCode);
     }
 
     /**

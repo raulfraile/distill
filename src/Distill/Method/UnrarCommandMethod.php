@@ -33,7 +33,9 @@ class UnrarCommandMethod extends AbstractMethod
         @mkdir($target);
         $command = 'unrar e '.escapeshellarg($file).' '.escapeshellarg($target);
 
-        return $this->executeCommand($command);
+        $exitCode = $this->executeCommand($command);
+
+        return $this->isExitCodeSuccessful($exitCode);
     }
 
     /**

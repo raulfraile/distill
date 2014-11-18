@@ -33,7 +33,9 @@ class CabextractCommandMethod extends AbstractMethod
         @mkdir($target);
         $command = 'cabextract -d '.escapeshellarg($target).' '.escapeshellarg($file);
 
-        return $this->executeCommand($command);
+        $exitCode = $this->executeCommand($command);
+
+        return $this->isExitCodeSuccessful($exitCode);
     }
 
     /**

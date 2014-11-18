@@ -47,7 +47,9 @@ class TarCommandMethod extends AbstractMethod
 
         $command = sprintf("tar -%s %s -C %s", implode('', $tarOptions), escapeshellarg($file), escapeshellarg($target));
 
-        return $this->executeCommand($command);
+        $exitCode = $this->executeCommand($command);
+
+        return $this->isExitCodeSuccessful($exitCode);
     }
 
     /**

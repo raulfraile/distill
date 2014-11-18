@@ -34,7 +34,9 @@ class X7zCommandMethod extends AbstractMethod
         @mkdir($target);
         $command = '7z e -y '.escapeshellarg($file).' -o'.escapeshellarg($target);
 
-        return $this->executeCommand($command);
+        $exitCode = $this->executeCommand($command);
+
+        return $this->isExitCodeSuccessful($exitCode);
     }
 
     /**
