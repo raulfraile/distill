@@ -138,7 +138,8 @@ class Distill
                 $this->rrmdir($file->getRealPath());
             }
         }
-        rmdir($path);
+
+        return rmdir($path);
     }
 
     /**
