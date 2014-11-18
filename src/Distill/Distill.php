@@ -86,7 +86,7 @@ class Distill
     public function extractWithoutRootDirectory($file, $path, FormatInterface $format = null)
     {
         // extract to a temporary place
-        $tempDirectory = sys_get_temp_dir() . uniqid(time());
+        $tempDirectory = sys_get_temp_dir() . uniqid(time()) . DIRECTORY_SEPARATOR;
         $this->extract($file, $tempDirectory, $format);
 
         // move directory
