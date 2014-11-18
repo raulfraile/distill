@@ -111,12 +111,34 @@ class Distill
         }
 
         if (true === $hasSingleRootDirectory) {
+            $this->rrmdir($path);
             return rename($singleRootDirectoryName, $path);
         }
 
         // it is not a compressed file with a single directory
 
         return false;
+    }
+
+    /**
+     * Recursively removes a directory.
+     * @param string $path Directory path.
+     */
+    protected function rrmdir($path) {
+
+        if (!is_dir($path)) {
+            return true;
+        }
+
+        $iterator = new \DirectoryIterator($path);
+        foreach($iterator as $file) {
+            if($file->isFile()) {
+                unlink($file->getRealPath());
+            } else if(!$file->isDot() && $file->isDir()) {
+                $this->rrmdir($file->getRealPath());
+            }
+        }
+        rmdir($path);
     }
 
     /**

@@ -179,5 +179,38 @@ class DistillTest extends TestCase
         $this->clearTemporaryPath();
     }
 
+    public function testCanExtractWithoutRootDirectorySingleDirectoryZipFiles()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
 
+        $response = $this->distill->extractWithoutRootDirectory($this->filesPath . 'file_ok_dir.zip', $target, new Format\Zip());
+
+        $this->assertTrue($response);
+        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->clearTemporaryPath();
+    }
+
+    public function testCanExtractWithoutRootDirectorySingleDirectoryTarGzFiles()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $response = $this->distill->extractWithoutRootDirectory($this->filesPath . 'file_ok_dir.tar.gz', $target, new Format\TarGz());
+
+        $this->assertTrue($response);
+        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->clearTemporaryPath();
+    }
+
+    public function testCannotExtractWithoutRootDirectoryNoDirectoryZipFiles()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $response = $this->distill->extractWithoutRootDirectory($this->filesPath . 'file_ok.zip', $target, new Format\Zip());
+
+        $this->assertFalse($response);
+        $this->clearTemporaryPath();
+    }
 }

@@ -16,7 +16,7 @@ zip -j -T -r ../file_ok.zip *.txt
 # zip file (single dir)
 cd ..
 rm -f file_ok_dir.zip
-zip -T file_ok_dir.zip uncompressed/*
+zip -T file_ok_dir.zip uncompressed/*.txt
 cd uncompressed
 
 # zip encrypted file
@@ -30,6 +30,12 @@ tar -cvf ../file_ok.tar *.txt
 # tar.gz file
 rm -f ../file_ok.tar.gz
 tar -zcvf ../file_ok.tar.gz *.txt
+
+# tar.gz file (single dir)
+cd ..
+rm -f ../file_ok_dir.tar.gz
+tar -zcvf file_ok_dir.tar.gz uncompressed/*.txt
+cd uncompressed
 
 # tar.bz2 file
 rm -f ../file_ok.tar.bz2
