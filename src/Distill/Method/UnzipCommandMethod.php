@@ -23,6 +23,8 @@ use Distill\Format\FormatInterface;
 class UnzipCommandMethod extends AbstractMethod
 {
 
+    const EXIT_CODE_WARNING_ZIPFILE = 1;
+    const EXIT_CODE_GENERIC_ERROR_ZIPFILE = 2;
     const EXIT_CODE_SEVERE_ERROR_ZIPFILE = 3;
 
     /**
@@ -38,8 +40,12 @@ class UnzipCommandMethod extends AbstractMethod
 
         $exitCode = $this->executeCommand($command);
 
-        if (self::EXIT_CODE_SEVERE_ERROR_ZIPFILE === $exitCode) {
-            throw new CorruptFileException($file);
+        switch ($exitCode) {
+            case self::EXIT_CODE_WARNING_ZIPFILE:
+            case self::EXIT_CODE_GENERIC_ERROR_ZIPFILE:
+                throw new CorruptFileException($file, CorruptFileException::SEVERITY_LOW);
+            case self::EXIT_CODE_SEVERE_ERROR_ZIPFILE:
+                throw new CorruptFileException($file, CorruptFileException::SEVERITY_HIGH);
         }
 
         return $this->isExitCodeSuccessful($exitCode);

@@ -14,6 +14,9 @@ namespace Distill\Exception;
 class CorruptFileException extends \Exception
 {
 
+    const SEVERITY_LOW = 0;
+    const SEVERITY_HIGH = 1;
+
     /**
      * Filename.
      * @var string
@@ -21,16 +24,47 @@ class CorruptFileException extends \Exception
     protected $filename;
 
     /**
+     * Severity of the corrupt file.
+     * @var int
+     */
+    protected $severity;
+
+    /**
      * Constructor
      * @param string     $filename  Filename
      * @param int        $code      Exception code
      * @param \Exception $previous  Previous exception
      */
-    public function __construct($filename, $code = 0, \Exception $previous = null)
+    public function __construct($filename, $severity = self::SEVERITY_HIGH, $code = 0, \Exception $previous = null)
     {
+        $this->filename = $filename;
+        $this->severity = $severity;
+
         $message = sprintf('File "%s" is not valid', $filename);
 
         parent::__construct($message, $code, $previous);
     }
+
+    /**
+     * Gets the corrupt filename.
+     *
+     * @return string Filename.
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * Gets the severity of the error.
+     *
+     * @return int
+     */
+    public function getSeverity()
+    {
+        return $this->severity;
+    }
+
+
 
 }
