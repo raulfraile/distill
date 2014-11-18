@@ -11,6 +11,12 @@
 
 namespace Distill\Exception;
 
+/**
+ * Corrupt file exception
+ *
+ * - SEVERITY_LOW: Even though there were errors, processing may have completed successfully.
+ * - SEVERITY_HIGH: Processing probably failed immediately.
+ */
 class CorruptFileException extends \Exception
 {
 
@@ -64,7 +70,5 @@ class CorruptFileException extends \Exception
     {
         return $this->severity;
     }
-
-
 
 }
