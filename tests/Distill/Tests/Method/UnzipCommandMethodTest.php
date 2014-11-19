@@ -50,7 +50,7 @@ class UnzipCommandMethodTest extends AbstractMethodTest
 
     public function testExtractCorruptZipFile()
     {
-        $this->setExpectedException('Distill\\Exception\\CorruptFileException');
+        $this->setExpectedException('Distill\\Exception\\CorruptedFileException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();

@@ -11,7 +11,7 @@
 
 namespace Distill\Method;
 
-use Distill\Exception\CorruptFileException;
+use Distill\Exception\CorruptedFileException;
 use Distill\File;
 use Distill\Format\FormatInterface;
 
@@ -43,9 +43,9 @@ class UnzipCommandMethod extends AbstractMethod
         switch ($exitCode) {
             case self::EXIT_CODE_WARNING_ZIPFILE:
             case self::EXIT_CODE_GENERIC_ERROR_ZIPFILE:
-                throw new CorruptFileException($file, CorruptFileException::SEVERITY_LOW);
+                throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_LOW);
             case self::EXIT_CODE_SEVERE_ERROR_ZIPFILE:
-                throw new CorruptFileException($file, CorruptFileException::SEVERITY_HIGH);
+                throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
         }
 
         return $this->isExitCodeSuccessful($exitCode);
