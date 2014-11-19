@@ -15,6 +15,7 @@ use Distill\Extractor\ExtractorInterface;
 use Distill\Strategy\StrategyInterface;
 use Distill\Format\FormatInterface;
 use Pimple\Container;
+use Symfony\Component\Filesystem\Filesystem;
 
 class Distill
 {
@@ -85,6 +86,7 @@ class Distill
      */
     public function extractWithoutRootDirectory($file, $path, FormatInterface $format = null)
     {
+
         // extract to a temporary place
         $tempDirectory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . uniqid(time()) . DIRECTORY_SEPARATOR;
         $this->extract($file, $tempDirectory, $format);
@@ -92,26 +94,30 @@ class Distill
         // move directory
         $iterator = new \FilesystemIterator($tempDirectory, \FilesystemIterator::SKIP_DOTS);
 
-        $hasSingleRootDirectory = false;
+        $hasSingleRootDirectory = true;
         $singleRootDirectoryName = null;
+        $numberDirectories = 0;
 
-        while ($iterator->valid()) {
+        while ($iterator->valid() && $hasSingleRootDirectory) {
             $uncompressedResource = $iterator->current();
 
-            $iterator->next();
-
-            if (false === $hasSingleRootDirectory && true === $uncompressedResource->isDir()) {
-                $hasSingleRootDirectory = true;
-                $singleRootDirectoryName = $uncompressedResource->getRealPath();
-
-                continue;
+            if (false === $uncompressedResource->isDir()) {
+                $hasSingleRootDirectory = false;
             }
 
-            $hasSingleRootDirectory = false;
+            $singleRootDirectoryName = $uncompressedResource->getRealPath();
+            $numberDirectories++;
+
+            if ($numberDirectories > 1) {
+                $hasSingleRootDirectory = false;
+            }
+
+            $iterator->next();
         }
 
         if (true === $hasSingleRootDirectory) {
             $this->rrmdir($path);
+
             return rename($singleRootDirectoryName, $path);
         }
 
