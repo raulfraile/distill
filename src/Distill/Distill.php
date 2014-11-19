@@ -78,10 +78,13 @@ class Distill
     }
 
     /**
-     * Extracts the compressed file and copies the files from the root directory.
-     * @param string                 $file   Compressed file
-     * @param string                 $path   Destination path
-     * @param Format\FormatInterface $format
+     * Extracts the compressed file and copies the files from the root directory
+     * only if the compressed file contains a single directory.
+     * @param string $file Compressed file.
+     * @param string $path Destination path.
+     * @param Format\FormatInterface $format Format.
+     *
+     * @throws NotSingleDirectoryException
      *
      * @return bool Returns TRUE when successful, FALSE otherwise
      */
