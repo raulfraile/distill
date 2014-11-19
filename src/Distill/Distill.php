@@ -120,17 +120,17 @@ class Distill
             $iterator->next();
         }
 
-        if (true === $hasSingleRootDirectory) {
-            $filesystem->remove($path);
-            $filesystem->rename($singleRootDirectoryName, $path);
+        if (false === $hasSingleRootDirectory) {
+            // it is not a compressed file with a single directory
+            $filesystem->remove($tempDirectory);
 
-            return true;
+            throw new NotSingleDirectoryException($file);
         }
 
-        // it is not a compressed file with a single directory
-        $filesystem->remove($tempDirectory);
+        $filesystem->remove($path);
+        $filesystem->rename($singleRootDirectoryName, $path);
 
-        throw new NotSingleDirectoryException($file);
+        return true;
     }
 
     /**
