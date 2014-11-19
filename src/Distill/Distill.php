@@ -11,6 +11,7 @@
 
 namespace Distill;
 
+use Distill\Exception\NotSingleDirectoryException;
 use Distill\Extractor\ExtractorInterface;
 use Distill\Strategy\StrategyInterface;
 use Distill\Format\FormatInterface;
@@ -124,8 +125,7 @@ class Distill
         }
 
         // it is not a compressed file with a single directory
-
-        return false;
+        throw new NotSingleDirectoryException($file);
     }
 
     /**

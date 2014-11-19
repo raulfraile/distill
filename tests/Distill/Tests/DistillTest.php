@@ -205,12 +205,11 @@ class DistillTest extends TestCase
 
     public function testCannotExtractWithoutRootDirectoryNoDirectoryZipFiles()
     {
+        $this->setExpectedException('Distill\\Exception\\NotSingleDirectoryException');
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->distill->extractWithoutRootDirectory($this->filesPath . 'file_ok.zip', $target, new Format\Zip());
-
-        $this->assertFalse($response);
-        $this->clearTemporaryPath();
+        $this->distill->extractWithoutRootDirectory($this->filesPath . 'file_ok.zip', $target, new Format\Zip());
     }
 }
