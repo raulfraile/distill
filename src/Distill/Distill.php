@@ -129,30 +129,6 @@ class Distill
     }
 
     /**
-     * Recursively removes a directory.
-     * @param string $path Directory path.
-     *
-     * @return bool
-     */
-    protected function rrmdir($path) {
-
-        if (!is_dir($path)) {
-            return true;
-        }
-
-        $iterator = new \DirectoryIterator($path);
-        foreach($iterator as $file) {
-            if($file->isFile()) {
-                unlink($file->getRealPath());
-            } else if(!$file->isDot() && $file->isDir()) {
-                $this->rrmdir($file->getRealPath());
-            }
-        }
-
-        return rmdir($path);
-    }
-
-    /**
      * Gets the file chooser.
      *
      * @return Chooser
