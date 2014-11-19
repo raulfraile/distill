@@ -128,6 +128,8 @@ class Distill
         }
 
         // it is not a compressed file with a single directory
+        $filesystem->remove($tempDirectory);
+
         throw new NotSingleDirectoryException($file);
     }
 
