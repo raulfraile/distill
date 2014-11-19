@@ -86,6 +86,7 @@ class Distill
      */
     public function extractWithoutRootDirectory($file, $path, FormatInterface $format = null)
     {
+        $filesystem = new Filesystem();
 
         // extract to a temporary place
         $tempDirectory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . uniqid(time()) . DIRECTORY_SEPARATOR;
@@ -116,9 +117,10 @@ class Distill
         }
 
         if (true === $hasSingleRootDirectory) {
-            $this->rrmdir($path);
+            $filesystem->remove($path);
+            $filesystem->rename($singleRootDirectoryName, $path);
 
-            return rename($singleRootDirectoryName, $path);
+            return true;
         }
 
         // it is not a compressed file with a single directory
