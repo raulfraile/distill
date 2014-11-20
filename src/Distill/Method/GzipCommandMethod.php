@@ -14,7 +14,7 @@ namespace Distill\Method;
 use Distill\Format\FormatInterface;
 
 /**
- * Extracts files from bzip2 archives.
+ * Extracts files from gzip archives.
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
