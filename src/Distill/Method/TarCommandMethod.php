@@ -11,6 +11,7 @@
 
 namespace Distill\Method;
 
+use Distill\Exception\CorruptedFileException;
 use Distill\Format\FormatInterface;
 use Distill\Format\TarBz2;
 use Distill\Format\TarGz;
@@ -23,6 +24,10 @@ use Distill\Format\TarXz;
  */
 class TarCommandMethod extends AbstractMethod
 {
+
+    const EXIT_CODE_OK = 0;
+    const EXIT_CODE_SOME_FILES_DIFFER = 1;
+    const EXIT_CODE_FATAL_ERROR = 2;
 
     /**
      * {@inheritdoc}
@@ -49,7 +54,11 @@ class TarCommandMethod extends AbstractMethod
 
         $exitCode = $this->executeCommand($command);
 
-        return $this->isExitCodeSuccessful($exitCode);
+        if (self::EXIT_CODE_FATAL_ERROR === $exitCode || self::EXIT_CODE_SOME_FILES_DIFFER === $exitCode) {
+            throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
+        }
+
+        return self::EXIT_CODE_OK === $exitCode;
     }
 
     /**

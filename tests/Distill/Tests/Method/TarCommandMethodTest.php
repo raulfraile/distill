@@ -28,12 +28,13 @@ class TarCommandMethodTest extends AbstractMethodTest
 
     public function testExtractFakeTarFile()
     {
+        $this->setExpectedException('Distill\\Exception\\CorruptedFileException');
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.tar', $target, new Format\Tar());
+        $this->extract('file_fake.tar', $target, new Format\Tar());
 
-        $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 
@@ -51,12 +52,13 @@ class TarCommandMethodTest extends AbstractMethodTest
 
     public function testExtractFakeTarBz2File()
     {
+        $this->setExpectedException('Distill\\Exception\\CorruptedFileException');
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.tar.bz2', $target, new Format\TarBz2());
+        $this->extract('file_fake.tar.bz2', $target, new Format\TarBz2());
 
-        $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 
@@ -74,12 +76,13 @@ class TarCommandMethodTest extends AbstractMethodTest
 
     public function testExtractFakeTarGzFile()
     {
+        $this->setExpectedException('Distill\\Exception\\CorruptedFileException');
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.tar.gz', $target, new Format\TarGz());
+        $this->extract('file_fake.tar.gz', $target, new Format\TarGz());
 
-        $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 
@@ -97,23 +100,25 @@ class TarCommandMethodTest extends AbstractMethodTest
 
     public function testExtractFakeTarXzFile()
     {
+        $this->setExpectedException('Distill\\Exception\\CorruptedFileException');
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.tar.xz', $target, new Format\TarXz());
+        $this->extract('file_fake.tar.xz', $target, new Format\TarXz());
 
-        $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 
     public function testExtractNoTarFile()
     {
+        $this->setExpectedException('Distill\\Exception\\CorruptedFileException');
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.phar', $target, new Format\Phar());
-
-        $this->assertFalse($response);
+        $this->extract('file_ok.phar', $target, new Format\Phar());
+        
         $this->clearTemporaryPath();
     }
 
