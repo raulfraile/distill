@@ -13,18 +13,8 @@ namespace Distill\Format;
 
 use Distill\Method;
 
-class Cab implements FormatInterface
+class Cab extends AbstractFormat
 {
-
-    const FORMAT_NAME = 'cab';
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getName()
-    {
-        return self::FORMAT_NAME;
-    }
 
     /**
      * {@inheritdoc}
@@ -67,6 +57,14 @@ class Cab implements FormatInterface
             Method\CabextractCommandMethod::getName(),
             Method\X7zCommandMethod::getName()
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getClass()
+    {
+        return get_class();
     }
 
 }

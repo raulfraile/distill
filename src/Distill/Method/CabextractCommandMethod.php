@@ -49,9 +49,9 @@ class CabextractCommandMethod extends AbstractMethod
     /**
      * {@inheritdoc}
      */
-    public static function getName()
+    public static function getClass()
     {
-        return 'cabextract_command';
+        return get_class();
     }
 
 }

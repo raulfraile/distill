@@ -24,18 +24,8 @@ use Distill\Method;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class Bz2 implements FormatInterface
+class Bz2 extends AbstractFormat
 {
-
-    const FORMAT_NAME = 'bz2';
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getName()
-    {
-        return self::FORMAT_NAME;
-    }
 
     /**
      * {@inheritdoc}
@@ -78,6 +68,14 @@ class Bz2 implements FormatInterface
             Method\Bzip2CommandMethod::getName(),
             Method\X7zCommandMethod::getName()
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getClass()
+    {
+        return get_class();
     }
 
 }

@@ -53,9 +53,9 @@ class PharExtensionMethod extends AbstractMethod
     /**
      * {@inheritdoc}
      */
-    public static function getName()
+    public static function getClass()
     {
-        return 'phar_extension';
+        return get_class();
     }
 
 }

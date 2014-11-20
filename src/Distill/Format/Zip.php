@@ -13,18 +13,8 @@ namespace Distill\Format;
 
 use Distill\Method;
 
-class Zip implements FormatInterface
+class Zip extends AbstractFormat
 {
-
-    const FORMAT_NAME = 'zip';
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getName()
-    {
-        return self::FORMAT_NAME;
-    }
 
     /**
      * {@inheritdoc}
@@ -68,6 +58,14 @@ class Zip implements FormatInterface
             Method\X7zCommandMethod::getName(),
             Method\ZipArchiveMethod::getName()
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getClass()
+    {
+        return get_class();
     }
 
 }

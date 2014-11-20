@@ -40,4 +40,12 @@ interface MethodInterface
      * @return string Method name
      */
     public static function getName();
+
+    /**
+     * Gets the method class FQN.
+     * @static
+     *
+     * @return string Method FQN.
+     */
+    public static function getClass();
 }

@@ -48,9 +48,9 @@ class Bzip2CommandMethod extends AbstractMethod
     /**
      * {@inheritdoc}
      */
-    public static function getName()
+    public static function getClass()
     {
-        return 'bzip2_command';
+        return get_class();
     }
 
 }

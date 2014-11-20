@@ -29,6 +29,14 @@ interface FormatInterface
     public static function getName();
 
     /**
+     * Gets the current class FQN.
+     * @static
+     *
+     * @return string Current class FQN.
+     */
+    public static function getClass();
+
+    /**
      * Gets the compression ratio level for the format.
      *
      * @return integer Compression ratio level (0: low, 10: high)

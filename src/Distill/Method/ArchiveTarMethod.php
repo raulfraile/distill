@@ -46,9 +46,9 @@ class ArchiveTarMethod extends AbstractMethod
     /**
      * {@inheritdoc}
      */
-    public static function getName()
+    public static function getClass()
     {
-        return 'archive_tar';
+        return get_class();
     }
 
 }

@@ -72,9 +72,9 @@ class TarCommandMethod extends AbstractMethod
     /**
      * {@inheritdoc}
      */
-    public static function getName()
+    public static function getClass()
     {
-        return 'tar_command';
+        return get_class();
     }
 
 }

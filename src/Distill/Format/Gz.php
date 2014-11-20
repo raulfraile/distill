@@ -17,18 +17,8 @@ use Distill\Method;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class Gz implements FormatInterface
+class Gz extends AbstractFormat
 {
-
-    const FORMAT_NAME = 'gz';
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getName()
-    {
-        return self::FORMAT_NAME;
-    }
 
     /**
      * {@inheritdoc}
@@ -71,6 +61,14 @@ class Gz implements FormatInterface
             Method\GzipCommandMethod::getName(),
             Method\X7zCommandMethod::getName()
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getClass()
+    {
+        return get_class();
     }
 
 }

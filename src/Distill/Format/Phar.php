@@ -13,18 +13,8 @@ namespace Distill\Format;
 
 use Distill\Method;
 
-class Phar implements FormatInterface
+class Phar extends AbstractFormat
 {
-
-    const FORMAT_NAME = 'phar';
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getName()
-    {
-        return self::FORMAT_NAME;
-    }
 
     /**
      * {@inheritdoc}
@@ -68,4 +58,11 @@ class Phar implements FormatInterface
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getClass()
+    {
+        return get_class();
+    }
 }

@@ -13,18 +13,8 @@ namespace Distill\Format;
 
 use Distill\Method;
 
-class TarGz implements FormatInterface
+class TarGz extends AbstractFormat
 {
-
-    const FORMAT_NAME = 'tar_gz';
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getName()
-    {
-        return self::FORMAT_NAME;
-    }
 
     /**
      * {@inheritdoc}
@@ -68,6 +58,14 @@ class TarGz implements FormatInterface
             Method\X7zCommandMethod::getName(),
             Method\ArchiveTarMethod::getName()
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getClass()
+    {
+        return get_class();
     }
 
 }

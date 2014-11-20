@@ -49,9 +49,9 @@ class UnrarCommandMethod extends AbstractMethod
     /**
      * {@inheritdoc}
      */
-    public static function getName()
+    public static function getClass()
     {
-        return 'unrar_command';
+        return get_class();
     }
 
 }

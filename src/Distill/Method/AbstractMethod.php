@@ -63,4 +63,17 @@ abstract class AbstractMethod implements MethodInterface
         return 0 === $code;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        $className = static::getClass();
+        $className = str_replace('\\', '', $className);
+        $className = preg_replace('/^DistillMethod/', '', $className);
+        $className = strtolower($className);
+
+        return $className;
+    }
+
 }

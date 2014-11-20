@@ -48,9 +48,9 @@ class GzipCommandMethod extends AbstractMethod
     /**
      * {@inheritdoc}
      */
-    public static function getName()
+    public static function getClass()
     {
-        return 'gzip_command';
+        return get_class();
     }
 
 }

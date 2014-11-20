@@ -38,34 +38,34 @@ class ContainerProvider implements ServiceProviderInterface
     public function __construct()
     {
         $this->formats = [
-            Format\Bz2::getName(),
-            Format\Cab::getName(),
-            Format\Gz::getName(),
-            Format\Phar::getName(),
-            Format\Rar::getName(),
-            Format\Tar::getName(),
-            Format\TarBz2::getName(),
-            Format\TarGz::getName(),
-            Format\TarXz::getName(),
-            Format\X7z::getName(),
-            Format\Xz::getName(),
-            Format\Zip::getName()
+            Format\Bz2::getClass(),
+            Format\Cab::getClass(),
+            Format\Gz::getClass(),
+            Format\Phar::getClass(),
+            Format\Rar::getClass(),
+            Format\Tar::getClass(),
+            Format\TarBz2::getClass(),
+            Format\TarGz::getClass(),
+            Format\TarXz::getClass(),
+            Format\X7z::getClass(),
+            Format\Xz::getClass(),
+            Format\Zip::getClass()
         ];
 
         $this->methods = [
-            Method\ArchiveTarMethod::getName(),
-            Method\Bzip2CommandMethod::getName(),
-            Method\CabextractCommandMethod::getName(),
-            Method\GzipCommandMethod::getName(),
-            Method\PharExtensionMethod::getName(),
-            Method\PharDataMethod::getName(),
-            Method\RarExtensionMethod::getName(),
-            Method\TarCommandMethod::getName(),
-            Method\UnrarCommandMethod::getName(),
-            Method\UnzipCommandMethod::getName(),
-            Method\X7zCommandMethod::getName(),
-            Method\XzCommandMethod::getName(),
-            Method\ZipArchiveMethod::getName()
+            Method\ArchiveTarMethod::getClass(),
+            Method\Bzip2CommandMethod::getClass(),
+            Method\CabextractCommandMethod::getClass(),
+            Method\GzipCommandMethod::getClass(),
+            Method\PharExtensionMethod::getClass(),
+            Method\PharDataMethod::getClass(),
+            Method\RarExtensionMethod::getClass(),
+            Method\TarCommandMethod::getClass(),
+            Method\UnrarCommandMethod::getClass(),
+            Method\UnzipCommandMethod::getClass(),
+            Method\X7zCommandMethod::getClass(),
+            Method\XzCommandMethod::getClass(),
+            Method\ZipArchiveMethod::getClass()
         ];
     }
 
@@ -105,42 +105,11 @@ class ContainerProvider implements ServiceProviderInterface
      */
     protected function registerFormats(Container $container)
     {
-        $container['distill.format.bz2'] = $container->factory(function ($c) {
-            return new Format\Bz2();
-        });
-        $container['distill.format.cab'] = $container->factory(function ($c) {
-            return new Format\Cab();
-        });
-        $container['distill.format.gz'] = $container->factory(function ($c) {
-            return new Format\Gz();
-        });
-        $container['distill.format.phar'] = $container->factory(function ($c) {
-            return new Format\Phar();
-        });
-        $container['distill.format.rar'] = $container->factory(function ($c) {
-            return new Format\Rar();
-        });
-        $container['distill.format.tar'] = $container->factory(function ($c) {
-            return new Format\Tar();
-        });
-        $container['distill.format.tar_bz2'] = $container->factory(function ($c) {
-            return new Format\TarBz2();
-        });
-        $container['distill.format.tar_gz'] = $container->factory(function ($c) {
-            return new Format\TarGz();
-        });
-        $container['distill.format.tar_xz'] = $container->factory(function ($c) {
-            return new Format\TarXz();
-        });
-        $container['distill.format.7z'] = $container->factory(function ($c) {
-            return new Format\X7z();
-        });
-        $container['distill.format.xz'] = $container->factory(function ($c) {
-            return new Format\Xz();
-        });
-        $container['distill.format.zip'] = $container->factory(function ($c) {
-            return new Format\Zip();
-        });
+        foreach ($this->formats as $formatClass) {
+            $container['distill.format.' . $formatClass::getName()] = $container->factory(function ($c) use ($formatClass) {
+                return new $formatClass();
+            });
+        }
     }
 
     /**
@@ -149,57 +118,11 @@ class ContainerProvider implements ServiceProviderInterface
      */
     protected function registerMethods(Container $container)
     {
-        $container['distill.method.' . Method\ArchiveTarMethod::getName()] = $container->factory(function ($c) {
-            return new Method\ArchiveTarMethod();
-        });
-
-        $container['distill.method.' . Method\Bzip2CommandMethod::getName()] = $container->factory(function ($c) {
-            return new Method\Bzip2CommandMethod();
-        });
-
-        $container['distill.method.' . Method\CabextractCommandMethod::getName()] = $container->factory(function ($c) {
-            return new Method\CabextractCommandMethod();
-        });
-
-        $container['distill.method.' . Method\GzipCommandMethod::getName()] = $container->factory(function ($c) {
-            return new Method\GzipCommandMethod();
-        });
-
-        $container['distill.method.' . Method\PharExtensionMethod::getName()] = $container->factory(function ($c) {
-            return new Method\PharExtensionMethod();
-        });
-
-        $container['distill.method.' . Method\PharDataMethod::getName()] = $container->factory(function ($c) {
-            return new Method\PharDataMethod();
-        });
-
-        $container['distill.method.' . Method\RarExtensionMethod::getName()] = $container->factory(function ($c) {
-            return new Method\RarExtensionMethod();
-        });
-
-        $container['distill.method.' . Method\TarCommandMethod::getName()] = $container->factory(function ($c) {
-            return new Method\TarCommandMethod();
-        });
-
-        $container['distill.method.' . Method\UnrarCommandMethod::getName()] = $container->factory(function ($c) {
-            return new Method\UnrarCommandMethod();
-        });
-
-        $container['distill.method.' . Method\UnzipCommandMethod::getName()] = $container->factory(function ($c) {
-            return new Method\UnzipCommandMethod();
-        });
-
-        $container['distill.method.' . Method\X7zCommandMethod::getName()] = $container->factory(function ($c) {
-            return new Method\X7zCommandMethod();
-        });
-
-        $container['distill.method.' . Method\XzCommandMethod::getName()] = $container->factory(function ($c) {
-            return new Method\XzCommandMethod();
-        });
-
-        $container['distill.method.' . Method\ZipArchiveMethod::getName()] = $container->factory(function ($c) {
-            return new Method\ZipArchiveMethod();
-        });
+        foreach ($this->methods as $methodClass) {
+            $container['distill.method.' . $methodClass::getName()] = $container->factory(function ($c) use ($methodClass) {
+                return new $methodClass();
+            });
+        }
     }
 
     protected function registerStrategies(Container $container)
@@ -219,7 +142,7 @@ class ContainerProvider implements ServiceProviderInterface
     {
         $formats = $this->formats;
         $callback = function($format) use ($container, $formats) {
-            return $container['distill.format.' . $format];
+            return $container['distill.format.' . $format::getName()];
         };
 
         return array_map($callback, $this->formats);
@@ -229,7 +152,7 @@ class ContainerProvider implements ServiceProviderInterface
     {
         $methods = $this->methods;
         $callback = function($method) use ($container, $methods) {
-            return $container['distill.method.' . $method];
+            return $container['distill.method.' . $method::getName()];
         };
 
         return array_map($callback, $this->methods);

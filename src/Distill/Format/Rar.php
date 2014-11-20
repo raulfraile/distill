@@ -13,18 +13,8 @@ namespace Distill\Format;
 
 use Distill\Method;
 
-class Rar implements FormatInterface
+class Rar extends AbstractFormat
 {
-
-    const FORMAT_NAME = 'rar';
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getName()
-    {
-        return self::FORMAT_NAME;
-    }
 
     /**
      * {@inheritdoc}
@@ -69,5 +59,13 @@ class Rar implements FormatInterface
             Method\PharDataMethod::getName(),
             Method\ArchiveTarMethod::getName()
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getClass()
+    {
+        return get_class();
     }
 }

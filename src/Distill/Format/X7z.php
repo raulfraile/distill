@@ -13,18 +13,8 @@ namespace Distill\Format;
 
 use Distill\Method;
 
-class X7z implements FormatInterface
+class X7z extends AbstractFormat
 {
-
-    const FORMAT_NAME = '7z';
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getName()
-    {
-        return self::FORMAT_NAME;
-    }
 
     /**
      * {@inheritdoc}
@@ -66,6 +56,14 @@ class X7z implements FormatInterface
         return [
             Method\X7zCommandMethod::getName()
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getClass()
+    {
+        return get_class();
     }
 
 }

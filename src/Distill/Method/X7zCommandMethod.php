@@ -50,9 +50,9 @@ class X7zCommandMethod extends AbstractMethod
     /**
      * {@inheritdoc}
      */
-    public static function getName()
+    public static function getClass()
     {
-        return '7z_command';
+        return get_class();
     }
 
 }
