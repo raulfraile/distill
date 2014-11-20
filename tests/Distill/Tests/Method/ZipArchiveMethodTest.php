@@ -28,24 +28,36 @@ class ZipArchiveMethodTest extends AbstractMethodTest
 
     public function testExtractFakeZipFile()
     {
+        $this->setExpectedException('Distill\\Exception\\CorruptedFileException');
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.zip', $target, new Format\Zip());
+        $this->extract('file_fake.zip', $target, new Format\Zip());
 
-        $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 
     public function testExtractNoZipFile()
     {
+        $this->setExpectedException('Distill\\Exception\\CorruptedFileException');
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.rar', $target, new Format\Rar());
+        $this->extract('file_ok.rar', $target, new Format\Rar());
 
-        $this->assertFalse($response);
         $this->clearTemporaryPath();
+    }
+
+    public function testExtractCorruptZipFile()
+    {
+        $this->setExpectedException('Distill\\Exception\\CorruptedFileException');
+
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->extract('file_corrupt.zip', $target, new Format\Zip());
     }
 
 }

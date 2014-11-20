@@ -11,6 +11,7 @@
 
 namespace Distill\Method;
 
+use Distill\Exception\CorruptedFileException;
 use Distill\File;
 use Distill\Format\FormatInterface;
 
@@ -33,7 +34,15 @@ class ZipArchiveMethod extends AbstractMethod
 
         $archive = new \ZipArchive();
 
-        if (true !== $archive->open($file)) {
+        if (true !== $response = $archive->open($file)) {
+            switch($response) {
+                case \ZipArchive::ER_NOZIP :
+                case \ZipArchive::ER_INCONS :
+                case \ZipArchive::ER_CRC :
+                throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
+                    break;
+            }
+
             return false;
         }
 
