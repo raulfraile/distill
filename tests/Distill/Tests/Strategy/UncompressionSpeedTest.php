@@ -19,10 +19,10 @@ class UncompressionSpeedTest extends TestCase
         $this->strategy = new UncompressionSpeed();
     }
 
-    public function testEmptyFilesGetNull()
+    public function testEmptyFilesGetEmpty()
     {
-        $preferredFile = $this->strategy->getPreferredFile([]);
-        $this->assertNull($preferredFile);
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered([]);
+        $this->assertEmpty($preferredFiles);
     }
 
     public function testZipShouldBePreferredOverPhar()
@@ -32,15 +32,15 @@ class UncompressionSpeedTest extends TestCase
             new File('test.phar', new Format\Phar())
         ];
 
-        $preferredFile = $this->strategy->getPreferredFile($files);
-        $this->assertInstanceOf('\\Distill\\Format\\Zip', $preferredFile->getFormat());
-        $this->assertEquals('test.zip', $preferredFile->getPath());
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $this->assertInstanceOf('\\Distill\\Format\\Zip', $preferredFiles[0]->getFormat());
+        $this->assertEquals('test.zip', $preferredFiles[0]->getPath());
 
         array_reverse($files);
 
-        $preferredFile = $this->strategy->getPreferredFile($files);
-        $this->assertInstanceOf('\\Distill\\Format\\Zip', $preferredFile->getFormat());
-        $this->assertEquals('test.zip', $preferredFile->getPath());
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $this->assertInstanceOf('\\Distill\\Format\\Zip', $preferredFiles[0]->getFormat());
+        $this->assertEquals('test.zip', $preferredFiles[0]->getPath());
     }
 
     public function testZipShouldBePreferredOverPharEvenWhenRepeated()
@@ -51,13 +51,13 @@ class UncompressionSpeedTest extends TestCase
             new File('test.ph', new Format\Phar()),
         ];
 
-        $preferredFile = $this->strategy->getPreferredFile($files);
-        $this->assertInstanceOf('\\Distill\\Format\\Zip', $preferredFile->getFormat());
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $this->assertInstanceOf('\\Distill\\Format\\Zip', $preferredFiles[0]->getFormat());
 
         array_reverse($files);
 
-        $preferredFile = $this->strategy->getPreferredFile($files);
-        $this->assertInstanceOf('\\Distill\\Format\\Zip', $preferredFile->getFormat());
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $this->assertInstanceOf('\\Distill\\Format\\Zip', $preferredFiles[0]->getFormat());
     }
 
 

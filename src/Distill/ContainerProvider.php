@@ -19,6 +19,35 @@ use Pimple\ServiceProviderInterface;
 class ContainerProvider implements ServiceProviderInterface
 {
 
+    protected $formats = [
+        'bz2', 'cab', 'gz', 'phar', 'rar', 'tar', 'tar_bz2', 'tar_gz', 'tar_xz', '7z', 'xz', 'zip'
+    ];
+
+    protected $methods;
+
+    public function __construct()
+    {
+        $this->formats = [
+            'bz2', 'cab', 'gz', 'phar', 'rar', 'tar', 'tar_bz2', 'tar_gz', 'tar_xz', '7z', 'xz', 'zip'
+        ];
+
+        $this->methods = [
+            Method\ArchiveTarMethod::getName(),
+            Method\Bzip2CommandMethod::getName(),
+            Method\CabextractCommandMethod::getName(),
+            Method\GzipCommandMethod::getName(),
+            Method\PharExtensionMethod::getName(),
+            Method\PharDataMethod::getName(),
+            Method\RarExtensionMethod::getName(),
+            Method\TarCommandMethod::getName(),
+            Method\UnrarCommandMethod::getName(),
+            Method\UnzipCommandMethod::getName(),
+            Method\X7zCommandMethod::getName(),
+            Method\XzCommandMethod::getName(),
+            Method\ZipArchiveMethod::getName()
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -29,28 +58,30 @@ class ContainerProvider implements ServiceProviderInterface
         $this->registerStrategies($container);
 
         $container['distill.format_guesser'] = $container->factory(function ($c) {
-            return new FormatGuesser([
-                $c['distill.format.bz2'],
-                $c['distill.format.cab'],
-                $c['distill.format.gz'],
-                $c['distill.format.phar'],
-                $c['distill.format.rar'],
-                $c['distill.format.tar'],
-                $c['distill.format.tar_bz2'],
-                $c['distill.format.tar_gz'],
-                $c['distill.format.tar_xz'],
-                $c['distill.format.7z'],
-                $c['distill.format.xz'],
-                $c['distill.format.zip']
-            ]);
+            $formats = $this->formats;
+            $callback = function($format) use ($c, $formats) {
+                return $c['distill.format.' . $format];
+            };
+
+            return new FormatGuesser(array_map($callback, $this->formats));
         });
 
-        $container['distill.support_checker'] = $container->factory(function ($c) {
-            return new SupportChecker($c);
+        $methods = $this->methods;
+        $callbackMethods = function($method) use ($container, $methods) {
+            return $container['distill.method.' . $method];
+        };
+
+        $container['distill.support_checker'] = $container->factory(function ($c) use ($callbackMethods) {
+
+            return new SupportChecker(array_map($callbackMethods, $this->methods));
         });
 
         $container['distill.chooser'] = $container->factory(function ($c) {
-            return new Chooser($c['distill.strategy.minimum_size'], $c['distill.format_guesser'], $c['distill.support_checker']);
+            return new Chooser(
+                $c['distill.support_checker'],
+                $c['distill.strategy.minimum_size'],
+                $c['distill.format_guesser']
+            );
         });
 
         $container['distill.extractor.extractor'] = $container->factory(function ($c) {

@@ -32,13 +32,15 @@ class Random extends AbstractStrategy
     /**
      * {@inheritdoc}
      */
-    public function getPreferredFile(array $files)
+    public function getPreferredFilesOrdered(array $files)
     {
         if (empty($files)) {
-            return null;
+            return [];
         }
 
-        return $files[rand(0, count($files) - 1)];
+        shuffle($files);
+
+        return $files;
     }
 
 }

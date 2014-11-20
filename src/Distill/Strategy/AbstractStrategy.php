@@ -17,7 +17,7 @@ abstract class AbstractStrategy implements StrategyInterface
     /**
      * {@inheritdoc}
      */
-    public function getPreferredFile(array $files)
+    public function getPreferredFilesOrdered(array $files)
     {
         usort($files, 'static::order');
 

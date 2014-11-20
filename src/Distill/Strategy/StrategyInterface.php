@@ -24,12 +24,12 @@ interface StrategyInterface
 {
 
     /**
-     * Returns the preferred file.
+     * Returns the preferred files in order.
      * @param File[] $files
      *
      * @return null|File
      */
-    public function getPreferredFile(array $files);
+    public function getPreferredFilesOrdered(array $files);
 
     /**
      * Gets the strategy key name.

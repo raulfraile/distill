@@ -10,20 +10,18 @@ use Distill\Tests\TestCase;
 class MinimumSizeTest extends TestCase
 {
 
-
     /** @var MinimumSize $strategy  */
     protected $strategy;
-
 
     public function setUp()
     {
         $this->strategy = new MinimumSize();
     }
 
-    public function testEmptyFilesGetNull()
+    public function testEmptyFilesGetEmptyArray()
     {
-        $preferredFile = $this->strategy->getPreferredFile([]);
-        $this->assertNull($preferredFile);
+        $preferredFile = $this->strategy->getPreferredFilesOrdered([]);
+        $this->assertEmpty($preferredFile);
     }
 
     public function testGzShouldBePreferredOverZip()
@@ -33,15 +31,15 @@ class MinimumSizeTest extends TestCase
             new File('test.tgz', new Format\TarGz())
         ];
 
-        $preferredFile = $this->strategy->getPreferredFile($files);
-        $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFile->getFormat());
-        $this->assertEquals('test.tgz', $preferredFile->getPath());
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFiles[0]->getFormat());
+        $this->assertEquals('test.tgz', $preferredFiles[0]->getPath());
 
         array_reverse($files);
 
-        $preferredFile = $this->strategy->getPreferredFile($files);
-        $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFile->getFormat());
-        $this->assertEquals('test.tgz', $preferredFile->getPath());
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFiles[0]->getFormat());
+        $this->assertEquals('test.tgz', $preferredFiles[0]->getPath());
     }
 
     public function testGzShouldBePreferredOverZipEvenWhenRepeated()
@@ -52,13 +50,13 @@ class MinimumSizeTest extends TestCase
             new File('test.tar.gz', new Format\TarGz()),
         ];
 
-        $preferredFile = $this->strategy->getPreferredFile($files);
-        $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFile->getFormat());
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFiles[0]->getFormat());
 
         array_reverse($files);
 
-        $preferredFile = $this->strategy->getPreferredFile($files);
-        $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFile->getFormat());
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFiles[0]->getFormat());
     }
 
 

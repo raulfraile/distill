@@ -12,6 +12,7 @@
 namespace Distill;
 
 use Distill\Format\FormatInterface;
+use Distill\Method\MethodInterface;
 use Pimple\Container;
 
 class SupportChecker implements SupportCheckerInterface
@@ -20,15 +21,19 @@ class SupportChecker implements SupportCheckerInterface
     /**
      * @var Container
      */
-    protected $container;
+    protected $methods;
 
     /**
      * Constructor.
-     * @param Container $container Container.
+     * @param MethodInterface[] $methods.
      */
-    public function __construct(Container $container)
+    public function __construct(array $methods)
     {
-        $this->container = $container;
+        $this->methods = [];
+
+        foreach ($methods as $method) {
+            $this->methods[$method->getName()] = $method;
+        }
     }
 
     /**
@@ -41,7 +46,7 @@ class SupportChecker implements SupportCheckerInterface
         $i = 0;
         $supported = false;
         while (!$supported && $i < $methodsCount) {
-            $method = $this->container['distill.method.' . $methodsKeys[$i]];
+            $method = $this->methods[$methodsKeys[$i]];
             if ($method->isSupported($format)) {
                 $supported = true;
             }

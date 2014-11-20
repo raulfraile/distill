@@ -40,9 +40,9 @@ class Chooser
      * @param FormatGuesserInterface $formatGuesser
      */
     public function __construct(
+        SupportCheckerInterface $supportChecker,
         StrategyInterface $strategy = null,
-        FormatGuesserInterface $formatGuesser = null,
-        SupportChecker $supportChecker)
+        FormatGuesserInterface $formatGuesser = null)
     {
         $this->strategy = $strategy;
         $this->formatGuesser = $formatGuesser;
@@ -147,7 +147,7 @@ class Chooser
             throw new StrategyRequiredException();
         }
 
-        $preferredFiles = $this->strategy->getPreferredFile($this->files);
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($this->files);
 
         // get the first file that is supported
         $supportedFile = null;

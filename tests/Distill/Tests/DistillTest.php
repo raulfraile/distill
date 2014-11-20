@@ -14,7 +14,6 @@ class DistillTest extends TestCase
      */
     protected $distill;
 
-
     public function setUp()
     {
         $this->distill = new Distill();

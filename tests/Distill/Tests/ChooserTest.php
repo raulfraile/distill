@@ -19,7 +19,10 @@ class ChooserTest extends TestCase
 
     public function setUp()
     {
-        $this->chooser = new Chooser();
+        $supportChecker = m::mock('Distill\SupportCheckerInterface');
+        $supportChecker->shouldReceive('isFormatSupported')->andReturn(true)->getMock();
+
+        $this->chooser = new Chooser($supportChecker);
     }
 
     public function testExceptionWhenNoStrategyIsDefined()
