@@ -45,8 +45,12 @@ class ContainerProvider implements ServiceProviderInterface
             ]);
         });
 
+        $container['distill.support_checker'] = $container->factory(function ($c) {
+            return new SupportChecker($c);
+        });
+
         $container['distill.chooser'] = $container->factory(function ($c) {
-            return new Chooser($c['distill.strategy.minimum_size'], $c['distill.format_guesser']);
+            return new Chooser($c['distill.strategy.minimum_size'], $c['distill.format_guesser'], $c['distill.support_checker']);
         });
 
         $container['distill.extractor.extractor'] = $container->factory(function ($c) {

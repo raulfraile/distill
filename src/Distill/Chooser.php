@@ -6,6 +6,7 @@ use Distill\Exception\FormatGuesserRequiredException;
 use Distill\Exception\StrategyRequiredException;
 use Distill\Format\FormatInterface;
 use Distill\Strategy\StrategyInterface;
+use Distill\SupportChecker;
 
 class Chooser
 {
@@ -23,6 +24,12 @@ class Chooser
     protected $formatGuesser;
 
     /**
+     * Support checker.
+     * @var SupportChecker
+     */
+    protected $supportChecker;
+
+    /**
      * @var File[]
      */
     protected $files;
@@ -34,10 +41,12 @@ class Chooser
      */
     public function __construct(
         StrategyInterface $strategy = null,
-        FormatGuesserInterface $formatGuesser = null)
+        FormatGuesserInterface $formatGuesser = null,
+        SupportChecker $supportChecker)
     {
         $this->strategy = $strategy;
         $this->formatGuesser = $formatGuesser;
+        $this->supportChecker = $supportChecker;
     }
 
     /**
@@ -138,9 +147,17 @@ class Chooser
             throw new StrategyRequiredException();
         }
 
-        $preferredFile = $this->strategy->getPreferredFile($this->files);
+        $preferredFiles = $this->strategy->getPreferredFile($this->files);
 
-        return $preferredFile->getPath();
+        // get the first file that is supported
+        $supportedFile = null;
+        for ($supportedFile = null, $i = 0; $i < count($preferredFiles) && null === $supportedFile; $i++) {
+            if ($this->supportChecker->isFormatSupported($preferredFiles[$i]->getFormat())) {
+                $supportedFile = $preferredFiles[$i];
+            }
+        }
+
+        return $supportedFile;
     }
 
 }

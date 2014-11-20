@@ -118,7 +118,7 @@ class TarCommandMethodTest extends AbstractMethodTest
         $this->clearTemporaryPath();
 
         $this->extract('file_ok.phar', $target, new Format\Phar());
-        
+
         $this->clearTemporaryPath();
     }
 

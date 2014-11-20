@@ -24,12 +24,14 @@ use Distill\File;
 class UncompressionSpeed extends AbstractStrategy
 {
 
+    const STRATEGY_NAME = 'uncompression_speed';
+
     /**
      * {@inheritdoc}
      */
     public static function getName()
     {
-        return 'uncompression_speed';
+        return self::STRATEGY_NAME;
     }
 
     /**

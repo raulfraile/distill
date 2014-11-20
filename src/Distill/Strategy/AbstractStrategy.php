@@ -21,11 +21,7 @@ abstract class AbstractStrategy implements StrategyInterface
     {
         usort($files, 'static::order');
 
-        if (empty($files)) {
-            return null;
-        }
-
-        return $files[0];
+        return $files;
     }
 
 }
