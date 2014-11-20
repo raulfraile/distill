@@ -84,8 +84,8 @@ class ContainerProvider implements ServiceProviderInterface
             );
         });
 
-        $container['distill.extractor.extractor'] = $container->factory(function ($c) {
-            return new Extractor($c);
+        $container['distill.extractor.extractor'] = $container->factory(function ($c) use ($callbackMethods) {
+            return new Extractor(array_map($callbackMethods, $this->methods));
         });
     }
 

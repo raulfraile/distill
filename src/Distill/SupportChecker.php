@@ -13,13 +13,12 @@ namespace Distill;
 
 use Distill\Format\FormatInterface;
 use Distill\Method\MethodInterface;
-use Pimple\Container;
 
 class SupportChecker implements SupportCheckerInterface
 {
 
     /**
-     * @var Container
+     * @var MethodInterface[]
      */
     protected $methods;
 

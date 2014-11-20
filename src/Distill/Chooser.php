@@ -6,7 +6,7 @@ use Distill\Exception\FormatGuesserRequiredException;
 use Distill\Exception\StrategyRequiredException;
 use Distill\Format\FormatInterface;
 use Distill\Strategy\StrategyInterface;
-use Distill\SupportChecker;
+use Distill\SupportCheckerInterface;
 
 class Chooser
 {
@@ -25,7 +25,7 @@ class Chooser
 
     /**
      * Support checker.
-     * @var SupportChecker
+     * @var SupportCheckerInterface
      */
     protected $supportChecker;
 
@@ -36,7 +36,8 @@ class Chooser
 
     /**
      * Constructor.
-     * @param StrategyInterface      $strategy
+     * @param SupportCheckerInterface $supportChecker
+     * @param StrategyInterface $strategy
      * @param FormatGuesserInterface $formatGuesser
      */
     public function __construct(

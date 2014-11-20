@@ -27,7 +27,7 @@ interface StrategyInterface
      * Returns the preferred files in order.
      * @param File[] $files
      *
-     * @return null|File
+     * @return File[]
      */
     public function getPreferredFilesOrdered(array $files);
 

@@ -12,23 +12,26 @@
 namespace Distill\Extractor;
 
 use Distill\Format\FormatInterface;
-use Pimple\Container;
+use Distill\Method\MethodInterface;
 
 class Extractor implements ExtractorInterface
 {
 
     /**
-     * @var Container
+     * @var MethodInterface[]
      */
-    protected $container;
+    protected $methods;
 
     /**
-     * Constructor
-     * @param Container $container
+     * Constructor.
+     * @param MethodInterface[] $methods.
      */
-    public function __construct(Container $container)
+    public function __construct(array $methods)
     {
-        $this->container = $container;
+        $this->methods = [];
+        foreach ($methods as $method) {
+            $this->methods[$method->getName()] = $method;
+        }
     }
 
     /**
@@ -41,7 +44,7 @@ class Extractor implements ExtractorInterface
         $i = 0;
         $success = false;
         while (!$success && $i < $methodsCount) {
-            $method = $this->container['distill.method.' . $methodsKeys[$i]];
+            $method = $this->methods[$methodsKeys[$i]];
             if ($method->isSupported($format)) {
                 $success = $method->extract($file, $path, $format);
             }
