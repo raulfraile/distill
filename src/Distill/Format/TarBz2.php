@@ -16,6 +16,16 @@ use Distill\Method;
 class TarBz2 implements FormatInterface
 {
 
+    const FORMAT_NAME = 'tar_bz2';
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return self::FORMAT_NAME;
+    }
+
     /**
      * {@inheritdoc}
      */

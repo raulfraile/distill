@@ -21,6 +21,14 @@ interface FormatInterface
     const LEVEL_HIGHEST = 10;
 
     /**
+     * Gets the format key name.
+     * @static
+     *
+     * @return string Format name
+     */
+    public static function getName();
+
+    /**
      * Gets the compression ratio level for the format.
      *
      * @return integer Compression ratio level (0: low, 10: high)

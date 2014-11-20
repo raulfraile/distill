@@ -16,6 +16,16 @@ use Distill\Method;
 class Cab implements FormatInterface
 {
 
+    const FORMAT_NAME = 'cab';
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return self::FORMAT_NAME;
+    }
+
     /**
      * {@inheritdoc}
      */

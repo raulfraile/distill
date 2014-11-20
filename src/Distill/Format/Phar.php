@@ -16,6 +16,16 @@ use Distill\Method;
 class Phar implements FormatInterface
 {
 
+    const FORMAT_NAME = 'phar';
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return self::FORMAT_NAME;
+    }
+
     /**
      * {@inheritdoc}
      */

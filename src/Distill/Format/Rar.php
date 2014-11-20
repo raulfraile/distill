@@ -16,6 +16,16 @@ use Distill\Method;
 class Rar implements FormatInterface
 {
 
+    const FORMAT_NAME = 'rar';
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return self::FORMAT_NAME;
+    }
+
     /**
      * {@inheritdoc}
      */

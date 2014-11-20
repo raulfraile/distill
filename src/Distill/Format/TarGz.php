@@ -16,6 +16,16 @@ use Distill\Method;
 class TarGz implements FormatInterface
 {
 
+    const FORMAT_NAME = 'tar_gz';
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return self::FORMAT_NAME;
+    }
+
     /**
      * {@inheritdoc}
      */

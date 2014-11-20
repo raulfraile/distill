@@ -27,6 +27,16 @@ use Distill\Method;
 class Bz2 implements FormatInterface
 {
 
+    const FORMAT_NAME = 'bz2';
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return self::FORMAT_NAME;
+    }
+
     /**
      * {@inheritdoc}
      */

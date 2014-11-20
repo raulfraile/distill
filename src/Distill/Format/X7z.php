@@ -16,6 +16,16 @@ use Distill\Method;
 class X7z implements FormatInterface
 {
 
+    const FORMAT_NAME = '7z';
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return self::FORMAT_NAME;
+    }
+
     /**
      * {@inheritdoc}
      */

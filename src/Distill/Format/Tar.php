@@ -16,6 +16,16 @@ use Distill\Method;
 class Tar implements FormatInterface
 {
 
+    const FORMAT_NAME = 'tar';
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return self::FORMAT_NAME;
+    }
+
     /**
      * {@inheritdoc}
      */

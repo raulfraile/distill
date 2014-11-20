@@ -16,6 +16,16 @@ use Distill\Method;
 class Zip implements FormatInterface
 {
 
+    const FORMAT_NAME = 'zip';
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return self::FORMAT_NAME;
+    }
+
     /**
      * {@inheritdoc}
      */

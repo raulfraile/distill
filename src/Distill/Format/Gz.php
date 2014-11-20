@@ -20,6 +20,16 @@ use Distill\Method;
 class Gz implements FormatInterface
 {
 
+    const FORMAT_NAME = 'gz';
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName()
+    {
+        return self::FORMAT_NAME;
+    }
+
     /**
      * {@inheritdoc}
      */
