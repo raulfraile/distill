@@ -47,7 +47,7 @@ class PharExtensionMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && class_exists('\\Phar');
+        return class_exists('\\Phar');
     }
 
     /**

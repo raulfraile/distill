@@ -54,17 +54,17 @@ class ContainerProvider implements ServiceProviderInterface
 
         $this->methods = [
             Method\ArchiveTarMethod::getClass(),
-            Method\Bzip2CommandMethod::getClass(),
-            Method\CabextractCommandMethod::getClass(),
-            Method\GzipCommandMethod::getClass(),
+            Method\Command\Bzip2CommandMethod::getClass(),
+            Method\Command\CabextractCommandMethod::getClass(),
+            Method\Command\GzipCommandMethod::getClass(),
             Method\PharExtensionMethod::getClass(),
             Method\PharDataMethod::getClass(),
             Method\RarExtensionMethod::getClass(),
-            Method\TarCommandMethod::getClass(),
-            Method\UnrarCommandMethod::getClass(),
-            Method\UnzipCommandMethod::getClass(),
-            Method\X7zCommandMethod::getClass(),
-            Method\XzCommandMethod::getClass(),
+            Method\Command\TarCommandMethod::getClass(),
+            Method\Command\UnrarCommandMethod::getClass(),
+            Method\Command\UnzipCommandMethod::getClass(),
+            Method\Command\X7zCommandMethod::getClass(),
+            Method\Command\XzCommandMethod::getClass(),
             Method\ZipArchiveMethod::getClass()
         ];
     }

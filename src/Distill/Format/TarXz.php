@@ -54,7 +54,7 @@ class TarXz extends AbstractFormat
     public function getUncompressionMethods()
     {
         return [
-            Method\TarCommandMethod::getName()
+            Method\Command\TarCommandMethod::getName()
         ];
     }
 

@@ -4,44 +4,46 @@ namespace Distill\Tests\Method;
 
 use Distill\Method;
 use Distill\Format;
+use Distill\Tests\Method\AbstractMethodTest;
 
-class Bzip2CommandMethodTest extends AbstractMethodTest
+class UnrarCommandMethodTest extends AbstractMethodTest
 {
 
     public function setUp()
     {
-        $this->method = new Method\Bzip2CommandMethod();
+        $this->method = new Method\Command\UnrarCommandMethod();
         parent::setUp();
     }
 
-    public function testExtractCorrectBz2File()
+    public function testExtractCorrectRarFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.bz2', $target, new Format\Bz2());
+        $response = $this->extract('file_ok.rar', $target, new Format\Rar());
 
         $this->assertTrue($response);
+        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
         $this->clearTemporaryPath();
     }
 
-    public function testExtractFakeBz2File()
+    public function testExtractFakeRarFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.bz2', $target, new Format\Bz2());
+        $response = $this->extract('file_fake.rar', $target, new Format\Rar());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 
-    public function testExtractNoBz2File()
+    public function testExtractNoRarFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.cab', $target, new Format\Cab());
+        $response = $this->extract('file_ok.phar', $target, new Format\Phar());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();

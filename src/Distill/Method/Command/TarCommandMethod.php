@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Method;
+namespace Distill\Method\Command;
 
 use Distill\Exception\CorruptedFileException;
 use Distill\Format\FormatInterface;
@@ -22,7 +22,7 @@ use Distill\Format\TarXz;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class TarCommandMethod extends AbstractMethod
+class TarCommandMethod extends AbstractCommandMethod
 {
 
     const EXIT_CODE_OK = 0;

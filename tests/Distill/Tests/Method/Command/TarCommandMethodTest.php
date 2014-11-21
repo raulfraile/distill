@@ -4,13 +4,14 @@ namespace Distill\Tests\Method;
 
 use Distill\Method;
 use Distill\Format;
+use Distill\Tests\Method\AbstractMethodTest;
 
 class TarCommandMethodTest extends AbstractMethodTest
 {
 
     public function setUp()
     {
-        $this->method = new Method\TarCommandMethod();
+        $this->method = new Method\Command\TarCommandMethod();
         parent::setUp();
     }
 

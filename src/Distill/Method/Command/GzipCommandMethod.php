@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Method;
+namespace Distill\Method\Command;
 
 use Distill\Format\FormatInterface;
 
@@ -18,7 +18,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class GzipCommandMethod extends AbstractMethod
+class GzipCommandMethod extends AbstractCommandMethod
 {
 
     /**

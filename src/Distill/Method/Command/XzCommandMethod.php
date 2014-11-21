@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Method;
+namespace Distill\Method\Command;
 
 use Distill\File;
 use Distill\Format\FormatInterface;
@@ -19,7 +19,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class X7zCommandMethod extends AbstractMethod
+class XzCommandMethod extends AbstractCommandMethod
 {
 
     /**
@@ -31,8 +31,7 @@ class X7zCommandMethod extends AbstractMethod
             return false;
         }
 
-        @mkdir($target);
-        $command = '7z e -y '.escapeshellarg($file).' -o'.escapeshellarg($target);
+        $command = sprintf("xz -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
 
         $exitCode = $this->executeCommand($command);
 
@@ -44,7 +43,7 @@ class X7zCommandMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('7z');
+        return !$this->isWindows() && $this->existsCommand('xz');
     }
 
     /**

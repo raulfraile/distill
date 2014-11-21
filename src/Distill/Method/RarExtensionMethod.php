@@ -53,7 +53,7 @@ class RarExtensionMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && class_exists('\\RarArchive');
+        return class_exists('\\RarArchive');
     }
 
     /**

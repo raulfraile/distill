@@ -9,8 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Method;
+namespace Distill\Method\Command;
 
+use Distill\Exception\CorruptedFileException;
+use Distill\File;
 use Distill\Format\FormatInterface;
 
 /**
@@ -18,8 +20,12 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class CabextractCommandMethod extends AbstractMethod
+class UnzipCommandMethod extends AbstractCommandMethod
 {
+
+    const EXIT_CODE_WARNING_ZIPFILE = 1;
+    const EXIT_CODE_GENERIC_ERROR_ZIPFILE = 2;
+    const EXIT_CODE_SEVERE_ERROR_ZIPFILE = 3;
 
     /**
      * {@inheritdoc}
@@ -30,10 +36,17 @@ class CabextractCommandMethod extends AbstractMethod
             return false;
         }
 
-        @mkdir($target);
-        $command = 'cabextract -d '.escapeshellarg($target).' '.escapeshellarg($file);
+        $command = 'unzip '.escapeshellarg($file).' -d '.escapeshellarg($target);
 
         $exitCode = $this->executeCommand($command);
+
+        switch ($exitCode) {
+            case self::EXIT_CODE_WARNING_ZIPFILE:
+            case self::EXIT_CODE_GENERIC_ERROR_ZIPFILE:
+                throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_LOW);
+            case self::EXIT_CODE_SEVERE_ERROR_ZIPFILE:
+                throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
+        }
 
         return $this->isExitCodeSuccessful($exitCode);
     }
@@ -43,7 +56,7 @@ class CabextractCommandMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('cabextract');
+        return !$this->isWindows() && $this->existsCommand('unzip');
     }
 
     /**

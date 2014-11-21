@@ -54,8 +54,8 @@ class TarGz extends AbstractFormat
     public function getUncompressionMethods()
     {
         return [
-            Method\TarCommandMethod::getName(),
-            Method\X7zCommandMethod::getName(),
+            Method\Command\TarCommandMethod::getName(),
+            Method\Command\X7zCommandMethod::getName(),
             Method\PharDataMethod::getName(),
             Method\ArchiveTarMethod::getName()
         ];

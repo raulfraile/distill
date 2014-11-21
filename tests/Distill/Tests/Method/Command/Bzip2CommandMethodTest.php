@@ -1,47 +1,48 @@
 <?php
 
-namespace Distill\Tests\Method;
+namespace Distill\Tests\Method\Command;
 
 use Distill\Method;
 use Distill\Format;
+use Distill\Tests\Method\AbstractMethodTest;
 
-class X7zCommandMethodTest extends AbstractMethodTest
+class Bzip2CommandMethodTest extends AbstractMethodTest
 {
 
     public function setUp()
     {
-        $this->method = new Method\X7zCommandMethod();
+        $this->method = new Method\Command\Bzip2CommandMethod();
         parent::setUp();
     }
 
-    public function testExtractCorrect7zFile()
+    public function testExtractCorrectBz2File()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.7z', $target, new Format\X7z());
+        $response = $this->extract('file_ok.bz2', $target, new Format\Bz2());
 
         $this->assertTrue($response);
         $this->clearTemporaryPath();
     }
 
-    public function testExtractFake7zFile()
+    public function testExtractFakeBz2File()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.7z', $target, new Format\X7z());
+        $response = $this->extract('file_fake.bz2', $target, new Format\Bz2());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 
-    public function testExtractNo7zFile()
+    public function testExtractNoBz2File()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.phar', $target, new Format\Phar());
+        $response = $this->extract('file_ok.cab', $target, new Format\Cab());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();

@@ -9,10 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Method;
+namespace Distill\Method\Command;
 
-use Distill\Exception\CorruptedFileException;
-use Distill\File;
 use Distill\Format\FormatInterface;
 
 /**
@@ -20,12 +18,8 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class UnzipCommandMethod extends AbstractMethod
+class Bzip2CommandMethod extends AbstractCommandMethod
 {
-
-    const EXIT_CODE_WARNING_ZIPFILE = 1;
-    const EXIT_CODE_GENERIC_ERROR_ZIPFILE = 2;
-    const EXIT_CODE_SEVERE_ERROR_ZIPFILE = 3;
 
     /**
      * {@inheritdoc}
@@ -36,17 +30,9 @@ class UnzipCommandMethod extends AbstractMethod
             return false;
         }
 
-        $command = 'unzip '.escapeshellarg($file).' -d '.escapeshellarg($target);
+        $command = sprintf("bzip2 -k -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
 
         $exitCode = $this->executeCommand($command);
-
-        switch ($exitCode) {
-            case self::EXIT_CODE_WARNING_ZIPFILE:
-            case self::EXIT_CODE_GENERIC_ERROR_ZIPFILE:
-                throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_LOW);
-            case self::EXIT_CODE_SEVERE_ERROR_ZIPFILE:
-                throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
-        }
 
         return $this->isExitCodeSuccessful($exitCode);
     }
@@ -56,7 +42,7 @@ class UnzipCommandMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('unzip');
+        return !$this->isWindows() && $this->existsCommand('bzip2');
     }
 
     /**

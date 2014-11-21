@@ -54,7 +54,7 @@ class X7z extends AbstractFormat
     public function getUncompressionMethods()
     {
         return [
-            Method\X7zCommandMethod::getName()
+            Method\Command\X7zCommandMethod::getName()
         ];
     }
 

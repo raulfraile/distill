@@ -1,16 +1,17 @@
 <?php
 
-namespace Distill\Tests\Method;
+namespace Distill\Tests\Method\Command;
 
 use Distill\Method;
 use Distill\Format;
+use Distill\Tests\Method\AbstractMethodTest;
 
 class CabextractCommandMethodTest extends AbstractMethodTest
 {
 
     public function setUp()
     {
-        $this->method = new Method\CabextractCommandMethod();
+        $this->method = new Method\Command\CabextractCommandMethod();
         parent::setUp();
     }
 

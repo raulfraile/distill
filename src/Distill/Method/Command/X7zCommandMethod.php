@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Method;
+namespace Distill\Method\Command;
 
+use Distill\File;
 use Distill\Format\FormatInterface;
 
 /**
@@ -18,7 +19,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class UnrarCommandMethod extends AbstractMethod
+class X7zCommandMethod extends AbstractCommandMethod
 {
 
     /**
@@ -31,7 +32,7 @@ class UnrarCommandMethod extends AbstractMethod
         }
 
         @mkdir($target);
-        $command = 'unrar e '.escapeshellarg($file).' '.escapeshellarg($target);
+        $command = '7z e -y '.escapeshellarg($file).' -o'.escapeshellarg($target);
 
         $exitCode = $this->executeCommand($command);
 
@@ -43,7 +44,7 @@ class UnrarCommandMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('unrar');
+        return !$this->isWindows() && $this->existsCommand('7z');
     }
 
     /**

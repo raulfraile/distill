@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Method;
+namespace Distill\Method\Command;
 
 use Distill\Format\FormatInterface;
 
@@ -18,7 +18,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class Bzip2CommandMethod extends AbstractMethod
+class CabextractCommandMethod extends AbstractCommandMethod
 {
 
     /**
@@ -30,7 +30,8 @@ class Bzip2CommandMethod extends AbstractMethod
             return false;
         }
 
-        $command = sprintf("bzip2 -k -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
+        @mkdir($target);
+        $command = 'cabextract -d '.escapeshellarg($target).' '.escapeshellarg($file);
 
         $exitCode = $this->executeCommand($command);
 
@@ -42,7 +43,7 @@ class Bzip2CommandMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('bzip2');
+        return !$this->isWindows() && $this->existsCommand('cabextract');
     }
 
     /**

@@ -54,8 +54,8 @@ class Cab extends AbstractFormat
     public function getUncompressionMethods()
     {
         return [
-            Method\CabextractCommandMethod::getName(),
-            Method\X7zCommandMethod::getName()
+            Method\Command\CabextractCommandMethod::getName(),
+            Method\Command\X7zCommandMethod::getName()
         ];
     }
 
