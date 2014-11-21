@@ -22,6 +22,8 @@ class FormatGuesser implements FormatGuesserInterface
      */
     protected $formats;
 
+    protected $extensionMap;
+
     /**
      * Constructor.
      * @param FormatInterface[] $formats Formats.
@@ -29,6 +31,15 @@ class FormatGuesser implements FormatGuesserInterface
     public function __construct(array $formats = [])
     {
         $this->formats = $formats;
+
+        $this->extensionMap = [];
+        foreach ($this->formats as $format) {
+            $extensions = $format->getExtensions();
+
+            foreach ($extensions as $extension) {
+                $this->extensionMap[$extension] = $format;
+            }
+        }
     }
 
     /**
@@ -38,21 +49,11 @@ class FormatGuesser implements FormatGuesserInterface
     {
         $extension = $this->getExtension($file);
 
-        $format = null;
-        $formatsNumber = count($this->formats);
-        $i = 0;
-        while (null === $format && $i < $formatsNumber) {
-            if (in_array($extension, $this->formats[$i]->getExtensions())) {
-                $format = $this->formats[$i];
-            }
-            $i++;
-        }
-
-        if (null === $format) {
+        if (false === array_key_exists($extension, $this->extensionMap)) {
             throw new ExtensionNotSupportedException($extension);
         }
 
-        return $format;
+        return $this->extensionMap[$extension];
     }
 
     /**
@@ -69,8 +70,10 @@ class FormatGuesser implements FormatGuesserInterface
             $filename  = pathinfo($file, PATHINFO_FILENAME);
             $subextension = pathinfo($filename, PATHINFO_EXTENSION);
 
-            if ("" !== $subextension) {
-                $extension = sprintf('%s.%s', $subextension, strtolower($extension));
+            $completeExtension = sprintf('%s.%s', $subextension, $extension);
+
+            if (array_key_exists($completeExtension, $this->extensionMap)) {
+                $extension = $completeExtension;
             }
         }
 
