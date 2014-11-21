@@ -56,6 +56,7 @@ class TarBz2 extends AbstractFormat
         return [
             Method\TarCommandMethod::getName(),
             Method\X7zCommandMethod::getName(),
+            Method\PharDataMethod::getName(),
             Method\ArchiveTarMethod::getName()
         ];
     }
