@@ -18,11 +18,16 @@ class FormatGuesser implements FormatGuesserInterface
 {
 
     /**
-     * @var FormatInterface[]
+     * Maps extensions and formats
+     * @var string[]
      */
-    protected $formats;
-
     protected $extensionMap;
+
+    /**
+     * Contains root extensions that may contain subextensions.
+     * @var string[]
+     */
+    protected $composedExtensions = [];
 
     /**
      * Constructor.
@@ -30,14 +35,16 @@ class FormatGuesser implements FormatGuesserInterface
      */
     public function __construct(array $formats = [])
     {
-        $this->formats = $formats;
-
         $this->extensionMap = [];
-        foreach ($this->formats as $format) {
+        foreach ($formats as $format) {
             $extensions = $format->getExtensions();
 
             foreach ($extensions as $extension) {
                 $this->extensionMap[$extension] = $format;
+
+                if (false !== $positionDot = strpos($extension, '.')) {
+                    $this->composedExtensions[] = substr($extension, $positionDot + 1);
+                }
             }
         }
     }
@@ -66,7 +73,7 @@ class FormatGuesser implements FormatGuesserInterface
     {
         $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
-        if (in_array($extension, array('bz', 'bz2', 'gz', 'xz'))) {
+        if (in_array($extension, $this->composedExtensions)) {
             $filename  = pathinfo($file, PATHINFO_FILENAME);
             $subextension = pathinfo($filename, PATHINFO_EXTENSION);
 
