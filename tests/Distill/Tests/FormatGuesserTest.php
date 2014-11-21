@@ -103,4 +103,9 @@ class FormatGuesserTest extends \PHPUnit_Framework_TestCase
         $this->formatGuesser->guess($this->filesPath . 'empty.txt');
     }
 
+    public function testFileComposedExtensionGuesser()
+    {
+        $this->guessFormat('test.txt.gz', '\\Distill\\Format\\Gz');
+    }
+
 }
