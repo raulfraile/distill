@@ -11,6 +11,7 @@
 
 namespace Distill;
 
+use Distill\Exception\HashAlgorithmNotSupportedException;
 use Distill\Exception\NotSingleDirectoryException;
 use Distill\Extractor\ExtractorInterface;
 use Distill\Strategy\StrategyInterface;
@@ -131,6 +132,34 @@ class Distill
         $filesystem->rename($singleRootDirectoryName, $path);
 
         return true;
+    }
+
+    /**
+     * Checks if the file is the intended file to be decompressed and has not been manipulated.
+     * @param string $file          File to be checked.
+     * @param string $hashAlgorithm Hash algorithm.
+     * @param string $expectedHash  Expected hash.
+     * @param string $publicKey     Only when using signed hashes, public key.
+     *
+     * @throws HashAlgorithmNotSupportedException
+     *
+     * @return bool
+     */
+    public function isValidChecksum($file, $hashAlgorithm, $expectedHash, $publicKey = null)
+    {
+        // check if the hash has been signed
+        if (null !== $publicKey) {
+            $expectedHash = openssl_public_decrypt($expectedHash, $decrypted, $publicKey);
+        }
+
+        $hashAlgorithm = strtolower($hashAlgorithm);
+        if (false === in_array($hashAlgorithm, hash_algos())) {
+            throw new HashAlgorithmNotSupportedException($hashAlgorithm);
+        }
+
+        $hash = hash_file($hashAlgorithm, $file);
+
+        return $hash === $expectedHash;
     }
 
     /**
