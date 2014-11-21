@@ -3,6 +3,7 @@
 namespace Distill;
 
 use Distill\Exception\FormatGuesserRequiredException;
+use Distill\Exception\InvalidArgumentException;
 use Distill\Exception\StrategyRequiredException;
 use Distill\Format\FormatInterface;
 use Distill\Strategy\StrategyInterface;
@@ -122,6 +123,40 @@ class Chooser
         }
 
         $this->files[] = new File($filename, $format);
+
+        return $this;
+    }
+
+    /**
+     * Adds new files that have the same name but different extensions.
+     * @param string            $basename Basename (e.g. 'my_file')
+     * @param string[]          $extensions Extensions (e.g. ['zip', 'rar'])
+     * @param FormatInterface[] $formats Formats for each of the exceptions. Supports indexed and associative arrays.
+     *
+     * @throws FormatGuesserRequiredException
+     *
+     * @return Chooser
+     */
+    public function addFilesWithDifferentExtensions($basename, array $extensions, array $formats = [])
+    {
+        if (!empty($formats) && count($extensions) != count($formats)) {
+            throw new InvalidArgumentException('formats', 'If present, it must contain the same number of elements as extensions passed');
+        }
+
+        $i = 0;
+        foreach ($extensions as $extension) {
+            $format = null;
+
+            if (array_key_exists($i, $formats)) {
+                $format = $formats[$i];
+            }
+
+            if (array_key_exists($extension, $formats)) {
+                $format = $formats[$extension];
+            }
+
+            $this->addFile($basename . '.' . $extension, $format);
+        }
 
         return $this;
     }
