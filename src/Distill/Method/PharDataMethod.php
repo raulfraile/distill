@@ -55,7 +55,7 @@ class PharDataMethod extends AbstractMethod
      */
     protected function getPharFormat(FormatInterface $format)
     {
-        if ($format instanceof Format\Tar || $format instanceof Format\TarBz2) {
+        if ($format instanceof Format\Tar || $format instanceof Format\TarBz2 || $format instanceof Format\TarGz) {
             return \Phar::TAR;
         }
 
@@ -67,7 +67,7 @@ class PharDataMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && class_exists('\\Phar');
+        return class_exists('\\PharData') && class_exists('\\Phar');
     }
 
     /**

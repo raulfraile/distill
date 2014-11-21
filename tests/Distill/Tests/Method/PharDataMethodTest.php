@@ -60,6 +60,29 @@ class PharDataMethodTest extends AbstractMethodTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractCorrectTarGzFile()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $response = $this->extract('file_ok.tar.gz', $target, new Format\TarGz());
+
+        $this->assertTrue($response);
+        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->clearTemporaryPath();
+    }
+
+    public function testExtractFakeGzFile()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $response = $this->extract('file_fake.tar.gz', $target, new Format\TarGz());
+
+        $this->assertFalse($response);
+        $this->clearTemporaryPath();
+    }
+
     public function testExtractNoPharDataFile()
     {
         $target = $this->getTemporaryPath();
