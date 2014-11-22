@@ -66,9 +66,7 @@ class Rar extends AbstractFormat
         return [
             Method\Command\Unrar::getName(),
             Method\Command\x7zip::getName(),
-            Method\Extension\PharData::getName(),
-            Method\Extension\Rar::getName(),
-            Method\Extension\Pear\ArchiveTar::getName()
+            Method\Extension\Rar::getName()
         ];
     }
 
