@@ -8,7 +8,7 @@ php:
 
 matrix:
   allow_failures:
-    - php: hhvm-nightly
+    - php: hhvm
 
 before_script:
   - sudo apt-get update -qq
@@ -19,11 +19,9 @@ before_script:
   - sudo apt-get install -y cabextract
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then pecl install zip; fi;'
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then pecl install rar; fi;'
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then phpenv rehash; fi;'
-
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then echo "phar.readonly = 0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then echo "phar.readonly = 0" > travis.hhvm.ini; fi;'
 
   - composer install --prefer-source
 
 script:
-  - phpunit --verbose
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then phpunit --verbose; else hhvm -c travis.hhvm.ini phpunit --verbose fi;'
