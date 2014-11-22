@@ -40,6 +40,7 @@ class ContainerProvider implements ServiceProviderInterface
         $this->formats = [
             Format\Bz2::getClass(),
             Format\Cab::getClass(),
+            Format\Epub::getClass(),
             Format\Gz::getClass(),
             Format\Phar::getClass(),
             Format\Rar::getClass(),

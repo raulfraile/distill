@@ -1,0 +1,487 @@
+body {
+  direction: ltr;
+  widows: 2;
+  orphans: 2;
+  -webkit-hyphens: none !important;
+  adobe-hyphenate: none;
+  -moz-hyphens: none;
+  hyphens: none;
+}
+/* Title page */
+ #cover-image {width: 100%; }
+ #cover-image img { max-width: 100%; }
+ div#text-cover h2 {
+   page-break-before: avoid;
+ }
+
+/* ToC page */
+h2#toc {
+  margin-top: 1em;
+  font-variant: normal;
+  font-family: sans-serif;
+}
+
+/* Book ToC */
+ul.toc, ul.toc ul {
+  padding: 0;
+  margin: 0;
+}
+
+/* Chapters for ToC without Parts */
+.toc.no-parts > li {
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+  font-size: 122%;
+}
+
+/* Sections for a ToC without parts  */
+.toc.no-parts > li > ul > li {
+  font-size: 83%;
+}
+
+/* Sub-sections and below for a ToC without parts */
+.toc.no-parts > li > ul > li > ul {
+  font-size: 80%;
+}
+
+/* ToC with Parts */
+.toc.has-parts > li  {
+  margin-bottom: 1em;
+  margin-top: 1em;
+  font-size: 150%;
+}
+
+/* Chapters for a ToC with parts  */
+.toc.has-parts > li > ul > li {
+  font-size: 66%;
+}
+
+/* Sections and below for a ToC with parts */
+.toc.has-parts > li > ul > li > ul {
+  font-size: 80%;
+}
+
+.toc li {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 1em;
+}
+.section-number {
+  font-weight: bold;
+}
+
+/* Dedication */
+div.dedication-centered {
+  text-align: center;
+}
+
+div.dedication {
+  font-style: italic;
+  margin-top: 10em;
+}
+
+/* headings */
+
+h1#toc { text-align: left;}
+h1, h2, h3, h4, h5, h6 {
+  font-family: sans-serif;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+  page-break-after: avoid;
+}
+/* Parts */
+h1 {
+   font-size: 4em;
+   line-height: .8em;
+   font-variant: small-caps;
+   margin-top: 20%;
+   text-align: center;
+   padding: 0;
+   font-weight: normal;
+}
+
+/* Chapters */
+h1#toc, h2 {
+   margin-top: 10%;
+   margin-bottom: 1em;
+}
+
+/* Sections */
+h3 {
+   margin-top: 1em;
+   margin-bottom: 0.25em;
+}
+
+h4 { margin-top: 1em;
+   margin-bottom: 0.25em;
+}
+
+h5 { margin-top: 1em;
+   margin-bottom: 0.25em;
+}
+
+h6 {
+   margin: 0;
+}
+
+/* scene breaks */
+
+hr.scene-break {
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.scene-break.space {
+  margin-top: 1em;
+}
+
+.scene-break.stars {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  width: 100%;
+  text-align: center;
+}
+
+/* Tables */
+table {
+  margin: 10px auto 20px auto;
+  border-collapse: collapse;
+  page-break-inside: avoid;
+}
+
+tbody {
+  padding-bottom: 40px;
+}
+
+tr {
+  page-break-inside: avoid;
+}
+
+td, th {
+  padding-right: 10px;
+}
+
+th {
+  text-align: left;
+  border-bottom: thin solid;
+}
+
+/* general text */
+
+span.underline {
+  text-decoration: underline;
+}
+
+p {
+  text-indent: 0em;
+  margin-top: 0.5em;
+}
+blockquote { margin: 1.5em 0em 1.5em 2em; }
+/* code blocks */
+code.lineno, span.lineno {
+  color: gray;
+  font-size: 80%;
+}
+
+/* setting the display on a div to inline-block makes the epub reader try
+   to fit the div on a single page.
+   See http://www.pigsgourdsandwikis.com/2010/06/goodbye-widows-and-orphans-or-yes-you.html
+*/
+div.code-block {
+  margin-top: 1em;
+  margin-bottom: 1.5em;
+  font-size: 90%;
+}
+
+code {
+  -webkit-hyphens: none;
+}
+
+div.code-block div.highlight {
+  -webkit-hyphens: none;
+}
+
+/* captions for codeblocks and tables */
+p.codeblock-title, p.table-title {
+  page-break-after: avoid;
+  margin-bottom: 0px;
+}
+
+p.table-title {
+  text-align: center;
+}
+
+p.codeblock-title {
+  margin-top: -10px;
+  padding-top: -10px;
+  text-indent: 0em;
+}
+
+div.code-block hr {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+div.code-block hr {
+  width: 100%;
+}
+
+table.with-caption {
+  margin-top: 0px;
+  padding-top: 0px;
+  page-break-before: avoid;
+}
+
+.centered p {
+  text-align: center;
+  text-indent: 0em;
+}
+
+div.page-break {
+  page-break-after: always;
+}
+
+/* asides */
+
+.sidebarish {
+  font-size: 0.9em;
+}
+
+div.aside {
+  border-style: solid;
+  background-color: rgb(255,255,255);
+  border-color: rgb(200,200,200);
+  border-width: thin;
+  margin: 1em;
+  padding: 1em 1.5em;
+}
+
+/* tips, warnings, etc */
+table.sidebarish {
+  margin: 1em 1em 1em 0em;
+  border-style: none;
+  border-collapse: collapse;
+}
+
+table.sidebarish > tbody > tr > td {
+  vertical-align: top;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
+.sidebarish h1, .sidebarish h2, .sidebarish h3, .sidebarish h4 {
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+  text-align: left;
+}
+
+table.sidebarish td.sidebar-icon {
+  width: 50px;
+  padding-top: 1.5em;
+  padding-left: 0em;
+}
+
+table.sidebarish td.sidebar-icon img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+
+/* force some space before and after code blocks */
+pre {
+   margin-top: 0.5em;
+   margin-bottom: 0.5em;
+   font-family: Courier, monospace;
+   white-space: pre-wrap;
+}
+
+/* poems */
+div.poem pre {
+  font-family: serif;
+}
+
+body {
+  direction: ltr;
+}
+
+/* image equations */
+img.inline-equation {
+   vertical-align: -30%;
+}
+
+img.block-equation {
+  margin-top: 0.5em;
+  margin-right: auto;
+  margin-bottom: 0.5em;
+  margin-left: auto;
+  text-align: center;
+}
+
+/* Lists */
+ul, ol {
+  margin-top: 1em;
+}
+
+/* nested lists should not have a margin */
+ul ul, ul ol, ol ul, ol ol {
+  margin-top: 0.1em;
+}
+
+ol.arabic {
+  list-style-type: decimal;
+}
+
+ol.lower-roman {
+  list-style-type: lower-roman;
+}
+
+ol.lower-alpha {
+  list-style-stype: lower-alpha;
+}
+
+/* Prevents overflow in non-iBooks epub readers */
+img {
+  max-width: 100%;
+}
+
+/* used to center div surrounding an image with a caption */
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* captions for images and tables */
+p.caption, p.table-title {
+  font-size: 0.7em;
+  font-weight: bold;
+}
+
+/* Images with captions */
+
+div.image-with-caption {
+  width: 100%;
+  text-align: center;
+}
+
+div.image-with-caption img {
+  display: inline-block;
+}
+
+div.image-with-caption p.caption {
+  text-align: center;
+  margin: 0em !important;
+  padding: 0em !important;
+  text-indent: 0em !important;
+  page-break-before: avoid;
+}
+
+div.image-with-caption.floatleft {
+  float: left;
+  clear: left;
+  margin-right: 1em;
+}
+
+div.image-with-caption.floatright {
+  float: right;
+  clear: right;
+  margin-left: 1em;
+}
+
+div.image-with-caption.floatleft img, div.image-with-caption.floatright img {
+  width: 100% !important;
+  vertical-align: text-top;
+  margin: .5em !important;
+}
+
+div.image-with-caption.floatleft p.caption, div.image-with-caption.floatright p.caption {
+  width: 100%;
+}
+
+/* styles for inserted (uil) and deleted (udl) lines */
+.udl {
+  text-decoration: line-through;
+}
+
+.uil {
+  font-weight: 900;
+}
+
+/* NOTE: I replaced this line:
+ * .err { border: 1px solid #FF0000 }
+ * with this:
+ * .err { color: #FF0000 }
+ * to get rid of the ugly red boxes
+ */
+/* ============================================================================== */
+/* everything below this line is generated by */
+/* rake generate:pygments:styles[default] */
+
+.hll { background-color: #ffffcc }
+.c { color: #408080; font-style: italic } /* Comment */
+.err { color: #FF0000 }
+.k { color: #008000; font-weight: 600 } /* Keyword */
+.o { color: #666666 } /* Operator */
+.cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.cp { color: #BC7A00 } /* Comment.Preproc */
+.c1 { color: #408080; font-style: italic } /* Comment.Single */
+.cs { color: #408080; font-style: italic } /* Comment.Special */
+.gd { color: #A00000 } /* Generic.Deleted */
+.ge { font-style: italic } /* Generic.Emph */
+.gr { color: #FF0000 } /* Generic.Error */
+.gh { color: #000080; font-weight: 600 } /* Generic.Heading */
+.gi { color: #00A000 } /* Generic.Inserted */
+.go { color: #888888 } /* Generic.Output */
+.gp { color: #000080; font-weight: 600 } /* Generic.Prompt */
+.gs { font-weight: 600 } /* Generic.Strong */
+.gu { color: #800080; font-weight: 600 } /* Generic.Subheading */
+.gt { color: #0044DD } /* Generic.Traceback */
+.kc { color: #008000; font-weight: 600 } /* Keyword.Constant */
+.kd { color: #008000; font-weight: 600 } /* Keyword.Declaration */
+.kn { color: #008000; font-weight: 600 } /* Keyword.Namespace */
+.kp { color: #008000 } /* Keyword.Pseudo */
+.kr { color: #008000; font-weight: 600 } /* Keyword.Reserved */
+.kt { color: #B00040 } /* Keyword.Type */
+.m { color: #666666 } /* Literal.Number */
+.s { color: #BA2121 } /* Literal.String */
+.na { color: #7D9029 } /* Name.Attribute */
+.nb { color: #008000 } /* Name.Builtin */
+.nc { color: #0000FF; font-weight: 600 } /* Name.Class */
+.no { color: #880000 } /* Name.Constant */
+.nd { color: #AA22FF } /* Name.Decorator */
+.ni { color: #999999; font-weight: 600 } /* Name.Entity */
+.ne { color: #D2413A; font-weight: 600 } /* Name.Exception */
+.nf { color: #0000FF } /* Name.Function */
+.nl { color: #A0A000 } /* Name.Label */
+.nn { color: #0000FF; font-weight: 600 } /* Name.Namespace */
+.nt { color: #008000; font-weight: 600 } /* Name.Tag */
+.nv { color: #19177C } /* Name.Variable */
+.ow { color: #AA22FF; font-weight: 600 } /* Operator.Word */
+.w { color: #bbbbbb } /* Text.Whitespace */
+.mf { color: #666666 } /* Literal.Number.Float */
+.mh { color: #666666 } /* Literal.Number.Hex */
+.mi { color: #666666 } /* Literal.Number.Integer */
+.mo { color: #666666 } /* Literal.Number.Oct */
+.sb { color: #BA2121 } /* Literal.String.Backtick */
+.sc { color: #BA2121 } /* Literal.String.Char */
+.sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.s2 { color: #BA2121 } /* Literal.String.Double */
+.se { color: #BB6622; font-weight: 600 } /* Literal.String.Escape */
+.sh { color: #BA2121 } /* Literal.String.Heredoc */
+.si { color: #BB6688; font-weight: 600 } /* Literal.String.Interpol */
+.sx { color: #008000 } /* Literal.String.Other */
+.sr { color: #BB6688 } /* Literal.String.Regex */
+.s1 { color: #BA2121 } /* Literal.String.Single */
+.ss { color: #19177C } /* Literal.String.Symbol */
+.bp { color: #008000 } /* Name.Builtin.Pseudo */
+.vc { color: #19177C } /* Name.Variable.Class */
+.vg { color: #19177C } /* Name.Variable.Global */
+.vi { color: #19177C } /* Name.Variable.Instance */
+.il { color: #666666 } /* Literal.Number.Integer.Long */

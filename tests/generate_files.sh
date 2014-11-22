@@ -72,3 +72,10 @@ php ../../generate_phar.php ../file_ok.phar 1.txt 2.txt 3.txt
 # cab file
 rm -f ../file_ok.cab
 lcab 1.txt 2.txt 3.txt ../file_ok.cab
+
+# epub file
+rm -f ../file_ok.epub
+cd ../epub
+zip -X -0 gbe.epub.zip mimetype
+zip -X -9 -r gbe.epub.zip * -x mimetype
+mv gbe.epub.zip ../file_ok.epub

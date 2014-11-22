@@ -61,4 +61,16 @@ class ZipMethodTest extends AbstractMethodTest
         $this->extract('file_corrupt.zip', $target, new Format\Zip());
     }
 
+    public function testExtractCorrectEpubFile()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $response = $this->extract('file_ok.epub', $target, new Format\Epub());
+
+        $this->assertTrue($response);
+        $this->checkDirectoryFiles($target, $this->filesPath . '/epub');
+        $this->clearTemporaryPath();
+    }
+
 }

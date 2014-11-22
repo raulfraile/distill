@@ -9,7 +9,7 @@ Distill extracts files from compressed archives.
 
 Features:
 
-* Extract files from `bz2`, `gz`, `phar`, `rar`, `tar`, `tar.bz2`, `tar.gz`, `tar.xz`, `7z`, `xz`
+* Extract files from `bz2`, `epub`, `gz`, `phar`, `rar`, `tar`, `tar.bz2`, `tar.gz`, `tar.xz`, `7z`, `xz`
 and `zip` archives.
 * Different uncompression methods under the hood: PHP extensions and command line binaries.
 * Strategy to choose the right file in case there are more than one available format. Strategies can be
@@ -56,6 +56,7 @@ $distill->extract(__DIR__ . '/../tests/files/file_ok.zip', __DIR__ . '/extract')
 
 * `bz2`: `bzip2` unix command and `7z` unix command.
 * `cab`: `7z` unix command.
+* `epub`: `zip` unix command.
 * `gz`: `gzip` unix command and `7z` unix command.
 * `phar`: `PHAR` extension.
 * `rar`: `unrar` unix command, `7z` unix command, and `rar` extension.
