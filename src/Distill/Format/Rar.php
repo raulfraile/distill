@@ -57,6 +57,7 @@ class Rar extends AbstractFormat
             Method\Command\UnrarCommandMethod::getName(),
             Method\Command\X7zCommandMethod::getName(),
             Method\PharDataMethod::getName(),
+            Method\RarExtensionMethod::getName(),
             Method\ArchiveTarMethod::getName()
         ];
     }

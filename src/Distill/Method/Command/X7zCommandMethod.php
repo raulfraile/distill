@@ -11,6 +11,8 @@
 
 namespace Distill\Method\Command;
 
+use Distill\Exception\CorruptedFileException;
+use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\File;
 use Distill\Format\FormatInterface;
 
@@ -22,13 +24,20 @@ use Distill\Format\FormatInterface;
 class X7zCommandMethod extends AbstractCommandMethod
 {
 
+    const EXIT_CODE_OK = 0;
+    const EXIT_CODE_FATAL_ERROR = 2;
+
     /**
      * {@inheritdoc}
      */
     public function extract($file, $target, FormatInterface $format)
     {
-        if (!$this->isSupported()) {
+        if (false === $this->isSupported()) {
             return false;
+        }
+
+        if (false === $this->isFormatSupported($format)) {
+            throw new FormatNotSupportedInMethodException($this, $format);
         }
 
         @mkdir($target);
@@ -36,7 +45,11 @@ class X7zCommandMethod extends AbstractCommandMethod
 
         $exitCode = $this->executeCommand($command);
 
-        return $this->isExitCodeSuccessful($exitCode);
+        if (self::EXIT_CODE_FATAL_ERROR === $exitCode) {
+            throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
+        }
+
+        return self::EXIT_CODE_OK === $exitCode;
     }
 
     /**

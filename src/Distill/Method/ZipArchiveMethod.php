@@ -12,6 +12,7 @@
 namespace Distill\Method;
 
 use Distill\Exception\CorruptedFileException;
+use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\File;
 use Distill\Format\FormatInterface;
 
@@ -30,6 +31,10 @@ class ZipArchiveMethod extends AbstractMethod
     {
         if (!$this->isSupported()) {
             return false;
+        }
+
+        if (false === $this->isFormatSupported($format)) {
+            throw new FormatNotSupportedInMethodException($this, $format);
         }
 
         $archive = new \ZipArchive();

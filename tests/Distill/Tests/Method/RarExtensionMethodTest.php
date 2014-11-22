@@ -39,12 +39,13 @@ class RarExtensionMethodTest extends AbstractMethodTest
 
     public function testExtractNoRarFile()
     {
+        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedInMethodException');
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.phar', $target, new Format\Phar());
+        $this->extract('file_ok.phar', $target, new Format\Phar());
 
-        $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 

@@ -39,12 +39,13 @@ class XzCommandMethodTest extends AbstractMethodTest
 
     public function testExtractNoXzFile()
     {
+        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedInMethodException');
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.zip', $target, new Format\Zip());
+        $this->extract('file_ok.zip', $target, new Format\Zip());
 
-        $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 

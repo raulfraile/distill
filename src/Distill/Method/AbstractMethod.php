@@ -11,6 +11,7 @@
 
 namespace Distill\Method;
 
+use Distill\Format\FormatInterface;
 use Symfony\Component\Process\Process;
 
 abstract class AbstractMethod implements MethodInterface
@@ -32,6 +33,11 @@ abstract class AbstractMethod implements MethodInterface
         $className = strtolower($className);
 
         return $className;
+    }
+
+    protected function isFormatSupported(FormatInterface $format)
+    {
+        return in_array(static::getName(), $format->getUncompressionMethods());
     }
 
 }

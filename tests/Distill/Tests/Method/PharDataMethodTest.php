@@ -85,23 +85,25 @@ class PharDataMethodTest extends AbstractMethodTest
 
     public function testExtractNoPharDataFile()
     {
+        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedInMethodException');
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.cab', $target, new Format\Cab());
+        $this->extract('file_ok.cab', $target, new Format\Cab());
 
-        $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 
     public function testExtractTarFileWithWrongFormat()
     {
+        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedInMethodException');
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.tar', $target, new Format\Bz2());
+        $this->extract('file_ok.tar', $target, new Format\Bz2());
 
-        $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 

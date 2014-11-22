@@ -11,6 +11,7 @@
 
 namespace Distill\Method;
 
+use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Format\FormatInterface;
 
 /**
@@ -28,6 +29,10 @@ class ArchiveTarMethod extends AbstractMethod
     {
         if (!$this->isSupported()) {
             return false;
+        }
+
+        if (false === $this->isFormatSupported($format)) {
+            throw new FormatNotSupportedInMethodException($this, $format);
         }
 
         $tar = new \Archive_Tar($file, true);

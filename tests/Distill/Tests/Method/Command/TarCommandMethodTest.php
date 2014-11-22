@@ -113,7 +113,7 @@ class TarCommandMethodTest extends AbstractMethodTest
 
     public function testExtractNoTarFile()
     {
-        $this->setExpectedException('Distill\\Exception\\CorruptedFileException');
+        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedInMethodException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();

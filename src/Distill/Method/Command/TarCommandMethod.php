@@ -12,6 +12,7 @@
 namespace Distill\Method\Command;
 
 use Distill\Exception\CorruptedFileException;
+use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Format\FormatInterface;
 use Distill\Format\TarBz2;
 use Distill\Format\TarGz;
@@ -36,6 +37,10 @@ class TarCommandMethod extends AbstractCommandMethod
     {
         if (!$this->isSupported()) {
             return false;
+        }
+
+        if (false === $this->isFormatSupported($format)) {
+            throw new FormatNotSupportedInMethodException($this, $format);
         }
 
         @mkdir($target);

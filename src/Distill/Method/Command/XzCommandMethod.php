@@ -11,6 +11,7 @@
 
 namespace Distill\Method\Command;
 
+use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\File;
 use Distill\Format\FormatInterface;
 
@@ -29,6 +30,10 @@ class XzCommandMethod extends AbstractCommandMethod
     {
         if (!$this->isSupported()) {
             return false;
+        }
+
+        if (false === $this->isFormatSupported($format)) {
+            throw new FormatNotSupportedInMethodException($this, $format);
         }
 
         $command = sprintf("xz -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));

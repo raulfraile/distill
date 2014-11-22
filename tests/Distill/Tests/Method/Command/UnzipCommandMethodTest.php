@@ -40,12 +40,13 @@ class UnzipCommandMethodTest extends AbstractMethodTest
 
     public function testExtractNoZipFile()
     {
+        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedInMethodException');
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.rar', $target, new Format\Rar());
+        $this->extract('file_ok.rar', $target, new Format\Rar());
 
-        $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 

@@ -56,6 +56,7 @@ class Tar extends AbstractFormat
         return [
             Method\Command\TarCommandMethod::getName(),
             Method\Command\X7zCommandMethod::getName(),
+            Method\PharDataMethod::getName(),
             Method\ArchiveTarMethod::getName()
         ];
     }

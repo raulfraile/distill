@@ -11,6 +11,7 @@
 
 namespace Distill\Method;
 
+use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Format;
 use Distill\Format\FormatInterface;
 
@@ -29,6 +30,10 @@ class PharDataMethod extends AbstractMethod
     {
         if (!$this->isSupported()) {
             return false;
+        }
+
+        if (false === $this->isFormatSupported($format)) {
+            throw new FormatNotSupportedInMethodException($this, $format);
         }
 
         try {

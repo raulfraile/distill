@@ -11,6 +11,7 @@
 
 namespace Distill\Method\Command;
 
+use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Format\FormatInterface;
 
 /**
@@ -28,6 +29,10 @@ class UnrarCommandMethod extends AbstractCommandMethod
     {
         if (!$this->isSupported()) {
             return false;
+        }
+
+        if (false === $this->isFormatSupported($format)) {
+            throw new FormatNotSupportedInMethodException($this, $format);
         }
 
         @mkdir($target);
