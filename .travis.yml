@@ -21,8 +21,8 @@ before_script:
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then pecl install rar; fi;'
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then phpenv rehash; fi;'
 
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then echo "phar.readonly = 0" >> ~/.phpenv/versions/$(phpenv version-name)/hhvm_extra.ini; fi;'
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then phpenv config-add hhvm_extra.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then echo "phar.readonly = 0" > ~/.phpenv/versions/$(phpenv version-name)/hhvm_extra.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then phpenv config-add ~/.phpenv/versions/$(phpenv version-name)/hhvm_extra.ini; fi;'
 
   - composer install --prefer-source
 
