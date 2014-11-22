@@ -49,14 +49,4 @@ abstract class AbstractCommandMethod extends AbstractMethod
         return $process->getExitCode();
     }
 
-    /**
-     * Checks whether PHP is running on Windows.
-     *
-     * @return bool Returns TRUE when running on windows, FALSE otherwise
-     */
-    protected function isWindows()
-    {
-        return defined('PHP_WINDOWS_VERSION_BUILD');
-    }
-
 }

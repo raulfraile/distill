@@ -11,11 +11,12 @@ class PharTest extends AbstractMethodTest
 
     public function setUp()
     {
-        if (!extension_loaded('Phar')) {
-            $this->markTestSkipped('Phar extension not available');
+        $this->method = new Method\Extension\Phar();
+
+        if (false === $this->method->isSupported()) {
+            $this->markTestSkipped('The Phar method is not available');
         }
 
-        $this->method = new Method\Extension\Phar();
         parent::setUp();
     }
 

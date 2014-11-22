@@ -46,11 +46,31 @@ abstract class AbstractMethod implements MethodInterface
         return in_array(static::getName(), $format->getUncompressionMethods());
     }
 
+    /**
+     * Gets an object to work with the filesystem.
+     *
+     * @return Filesystem
+     */
     protected function getFilesystem()
     {
         return new Filesystem();
     }
 
+    /**
+     * Checks whether PHP is running on Windows.
+     *
+     * @return bool Returns TRUE when running on windows, FALSE otherwise
+     */
+    protected function isWindows()
+    {
+        return defined('PHP_WINDOWS_VERSION_BUILD');
+    }
+
+    /**
+     * Checks whether the code is running on HHVM.
+     *
+     * @return bool Returns TRUE when running on HHVM, FALSE otherwise
+     */
     protected function isHhvm() {
         return defined('HHVM_VERSION');
     }
