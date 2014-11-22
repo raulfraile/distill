@@ -145,7 +145,7 @@ class Distill
 
     public function isFormatSupported(FormatInterface $format)
     {
-        $this->container['distill.support_checker']->isFormatSupported($format);
+        return $this->container['distill.support_checker']->isFormatSupported($format);
     }
 
 }

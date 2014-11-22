@@ -4,7 +4,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Distill\Distill;
 use Distill\Strategy\MinimumSize;
-ldd(get_loaded_extensions());
+
 $distill = new Distill();
 $strategy = new MinimumSize();
 
