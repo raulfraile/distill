@@ -15,6 +15,10 @@ use Distill\Method;
 /**
  * A GZIP file.
  *
+ * GZIP is based on the DEFLATE algorithm, which is a combination of LZ77 and Huffman coding.
+ *
+ * @see http://en.wikipedia.org/wiki/Gzip
+ *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
 class Gz extends AbstractFormat

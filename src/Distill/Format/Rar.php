@@ -13,6 +13,16 @@ namespace Distill\Format;
 
 use Distill\Method;
 
+/**
+ * A RAR file.
+ *
+ * RAR is a proprietary archive file format that supports data compression, error
+ * recovery and file spanning.
+ *
+ * @see http://en.wikipedia.org/wiki/RAR
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class Rar extends AbstractFormat
 {
 

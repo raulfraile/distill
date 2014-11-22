@@ -13,12 +13,11 @@ namespace Distill\Method\Extension;
 
 use Distill\Exception\CorruptedFileException;
 use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\File;
 use Distill\Format\FormatInterface;
 use Distill\Method\AbstractMethod;
 
 /**
- * Extracts files from bzip2 archives.
+ * Extracts files from zip archives using the zip extension.
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
