@@ -5,11 +5,10 @@ php:
   - 5.5
   - 5.6
   - hhvm-nightly
-  - hhvm
 
 matrix:
   allow_failures:
-    - php: [hhvm-nightly, hhvm]
+    - php: hhvm-nightly
 
 before_script:
   - sudo apt-get update -qq
