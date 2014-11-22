@@ -39,7 +39,7 @@ class PharData extends AbstractMethod
 
         try {
             $pharFormat = $this->getPharFormat($format);
-            $archive = new \PharData($file, null, null, $pharFormat);
+            $archive = new \PharData($file/*, null, null, $pharFormat*/);
         } catch (\UnexpectedValueException $e) {
             return false;
         }
