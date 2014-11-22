@@ -9,19 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Method;
+namespace Distill\Method\Extension;
 
-use Distill\Exception\CorruptedFileException;
 use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\File;
+use Distill\Format;
 use Distill\Format\FormatInterface;
+use Distill\Method\AbstractMethod;
 
 /**
  * Extracts files from bzip2 archives.
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class ZipArchiveMethod extends AbstractMethod
+class PharData extends AbstractMethod
 {
 
     /**
@@ -37,24 +37,35 @@ class ZipArchiveMethod extends AbstractMethod
             throw new FormatNotSupportedInMethodException($this, $format);
         }
 
-        $archive = new \ZipArchive();
-
-        if (true !== $response = $archive->open($file)) {
-            switch($response) {
-                case \ZipArchive::ER_NOZIP :
-                case \ZipArchive::ER_INCONS :
-                case \ZipArchive::ER_CRC :
-                throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
-                    break;
-            }
-
+        try {
+            $pharFormat = $this->getPharFormat($format);
+            $archive = new \PharData($file, null, null, $pharFormat);
+        } catch (\UnexpectedValueException $e) {
             return false;
         }
 
-        $archive->extractTo($target);
-        $archive->close();
+        if (null === $pharFormat || !$archive->isFileFormat($pharFormat)) {
+            return false;
+        }
+
+        $archive->extractTo($target, null, true);
 
         return true;
+    }
+
+    /**
+     * Gets the format of the phar file.
+     * @param FormatInterface $format
+     *
+     * @return int|null
+     */
+    protected function getPharFormat(FormatInterface $format)
+    {
+        if ($format instanceof Format\Tar || $format instanceof Format\TarBz2 || $format instanceof Format\TarGz) {
+            return \Phar::TAR;
+        }
+
+        return null;
     }
 
     /**
@@ -62,7 +73,7 @@ class ZipArchiveMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return class_exists('\\ZipArchive');
+        return class_exists('\\PharData') && class_exists('\\Phar');
     }
 
     /**

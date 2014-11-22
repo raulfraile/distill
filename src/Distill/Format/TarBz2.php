@@ -54,10 +54,10 @@ class TarBz2 extends AbstractFormat
     public function getUncompressionMethods()
     {
         return [
-            Method\Command\TarCommandMethod::getName(),
-            Method\Command\X7zCommandMethod::getName(),
-            Method\PharDataMethod::getName(),
-            Method\ArchiveTarMethod::getName()
+            Method\Command\GnuTar::getName(),
+            Method\Command\x7zip::getName(),
+            Method\Extension\PharData::getName(),
+            Method\Extension\Pear\ArchiveTar::getName()
         ];
     }
 

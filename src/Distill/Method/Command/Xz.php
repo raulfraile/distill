@@ -12,6 +12,7 @@
 namespace Distill\Method\Command;
 
 use Distill\Exception\FormatNotSupportedInMethodException;
+use Distill\File;
 use Distill\Format\FormatInterface;
 
 /**
@@ -19,7 +20,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class UnrarCommandMethod extends AbstractCommandMethod
+class Xz extends AbstractCommandMethod
 {
 
     /**
@@ -35,8 +36,7 @@ class UnrarCommandMethod extends AbstractCommandMethod
             throw new FormatNotSupportedInMethodException($this, $format);
         }
 
-        $this->getFilesystem()->mkdir($target);
-        $command = 'unrar e '.escapeshellarg($file).' '.escapeshellarg($target);
+        $command = sprintf("xz -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
 
         $exitCode = $this->executeCommand($command);
 
@@ -48,7 +48,7 @@ class UnrarCommandMethod extends AbstractCommandMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('unrar');
+        return !$this->isWindows() && $this->existsCommand('xz');
     }
 
     /**

@@ -2,14 +2,14 @@
 
 namespace Distill\Tests\Format;
 
-use Distill\Format\X7z;
+use Distill\Format\x7z;
 
 class X7zTest extends AbstractFormatTest
 {
 
     public function setUp()
     {
-        $this->format = new X7z();
+        $this->format = new x7z();
     }
 
     public function testCompressionRatioLevelIsValid()

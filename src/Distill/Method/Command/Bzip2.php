@@ -11,9 +11,7 @@
 
 namespace Distill\Method\Command;
 
-use Distill\Exception\CorruptedFileException;
 use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\File;
 use Distill\Format\FormatInterface;
 
 /**
@@ -21,18 +19,15 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class X7zCommandMethod extends AbstractCommandMethod
+class Bzip2 extends AbstractCommandMethod
 {
-
-    const EXIT_CODE_OK = 0;
-    const EXIT_CODE_FATAL_ERROR = 2;
 
     /**
      * {@inheritdoc}
      */
     public function extract($file, $target, FormatInterface $format)
     {
-        if (false === $this->isSupported()) {
+        if (!$this->isSupported()) {
             return false;
         }
 
@@ -40,16 +35,11 @@ class X7zCommandMethod extends AbstractCommandMethod
             throw new FormatNotSupportedInMethodException($this, $format);
         }
 
-        $this->getFilesystem()->mkdir($target);
-        $command = '7z e -y '.escapeshellarg($file).' -o'.escapeshellarg($target);
+        $command = sprintf("bzip2 -k -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
 
         $exitCode = $this->executeCommand($command);
 
-        if (self::EXIT_CODE_FATAL_ERROR === $exitCode) {
-            throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
-        }
-
-        return self::EXIT_CODE_OK === $exitCode;
+        return $this->isExitCodeSuccessful($exitCode);
     }
 
     /**
@@ -57,7 +47,7 @@ class X7zCommandMethod extends AbstractCommandMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('7z');
+        return !$this->isWindows() && $this->existsCommand('bzip2');
     }
 
     /**

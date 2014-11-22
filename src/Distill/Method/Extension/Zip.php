@@ -9,24 +9,21 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Method\Command;
+namespace Distill\Method\Extension;
 
 use Distill\Exception\CorruptedFileException;
 use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\File;
 use Distill\Format\FormatInterface;
+use Distill\Method\AbstractMethod;
 
 /**
  * Extracts files from bzip2 archives.
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class UnzipCommandMethod extends AbstractCommandMethod
+class Zip extends AbstractMethod
 {
-
-    const EXIT_CODE_WARNING_ZIPFILE = 1;
-    const EXIT_CODE_GENERIC_ERROR_ZIPFILE = 2;
-    const EXIT_CODE_SEVERE_ERROR_ZIPFILE = 3;
 
     /**
      * {@inheritdoc}
@@ -41,19 +38,24 @@ class UnzipCommandMethod extends AbstractCommandMethod
             throw new FormatNotSupportedInMethodException($this, $format);
         }
 
-        $command = 'unzip '.escapeshellarg($file).' -d '.escapeshellarg($target);
+        $archive = new \ZipArchive();
 
-        $exitCode = $this->executeCommand($command);
-
-        switch ($exitCode) {
-            case self::EXIT_CODE_WARNING_ZIPFILE:
-            case self::EXIT_CODE_GENERIC_ERROR_ZIPFILE:
-                throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_LOW);
-            case self::EXIT_CODE_SEVERE_ERROR_ZIPFILE:
+        if (true !== $response = $archive->open($file)) {
+            switch($response) {
+                case \ZipArchive::ER_NOZIP :
+                case \ZipArchive::ER_INCONS :
+                case \ZipArchive::ER_CRC :
                 throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
+                    break;
+            }
+
+            return false;
         }
 
-        return $this->isExitCodeSuccessful($exitCode);
+        $archive->extractTo($target);
+        $archive->close();
+
+        return true;
     }
 
     /**
@@ -61,7 +63,7 @@ class UnzipCommandMethod extends AbstractCommandMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('unzip');
+        return class_exists('\\ZipArchive');
     }
 
     /**

@@ -47,25 +47,25 @@ class ContainerProvider implements ServiceProviderInterface
             Format\TarBz2::getClass(),
             Format\TarGz::getClass(),
             Format\TarXz::getClass(),
-            Format\X7z::getClass(),
+            Format\x7z::getClass(),
             Format\Xz::getClass(),
             Format\Zip::getClass()
         ];
 
         $this->methods = [
-            Method\ArchiveTarMethod::getClass(),
-            Method\Command\Bzip2CommandMethod::getClass(),
-            Method\Command\CabextractCommandMethod::getClass(),
-            Method\Command\GzipCommandMethod::getClass(),
-            Method\PharExtensionMethod::getClass(),
-            Method\PharDataMethod::getClass(),
-            Method\RarExtensionMethod::getClass(),
-            Method\Command\TarCommandMethod::getClass(),
-            Method\Command\UnrarCommandMethod::getClass(),
-            Method\Command\UnzipCommandMethod::getClass(),
-            Method\Command\X7zCommandMethod::getClass(),
-            Method\Command\XzCommandMethod::getClass(),
-            Method\ZipArchiveMethod::getClass()
+            Method\Extension\Pear\ArchiveTar::getClass(),
+            Method\Command\Bzip2::getClass(),
+            Method\Command\Cabextract::getClass(),
+            Method\Command\GnuGzip::getClass(),
+            Method\Extension\Phar::getClass(),
+            Method\Extension\PharData::getClass(),
+            Method\Extension\Rar::getClass(),
+            Method\Command\GnuTar::getClass(),
+            Method\Command\Unrar::getClass(),
+            Method\Command\Unzip::getClass(),
+            Method\Command\x7zip::getClass(),
+            Method\Command\Xz::getClass(),
+            Method\Extension\Zip::getClass()
         ];
     }
 

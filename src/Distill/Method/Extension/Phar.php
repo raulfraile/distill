@@ -9,17 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Method\Command;
+namespace Distill\Method\Extension;
 
 use Distill\Exception\FormatNotSupportedInMethodException;
+use Distill\File;
 use Distill\Format\FormatInterface;
+use Distill\Method\AbstractMethod;
 
 /**
  * Extracts files from bzip2 archives.
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class Bzip2CommandMethod extends AbstractCommandMethod
+class Phar extends AbstractMethod
 {
 
     /**
@@ -35,11 +37,15 @@ class Bzip2CommandMethod extends AbstractCommandMethod
             throw new FormatNotSupportedInMethodException($this, $format);
         }
 
-        $command = sprintf("bzip2 -k -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
+        try {
+            $phar = new \Phar($file);
+            $this->getFilesystem()->mkdir($target);
+            $phar->extractTo($target, null, true);
 
-        $exitCode = $this->executeCommand($command);
-
-        return $this->isExitCodeSuccessful($exitCode);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -47,7 +53,7 @@ class Bzip2CommandMethod extends AbstractCommandMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('bzip2');
+        return class_exists('\\Phar');
     }
 
     /**

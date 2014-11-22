@@ -136,7 +136,7 @@ class DistillTest extends TestCase
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->distill->extract($this->filesPath . 'file_ok.7z', $target, new Format\X7z());
+        $response = $this->distill->extract($this->filesPath . 'file_ok.7z', $target, new Format\x7z());
 
         $this->assertTrue($response);
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');

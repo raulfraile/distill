@@ -13,7 +13,7 @@ namespace Distill\Format;
 
 use Distill\Method;
 
-class X7z extends AbstractFormat
+class x7z extends AbstractFormat
 {
 
     /**
@@ -54,7 +54,7 @@ class X7z extends AbstractFormat
     public function getUncompressionMethods()
     {
         return [
-            Method\Command\X7zCommandMethod::getName()
+            Method\Command\x7zip::getName()
         ];
     }
 

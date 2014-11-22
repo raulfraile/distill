@@ -9,18 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Method;
+namespace Distill\Method\Extension;
 
 use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\File;
 use Distill\Format\FormatInterface;
+use Distill\Method\AbstractMethod;
 
 /**
  * Extracts files from bzip2 archives.
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class RarExtensionMethod extends AbstractMethod
+class Rar extends AbstractMethod
 {
 
     /**

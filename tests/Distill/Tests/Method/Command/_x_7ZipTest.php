@@ -6,12 +6,12 @@ use Distill\Method;
 use Distill\Format;
 use Distill\Tests\Method\AbstractMethodTest;
 
-class X7zCommandMethodTest extends AbstractMethodTest
+class x7zipTest extends AbstractMethodTest
 {
 
     public function setUp()
     {
-        $this->method = new Method\Command\X7zCommandMethod();
+        $this->method = new Method\Command\x7zip();
         parent::setUp();
     }
 
@@ -20,7 +20,7 @@ class X7zCommandMethodTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.7z', $target, new Format\X7z());
+        $response = $this->extract('file_ok.7z', $target, new Format\x7z());
 
         $this->assertTrue($response);
         $this->clearTemporaryPath();
@@ -33,7 +33,7 @@ class X7zCommandMethodTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_fake.7z', $target, new Format\X7z());
+        $this->extract('file_fake.7z', $target, new Format\x7z());
 
         $this->clearTemporaryPath();
     }

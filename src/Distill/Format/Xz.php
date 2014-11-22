@@ -54,8 +54,8 @@ class Xz extends AbstractFormat
     public function getUncompressionMethods()
     {
         return [
-            Method\Command\XzCommandMethod::getName(),
-            Method\Command\X7zCommandMethod::getName()
+            Method\Command\Xz::getName(),
+            Method\Command\x7zip::getName()
         ];
     }
 

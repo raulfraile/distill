@@ -9,18 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Method;
+namespace Distill\Method\Extension\Pear;
 
 use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\File;
 use Distill\Format\FormatInterface;
+use Distill\Method\AbstractMethod;
 
 /**
  * Extracts files from bzip2 archives.
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class PharExtensionMethod extends AbstractMethod
+class ArchiveTar extends AbstractMethod
 {
 
     /**
@@ -36,15 +36,9 @@ class PharExtensionMethod extends AbstractMethod
             throw new FormatNotSupportedInMethodException($this, $format);
         }
 
-        try {
-            $phar = new \Phar($file);
-            $this->getFilesystem()->mkdir($target);
-            $phar->extractTo($target, null, true);
+        $tar = new \Archive_Tar($file, true);
 
-            return true;
-        } catch (\Exception $e) {
-            return false;
-        }
+        return $tar->extract($target);
     }
 
     /**
@@ -52,7 +46,7 @@ class PharExtensionMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return class_exists('\\Phar');
+        return !$this->isWindows() && class_exists('\\ArchiveTar');
     }
 
     /**

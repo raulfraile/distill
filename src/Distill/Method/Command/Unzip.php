@@ -9,10 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Method;
+namespace Distill\Method\Command;
 
+use Distill\Exception\CorruptedFileException;
 use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\Format;
+use Distill\File;
 use Distill\Format\FormatInterface;
 
 /**
@@ -20,8 +21,12 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class PharDataMethod extends AbstractMethod
+class Unzip extends AbstractCommandMethod
 {
+
+    const EXIT_CODE_WARNING_ZIPFILE = 1;
+    const EXIT_CODE_GENERIC_ERROR_ZIPFILE = 2;
+    const EXIT_CODE_SEVERE_ERROR_ZIPFILE = 3;
 
     /**
      * {@inheritdoc}
@@ -36,35 +41,19 @@ class PharDataMethod extends AbstractMethod
             throw new FormatNotSupportedInMethodException($this, $format);
         }
 
-        try {
-            $pharFormat = $this->getPharFormat($format);
-            $archive = new \PharData($file, null, null, $pharFormat);
-        } catch (\UnexpectedValueException $e) {
-            return false;
+        $command = 'unzip '.escapeshellarg($file).' -d '.escapeshellarg($target);
+
+        $exitCode = $this->executeCommand($command);
+
+        switch ($exitCode) {
+            case self::EXIT_CODE_WARNING_ZIPFILE:
+            case self::EXIT_CODE_GENERIC_ERROR_ZIPFILE:
+                throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_LOW);
+            case self::EXIT_CODE_SEVERE_ERROR_ZIPFILE:
+                throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
         }
 
-        if (null === $pharFormat || !$archive->isFileFormat($pharFormat)) {
-            return false;
-        }
-
-        $archive->extractTo($target, null, true);
-
-        return true;
-    }
-
-    /**
-     * Gets the format of the phar file.
-     * @param FormatInterface $format
-     *
-     * @return int|null
-     */
-    protected function getPharFormat(FormatInterface $format)
-    {
-        if ($format instanceof Format\Tar || $format instanceof Format\TarBz2 || $format instanceof Format\TarGz) {
-            return \Phar::TAR;
-        }
-
-        return null;
+        return $this->isExitCodeSuccessful($exitCode);
     }
 
     /**
@@ -72,7 +61,7 @@ class PharDataMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return class_exists('\\PharData') && class_exists('\\Phar');
+        return !$this->isWindows() && $this->existsCommand('unzip');
     }
 
     /**

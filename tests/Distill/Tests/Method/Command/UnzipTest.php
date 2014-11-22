@@ -1,6 +1,6 @@
 <?php
 
-namespace Distill\Tests\Method\Command;
+namespace Distill\Tests\Method\Command\Unzip;
 
 use Distill\Method;
 use Distill\Format;
@@ -11,7 +11,7 @@ class UnzipCommandMethodTest extends AbstractMethodTest
 
     public function setUp()
     {
-        $this->method = new Method\Command\UnzipCommandMethod();
+        $this->method = new Method\Command\Unzip();
         parent::setUp();
     }
 

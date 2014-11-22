@@ -1,43 +1,48 @@
 <?php
 
-namespace Distill\Tests\Method;
+namespace Distill\Tests\Method\Extension\Pear;
 
 use Distill\Method;
 use Distill\Format;
+use Distill\Tests\Method\AbstractMethodTest;
 
-class PharExtensionMethodTest extends AbstractMethodTest
+class ArchiveTarTest extends AbstractMethodTest
 {
 
     public function setUp()
     {
-        $this->method = new Method\PharExtensionMethod();
+        if (!class_exists('\\ArchiveTar')) {
+            $this->markTestSkipped('Archive_Tar not installed');
+        }
+
+        $this->method = new Method\Extension\Pear\ArchiveTar();
         parent::setUp();
     }
 
-    public function testExtractCorrectPharFile()
+    public function testExtractCorrectTarFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.phar', $target, new Format\Phar());
+        $response = $this->extract('file_ok.tar', $target, new Format\Tar());
 
         $this->assertTrue($response);
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
         $this->clearTemporaryPath();
     }
 
-    public function testExtractFakePharFile()
+    public function testExtractFakeTarFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.phar', $target, new Format\Phar());
+        $response = $this->extract('file_fake.tar', $target, new Format\Tar());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 
-    public function testExtractNoPharFile()
+    public function testExtractNoTarFile()
     {
         $this->setExpectedException('Distill\\Exception\\FormatNotSupportedInMethodException');
 

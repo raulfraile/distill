@@ -54,7 +54,7 @@ class Phar extends AbstractFormat
     public function getUncompressionMethods()
     {
         return [
-            Method\PharExtensionMethod::getName()
+            Method\Extension\Phar::getName()
         ];
     }
 

@@ -54,11 +54,11 @@ class Rar extends AbstractFormat
     public function getUncompressionMethods()
     {
         return [
-            Method\Command\UnrarCommandMethod::getName(),
-            Method\Command\X7zCommandMethod::getName(),
-            Method\PharDataMethod::getName(),
-            Method\RarExtensionMethod::getName(),
-            Method\ArchiveTarMethod::getName()
+            Method\Command\Unrar::getName(),
+            Method\Command\x7zip::getName(),
+            Method\Extension\PharData::getName(),
+            Method\Extension\Rar::getName(),
+            Method\Extension\Pear\ArchiveTar::getName()
         ];
     }
 

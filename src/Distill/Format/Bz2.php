@@ -65,8 +65,8 @@ class Bz2 extends AbstractFormat
     public function getUncompressionMethods()
     {
         return [
-            Method\Command\Bzip2CommandMethod::getName(),
-            Method\Command\X7zCommandMethod::getName()
+            Method\Command\Bzip2::getName(),
+            Method\Command\x7zip::getName()
         ];
     }
 

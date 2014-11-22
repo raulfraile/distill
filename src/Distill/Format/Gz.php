@@ -58,8 +58,8 @@ class Gz extends AbstractFormat
     public function getUncompressionMethods()
     {
         return [
-            Method\Command\GzipCommandMethod::getName(),
-            Method\Command\X7zCommandMethod::getName()
+            Method\Command\GnuGzip::getName(),
+            Method\Command\x7zip::getName()
         ];
     }
 

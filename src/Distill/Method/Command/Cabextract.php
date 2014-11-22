@@ -11,24 +11,16 @@
 
 namespace Distill\Method\Command;
 
-use Distill\Exception\CorruptedFileException;
 use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Format\FormatInterface;
-use Distill\Format\TarBz2;
-use Distill\Format\TarGz;
-use Distill\Format\TarXz;
 
 /**
  * Extracts files from bzip2 archives.
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class TarCommandMethod extends AbstractCommandMethod
+class Cabextract extends AbstractCommandMethod
 {
-
-    const EXIT_CODE_OK = 0;
-    const EXIT_CODE_SOME_FILES_DIFFER = 1;
-    const EXIT_CODE_FATAL_ERROR = 2;
 
     /**
      * {@inheritdoc}
@@ -44,26 +36,11 @@ class TarCommandMethod extends AbstractCommandMethod
         }
 
         $this->getFilesystem()->mkdir($target);
-
-        $tarOptions = ['x', 'v', 'f'];
-
-        if ($format instanceof TarBz2) {
-            array_unshift($tarOptions, 'j');
-        } elseif ($format instanceof TarGz) {
-            array_unshift($tarOptions, 'z');
-        } elseif ($format instanceof TarXz) {
-            array_unshift($tarOptions, 'J');
-        }
-
-        $command = sprintf("tar -%s %s -C %s", implode('', $tarOptions), escapeshellarg($file), escapeshellarg($target));
+        $command = 'cabextract -d '.escapeshellarg($target).' '.escapeshellarg($file);
 
         $exitCode = $this->executeCommand($command);
 
-        if (self::EXIT_CODE_FATAL_ERROR === $exitCode || self::EXIT_CODE_SOME_FILES_DIFFER === $exitCode) {
-            throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
-        }
-
-        return self::EXIT_CODE_OK === $exitCode;
+        return $this->isExitCodeSuccessful($exitCode);
     }
 
     /**
@@ -71,7 +48,7 @@ class TarCommandMethod extends AbstractCommandMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('tar');
+        return !$this->isWindows() && $this->existsCommand('cabextract');
     }
 
     /**

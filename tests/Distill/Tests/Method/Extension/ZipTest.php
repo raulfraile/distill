@@ -1,16 +1,17 @@
 <?php
 
-namespace Distill\Tests\Method;
+namespace Distill\Tests\Method\Extension;
 
 use Distill\Method;
 use Distill\Format;
+use Distill\Tests\Method\AbstractMethodTest;
 
-class ZipArchiveMethodTest extends AbstractMethodTest
+class ZipMethodTest extends AbstractMethodTest
 {
 
     public function setUp()
     {
-        $this->method = new Method\ZipArchiveMethod();
+        $this->method = new Method\Extension\Zip();
         parent::setUp();
     }
 

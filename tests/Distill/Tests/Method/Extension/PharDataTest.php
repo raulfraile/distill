@@ -1,16 +1,17 @@
 <?php
 
-namespace Distill\Tests\Method;
+namespace Distill\Tests\Method\Extension;
 
 use Distill\Method;
 use Distill\Format;
+use Distill\Tests\Method\AbstractMethodTest;
 
-class PharDataMethodTest extends AbstractMethodTest
+class PharDataTest extends AbstractMethodTest
 {
 
     public function setUp()
     {
-        $this->method = new Method\PharDataMethod();
+        $this->method = new Method\Extension\PharData();
         parent::setUp();
     }
 

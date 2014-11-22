@@ -1,50 +1,50 @@
 <?php
 
-namespace Distill\Tests\Method\Command;
+namespace Distill\Tests\Method\Command\Xz;
 
 use Distill\Method;
 use Distill\Format;
 use Distill\Tests\Method\AbstractMethodTest;
 
-class GzipCommandMethodTest extends AbstractMethodTest
+class XzTest extends AbstractMethodTest
 {
 
     public function setUp()
     {
-        $this->method = new Method\Command\GzipCommandMethod();
+        $this->method = new Method\Command\Xz();
         parent::setUp();
     }
 
-    public function testExtractCorrectGzFile()
+    public function testExtractCorrectXzFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.gz', $target, new Format\Gz());
+        $response = $this->extract('file_ok.xz', $target, new Format\Xz());
 
         $this->assertTrue($response);
         $this->clearTemporaryPath();
     }
 
-    public function testExtractFakeGzFile()
+    public function testExtractFakeXzFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.gz', $target, new Format\Gz());
+        $response = $this->extract('file_fake.xz', $target, new Format\Xz());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 
-    public function testExtractNoGzFile()
+    public function testExtractNoXzFile()
     {
         $this->setExpectedException('Distill\\Exception\\FormatNotSupportedInMethodException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_ok.cab', $target, new Format\Cab());
+        $this->extract('file_ok.zip', $target, new Format\Zip());
 
         $this->clearTemporaryPath();
     }

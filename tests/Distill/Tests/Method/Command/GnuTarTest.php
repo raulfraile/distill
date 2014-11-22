@@ -1,17 +1,17 @@
 <?php
 
-namespace Distill\Tests\Method;
+namespace Distill\Tests\Method\Command;
 
 use Distill\Method;
 use Distill\Format;
 use Distill\Tests\Method\AbstractMethodTest;
 
-class TarCommandMethodTest extends AbstractMethodTest
+class GnuTarTest extends AbstractMethodTest
 {
 
     public function setUp()
     {
-        $this->method = new Method\Command\TarCommandMethod();
+        $this->method = new Method\Command\GnuTar();
         parent::setUp();
     }
 

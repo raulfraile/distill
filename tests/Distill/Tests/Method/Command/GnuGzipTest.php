@@ -6,46 +6,45 @@ use Distill\Method;
 use Distill\Format;
 use Distill\Tests\Method\AbstractMethodTest;
 
-class CabextractCommandMethodTest extends AbstractMethodTest
+class GnuGzipTest extends AbstractMethodTest
 {
 
     public function setUp()
     {
-        $this->method = new Method\Command\CabextractCommandMethod();
+        $this->method = new Method\Command\GnuGzip();
         parent::setUp();
     }
 
-    public function testExtractCorrectCabFile()
+    public function testExtractCorrectGzFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.cab', $target, new Format\Cab());
+        $response = $this->extract('file_ok.gz', $target, new Format\Gz());
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
         $this->clearTemporaryPath();
     }
 
-    public function testExtractFakeCabFile()
+    public function testExtractFakeGzFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.cab', $target, new Format\Cab());
+        $response = $this->extract('file_fake.gz', $target, new Format\Gz());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
     }
 
-    public function testExtractNoCabFile()
+    public function testExtractNoGzFile()
     {
         $this->setExpectedException('Distill\\Exception\\FormatNotSupportedInMethodException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_ok.phar', $target, new Format\Phar());
+        $this->extract('file_ok.cab', $target, new Format\Cab());
 
         $this->clearTemporaryPath();
     }

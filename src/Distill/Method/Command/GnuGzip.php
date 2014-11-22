@@ -15,11 +15,11 @@ use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Format\FormatInterface;
 
 /**
- * Extracts files from bzip2 archives.
+ * Extracts files from gzip archives.
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class CabextractCommandMethod extends AbstractCommandMethod
+class GnuGzip extends AbstractCommandMethod
 {
 
     /**
@@ -35,8 +35,7 @@ class CabextractCommandMethod extends AbstractCommandMethod
             throw new FormatNotSupportedInMethodException($this, $format);
         }
 
-        $this->getFilesystem()->mkdir($target);
-        $command = 'cabextract -d '.escapeshellarg($target).' '.escapeshellarg($file);
+        $command = sprintf("gzip -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
 
         $exitCode = $this->executeCommand($command);
 
@@ -48,7 +47,7 @@ class CabextractCommandMethod extends AbstractCommandMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('cabextract');
+        return !$this->isWindows() && $this->existsCommand('gzip');
     }
 
     /**

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Method;
+namespace Distill\Method\Command;
 
 use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Format\FormatInterface;
@@ -19,7 +19,7 @@ use Distill\Format\FormatInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class ArchiveTarMethod extends AbstractMethod
+class Unrar extends AbstractCommandMethod
 {
 
     /**
@@ -35,9 +35,12 @@ class ArchiveTarMethod extends AbstractMethod
             throw new FormatNotSupportedInMethodException($this, $format);
         }
 
-        $tar = new \Archive_Tar($file, true);
+        $this->getFilesystem()->mkdir($target);
+        $command = 'unrar e '.escapeshellarg($file).' '.escapeshellarg($target);
 
-        return $tar->extract($target);
+        $exitCode = $this->executeCommand($command);
+
+        return $this->isExitCodeSuccessful($exitCode);
     }
 
     /**
@@ -45,7 +48,7 @@ class ArchiveTarMethod extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && class_exists('\\ArchiveTar');
+        return !$this->isWindows() && $this->existsCommand('unrar');
     }
 
     /**
