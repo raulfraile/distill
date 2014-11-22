@@ -35,6 +35,12 @@ abstract class AbstractMethod implements MethodInterface
         return $className;
     }
 
+    /**
+     * Checks if the method is registered for the format.
+     * @param FormatInterface $format Format.
+     *
+     * @return bool TRUE if it is registered, FALSE otherwise.
+     */
     protected function isFormatSupported(FormatInterface $format)
     {
         return in_array(static::getName(), $format->getUncompressionMethods());
