@@ -27,10 +27,16 @@ class DistillTest extends TestCase
 
     public function testCanExtractBz2Files()
     {
+        $format = new Format\Bz2();
+
+        if (false === $this->distill->isFormatSupported($format)) {
+            $this->markTestSkipped('bzip2 files are not supported');
+        }
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->distill->extract($this->filesPath . 'file_ok.bz2', $target, new Format\Bz2());
+        $response = $this->distill->extract($this->filesPath . 'file_ok.bz2', $target, $format);
 
         $this->assertTrue($response);
         $this->clearTemporaryPath();
@@ -38,10 +44,16 @@ class DistillTest extends TestCase
 
     public function testCanExtractCabFiles()
     {
+        $format = new Format\Cab();
+
+        if (false === $this->distill->isFormatSupported($format)) {
+            $this->markTestSkipped('cab files are not supported');
+        }
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->distill->extract($this->filesPath . 'file_ok.cab', $target, new Format\Cab());
+        $response = $this->distill->extract($this->filesPath . 'file_ok.cab', $target, $format);
 
         $this->assertTrue($response);
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
@@ -50,10 +62,16 @@ class DistillTest extends TestCase
 
     public function testCanExtractGzFiles()
     {
+        $format = new Format\Gz();
+
+        if (false === $this->distill->isFormatSupported($format)) {
+            $this->markTestSkipped('gzip files are not supported');
+        }
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->distill->extract($this->filesPath . 'file_ok.gz', $target, new Format\Gz());
+        $response = $this->distill->extract($this->filesPath . 'file_ok.gz', $target, $format);
 
         $this->assertTrue($response);
         $this->clearTemporaryPath();
@@ -61,10 +79,16 @@ class DistillTest extends TestCase
 
     public function testCanExtractPharFiles()
     {
+        $format = new Format\Phar();
+
+        if (false === $this->distill->isFormatSupported($format)) {
+            $this->markTestSkipped('phar files are not supported');
+        }
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->distill->extract($this->filesPath . 'file_ok.phar', $target, new Format\Phar());
+        $response = $this->distill->extract($this->filesPath . 'file_ok.phar', $target, $format);
 
         $this->assertTrue($response);
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
@@ -73,10 +97,16 @@ class DistillTest extends TestCase
 
     public function testCanExtractRarFiles()
     {
+        $format = new Format\Rar();
+
+        if (false === $this->distill->isFormatSupported($format)) {
+            $this->markTestSkipped('rar files are not supported');
+        }
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->distill->extract($this->filesPath . 'file_ok.rar', $target, new Format\Rar());
+        $response = $this->distill->extract($this->filesPath . 'file_ok.rar', $target, $format);
 
         $this->assertTrue($response);
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
@@ -85,10 +115,16 @@ class DistillTest extends TestCase
 
     public function testCanExtractTarFiles()
     {
+        $format = new Format\Tar();
+
+        if (false === $this->distill->isFormatSupported($format)) {
+            $this->markTestSkipped('tar files are not supported');
+        }
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->distill->extract($this->filesPath . 'file_ok.tar', $target, new Format\Tar());
+        $response = $this->distill->extract($this->filesPath . 'file_ok.tar', $target, $format);
 
         $this->assertTrue($response);
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
@@ -97,10 +133,16 @@ class DistillTest extends TestCase
 
     public function testCanExtractTarBz2Files()
     {
+        $format = new Format\TarBz2();
+
+        if (false === $this->distill->isFormatSupported($format)) {
+            $this->markTestSkipped('tar.bz2 files are not supported');
+        }
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->distill->extract($this->filesPath . 'file_ok.tar.bz2', $target, new Format\TarBz2());
+        $response = $this->distill->extract($this->filesPath . 'file_ok.tar.bz2', $target, $format);
 
         $this->assertTrue($response);
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
@@ -109,10 +151,16 @@ class DistillTest extends TestCase
 
     public function testCanExtractTarGzFiles()
     {
+        $format = new Format\TarGz();
+
+        if (false === $this->distill->isFormatSupported($format)) {
+            $this->markTestSkipped('tar.gz files are not supported');
+        }
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->distill->extract($this->filesPath . 'file_ok.tar.gz', $target, new Format\TarGz());
+        $response = $this->distill->extract($this->filesPath . 'file_ok.tar.gz', $target, $format);
 
         $this->assertTrue($response);
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
@@ -121,22 +169,34 @@ class DistillTest extends TestCase
 
     public function testCanExtractTarXzFiles()
     {
+        $format = new Format\TarXz();
+
+        if (false === $this->distill->isFormatSupported($format)) {
+            $this->markTestSkipped('tar.xz files are not supported');
+        }
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->distill->extract($this->filesPath . 'file_ok.tar.xz', $target, new Format\TarXz());
+        $response = $this->distill->extract($this->filesPath . 'file_ok.tar.xz', $target, $format);
 
         $this->assertTrue($response);
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
         $this->clearTemporaryPath();
     }
 
-    public function testCanExtractX7zFiles()
+    public function testCanExtract7zFiles()
     {
+        $format = new Format\x7z();
+
+        if (false === $this->distill->isFormatSupported($format)) {
+            $this->markTestSkipped('7z files are not supported');
+        }
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->distill->extract($this->filesPath . 'file_ok.7z', $target, new Format\x7z());
+        $response = $this->distill->extract($this->filesPath . 'file_ok.7z', $target, $format);
 
         $this->assertTrue($response);
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
@@ -145,10 +205,16 @@ class DistillTest extends TestCase
 
     public function testCanExtractXzFiles()
     {
+        $format = new Format\Xz();
+
+        if (false === $this->distill->isFormatSupported($format)) {
+            $this->markTestSkipped('xz files are not supported');
+        }
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->distill->extract($this->filesPath . 'file_ok.xz', $target, new Format\Xz());
+        $response = $this->distill->extract($this->filesPath . 'file_ok.xz', $target, $format);
 
         $this->assertTrue($response);
         $this->clearTemporaryPath();
@@ -156,10 +222,16 @@ class DistillTest extends TestCase
 
     public function testCanExtractZipFiles()
     {
+        $format = new Format\Zip();
+
+        if (false === $this->distill->isFormatSupported($format)) {
+            $this->markTestSkipped('zip files are not supported');
+        }
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->distill->extract($this->filesPath . 'file_ok.zip', $target, new Format\Zip());
+        $response = $this->distill->extract($this->filesPath . 'file_ok.zip', $target, $format);
 
         $this->assertTrue($response);
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
