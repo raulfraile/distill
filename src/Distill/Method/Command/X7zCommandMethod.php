@@ -40,7 +40,7 @@ class X7zCommandMethod extends AbstractCommandMethod
             throw new FormatNotSupportedInMethodException($this, $format);
         }
 
-        @mkdir($target);
+        $this->getFilesystem()->mkdir($target);
         $command = '7z e -y '.escapeshellarg($file).' -o'.escapeshellarg($target);
 
         $exitCode = $this->executeCommand($command);

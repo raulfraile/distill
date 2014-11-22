@@ -43,7 +43,7 @@ class TarCommandMethod extends AbstractCommandMethod
             throw new FormatNotSupportedInMethodException($this, $format);
         }
 
-        @mkdir($target);
+        $this->getFilesystem()->mkdir($target);
 
         $tarOptions = ['x', 'v', 'f'];
 

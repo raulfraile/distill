@@ -35,7 +35,7 @@ class CabextractCommandMethod extends AbstractCommandMethod
             throw new FormatNotSupportedInMethodException($this, $format);
         }
 
-        @mkdir($target);
+        $this->getFilesystem()->mkdir($target);
         $command = 'cabextract -d '.escapeshellarg($target).' '.escapeshellarg($file);
 
         $exitCode = $this->executeCommand($command);

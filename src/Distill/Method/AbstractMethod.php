@@ -12,7 +12,7 @@
 namespace Distill\Method;
 
 use Distill\Format\FormatInterface;
-use Symfony\Component\Process\Process;
+use Symfony\Component\Filesystem\Filesystem;
 
 abstract class AbstractMethod implements MethodInterface
 {
@@ -44,6 +44,11 @@ abstract class AbstractMethod implements MethodInterface
     protected function isFormatSupported(FormatInterface $format)
     {
         return in_array(static::getName(), $format->getUncompressionMethods());
+    }
+
+    protected function getFilesystem()
+    {
+        return new Filesystem();
     }
 
 }

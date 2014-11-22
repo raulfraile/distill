@@ -42,7 +42,7 @@ class RarExtensionMethod extends AbstractMethod
             return false;
         }
 
-        @mkdir($target);
+        $this->getFilesystem()->mkdir($target);
 
         foreach ($rar->getEntries() as $entry) {
             $entry->extract($target);

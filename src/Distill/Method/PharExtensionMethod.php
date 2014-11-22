@@ -38,7 +38,7 @@ class PharExtensionMethod extends AbstractMethod
 
         try {
             $phar = new \Phar($file);
-            @mkdir($target);
+            $this->getFilesystem()->mkdir($target);
             $phar->extractTo($target, null, true);
 
             return true;

@@ -35,7 +35,7 @@ class UnrarCommandMethod extends AbstractCommandMethod
             throw new FormatNotSupportedInMethodException($this, $format);
         }
 
-        @mkdir($target);
+        $this->getFilesystem()->mkdir($target);
         $command = 'unrar e '.escapeshellarg($file).' '.escapeshellarg($target);
 
         $exitCode = $this->executeCommand($command);
