@@ -1,6 +1,6 @@
 # Distill: Smart compressed files extractor for PHP
 
-[![Build Status](https://secure.travis-ci.org/raulfraile/ladybug.png)](http://travis-ci.org/raulfraile/distill)
+[![Build Status](https://secure.travis-ci.org/raulfraile/distill.png)](http://travis-ci.org/raulfraile/distill)
 [![Latest Stable Version](https://poser.pugx.org/raulfraile/distill/v/stable.png)](https://packagist.org/packages/raulfraile/distill)
 [![Total Downloads](https://poser.pugx.org/raulfraile/distill/downloads.png)](https://packagist.org/packages/raulfraile/distill)
 [![Latest Unstable Version](https://poser.pugx.org/raulfraile/distill/v/unstable.png)](https://packagist.org/packages/raulfraile/distill)
@@ -20,8 +20,8 @@ based on minimizing bandwidth or optimizing uncompression speed.
 The recommended way to install Distill is through [Composer](http://packagist.org/about-composer). Just
 create a `composer.json` file for your project:
 
-[![Latest Stable Version](https://poser.pugx.org/raulfraile/distill/v/stable.png)](https://packagist.org/packages/raulfraile/ladybug)
-[![Latest Unstable Version](https://poser.pugx.org/raulfraile/distill/v/unstable.png)](https://packagist.org/packages/raulfraile/ladybug)
+[![Latest Stable Version](https://poser.pugx.org/raulfraile/distill/v/stable.png)](https://packagist.org/packages/raulfraile/distill)
+[![Latest Unstable Version](https://poser.pugx.org/raulfraile/distill/v/unstable.png)](https://packagist.org/packages/raulfraile/distill)
 
 
 ``` json
