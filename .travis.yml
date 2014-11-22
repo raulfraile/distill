@@ -25,4 +25,6 @@ before_script:
 
 script:
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then phpunit --verbose; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then cat travis.hhvm.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then hhvm -c travis.hhvm.ini -i; fi;'
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then hhvm -c travis.hhvm.ini $HOME/.phpenv/versions/hhvm/bin/phpunit; fi;'
