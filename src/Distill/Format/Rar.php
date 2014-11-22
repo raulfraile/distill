@@ -55,7 +55,7 @@ class Rar extends AbstractFormat
      */
     public function getExtensions()
     {
-        return ['rar'];
+        return ['rar', 'rev', 'r00', 'r01'];
     }
 
     /**
