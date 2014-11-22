@@ -17,9 +17,9 @@ before_script:
   - sudo apt-get install -y p7zip-full
   - sudo apt-get install -y p7zip-rar
   - sudo apt-get install -y cabextract
-  - pecl install zip
-  - pecl install rar
-  - phpenv rehash
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then pecl install zip; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then pecl install rar; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then phpenv rehash; fi;'
   - composer install --prefer-source
 
 script:
