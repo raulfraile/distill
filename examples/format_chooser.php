@@ -14,7 +14,6 @@ $preferredFile = $distill
     ->addFile('http://get.symfony.com/Symfony_Standard_Vendors_2.5.3.zip')
     ->addFile('http://get.symfony.com/Symfony_Standard_Vendors_2.5.3.tgz')
     ->getPreferredFile();
-
 echo $preferredFile . \PHP_EOL;
 
 $preferredFile = $distill

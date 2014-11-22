@@ -11,7 +11,6 @@
 
 namespace Distill;
 
-use Distill\Exception\HashAlgorithmNotSupportedException;
 use Distill\Exception\NotSingleDirectoryException;
 use Distill\Extractor\ExtractorInterface;
 use Distill\Strategy\StrategyInterface;

@@ -36,6 +36,11 @@ class Chooser
     protected $files;
 
     /**
+     * @var boolean
+     */
+    protected $excludeUnsupported;
+
+    /**
      * Constructor.
      * @param SupportCheckerInterface $supportChecker
      * @param StrategyInterface $strategy
@@ -49,6 +54,7 @@ class Chooser
         $this->strategy = $strategy;
         $this->formatGuesser = $formatGuesser;
         $this->supportChecker = $supportChecker;
+        $this->excludeUnsupported = true;
     }
 
     /**
@@ -172,6 +178,30 @@ class Chooser
     }
 
     /**
+     * Exclude files of not supported formats. This is the default behaviour.
+     *
+     * @return Chooser
+     */
+    public function excludeUnsupportedFormats()
+    {
+        $this->excludeUnsupported = true;
+
+        return $this;
+    }
+
+    /**
+     * Include files of not supported formats.
+     *
+     * @return Chooser
+     */
+    public function includeUnsupportedFormats()
+    {
+        $this->excludeUnsupported = false;
+
+        return $this;
+    }
+
+    /**
      * Gets the preferred file based on the chosen strategy.
      * @throws Exception\StrategyRequiredException
      *
@@ -179,21 +209,36 @@ class Chooser
      */
     public function getPreferredFile()
     {
+        $preferredFiles = $this->getPreferredFilesOrdered();
+
+        if (empty($preferredFiles)) {
+            return null;
+        }
+
+        return $preferredFiles[0];
+    }
+
+    /**
+     * Gets an ordered collection of preferred files.
+     * @throws StrategyRequiredException
+     *
+     * @return File[]
+     */
+    public function getPreferredFilesOrdered()
+    {
         if (null === $this->strategy) {
             throw new StrategyRequiredException();
         }
 
         $preferredFiles = $this->strategy->getPreferredFilesOrdered($this->files);
 
-        // get the first file that is supported
-        $supportedFile = null;
-        for ($supportedFile = null, $i = 0; $i < count($preferredFiles) && null === $supportedFile; $i++) {
-            if ($this->supportChecker->isFormatSupported($preferredFiles[$i]->getFormat())) {
-                $supportedFile = $preferredFiles[$i];
-            }
+        if (true === $this->excludeUnsupported) {
+            return array_values(array_filter($preferredFiles, function (File $file) {
+                return $this->supportChecker->isFormatSupported($file->getFormat());
+            }));
         }
 
-        return $supportedFile;
+        return $preferredFiles;
     }
 
 }
