@@ -13,8 +13,20 @@ namespace Distill\Format;
 
 use Distill\Method;
 
-class Tar extends AbstractFormat
-{
+/**
+ * A TAR file.
+ *
+ * A tar archive consists of a series of file objects. Each file object includes any file data,
+ * and is preceded by a 512-byte header record. The file data is written unaltered except that
+ * its length is rounded up to a multiple of 512 bytes. The end of an archive is marked by at
+ * least two consecutive zero-filled records. The final block of an archive is padded out to
+ * full length with zeros.
+ *
+ * @see http://en.wikipedia.org/wiki/Tar_(computing)
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
+class Tar extends AbstractFormat {
 
     /**
      * {@inheritdoc}

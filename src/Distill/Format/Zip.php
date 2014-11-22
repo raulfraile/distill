@@ -13,6 +13,16 @@ namespace Distill\Format;
 
 use Distill\Method;
 
+/**
+ * A ZIP file.
+ *
+ * ZIP is an archive file format that supports lossless data compression, may contain one or
+ * more files or folders that may have been compressed and permits a number of compression algorithms
+ *
+ * @see http://en.wikipedia.org/wiki/Zip_(file_format)
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class Zip extends AbstractFormat
 {
 
@@ -45,7 +55,7 @@ class Zip extends AbstractFormat
      */
     public function getExtensions()
     {
-        return ['zip'];
+        return ['zip', 'zipx'];
     }
 
     /**
