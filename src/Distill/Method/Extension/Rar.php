@@ -59,7 +59,7 @@ class Rar extends AbstractMethod
      */
     public function isSupported()
     {
-        return class_exists('\\RarArchive');
+        return extension_loaded('rar');
     }
 
     /**

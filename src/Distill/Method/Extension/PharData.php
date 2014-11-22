@@ -73,7 +73,7 @@ class PharData extends AbstractMethod
      */
     public function isSupported()
     {
-        return class_exists('\\PharData') && class_exists('\\Phar');
+        return extension_loaded('Phar');
     }
 
     /**

@@ -53,7 +53,7 @@ class Phar extends AbstractMethod
      */
     public function isSupported()
     {
-        return class_exists('\\Phar');
+        return extension_loaded('Phar');
     }
 
     /**

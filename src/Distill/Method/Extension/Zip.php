@@ -63,7 +63,7 @@ class Zip extends AbstractMethod
      */
     public function isSupported()
     {
-        return class_exists('\\ZipArchive');
+        return extension_loaded('zip');
     }
 
     /**
