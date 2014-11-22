@@ -13,7 +13,7 @@ namespace Distill\Method\Command;
 
 use Distill\Exception\CorruptedFileException;
 use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\File;
+use Distill\Exception\MethodNotSupportedException;
 use Distill\Format\FormatInterface;
 
 /**
@@ -34,7 +34,7 @@ class Unzip extends AbstractCommandMethod
     public function extract($file, $target, FormatInterface $format)
     {
         if (!$this->isSupported()) {
-            return false;
+            throw new MethodNotSupportedException($this);
         }
 
         if (false === $this->isFormatSupported($format)) {

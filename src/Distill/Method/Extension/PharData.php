@@ -12,6 +12,7 @@
 namespace Distill\Method\Extension;
 
 use Distill\Exception\FormatNotSupportedInMethodException;
+use Distill\Exception\MethodNotSupportedException;
 use Distill\Format;
 use Distill\Format\FormatInterface;
 use Distill\Method\AbstractMethod;
@@ -30,7 +31,7 @@ class PharData extends AbstractMethod
     public function extract($file, $target, FormatInterface $format)
     {
         if (!$this->isSupported()) {
-            return false;
+            throw new MethodNotSupportedException($this);
         }
 
         if (false === $this->isFormatSupported($format)) {
@@ -42,7 +43,6 @@ class PharData extends AbstractMethod
             $archive = new \PharData($file/*, null, null, $pharFormat*/);
             $archive->extractTo($target, null, true);
         } catch (\Exception $e) {
-            ld($e, $e->getMessage());
             return false;
         }
 

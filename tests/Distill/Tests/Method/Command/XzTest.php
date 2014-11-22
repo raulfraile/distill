@@ -12,6 +12,11 @@ class XzTest extends AbstractMethodTest
     public function setUp()
     {
         $this->method = new Method\Command\Xz();
+
+        if (false === $this->method->isSupported()) {
+            $this->markTestSkipped('The xz command is not installed');
+        }
+
         parent::setUp();
     }
 

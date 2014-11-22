@@ -12,6 +12,11 @@ class GnuGzipTest extends AbstractMethodTest
     public function setUp()
     {
         $this->method = new Method\Command\GnuGzip();
+
+        if (false === $this->method->isSupported()) {
+            $this->markTestSkipped('The GNU gzip command is not installed');
+        }
+
         parent::setUp();
     }
 

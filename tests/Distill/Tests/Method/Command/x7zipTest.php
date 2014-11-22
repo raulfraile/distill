@@ -12,6 +12,11 @@ class x7zipTest extends AbstractMethodTest
     public function setUp()
     {
         $this->method = new Method\Command\x7zip();
+
+        if (false === $this->method->isSupported()) {
+            $this->markTestSkipped('The 7zip command is not installed');
+        }
+
         parent::setUp();
     }
 

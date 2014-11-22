@@ -12,6 +12,11 @@ class UnzipCommandMethodTest extends AbstractMethodTest
     public function setUp()
     {
         $this->method = new Method\Command\Unzip();
+
+        if (false === $this->method->isSupported()) {
+            $this->markTestSkipped('The unzip command is not installed');
+        }
+
         parent::setUp();
     }
 

@@ -12,6 +12,11 @@ class UnrarTest extends AbstractMethodTest
     public function setUp()
     {
         $this->method = new Method\Command\Unrar();
+
+        if (false === $this->method->isSupported()) {
+            $this->markTestSkipped('The unrar command is not installed');
+        }
+
         parent::setUp();
     }
 

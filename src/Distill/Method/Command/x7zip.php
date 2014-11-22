@@ -13,7 +13,7 @@ namespace Distill\Method\Command;
 
 use Distill\Exception\CorruptedFileException;
 use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\File;
+use Distill\Exception\MethodNotSupportedException;
 use Distill\Format\FormatInterface;
 
 /**
@@ -32,8 +32,8 @@ class x7zip extends AbstractCommandMethod
      */
     public function extract($file, $target, FormatInterface $format)
     {
-        if (false === $this->isSupported()) {
-            return false;
+        if (!$this->isSupported()) {
+            throw new MethodNotSupportedException($this);
         }
 
         if (false === $this->isFormatSupported($format)) {

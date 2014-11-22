@@ -12,6 +12,7 @@
 namespace Distill\Method\Extension\Pear;
 
 use Distill\Exception\FormatNotSupportedInMethodException;
+use Distill\Exception\MethodNotSupportedException;
 use Distill\Format\FormatInterface;
 use Distill\Method\AbstractMethod;
 
@@ -29,7 +30,7 @@ class ArchiveTar extends AbstractMethod
     public function extract($file, $target, FormatInterface $format)
     {
         if (!$this->isSupported()) {
-            return false;
+            throw new MethodNotSupportedException($this);
         }
 
         if (false === $this->isFormatSupported($format)) {

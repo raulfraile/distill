@@ -12,6 +12,11 @@ class Bzip2CommandMethodTest extends AbstractMethodTest
     public function setUp()
     {
         $this->method = new Method\Command\Bzip2();
+
+        if (false === $this->method->isSupported()) {
+            $this->markTestSkipped('The bzip2 command is not installed');
+        }
+
         parent::setUp();
     }
 
