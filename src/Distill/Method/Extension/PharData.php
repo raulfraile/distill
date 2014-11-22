@@ -75,7 +75,8 @@ class PharData extends AbstractMethod
      */
     public function isSupported()
     {
-        return extension_loaded('Phar');
+        return extension_loaded('Phar') &&
+        (false === $this->isHhvm() || ($this->isHhvm() && in_array((string) ini_get('phar.readonly'), ['0', 'Off'])));
     }
 
     /**

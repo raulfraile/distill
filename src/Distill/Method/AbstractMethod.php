@@ -51,4 +51,8 @@ abstract class AbstractMethod implements MethodInterface
         return new Filesystem();
     }
 
+    protected function isHhvm() {
+        return defined('HHVM_VERSION');
+    }
+
 }
