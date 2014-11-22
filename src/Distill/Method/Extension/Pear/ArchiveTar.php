@@ -46,7 +46,7 @@ class ArchiveTar extends AbstractMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && class_exists('\\ArchiveTar');
+        return class_exists('\\ArchiveTar');
     }
 
     /**
