@@ -11,6 +11,10 @@ class RarExtensionMethodTest extends AbstractMethodTest
 
     public function setUp()
     {
+        if (!extension_loaded('rar')) {
+            $this->markTestSkipped('rar extension not available');
+        }
+
         $this->method = new Method\Extension\Rar();
         parent::setUp();
     }

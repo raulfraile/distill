@@ -11,6 +11,10 @@ class PharDataTest extends AbstractMethodTest
 
     public function setUp()
     {
+        if (!extension_loaded('Phar')) {
+            $this->markTestSkipped('Phar extension not available');
+        }
+
         $this->method = new Method\Extension\PharData();
         parent::setUp();
     }

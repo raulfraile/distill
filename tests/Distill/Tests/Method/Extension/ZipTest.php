@@ -11,6 +11,10 @@ class ZipMethodTest extends AbstractMethodTest
 
     public function setUp()
     {
+        if (!extension_loaded('zip')) {
+            $this->markTestSkipped('zip extension not available');
+        }
+
         $this->method = new Method\Extension\Zip();
         parent::setUp();
     }
