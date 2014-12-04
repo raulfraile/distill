@@ -25,28 +25,31 @@ abstract class AbstractCommandMethod extends AbstractMethod
      */
     protected function existsCommand($command)
     {
+        if (!function_exists('exec')) {
+            return false;
+        }
+
         if ($this->isWindows()) {
             return false;
         }
 
-        $process = new Process('command -v ' . $command . ' > /dev/null');
-        $process->run();
+        exec('command -v ' . $command . ' > /dev/null', $output, $code);
 
-        return $process->isSuccessful();
+        return 0 === $code;// && count($output) > 0;
     }
 
     /**
      * Executes a command.
-     * @param string $command Command
+     * @param string $command Command.
+     * @param string $output  Command output.
      *
      * @return bool Returns TRUE when successful, FALSE otherwise
      */
-    protected function executeCommand($command)
+    protected function executeCommand($command, & $output = null)
     {
-        $process = new Process($command);
-        $process->run();
+        exec($command . ' 2>&1', $output, $code);
 
-        return $process->getExitCode();
+        return $code;
     }
 
 }
