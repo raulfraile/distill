@@ -10,7 +10,7 @@ Distill extracts files from compressed archives.
 Features:
 
 * Extract files from `bz2`, `cab`, `epub`, `gz`, `phar`, `rar`, `tar`, `tar.bz2`, `tar.gz`, `tar.xz`, `7z`, `xz` and `zip` archives.
-* Different decompression methods under the hood: PHP extensions and command line binaries.
+* Different decompression methods under the hood: PHP extensions, command line binaries, third-party libraries and even fallback methods in plain PHP.
 * Strategy to choose the right file in case there are more than one available format. Strategies can be
 based on minimizing bandwidth or optimizing decompression speed.
 
