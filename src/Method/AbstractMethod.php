@@ -17,6 +17,23 @@ use Symfony\Component\Filesystem\Filesystem;
 abstract class AbstractMethod implements MethodInterface
 {
 
+    const OS_TYPE_UNIX = 1;
+    const OS_TYPE_DARWIN = 2;
+    const OS_TYPE_CYGWIN = 3;
+    const OS_TYPE_WINDOWS = 4;
+    const OS_TYPE_BSD = 5;
+
+    protected $osType = null;
+
+    protected function getOsType()
+    {
+        if (null === $this->osType) {
+            $this->osType = $this->guessType();
+        }
+
+        return $this->osType;
+    }
+
     protected function isExitCodeSuccessful($code)
     {
         return 0 === $code;
@@ -73,6 +90,29 @@ abstract class AbstractMethod implements MethodInterface
      */
     protected function isHhvm() {
         return defined('HHVM_VERSION');
+    }
+
+    /**
+     * Guesses OS type.
+     *
+     * @return int
+     */
+    protected function guessType()
+    {
+        $os = strtolower(PHP_OS);
+        if (false !== strpos($os, 'cygwin')) {
+            return self::OS_TYPE_CYGWIN;
+        }
+        if (false !== strpos($os, 'darwin')) {
+            return self::OS_TYPE_DARWIN;
+        }
+        if (false !== strpos($os, 'bsd')) {
+            return self::OS_TYPE_BSD;
+        }
+        if (0 === strpos($os, 'win')) {
+            return self::OS_TYPE_WINDOWS;
+        }
+        return self::OS_TYPE_UNIX;
     }
 
 }
