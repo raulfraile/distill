@@ -283,4 +283,32 @@ class DistillTest extends TestCase
 
         $this->distill->extractWithoutRootDirectory($this->filesPath . 'file_ok.zip', $target, new Format\Zip());
     }
+
+    public function testFormatIsNotSupportedAfterDisablingFormat()
+    {
+        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedException');
+
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $this->distill
+            ->disableFormat(Format\Zip::getName())
+            ->extract($this->filesPath . 'file_ok.zip', $target, new Format\Zip());
+    }
+
+    public function testFormatCannotBeDecompressedAfterDisablingAllMethods()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        foreach (Format\Zip::getUncompressionMethods() as $method) {
+            $this->distill->disableMethod($method);
+        }
+
+        $result = $this->distill
+            ->extract($this->filesPath . 'file_ok.zip', $target, new Format\Zip());
+
+        $this->assertFalse($result);
+        $this->clearTemporaryPath();
+    }
 }

@@ -11,6 +11,7 @@
 
 namespace Distill\Extractor;
 
+use Distill\Exception\FormatNotSupportedException;
 use Distill\Format\FormatInterface;
 use Distill\Method\MethodInterface;
 
@@ -23,14 +24,25 @@ class Extractor implements ExtractorInterface
     protected $methods;
 
     /**
-     * Constructor.
-     * @param MethodInterface[] $methods.
+     * @var FormatInterface[]
      */
-    public function __construct(array $methods)
+    protected $formats;
+
+    /**
+     * Constructor.
+     * @param MethodInterface[] $methods
+     * @param FormatInterface[] $formats
+     */
+    public function __construct(array $methods, array $formats)
     {
         $this->methods = [];
         foreach ($methods as $method) {
             $this->methods[$method->getName()] = $method;
+        }
+
+        $this->formats = [];
+        foreach ($formats as $format) {
+            $this->formats[$format->getName()] = $format;
         }
     }
 
@@ -39,14 +51,20 @@ class Extractor implements ExtractorInterface
      */
     public function extract($file, $path, FormatInterface $format)
     {
+        if (false === array_key_exists($format->getName(), $this->formats)) {
+            throw new FormatNotSupportedException($format);
+        }
+
         $methodsKeys = $format->getUncompressionMethods();
         $methodsCount = count($methodsKeys);
         $i = 0;
         $success = false;
         while (!$success && $i < $methodsCount) {
-            $method = $this->methods[$methodsKeys[$i]];
-            if ($method->isSupported($format)) {
-                $success = $method->extract($file, $path, $format);
+            if (array_key_exists($methodsKeys[$i], $this->methods)) {
+                $method = $this->methods[$methodsKeys[$i]];
+                if ($method->isSupported($format)) {
+                    $success = $method->extract($file, $path, $format);
+                }
             }
 
             $i++;

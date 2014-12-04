@@ -69,5 +69,5 @@ interface FormatInterface
      *
      * @return array List of compression methods
      */
-    public function getUncompressionMethods();
+    public static function getUncompressionMethods();
 }

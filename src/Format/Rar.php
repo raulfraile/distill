@@ -61,7 +61,7 @@ class Rar extends AbstractFormat
     /**
      * {@inheritdoc}
      */
-    public function getUncompressionMethods()
+    public static function getUncompressionMethods()
     {
         return [
             Method\Command\Unrar::getName(),
