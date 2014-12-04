@@ -9,16 +9,14 @@ Distill extracts files from compressed archives.
 
 Features:
 
-* Extract files from `bz2`, `epub`, `gz`, `phar`, `rar`, `tar`, `tar.bz2`, `tar.gz`, `tar.xz`, `7z`, `xz`
-and `zip` archives.
-* Different uncompression methods under the hood: PHP extensions and command line binaries.
+* Extract files from `bz2`, `cab`, `epub`, `gz`, `phar`, `rar`, `tar`, `tar.bz2`, `tar.gz`, `tar.xz`, `7z`, `xz` and `zip` archives.
+* Different decompression methods under the hood: PHP extensions and command line binaries.
 * Strategy to choose the right file in case there are more than one available format. Strategies can be
-based on minimizing bandwidth or optimizing uncompression speed.
+based on minimizing bandwidth or optimizing decompression speed.
 
 ## Installation
 
-The recommended way to install Distill is through [Composer](http://packagist.org/about-composer). Just
-create a `composer.json` file for your project:
+The recommended way to install Distill is through [Composer](http://packagist.org/about-composer). Require the `raulfraile/distill` package into your `composer.json` file:
 
 [![Latest Stable Version](https://poser.pugx.org/raulfraile/distill/v/stable.png)](https://packagist.org/packages/raulfraile/distill)
 [![Latest Unstable Version](https://poser.pugx.org/raulfraile/distill/v/unstable.png)](https://packagist.org/packages/raulfraile/distill)
@@ -27,19 +25,14 @@ create a `composer.json` file for your project:
 ``` json
 {
     "require": {
-        "raulfraile/distill": "*"
+        "raulfraile/distill": "@stable"
     }
 }
 ```
-To actually install Distill in your project, download the composer binary and run it:
 
-``` bash
-wget http://getcomposer.org/composer.phar
-# or
-curl -O http://getcomposer.org/composer.phar
+**Protip**: you should browse the [raulfraile/distill](https://packagist.org/packages/raulfraile/distill) page to choose a stable version to use, avoid the `@stable` meta constraint.
 
-php composer.phar install
-```
+Otherwise, install the library and setup the autoloader yourself.
 
 ## Example
 
@@ -118,6 +111,25 @@ If you are looking for a command line tool to extract compressed files check out
 $ distill-cli extract archive.tar.gz path/
 ```
 
+## Contributing
+
+See [CONTRIBUTING](https://github.com/raulfraile/distill/blob/master/CONTRIBUTING.md) file.
+
+
+## Running the Tests
+
+Install the [Composer](http://getcomposer.org/) `dev` dependencies:
+
+```
+$ composer install --dev
+``` 
+
+Then, run the test suite using [PHPUnit](http://phpunit.de/):
+
+```
+$ phpunit
+```
+
 ## Credits
 
 * Raul Fraile ([@raulfraile](https://twitter.com/raulfraile))
@@ -125,4 +137,4 @@ $ distill-cli extract archive.tar.gz path/
 
 ## License
 
-Distill is released under the MIT License. See the bundled LICENSE file for details.
+Distill is released under the MIT License. See the bundled [LICENSE](https://github.com/raulfraile/distill/blob/master/LICENSE) file for details.
