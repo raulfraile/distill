@@ -13,7 +13,10 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Distill\\": "src/" }
+        "psr-4": { "Distill\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Distill\\Tests\\": "tests/" }
     },
     "require": {
         "php": ">=5.4.0",

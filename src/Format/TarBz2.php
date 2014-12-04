@@ -45,7 +45,7 @@ class TarBz2 extends AbstractFormat
      */
     public function getExtensions()
     {
-        return ['tar.bz2', 'tar.bz', 'tbz2', 'tbz'];
+        return ['tar.bz2', 'tar.bz', 'tbz2', 'tbz', 'tb2'];
     }
 
     /**

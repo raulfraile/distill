@@ -13,7 +13,7 @@
         >
     <testsuites>
         <testsuite name="Distill Test Suite">
-            <directory>./tests/Distill</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 

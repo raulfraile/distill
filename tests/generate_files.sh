@@ -5,9 +5,9 @@ mkdir files/uncompressed
 
 cd files/uncompressed
 
-echo 'Contents of _1_' > 1.txt
-echo 'Contents of _2_' > 2.txt
-echo 'Contents of _3_' > 3.txt
+echo '1.txt file' > 1.txt
+echo '2.txt file' > 2.txt
+echo '3.txt file' > 3.txt
 
 # zip file
 rm -f ../file_ok.zip ../file_fake.zip
@@ -82,7 +82,7 @@ dd if=/dev/urandom of=../file_fake.phar bs=1 count=1240
 
 # cab file
 rm -f ../file_ok.cab ../file_fake.cab
-lcab 1.txt 2.txt 3.txt ../file_ok.cab
+gcab -c ../file_ok.cab 1.txt 2.txt 3.txt
 dd if=/dev/urandom of=../file_fake.cab bs=1 count=1240
 
 # epub file

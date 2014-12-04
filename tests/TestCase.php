@@ -15,7 +15,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->filesPath = __DIR__ . '/../../files/';
+        $this->filesPath = __DIR__ . '/files/';
     }
 
     protected function getTemporaryPath()
