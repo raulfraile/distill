@@ -64,6 +64,15 @@ class TarExtractor extends AbstractMethod
         return get_class();
     }
 
+    /**
+     * Reads a block header and returns an associative array with the headers.
+     * @param resource $fileHandler File handler.
+     * @param string   $filename    Filename.
+     *
+     * @throws CorruptedFileException
+     *
+     * @return array
+     */
     protected function readBlockHeader($fileHandler, $filename)
     {
         $data = fread($fileHandler, 512);
@@ -99,6 +108,13 @@ class TarExtractor extends AbstractMethod
         return $headers;
     }
 
+    /**
+     * Reads a block of data.
+     * @param resource $fileHandler File handler.
+     * @param int      $size        Size in bytes.
+     *
+     * @return string Block contents.
+     */
     protected function readBlockData($fileHandler, $size)
     {
         $blockSize = $size + (512 - ($size % 512));
@@ -159,6 +175,7 @@ class TarExtractor extends AbstractMethod
 
                 // create the file
                 file_put_contents($target . '/' . $name, $this->readBlockData($fileHandler, $size));
+
                 continue;
             } elseif (self::TYPE_DIRECTORY === $type) {
                 @mkdir($target . '/' . $name, 0777, true);
