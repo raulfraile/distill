@@ -5,9 +5,9 @@ mkdir files/uncompressed
 
 cd files/uncompressed
 
-echo '1.txt file' > 1.txt
-echo '2.txt file' > 2.txt
-echo '3.txt file' > 3.txt
+echo 'Contents of _1_' > 1.txt
+echo 'Contents of _2_' > 2.txt
+echo 'Contents of _3_' > 3.txt
 
 # zip file
 rm -f ../file_ok.zip ../file_fake.zip

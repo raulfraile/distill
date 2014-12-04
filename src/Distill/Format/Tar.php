@@ -69,7 +69,8 @@ class Tar extends AbstractFormat {
             Method\Command\GnuTar::getName(),
             Method\Command\x7zip::getName(),
             Method\Extension\PharData::getName(),
-            Method\Extension\Pear\ArchiveTar::getName()
+            Method\Extension\Pear\ArchiveTar::getName(),
+            Method\Native\TarExtractor::getName()
         ];
     }
 
