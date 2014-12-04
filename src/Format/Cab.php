@@ -67,7 +67,8 @@ class Cab extends AbstractFormat
     {
         return [
             Method\Command\Cabextract::getName(),
-            Method\Command\x7zip::getName()
+            Method\Command\x7zip::getName(),
+            Method\Command\Gnome\Gcab::getName(),
         ];
     }
 
