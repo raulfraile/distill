@@ -50,10 +50,22 @@ class Distill
      */
     protected $container;
 
+    /**
+     * Whether or not the container has been initialized.
+     * @var bool
+     */
     protected $initialized;
 
+    /**
+     * Disabled methods.
+     * @var string[]
+     */
     protected $disabledMethods;
 
+    /**
+     * Disabled formats.
+     * @var string[]
+     */
     protected $disabledFormats;
 
     /**
@@ -66,6 +78,9 @@ class Distill
         $this->disabledFormats = [];
     }
 
+    /**
+     * Initialize the DIC.
+     */
     protected function initialize()
     {
         $this->container = new Container();
@@ -76,6 +91,9 @@ class Distill
         $this->initialized = false;
     }
 
+    /**
+     * Initialize the DIC if it has not been initialized already.
+     */
     protected function initializeIfNotInitialized()
     {
         if (false === $this->initialized) {
@@ -172,6 +190,12 @@ class Distill
         return $this->container['distill.chooser'];
     }
 
+    /**
+     * Checks whether the format is supported.
+     * @param FormatInterface $format Format to be checked.
+     *
+     * @return boolean
+     */
     public function isFormatSupported(FormatInterface $format)
     {
         $this->initializeIfNotInitialized();
@@ -179,6 +203,12 @@ class Distill
         return $this->container['distill.support_checker']->isFormatSupported($format);
     }
 
+    /**
+     * Disables a method.
+     * @param string $methodName Method name (e.g. Method\Command\Unzip::getName()).
+     *
+     * @return Distill
+     */
     public function disableMethod($methodName)
     {
         $this->disabledMethods[] = $methodName;
@@ -187,6 +217,11 @@ class Distill
         return $this;
     }
 
+    /**
+     * Disables a format.
+     * @param string $formatName Format name (e.g. Format\Zip::getName()).
+     * @return Distill
+     */
     public function disableFormat($formatName)
     {
         $this->disabledFormats[] = $formatName;
