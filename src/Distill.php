@@ -20,7 +20,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class Distill
 {
-
     /**
      * Compressed file extractor.
      * @var ExtractorInterface Extractor
@@ -51,13 +50,37 @@ class Distill
      */
     protected $container;
 
+    protected $initialized;
+
+    protected $disabledMethods;
+
+    protected $disabledFormats;
+
     /**
      * Constructor.
      */
     public function __construct()
     {
+        $this->initialized = false;
+        $this->disabledMethods = [];
+        $this->disabledFormats = [];
+    }
+
+    protected function initialize()
+    {
         $this->container = new Container();
-        $this->container->register(new ContainerProvider());
+
+        $containerProvider = new ContainerProvider($this->disabledMethods, $this->disabledFormats);
+        $this->container->register($containerProvider);
+
+        $this->initialized = false;
+    }
+
+    protected function initializeIfNotInitialized()
+    {
+        if (false === $this->initialized) {
+            $this->initialize();
+        }
     }
 
     /**
@@ -70,6 +93,8 @@ class Distill
      */
     public function extract($file, $path, FormatInterface $format = null)
     {
+        $this->initializeIfNotInitialized();
+
         if (null === $format) {
             $format = $this->container['distill.format_guesser']->guess($file);
         }
@@ -80,8 +105,8 @@ class Distill
     /**
      * Extracts the compressed file and copies the files from the root directory
      * only if the compressed file contains a single directory.
-     * @param string $file Compressed file.
-     * @param string $path Destination path.
+     * @param string                 $file   Compressed file.
+     * @param string                 $path   Destination path.
      * @param Format\FormatInterface $format Format.
      *
      * @throws NotSingleDirectoryException
@@ -90,10 +115,12 @@ class Distill
      */
     public function extractWithoutRootDirectory($file, $path, FormatInterface $format = null)
     {
+        $this->initializeIfNotInitialized();
+
         $filesystem = new Filesystem();
 
         // extract to a temporary place
-        $tempDirectory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . uniqid(time()) . DIRECTORY_SEPARATOR;
+        $tempDirectory = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid(time()).DIRECTORY_SEPARATOR;
         $this->extract($file, $tempDirectory, $format);
 
         // move directory
@@ -140,12 +167,32 @@ class Distill
      */
     public function getChooser()
     {
+        $this->initializeIfNotInitialized();
+
         return $this->container['distill.chooser'];
     }
 
     public function isFormatSupported(FormatInterface $format)
     {
+        $this->initializeIfNotInitialized();
+
         return $this->container['distill.support_checker']->isFormatSupported($format);
+    }
+
+    public function disableMethod($methodName)
+    {
+        $this->disabledMethods[] = $methodName;
+        $this->initialized = false;
+
+        return $this;
+    }
+
+    public function disableFormat($formatName)
+    {
+        $this->disabledFormats[] = $formatName;
+        $this->initialized = false;
+
+        return $this;
     }
 
 }

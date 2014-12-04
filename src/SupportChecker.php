@@ -45,9 +45,12 @@ class SupportChecker implements SupportCheckerInterface
         $i = 0;
         $supported = false;
         while (!$supported && $i < $methodsCount) {
-            $method = $this->methods[$methodsKeys[$i]];
-            if ($method->isSupported($format)) {
-                $supported = true;
+
+            if (array_key_exists($methodsKeys[$i], $this->methods)) {
+                $method = $this->methods[$methodsKeys[$i]];
+                if ($method->isSupported($format)) {
+                    $supported = true;
+                }
             }
 
             $i++;

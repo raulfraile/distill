@@ -11,15 +11,12 @@
 
 namespace Distill;
 
-use Distill\Method;
-use Distill\Format;
 use Distill\Extractor\Extractor;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
 class ContainerProvider implements ServiceProviderInterface
 {
-
     /**
      * Available formats.
      * @var string[]
@@ -35,25 +32,13 @@ class ContainerProvider implements ServiceProviderInterface
     /**
      * Constructor.
      */
-    public function __construct()
+    public function __construct(
+        array $disabledMethods = [],
+        array $disabledFormats = []
+    )
     {
-        $this->formats = [
-            Format\Bz2::getClass(),
-            Format\Cab::getClass(),
-            Format\Epub::getClass(),
-            Format\Gz::getClass(),
-            Format\Phar::getClass(),
-            Format\Rar::getClass(),
-            Format\Tar::getClass(),
-            Format\TarBz2::getClass(),
-            Format\TarGz::getClass(),
-            Format\TarXz::getClass(),
-            Format\x7z::getClass(),
-            Format\Xz::getClass(),
-            Format\Zip::getClass()
-        ];
 
-        $this->methods = [
+        $methodsClasses = [
             Method\Command\Bzip2::getClass(),
             Method\Command\Cabextract::getClass(),
             Method\Command\GnuGzip::getClass(),
@@ -68,8 +53,38 @@ class ContainerProvider implements ServiceProviderInterface
             Method\Extension\PharData::getClass(),
             Method\Extension\Rar::getClass(),
             Method\Extension\Zip::getClass(),
-            Method\Native\TarExtractor::getClass(),
+            Method\Native\TarExtractor::getClass()
         ];
+
+        $formatsClasses = [
+            Format\Bz2::getClass(),
+            Format\Cab::getClass(),
+            Format\Epub::getClass(),
+            Format\Gz::getClass(),
+            Format\Phar::getClass(),
+            Format\Rar::getClass(),
+            Format\Tar::getClass(),
+            Format\TarBz2::getClass(),
+            Format\TarGz::getClass(),
+            Format\TarXz::getClass(),
+            Format\x7z::getClass(),
+            Format\Xz::getClass(),
+            Format\Zip::getClass(),
+        ];
+
+        $this->formats = [];
+        foreach ($formatsClasses as $formatClass) {
+            if (false === in_array($formatClass::getName(), $disabledFormats)) {
+                $this->formats[] = $formatClass::getClass();
+            }
+        }
+
+        $this->methods = [];
+        foreach ($methodsClasses as $methodClass) {
+            if (false === in_array($methodClass::getName(), $disabledMethods)) {
+                $this->methods[] = $methodClass::getClass();
+            }
+        }
     }
 
     /**
@@ -109,7 +124,7 @@ class ContainerProvider implements ServiceProviderInterface
     protected function registerFormats(Container $container)
     {
         foreach ($this->formats as $formatClass) {
-            $container['distill.format.' . $formatClass::getName()] = $container->factory(function ($c) use ($formatClass) {
+            $container['distill.format.'.$formatClass::getName()] = $container->factory(function ($c) use ($formatClass) {
                 return new $formatClass();
             });
         }
@@ -122,7 +137,7 @@ class ContainerProvider implements ServiceProviderInterface
     protected function registerMethods(Container $container)
     {
         foreach ($this->methods as $methodClass) {
-            $container['distill.method.' . $methodClass::getName()] = $container->factory(function ($c) use ($methodClass) {
+            $container['distill.method.'.$methodClass::getName()] = $container->factory(function ($c) use ($methodClass) {
                 return new $methodClass();
             });
         }
@@ -130,13 +145,13 @@ class ContainerProvider implements ServiceProviderInterface
 
     protected function registerStrategies(Container $container)
     {
-        $container['distill.strategy.' . Strategy\MinimumSize::getName()] = $container->factory(function ($c) {
+        $container['distill.strategy.'.Strategy\MinimumSize::getName()] = $container->factory(function ($c) {
             return new Strategy\MinimumSize();
         });
-        $container['distill.strategy.' . Strategy\UncompressionSpeed::getName()] = $container->factory(function ($c) {
+        $container['distill.strategy.'.Strategy\UncompressionSpeed::getName()] = $container->factory(function ($c) {
             return new Strategy\UncompressionSpeed();
         });
-        $container['distill.strategy.' . Strategy\Random::getName()] = $container->factory(function ($c) {
+        $container['distill.strategy.'.Strategy\Random::getName()] = $container->factory(function ($c) {
             return new Strategy\Random();
         });
     }
@@ -144,8 +159,8 @@ class ContainerProvider implements ServiceProviderInterface
     protected function getFormatsFromContainer(Container $container)
     {
         $formats = $this->formats;
-        $callback = function($format) use ($container, $formats) {
-            return $container['distill.format.' . $format::getName()];
+        $callback = function ($format) use ($container, $formats) {
+            return $container['distill.format.'.$format::getName()];
         };
 
         return array_map($callback, $this->formats);
@@ -154,11 +169,10 @@ class ContainerProvider implements ServiceProviderInterface
     protected function getMethodsFromContainer(Container $container)
     {
         $methods = $this->methods;
-        $callback = function($method) use ($container, $methods) {
-            return $container['distill.method.' . $method::getName()];
+        $callback = function ($method) use ($container, $methods) {
+            return $container['distill.method.'.$method::getName()];
         };
 
         return array_map($callback, $this->methods);
     }
-
 }
