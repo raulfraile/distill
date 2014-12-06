@@ -12,11 +12,13 @@
 namespace Distill;
 
 use Distill\Extractor\Extractor;
+use Distill\Method\MethodInterface;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
 class ContainerProvider implements ServiceProviderInterface
 {
+
     /**
      * Available formats.
      * @var string[]
@@ -35,9 +37,7 @@ class ContainerProvider implements ServiceProviderInterface
     public function __construct(
         array $disabledMethods = [],
         array $disabledFormats = []
-    )
-    {
-
+    ) {
         $methodsClasses = [
             Method\Command\Bzip2::getClass(),
             Method\Command\Cabextract::getClass(),
@@ -53,7 +53,7 @@ class ContainerProvider implements ServiceProviderInterface
             Method\Extension\PharData::getClass(),
             Method\Extension\Rar::getClass(),
             Method\Extension\Zip::getClass(),
-            Method\Native\TarExtractor::getClass()
+            Method\Native\TarExtractor::getClass(),
         ];
 
         $formatsClasses = [
@@ -85,6 +85,8 @@ class ContainerProvider implements ServiceProviderInterface
                 $this->methods[] = $methodClass::getClass();
             }
         }
+
+
     }
 
     /**
@@ -101,19 +103,20 @@ class ContainerProvider implements ServiceProviderInterface
         });
 
         $container['distill.support_checker'] = $container->factory(function ($c) {
-            return new SupportChecker($this->getMethodsFromContainer($c));
+            return new SupportChecker($this->getMethodsFromContainer($c), $this->getFormatsFromContainer($c));
         });
 
         $container['distill.chooser'] = $container->factory(function ($c) {
             return new Chooser(
                 $c['distill.support_checker'],
                 $c['distill.strategy.minimum_size'],
-                $c['distill.format_guesser']
+                $c['distill.format_guesser'],
+                $this->getMethodsFromContainer($c)
             );
         });
 
         $container['distill.extractor.extractor'] = $container->factory(function ($c) {
-            return new Extractor($this->getMethodsFromContainer($c), $this->getFormatsFromContainer($c));
+            return new Extractor($this->getMethodsFromContainer($c), $c['distill.support_checker']);
         });
     }
 
@@ -136,11 +139,34 @@ class ContainerProvider implements ServiceProviderInterface
      */
     protected function registerMethods(Container $container)
     {
+        $orderedMethods = [];
+
         foreach ($this->methods as $methodClass) {
-            $container['distill.method.'.$methodClass::getName()] = $container->factory(function ($c) use ($methodClass) {
-                return new $methodClass();
-            });
+            /** @var MethodInterface $method */
+            $method = new $methodClass();
+
+            if ($method->isSupported()) {
+                $container['distill.method.'.$method->getName()] = function ($c) use ($methodClass) {
+                    return new $methodClass();
+                };
+
+                $orderedMethods[] = 'distill.method.'.$method->getName();
+            }
         }
+
+        // order methods
+        usort($orderedMethods, function($methodName1, $methodName2) use ($container) {
+            $value1 = ((int) $container[$methodName1]->isSupported()) + ($container[$methodName1]->getUncompressionSpeedLevel() / 10);
+            $value2 = ((int) $container[$methodName2]->isSupported()) + ($container[$methodName2]->getUncompressionSpeedLevel() / 10);
+
+            if ($value1 == $value2) {
+                return 0;
+            }
+
+            return ($value1 > $value2) ? -1 : 1;
+        });
+
+        $container['distill.method.__ordered'] = $orderedMethods;
     }
 
     protected function registerStrategies(Container $container)
@@ -158,21 +184,23 @@ class ContainerProvider implements ServiceProviderInterface
 
     protected function getFormatsFromContainer(Container $container)
     {
-        $formats = $this->formats;
-        $callback = function ($format) use ($container, $formats) {
-            return $container['distill.format.'.$format::getName()];
-        };
+        $formats = [];
+        foreach ($container->keys() as $key) {
+            if (0 === strpos($key, 'distill.format.')) {
+                $formats[] = $container[$key];
+            }
+        }
 
-        return array_map($callback, $this->formats);
+        return $formats;
     }
 
     protected function getMethodsFromContainer(Container $container)
     {
-        $methods = $this->methods;
-        $callback = function ($method) use ($container, $methods) {
-            return $container['distill.method.'.$method::getName()];
-        };
+        $methods = [];
+        foreach ($container['distill.method.__ordered'] as $key) {
+            $methods[] = $container[$key];
+        }
 
-        return array_map($callback, $this->methods);
+        return $methods;
     }
 }

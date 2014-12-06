@@ -14,7 +14,8 @@ namespace Distill\Method\Command;
 use Distill\Exception\CorruptedFileException;
 use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Exception\MethodNotSupportedException;
-use Distill\Format\FormatInterface;
+use Distill\Format;
+use Distill\Method\MethodInterface;
 
 /**
  * Extracts files from bzip2 archives.
@@ -30,7 +31,7 @@ class x7zip extends AbstractCommandMethod
     /**
      * {@inheritdoc}
      */
-    public function extract($file, $target, FormatInterface $format)
+    public function extract($file, $target, Format\FormatInterface $format)
     {
         if (!$this->isSupported()) {
             throw new MethodNotSupportedException($this);
@@ -41,7 +42,7 @@ class x7zip extends AbstractCommandMethod
         }
 
         $this->getFilesystem()->mkdir($target);
-        $command = '7z e -y '.escapeshellarg($file).' -o'.escapeshellarg($target);
+        $command = '7z x -y '.escapeshellarg($file).' -o'.escapeshellarg($target);
 
         $exitCode = $this->executeCommand($command);
 
@@ -57,7 +58,11 @@ class x7zip extends AbstractCommandMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('7z');
+        if (null === $this->supported) {
+            $this->supported = $this->existsCommand('7z');
+        }
+
+        return $this->supported;
     }
 
     /**
@@ -66,6 +71,29 @@ class x7zip extends AbstractCommandMethod
     public static function getClass()
     {
         return get_class();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getUncompressionSpeedLevel(Format\FormatInterface $format = null)
+    {
+        return MethodInterface::SPEED_LEVEL_HIGHEST;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isFormatSupported(Format\FormatInterface $format)
+    {
+        return $format instanceof Format\Bz2
+            || $format instanceof Format\Cab
+            || $format instanceof Format\Gz
+            || $format instanceof Format\Rar
+            || $format instanceof Format\Tar
+            || $format instanceof Format\x7z
+            || $format instanceof Format\Xz
+            || $format instanceof Format\Zip;
     }
 
 }

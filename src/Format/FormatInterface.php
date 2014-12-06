@@ -14,11 +14,11 @@ namespace Distill\Format;
 interface FormatInterface
 {
 
-    const LEVEL_LOWEST = 0;
-    const LEVEL_LOW = 2;
-    const LEVEL_MIDDLE = 5;
-    const LEVEL_HIGH = 7;
-    const LEVEL_HIGHEST = 10;
+    const RATIO_LEVEL_LOWEST = 0;
+    const RATIO_LEVEL_LOW = 2;
+    const RATIO_LEVEL_MIDDLE = 5;
+    const RATIO_LEVEL_HIGH = 7;
+    const RATIO_LEVEL_HIGHEST = 10;
 
     /**
      * Gets the format key name.
@@ -41,33 +41,12 @@ interface FormatInterface
      *
      * @return integer Compression ratio level (0: low, 10: high)
      */
-    public function getCompressionRatioLevel();
-
-    /**
-     * Gets the uncompression speed level for the format.
-     *
-     * @return integer Uncompression speed level (0: low, 10: high)
-     */
-    public function getUncompressionSpeedLevel();
-
-    /**
-     * Gets the compression speed level for the format.
-     *
-     * @return integer Compression speed level (0: low, 10: high)
-     */
-    public function getCompressionSpeedLevel();
+    public static function getCompressionRatioLevel();
 
     /**
      * Gets the list of extensions associated to the format.
      *
      * @return array List of extensions
      */
-    public function getExtensions();
-
-    /**
-     * Gets the list of uncompression methods.
-     *
-     * @return array List of compression methods
-     */
-    public static function getUncompressionMethods();
+    public static function getExtensions();
 }

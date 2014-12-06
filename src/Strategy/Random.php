@@ -18,7 +18,7 @@ namespace Distill\Strategy;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class Random extends AbstractStrategy
+class Random implements StrategyInterface
 {
 
     /**
@@ -32,7 +32,7 @@ class Random extends AbstractStrategy
     /**
      * {@inheritdoc}
      */
-    public function getPreferredFilesOrdered(array $files)
+    public function getPreferredFilesOrdered(array $files, array $methods = [])
     {
         if (empty($files)) {
             return [];

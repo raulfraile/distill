@@ -17,14 +17,4 @@ class Bz2Test extends AbstractFormatTest
         $this->assertLevelValid($this->format->getCompressionRatioLevel());
     }
 
-    public function testCompressionSpeedLevelIsValid()
-    {
-        $this->assertLevelValid($this->format->getCompressionSpeedLevel());
-    }
-
-    public function testUncompressionSpeedLevelIsValid()
-    {
-        $this->assertLevelValid($this->format->getUncompressionSpeedLevel());
-    }
-
 }

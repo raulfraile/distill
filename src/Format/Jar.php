@@ -13,34 +13,15 @@ namespace Distill\Format;
 
 use Distill\Method;
 
-class Xz extends AbstractFormat
+class Jar extends Zip
 {
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getCompressionRatioLevel()
-    {
-        return FormatInterface::RATIO_LEVEL_HIGHEST;
-    }
 
     /**
      * {@inheritdoc}
      */
     public static function getExtensions()
     {
-        return ['xz'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getUncompressionMethods()
-    {
-        return [
-            Method\Command\Xz::getName(),
-            Method\Command\x7zip::getName()
-        ];
+        return ['jar'];
     }
 
     /**
@@ -50,4 +31,5 @@ class Xz extends AbstractFormat
     {
         return get_class();
     }
+
 }

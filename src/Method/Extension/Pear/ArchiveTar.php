@@ -13,8 +13,9 @@ namespace Distill\Method\Extension\Pear;
 
 use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Exception\MethodNotSupportedException;
-use Distill\Format\FormatInterface;
+use Distill\Format;
 use Distill\Method\AbstractMethod;
+use Distill\Method\MethodInterface;
 
 /**
  * Extracts files from bzip2 archives.
@@ -27,7 +28,7 @@ class ArchiveTar extends AbstractMethod
     /**
      * {@inheritdoc}
      */
-    public function extract($file, $target, FormatInterface $format)
+    public function extract($file, $target, Format\FormatInterface $format)
     {
         if (!$this->isSupported()) {
             throw new MethodNotSupportedException($this);
@@ -47,7 +48,11 @@ class ArchiveTar extends AbstractMethod
      */
     public function isSupported()
     {
-        return class_exists('\\ArchiveTar');
+        if (null === $this->supported) {
+            $this->supported = class_exists('\\ArchiveTar');
+        }
+
+        return $this->supported;
     }
 
     /**
@@ -56,6 +61,24 @@ class ArchiveTar extends AbstractMethod
     public static function getClass()
     {
         return get_class();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getUncompressionSpeedLevel(Format\FormatInterface $format = null)
+    {
+        return MethodInterface::SPEED_LEVEL_MIDDLE;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isFormatSupported(Format\FormatInterface $format)
+    {
+        return $format instanceof Format\Tar
+        || $format instanceof Format\TarBz2
+        || $format instanceof Format\TarGz;
     }
 
 }

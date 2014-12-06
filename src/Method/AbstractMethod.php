@@ -23,6 +23,8 @@ abstract class AbstractMethod implements MethodInterface
     const OS_TYPE_WINDOWS = 4;
     const OS_TYPE_BSD = 5;
 
+    protected $supported = null;
+
     protected $osType = null;
 
     protected function getOsType()
@@ -50,17 +52,6 @@ abstract class AbstractMethod implements MethodInterface
         $className = strtolower($className);
 
         return $className;
-    }
-
-    /**
-     * Checks if the method is registered for the format.
-     * @param FormatInterface $format Format.
-     *
-     * @return bool TRUE if it is registered, FALSE otherwise.
-     */
-    protected function isFormatSupported(FormatInterface $format)
-    {
-        return in_array(static::getName(), $format->getUncompressionMethods());
     }
 
     /**
@@ -114,5 +105,14 @@ abstract class AbstractMethod implements MethodInterface
         }
         return self::OS_TYPE_UNIX;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getUncompressionSpeedLevel(FormatInterface $format = null)
+    {
+        return MethodInterface::SPEED_LEVEL_MIDDLE;
+    }
+
 
 }

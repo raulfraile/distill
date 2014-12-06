@@ -4,6 +4,9 @@ namespace Distill\Tests;
 
 use Distill\Distill;
 use Distill\Format;
+use Distill\Method\Command\Cabextract;
+use Distill\Method\Command\Gnome\Gcab;
+use Distill\Method\Command\x7zip;
 use \Mockery as m;
 
 class DistillTest extends TestCase
@@ -296,19 +299,20 @@ class DistillTest extends TestCase
             ->extract($this->filesPath . 'file_ok.zip', $target, new Format\Zip());
     }
 
-    public function testFormatCannotBeDecompressedAfterDisablingAllMethods()
+    public function testFormatNotSupportedAfterDisablingAllMethods()
     {
+        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedException');
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        foreach (Format\Zip::getUncompressionMethods() as $method) {
-            $this->distill->disableMethod($method);
-        }
+        $this->distill->disableMethod(Cabextract::getName());
+        $this->distill->disableMethod(Gcab::getName());
+        $this->distill->disableMethod(x7zip::getName());
 
         $result = $this->distill
-            ->extract($this->filesPath . 'file_ok.zip', $target, new Format\Zip());
+            ->extract($this->filesPath . 'file_ok.cab', $target, new Format\Cab());
 
-        $this->assertFalse($result);
         $this->clearTemporaryPath();
     }
 }

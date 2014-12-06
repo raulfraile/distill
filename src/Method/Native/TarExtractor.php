@@ -15,7 +15,9 @@ use Distill\Exception\CorruptedFileException;
 use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Exception\MethodNotSupportedException;
 use Distill\Format\FormatInterface;
+use Distill\Format\Tar;
 use Distill\Method\AbstractMethod;
+use Distill\Method\MethodInterface;
 
 /**
  * Extracts files from tar archives natively from PHP.
@@ -187,5 +189,19 @@ class TarExtractor extends AbstractMethod
 
         return true;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getUncompressionSpeedLevel(FormatInterface $format = null)
+    {
+        return MethodInterface::SPEED_LEVEL_LOWEST;
+    }
+
+    public function isFormatSupported(FormatInterface $format)
+    {
+        return $format instanceof Tar;
+    }
+
 
 }

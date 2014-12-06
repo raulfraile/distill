@@ -4,8 +4,10 @@ namespace Distill\Tests\Strategy;
 
 use Distill\File;
 use Distill\Format;
+use Distill\Method\MethodInterface;
 use Distill\Strategy\UncompressionSpeed;
 use Distill\Tests\TestCase;
+use \Mockery as m;
 
 class UncompressionSpeedTest extends TestCase
 {
@@ -32,13 +34,25 @@ class UncompressionSpeedTest extends TestCase
             new File('test.phar', new Format\Phar())
         ];
 
-        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $methodMock = m::mock('Distill\Method\MethodInterface');
+        $methodMock->shouldReceive('isSupported')->andReturn(true);
+        $methodMock->shouldReceive('isFormatSupported')->andReturn(true);
+        $methodMock->shouldReceive('getUncompressionSpeedLevel')->withAnyArgs()
+            ->andReturnUsing(function($format){
+                if ($format instanceof Format\Zip) {
+                    return MethodInterface::SPEED_LEVEL_HIGHEST;
+                } else {
+                    return MethodInterface::SPEED_LEVEL_LOWEST;
+                }
+            })->getMock();
+
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, [$methodMock]);
         $this->assertInstanceOf('\\Distill\\Format\\Zip', $preferredFiles[0]->getFormat());
         $this->assertEquals('test.zip', $preferredFiles[0]->getPath());
 
         array_reverse($files);
 
-        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, [$methodMock]);
         $this->assertInstanceOf('\\Distill\\Format\\Zip', $preferredFiles[0]->getFormat());
         $this->assertEquals('test.zip', $preferredFiles[0]->getPath());
     }
@@ -51,12 +65,24 @@ class UncompressionSpeedTest extends TestCase
             new File('test.ph', new Format\Phar()),
         ];
 
-        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $methodMock = m::mock('Distill\Method\MethodInterface');
+        $methodMock->shouldReceive('isSupported')->andReturn(true);
+        $methodMock->shouldReceive('isFormatSupported')->andReturn(true);
+        $methodMock->shouldReceive('getUncompressionSpeedLevel')->withAnyArgs()
+            ->andReturnUsing(function($format){
+                if ($format instanceof Format\Zip) {
+                    return MethodInterface::SPEED_LEVEL_HIGHEST;
+                } else {
+                    return MethodInterface::SPEED_LEVEL_LOWEST;
+                }
+            })->getMock();
+
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, [$methodMock]);
         $this->assertInstanceOf('\\Distill\\Format\\Zip', $preferredFiles[0]->getFormat());
 
         array_reverse($files);
 
-        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, [$methodMock]);
         $this->assertInstanceOf('\\Distill\\Format\\Zip', $preferredFiles[0]->getFormat());
     }
 

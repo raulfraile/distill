@@ -13,8 +13,9 @@ namespace Distill\Method\Extension;
 
 use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Exception\MethodNotSupportedException;
-use Distill\Format\FormatInterface;
+use Distill\Format;
 use Distill\Method\AbstractMethod;
+use Distill\Method\MethodInterface;
 
 /**
  * Extracts files from bzip2 archives.
@@ -27,7 +28,7 @@ class Phar extends AbstractMethod
     /**
      * {@inheritdoc}
      */
-    public function extract($file, $target, FormatInterface $format)
+    public function extract($file, $target, Format\FormatInterface $format)
     {
         if (!$this->isSupported()) {
             throw new MethodNotSupportedException($this);
@@ -53,8 +54,12 @@ class Phar extends AbstractMethod
      */
     public function isSupported()
     {
-        return extension_loaded('Phar') &&
-            (false === $this->isHhvm() || ($this->isHhvm() && in_array((string) ini_get('phar.readonly'), ['0', 'Off'])));
+        if (null === $this->supported) {
+            $this->supported = extension_loaded('Phar') &&
+                (false === $this->isHhvm() || ($this->isHhvm() && in_array((string) ini_get('phar.readonly'), ['0', 'Off'])));
+        }
+
+        return $this->supported;
     }
 
     /**
@@ -63,6 +68,22 @@ class Phar extends AbstractMethod
     public static function getClass()
     {
         return get_class();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getUncompressionSpeedLevel(Format\FormatInterface $format = null)
+    {
+        return MethodInterface::SPEED_LEVEL_MIDDLE;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isFormatSupported(Format\FormatInterface $format)
+    {
+        return $format instanceof Format\Phar;
     }
 
 }

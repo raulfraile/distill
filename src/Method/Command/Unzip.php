@@ -14,7 +14,7 @@ namespace Distill\Method\Command;
 use Distill\Exception\CorruptedFileException;
 use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Exception\MethodNotSupportedException;
-use Distill\Format\FormatInterface;
+use Distill\Format;
 
 /**
  * Extracts files from bzip2 archives.
@@ -31,7 +31,7 @@ class Unzip extends AbstractCommandMethod
     /**
      * {@inheritdoc}
      */
-    public function extract($file, $target, FormatInterface $format)
+    public function extract($file, $target, Format\FormatInterface $format)
     {
         if (!$this->isSupported()) {
             throw new MethodNotSupportedException($this);
@@ -61,7 +61,11 @@ class Unzip extends AbstractCommandMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('unzip');
+        if (null === $this->supported) {
+            $this->supported = $this->existsCommand('unzip');
+        }
+
+        return $this->supported;
     }
 
     /**
@@ -70,6 +74,14 @@ class Unzip extends AbstractCommandMethod
     public static function getClass()
     {
         return get_class();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isFormatSupported(Format\FormatInterface $format = null)
+    {
+        return $format instanceof Format\Zip;
     }
 
 }

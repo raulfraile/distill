@@ -11,6 +11,7 @@
 
 namespace Distill;
 
+use Distill\Exception\FormatNotSupportedException;
 use Distill\Exception\NotSingleDirectoryException;
 use Distill\Extractor\ExtractorInterface;
 use Distill\Strategy\StrategyInterface;
@@ -115,6 +116,10 @@ class Distill
 
         if (null === $format) {
             $format = $this->container['distill.format_guesser']->guess($file);
+        }
+
+        if (false === $this->isFormatSupported($format)) {
+            throw new FormatNotSupportedException($format);
         }
 
         return $this->container['distill.extractor.extractor']->extract($file, $path, $format);
@@ -228,6 +233,18 @@ class Distill
         $this->initialized = false;
 
         return $this;
+    }
+
+    /**
+     * Gets the file chooser.
+     *
+     * @return SupportCheckerInterface
+     */
+    public function getSupportChecker()
+    {
+        $this->initializeIfNotInitialized();
+
+        return $this->container['distill.support_checker'];
     }
 
 }

@@ -65,7 +65,7 @@ class FormatGuesser implements FormatGuesserInterface
 
     /**
      * Gets the extension of a file.
-     * @param $file File path
+     * @param string $file File path
      *
      * @return string File extension
      */

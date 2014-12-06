@@ -19,31 +19,15 @@ class TarXz extends AbstractFormat
     /**
      * {@inheritdoc}
      */
-    public function getCompressionRatioLevel()
+    public static function getCompressionRatioLevel()
     {
-        return FormatInterface::LEVEL_HIGHEST;
+        return FormatInterface::RATIO_LEVEL_HIGHEST;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getUncompressionSpeedLevel()
-    {
-        return FormatInterface::LEVEL_HIGH;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCompressionSpeedLevel()
-    {
-        return FormatInterface::LEVEL_MIDDLE;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getExtensions()
+    public static function getExtensions()
     {
         return ['tar.xz', 'txz'];
     }

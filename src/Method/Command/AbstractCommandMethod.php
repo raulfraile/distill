@@ -11,6 +11,8 @@
 
 namespace Distill\Method\Command;
 
+use Distill\Format\FormatInterface;
+use Distill\Method\MethodInterface;
 use Symfony\Component\Process\Process;
 use Distill\Method\AbstractMethod;
 
@@ -50,6 +52,14 @@ abstract class AbstractCommandMethod extends AbstractMethod
         exec($command . ' 2>&1', $output, $code);
 
         return $code;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getUncompressionSpeedLevel(FormatInterface $format = null)
+    {
+        return MethodInterface::SPEED_LEVEL_HIGH;
     }
 
 }

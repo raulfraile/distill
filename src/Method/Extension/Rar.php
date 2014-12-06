@@ -14,8 +14,9 @@ namespace Distill\Method\Extension;
 use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Exception\MethodNotSupportedException;
 use Distill\File;
-use Distill\Format\FormatInterface;
+use Distill\Format;
 use Distill\Method\AbstractMethod;
+use Distill\Method\MethodInterface;
 
 /**
  * Extracts files from bzip2 archives.
@@ -28,7 +29,7 @@ class Rar extends AbstractMethod
     /**
      * {@inheritdoc}
      */
-    public function extract($file, $target, FormatInterface $format)
+    public function extract($file, $target, Format\FormatInterface $format)
     {
         if (!$this->isSupported()) {
             throw new MethodNotSupportedException($this);
@@ -60,7 +61,11 @@ class Rar extends AbstractMethod
      */
     public function isSupported()
     {
-        return extension_loaded('rar');
+        if (null === $this->supported) {
+            $this->supported = extension_loaded('rar');
+        }
+
+        return $this->supported;
     }
 
     /**
@@ -71,4 +76,16 @@ class Rar extends AbstractMethod
         return get_class();
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getUncompressionSpeedLevel(Format\FormatInterface $format = null)
+    {
+        return MethodInterface::SPEED_LEVEL_MIDDLE;
+    }
+
+    public function isFormatSupported(Format\FormatInterface $format)
+    {
+        return $format instanceof Format\Rar;
+    }
 }

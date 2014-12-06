@@ -19,31 +19,15 @@ class TarBz2 extends AbstractFormat
     /**
      * {@inheritdoc}
      */
-    public function getCompressionRatioLevel()
+    public static function getCompressionRatioLevel()
     {
-        return FormatInterface::LEVEL_HIGH;
+        return FormatInterface::RATIO_LEVEL_HIGH;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getUncompressionSpeedLevel()
-    {
-        return FormatInterface::LEVEL_HIGH;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCompressionSpeedLevel()
-    {
-        return FormatInterface::LEVEL_MIDDLE;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getExtensions()
+    public static function getExtensions()
     {
         return ['tar.bz2', 'tar.bz', 'tbz2', 'tbz', 'tb2'];
     }

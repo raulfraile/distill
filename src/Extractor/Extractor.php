@@ -14,6 +14,7 @@ namespace Distill\Extractor;
 use Distill\Exception\FormatNotSupportedException;
 use Distill\Format\FormatInterface;
 use Distill\Method\MethodInterface;
+use Distill\SupportCheckerInterface;
 
 class Extractor implements ExtractorInterface
 {
@@ -24,26 +25,19 @@ class Extractor implements ExtractorInterface
     protected $methods;
 
     /**
-     * @var FormatInterface[]
+     * @var SupportCheckerInterface $supportChecker
      */
-    protected $formats;
+    protected $supportChecker;
 
     /**
      * Constructor.
      * @param MethodInterface[] $methods
-     * @param FormatInterface[] $formats
+     * @param SupportCheckerInterface
      */
-    public function __construct(array $methods, array $formats)
+    public function __construct(array $methods, SupportCheckerInterface $supportChecker)
     {
-        $this->methods = [];
-        foreach ($methods as $method) {
-            $this->methods[$method->getName()] = $method;
-        }
-
-        $this->formats = [];
-        foreach ($formats as $format) {
-            $this->formats[$format->getName()] = $format;
-        }
+        $this->methods = $methods;
+        $this->supportChecker = $supportChecker;
     }
 
     /**
@@ -51,23 +45,17 @@ class Extractor implements ExtractorInterface
      */
     public function extract($file, $path, FormatInterface $format)
     {
-        if (false === array_key_exists($format->getName(), $this->formats)) {
+        if (false === $this->supportChecker->isFormatSupported($format)) {
             throw new FormatNotSupportedException($format);
         }
 
-        $methodsKeys = $format->getUncompressionMethods();
-        $methodsCount = count($methodsKeys);
-        $i = 0;
         $success = false;
-        while (!$success && $i < $methodsCount) {
-            if (array_key_exists($methodsKeys[$i], $this->methods)) {
-                $method = $this->methods[$methodsKeys[$i]];
-                if ($method->isSupported($format)) {
-                    $success = $method->extract($file, $path, $format);
-                }
-            }
 
-            $i++;
+        for ($i=0, $methodsCount = count($this->methods); $i<$methodsCount && false === $success; $i++) {
+            $method = $this->methods[$i];
+            if ($method->isSupported() && $method->isFormatSupported($format)) {
+                $success = $method->extract($file, $path, $format);
+            }
         }
 
         return $success;

@@ -20,7 +20,7 @@ class MinimumSizeTest extends TestCase
 
     public function testEmptyFilesGetEmptyArray()
     {
-        $preferredFile = $this->strategy->getPreferredFilesOrdered([]);
+        $preferredFile = $this->strategy->getPreferredFilesOrdered([], []);
         $this->assertEmpty($preferredFile);
     }
 
@@ -31,13 +31,13 @@ class MinimumSizeTest extends TestCase
             new File('test.tgz', new Format\TarGz())
         ];
 
-        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, []);
         $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFiles[0]->getFormat());
         $this->assertEquals('test.tgz', $preferredFiles[0]->getPath());
 
         array_reverse($files);
 
-        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, []);
         $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFiles[0]->getFormat());
         $this->assertEquals('test.tgz', $preferredFiles[0]->getPath());
     }
@@ -50,12 +50,12 @@ class MinimumSizeTest extends TestCase
             new File('test.tar.gz', new Format\TarGz()),
         ];
 
-        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, []);
         $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFiles[0]->getFormat());
 
         array_reverse($files);
 
-        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, []);
         $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFiles[0]->getFormat());
     }
 

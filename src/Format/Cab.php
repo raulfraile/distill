@@ -31,45 +31,17 @@ class Cab extends AbstractFormat
     /**
      * {@inheritdoc}
      */
-    public function getCompressionRatioLevel()
+    public static function getCompressionRatioLevel()
     {
-        return FormatInterface::LEVEL_MIDDLE;
+        return FormatInterface::RATIO_LEVEL_MIDDLE;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getUncompressionSpeedLevel()
-    {
-        return FormatInterface::LEVEL_MIDDLE;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCompressionSpeedLevel()
-    {
-        return FormatInterface::LEVEL_MIDDLE;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getExtensions()
+    public static function getExtensions()
     {
         return ['cab'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getUncompressionMethods()
-    {
-        return [
-            Method\Command\Cabextract::getName(),
-            Method\Command\x7zip::getName(),
-            Method\Command\Gnome\Gcab::getName(),
-        ];
     }
 
     /**

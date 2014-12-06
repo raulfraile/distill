@@ -14,10 +14,7 @@ namespace Distill\Method\Command;
 use Distill\Exception\CorruptedFileException;
 use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Exception\MethodNotSupportedException;
-use Distill\Format\FormatInterface;
-use Distill\Format\TarBz2;
-use Distill\Format\TarGz;
-use Distill\Format\TarXz;
+use Distill\Format;
 
 /**
  * Extracts files from bzip2 archives.
@@ -34,7 +31,7 @@ class GnuTar extends AbstractCommandMethod
     /**
      * {@inheritdoc}
      */
-    public function extract($file, $target, FormatInterface $format)
+    public function extract($file, $target, Format\FormatInterface $format)
     {
         if (!$this->isSupported()) {
             throw new MethodNotSupportedException($this);
@@ -48,11 +45,11 @@ class GnuTar extends AbstractCommandMethod
 
         $tarOptions = ['x', 'v', 'f'];
 
-        if ($format instanceof TarBz2) {
+        if ($format instanceof Format\TarBz2) {
             array_unshift($tarOptions, 'j');
-        } elseif ($format instanceof TarGz) {
+        } elseif ($format instanceof Format\TarGz) {
             array_unshift($tarOptions, 'z');
-        } elseif ($format instanceof TarXz) {
+        } elseif ($format instanceof Format\TarXz) {
             array_unshift($tarOptions, 'J');
         }
 
@@ -72,7 +69,11 @@ class GnuTar extends AbstractCommandMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('tar');
+        if (null === $this->supported) {
+            $this->supported = $this->existsCommand('tar');
+        }
+
+        return $this->supported;
     }
 
     /**
@@ -81,6 +82,17 @@ class GnuTar extends AbstractCommandMethod
     public static function getClass()
     {
         return get_class();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isFormatSupported(Format\FormatInterface $format = null)
+    {
+        return $format instanceof Format\Tar
+        || $format instanceof Format\TarBz2
+        || $format instanceof Format\TarGz
+        || $format instanceof Format\TarXz;
     }
 
 }

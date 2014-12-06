@@ -13,50 +13,15 @@ namespace Distill\Format;
 
 use Distill\Method;
 
-class Epub extends AbstractFormat
+class Epub extends Zip
 {
 
     /**
      * {@inheritdoc}
      */
-    public function getCompressionRatioLevel()
-    {
-        return FormatInterface::LEVEL_LOW;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUncompressionSpeedLevel()
-    {
-        return FormatInterface::LEVEL_MIDDLE;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCompressionSpeedLevel()
-    {
-        return FormatInterface::LEVEL_MIDDLE;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getExtensions()
+    public static function getExtensions()
     {
         return ['epub'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getUncompressionMethods()
-    {
-        return [
-            Method\Command\Unzip::getName(),
-            Method\Extension\Zip::getName()
-        ];
     }
 
     /**

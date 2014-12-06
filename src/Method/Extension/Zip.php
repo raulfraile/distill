@@ -14,8 +14,9 @@ namespace Distill\Method\Extension;
 use Distill\Exception\CorruptedFileException;
 use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Exception\MethodNotSupportedException;
-use Distill\Format\FormatInterface;
+use Distill\Format;
 use Distill\Method\AbstractMethod;
+use Distill\Method\MethodInterface;
 
 /**
  * Extracts files from zip archives using the zip extension.
@@ -28,7 +29,7 @@ class Zip extends AbstractMethod
     /**
      * {@inheritdoc}
      */
-    public function extract($file, $target, FormatInterface $format)
+    public function extract($file, $target, Format\FormatInterface $format)
     {
         if (!$this->isSupported()) {
             throw new MethodNotSupportedException($this);
@@ -63,7 +64,11 @@ class Zip extends AbstractMethod
      */
     public function isSupported()
     {
-        return extension_loaded('zip');
+        if (null === $this->supported) {
+            $this->supported = extension_loaded('zip');
+        }
+
+        return $this->supported;
     }
 
     /**
@@ -72,6 +77,19 @@ class Zip extends AbstractMethod
     public static function getClass()
     {
         return get_class();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getUncompressionSpeedLevel(Format\FormatInterface $format = null)
+    {
+        return MethodInterface::SPEED_LEVEL_MIDDLE;
+    }
+
+    public function isFormatSupported(Format\FormatInterface $format)
+    {
+        return $format instanceof Format\Zip;
     }
 
 }

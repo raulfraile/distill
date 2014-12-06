@@ -35,16 +35,12 @@ class UncompressionSpeed extends AbstractStrategy
     }
 
     /**
-     * Order files based on the strategy.
-     * @param File $file1 File 1
-     * @param File $file2 File 2
-     *
-     * @return int
+     * {@inheritdoc}
      */
-    protected function order(File $file1, File $file2)
+    protected function order(File $file1, File $file2, array $methods)
     {
-        $priority1 = $file1->getFormat()->getUncompressionSpeedLevel();
-        $priority2 = $file2->getFormat()->getUncompressionSpeedLevel();
+        $priority1 = $this->getMaxUncompressionSpeedFormat($file1->getFormat(), $methods);
+        $priority2 = $this->getMaxUncompressionSpeedFormat($file2->getFormat(), $methods);
 
         if ($priority1 == $priority2) {
             return 0;

@@ -8,6 +8,7 @@ use Distill\Exception\StrategyRequiredException;
 use Distill\Format\FormatInterface;
 use Distill\Strategy\StrategyInterface;
 use Distill\SupportCheckerInterface;
+use Distill\Method\MethodInterface;
 
 class Chooser
 {
@@ -41,20 +42,30 @@ class Chooser
     protected $excludeUnsupported;
 
     /**
+     * Available methods.
+     * @var MethodInterface[]
+     */
+    protected $methods;
+
+    /**
      * Constructor.
      * @param SupportCheckerInterface $supportChecker
      * @param StrategyInterface $strategy
      * @param FormatGuesserInterface $formatGuesser
+     * @param MethodInterface[] $methods
      */
     public function __construct(
         SupportCheckerInterface $supportChecker,
         StrategyInterface $strategy = null,
-        FormatGuesserInterface $formatGuesser = null)
+        FormatGuesserInterface $formatGuesser = null,
+        array $methods = [])
     {
         $this->strategy = $strategy;
         $this->formatGuesser = $formatGuesser;
         $this->supportChecker = $supportChecker;
         $this->excludeUnsupported = true;
+
+        $this->methods = $methods;
     }
 
     /**
@@ -230,7 +241,7 @@ class Chooser
             throw new StrategyRequiredException();
         }
 
-        $preferredFiles = $this->strategy->getPreferredFilesOrdered($this->files);
+        $preferredFiles = $this->strategy->getPreferredFilesOrdered($this->files, $this->methods);
 
         if (true === $this->excludeUnsupported) {
             return array_values(array_filter($preferredFiles, function (File $file) {

@@ -23,15 +23,25 @@ class SupportChecker implements SupportCheckerInterface
     protected $methods;
 
     /**
+     * @var FormatInterface[]
+     */
+    protected $formats;
+
+    protected $formatsMap;
+
+    /**
      * Constructor.
      * @param MethodInterface[] $methods.
+     * @param FormatInterface[] $formats.
      */
-    public function __construct(array $methods)
+    public function __construct(array $methods, array $formats)
     {
-        $this->methods = [];
+        $this->methods = $methods;
+        $this->formats = $formats;
 
-        foreach ($methods as $method) {
-            $this->methods[$method->getName()] = $method;
+        $this->formatsMap = [];
+        foreach ($this->formats as $format) {
+            $this->formatsMap[] = $format->getClass();
         }
     }
 
@@ -40,20 +50,15 @@ class SupportChecker implements SupportCheckerInterface
      */
     public function isFormatSupported(FormatInterface $format)
     {
-        $methodsKeys = $format->getUncompressionMethods();
-        $methodsCount = count($methodsKeys);
-        $i = 0;
+        if (false === in_array(get_class($format), $this->formatsMap)) {
+            return false;
+        }
+
         $supported = false;
-        while (!$supported && $i < $methodsCount) {
+        for ($i=0, $methodsCount = count($this->methods); $i<$methodsCount && false === $supported; $i++) {
+            $method = $this->methods[$i];
 
-            if (array_key_exists($methodsKeys[$i], $this->methods)) {
-                $method = $this->methods[$methodsKeys[$i]];
-                if ($method->isSupported($format)) {
-                    $supported = true;
-                }
-            }
-
-            $i++;
+            $supported = $method->isSupported() && $method->isFormatSupported($format);
         }
 
         return $supported;

@@ -12,6 +12,7 @@
 namespace Distill\Strategy;
 
 use Distill\File;
+use Distill\Method\MethodInterface;
 
 /**
  * Strategy interface.
@@ -25,11 +26,12 @@ interface StrategyInterface
 
     /**
      * Returns the preferred files in order.
-     * @param File[] $files
+     * @param File[]            $files
+     * @param MethodInterface[] $methods
      *
      * @return File[]
      */
-    public function getPreferredFilesOrdered(array $files);
+    public function getPreferredFilesOrdered(array $files, array $methods = []);
 
     /**
      * Gets the strategy key name.

@@ -14,8 +14,8 @@ namespace Distill\Method\Extension;
 use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Exception\MethodNotSupportedException;
 use Distill\Format;
-use Distill\Format\FormatInterface;
 use Distill\Method\AbstractMethod;
+use Distill\Method\MethodInterface;
 
 /**
  * Extracts files from bzip2 archives.
@@ -28,7 +28,7 @@ class PharData extends AbstractMethod
     /**
      * {@inheritdoc}
      */
-    public function extract($file, $target, FormatInterface $format)
+    public function extract($file, $target, Format\FormatInterface $format)
     {
         if (!$this->isSupported()) {
             throw new MethodNotSupportedException($this);
@@ -46,12 +46,6 @@ class PharData extends AbstractMethod
             return false;
         }
 
-        /*if (null === $pharFormat || !$archive->isFileFormat($pharFormat)) {
-            return false;
-        }*/
-
-
-
         return true;
     }
 
@@ -61,7 +55,7 @@ class PharData extends AbstractMethod
      *
      * @return int|null
      */
-    protected function getPharFormat(FormatInterface $format)
+    protected function getPharFormat(Format\FormatInterface $format)
     {
         if ($format instanceof Format\Tar || $format instanceof Format\TarBz2 || $format instanceof Format\TarGz) {
             return \Phar::TAR;
@@ -75,8 +69,12 @@ class PharData extends AbstractMethod
      */
     public function isSupported()
     {
-        return extension_loaded('Phar') &&
-        (false === $this->isHhvm() || ($this->isHhvm() && in_array((string) ini_get('phar.readonly'), ['0', 'Off'])));
+        if (null === $this->supported) {
+            $this->supported = extension_loaded('Phar') &&
+            (false === $this->isHhvm() || ($this->isHhvm() && in_array((string) ini_get('phar.readonly'), ['0', 'Off'])));
+        }
+
+        return $this->supported;
     }
 
     /**
@@ -87,4 +85,21 @@ class PharData extends AbstractMethod
         return get_class();
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getUncompressionSpeedLevel(Format\FormatInterface $format = null)
+    {
+        return MethodInterface::SPEED_LEVEL_MIDDLE;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isFormatSupported(Format\FormatInterface $format)
+    {
+        return $format instanceof Format\Tar
+            || $format instanceof Format\TarBz2
+            || $format instanceof Format\TarGz;
+    }
 }

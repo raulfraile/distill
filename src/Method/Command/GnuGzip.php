@@ -13,7 +13,7 @@ namespace Distill\Method\Command;
 
 use Distill\Exception\FormatNotSupportedInMethodException;
 use Distill\Exception\MethodNotSupportedException;
-use Distill\Format\FormatInterface;
+use Distill\Format;
 
 /**
  * Extracts files from gzip archives.
@@ -26,7 +26,7 @@ class GnuGzip extends AbstractCommandMethod
     /**
      * {@inheritdoc}
      */
-    public function extract($file, $target, FormatInterface $format)
+    public function extract($file, $target, Format\FormatInterface $format)
     {
         if (!$this->isSupported()) {
             throw new MethodNotSupportedException($this);
@@ -48,7 +48,11 @@ class GnuGzip extends AbstractCommandMethod
      */
     public function isSupported()
     {
-        return !$this->isWindows() && $this->existsCommand('gzip');
+        if (null === $this->supported) {
+            $this->supported = $this->existsCommand('gzip');
+        }
+
+        return $this->supported;
     }
 
     /**
@@ -57,6 +61,11 @@ class GnuGzip extends AbstractCommandMethod
     public static function getClass()
     {
         return get_class();
+    }
+
+    public function isFormatSupported(Format\FormatInterface $format = null)
+    {
+        return $format instanceof Format\Gz;
     }
 
 }
