@@ -35,14 +35,24 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
     protected function getDirectoryHash($directory)
     {
-        $finder = new Finder();
-        $finder->in($directory)
-            ->depth('< 3')
-            ->sortByName();
+        $files = [];
+
+        $directoryIterator = new \RecursiveDirectoryIterator($directory, \FilesystemIterator::CURRENT_AS_FILEINFO | \FilesystemIterator::SKIP_DOTS);
+
+        $objects = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::SELF_FIRST);
+        foreach($objects as $name => $object){
+
+            /** @var \SplFileInfo $object */
+            $key = preg_replace('#^'.preg_quote($directory) . '#', '', $object->getPathName());
+
+            $files[$key] = $object->getRealPath();
+        }
+
+        ksort($files);
 
         $hash = hash_init('sha512');
-        foreach ($finder as $file) {
-            hash_update($hash, $file->getRelativePathname() . $file->getContents());
+        foreach ($files as $fileRelativePath => $fileFullPath) {
+            hash_update($hash, $fileRelativePath . file_get_contents($fileFullPath));
         }
 
         return hash_final($hash);
