@@ -11,7 +11,7 @@
 
 namespace Distill\Exception;
 
-class InvalidArgumentException extends \InvalidArgumentException
+class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
 {
 
     /**
@@ -28,7 +28,8 @@ class InvalidArgumentException extends \InvalidArgumentException
 
     /**
      * Constructor
-     * @param string     $extension File extension
+     * @param string     $argument  Argument.
+     * @param string     $error     Error.
      * @param int        $code      Exception code
      * @param \Exception $previous  Previous exception
      */
@@ -38,5 +39,27 @@ class InvalidArgumentException extends \InvalidArgumentException
 
         parent::__construct($message, $code, $previous);
     }
+
+    /**
+     * Gets the argument.
+     *
+     * @return string
+     */
+    public function getArgument()
+    {
+        return $this->argument;
+    }
+
+    /**
+     * Gets the error.
+     *
+     * @return string
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
+
+
 
 }

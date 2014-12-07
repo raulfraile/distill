@@ -44,7 +44,7 @@ class XzTest extends AbstractMethodTest
 
     public function testExtractNoXzFile()
     {
-        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedInMethodException');
+        $this->setExpectedException('Distill\\Exception\\Method\\FormatNotSupportedInMethodException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();

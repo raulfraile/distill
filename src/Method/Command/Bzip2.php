@@ -11,8 +11,7 @@
 
 namespace Distill\Method\Command;
 
-use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\Exception\MethodNotSupportedException;
+use Distill\Exception;
 use Distill\Format;
 
 /**
@@ -28,16 +27,9 @@ class Bzip2 extends AbstractCommandMethod
      */
     public function extract($file, $target, Format\FormatInterface $format)
     {
-        if (!$this->isSupported()) {
-            throw new MethodNotSupportedException($this);
-        }
-
-        if (false === $this->isFormatSupported($format)) {
-            throw new FormatNotSupportedInMethodException($this, $format);
-        }
+        $this->checkSupport($format);
 
         $command = sprintf("bzip2 -k -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
-
         $exitCode = $this->executeCommand($command);
 
         return $this->isExitCodeSuccessful($exitCode);

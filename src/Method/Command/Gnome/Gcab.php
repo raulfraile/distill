@@ -29,13 +29,7 @@ class Gcab extends AbstractCommandMethod
      */
     public function extract($file, $target, Format\FormatInterface $format)
     {
-        if (!$this->isSupported()) {
-            throw new MethodNotSupportedException($this);
-        }
-
-        if (false === $this->isFormatSupported($format)) {
-            throw new FormatNotSupportedInMethodException($this, $format);
-        }
+        $this->checkSupport($format);
 
         $this->getFilesystem()->mkdir($target);
         $command = 'gcab -x '.escapeshellarg($file).' -C '.escapeshellarg($file);

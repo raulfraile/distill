@@ -28,13 +28,7 @@ class Unrar extends AbstractCommandMethod
      */
     public function extract($file, $target, Format\FormatInterface $format)
     {
-        if (!$this->isSupported()) {
-            throw new MethodNotSupportedException($this);
-        }
-
-        if (false === $this->isFormatSupported($format)) {
-            throw new FormatNotSupportedInMethodException($this, $format);
-        }
+        $this->checkSupport($format);
 
         $this->getFilesystem()->mkdir($target);
         $command = 'unrar e '.escapeshellarg($file).' '.escapeshellarg($target);

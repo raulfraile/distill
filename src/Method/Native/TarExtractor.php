@@ -11,9 +11,7 @@
 
 namespace Distill\Method\Native;
 
-use Distill\Exception\CorruptedFileException;
-use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\Exception\MethodNotSupportedException;
+use Distill\Exception;
 use Distill\Format\FormatInterface;
 use Distill\Format\Tar;
 use Distill\Method\AbstractMethod;
@@ -41,9 +39,7 @@ class TarExtractor extends AbstractMethod
      */
     public function extract($file, $target, FormatInterface $format)
     {
-        if (!$this->isSupported()) {
-            throw new MethodNotSupportedException($this);
-        }
+        $this->checkSupport($format);
 
         @mkdir($target);
 
@@ -71,7 +67,7 @@ class TarExtractor extends AbstractMethod
      * @param resource $fileHandler File handler.
      * @param string   $filename    Filename.
      *
-     * @throws CorruptedFileException
+     * @throws Exception\IO\Input\FileCorruptedException
      *
      * @return array
      */
@@ -80,7 +76,7 @@ class TarExtractor extends AbstractMethod
         $data = fread($fileHandler, 512);
 
         if (strlen($data) !== 512) {
-            throw new CorruptedFileException($filename);
+            throw new Exception\IO\Input\FileCorruptedException($filename);
         }
 
         $headers = [
@@ -155,7 +151,7 @@ class TarExtractor extends AbstractMethod
      * @param string $filename TAR file name.
      * @param string $target   Target path.
      *
-     * @throws CorruptedFileException
+     * @throws Exception\IO\Input\FileCorruptedException
      *
      * @return bool
      */

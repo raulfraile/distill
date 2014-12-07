@@ -9,34 +9,36 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Exception;
+namespace Distill\Exception\IO\Input;
 
-class NotSingleDirectoryException extends \Exception
+use Distill\Exception\IO\Exception as IOException;
+
+class FileEmptyException extends IOException
 {
 
     /**
-     * Compressed file path.
+     * Filename.
      * @var string
      */
     protected $filename;
 
     /**
-     * Constructor.
-     * @param string     $filename Compressed file path.
-     * @param int        $code     Exception code.
-     * @param \Exception $previous Previous exception.
+     * Constructor
+     * @param string     $filename  Filename
+     * @param int        $code      Exception code
+     * @param \Exception $previous  Previous exception
      */
     public function __construct($filename, $code = 0, \Exception $previous = null)
     {
         $this->filename = $filename;
 
-        $message = sprintf('Compressed file "%s" does not contain a single directory', $filename);
+        $message = sprintf('File "%s" is empty', $filename);
 
         parent::__construct($message, $code, $previous);
     }
 
     /**
-     * Gets the compressed file path.
+     * Gets the empty filename.
      *
      * @return string Filename.
      */

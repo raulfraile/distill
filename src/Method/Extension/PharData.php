@@ -30,13 +30,7 @@ class PharData extends AbstractMethod
      */
     public function extract($file, $target, Format\FormatInterface $format)
     {
-        if (!$this->isSupported()) {
-            throw new MethodNotSupportedException($this);
-        }
-
-        if (false === $this->isFormatSupported($format)) {
-            throw new FormatNotSupportedInMethodException($this, $format);
-        }
+        $this->checkSupport($format);
 
         try {
             $pharFormat = $this->getPharFormat($format);

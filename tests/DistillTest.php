@@ -4,6 +4,7 @@ namespace Distill\Tests;
 
 use Distill\Distill;
 use Distill\Format;
+use Distill\Exception;
 use Distill\Method\Command\Cabextract;
 use Distill\Method\Command\Gnome\Gcab;
 use Distill\Method\Command\x7zip;
@@ -21,6 +22,33 @@ class DistillTest extends TestCase
     {
         $this->distill = new Distill();
         parent::setUp();
+    }
+
+    public function testNotFoundInputFileThrowsException()
+    {
+        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileEmptyException');
+
+        $emptyFile = tempnam(sys_get_temp_dir(), 'distill_test');
+
+        $this->distill->extract($emptyFile, $this->getTemporaryPath());
+    }
+
+    public function testInputFileNotReadableThrowsException()
+    {
+        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileNotFoundException');
+
+        $notFoundFile = sys_get_temp_dir() . '/' . uniqid();
+
+        $this->distill->extract($notFoundFile, $this->getTemporaryPath());
+    }
+
+    public function testEmptyInputFileThrowsException()
+    {
+        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileNotFoundException');
+
+        $notFoundFile = sys_get_temp_dir() . '/' . uniqid();
+
+        $this->distill->extract($notFoundFile, $this->getTemporaryPath());
     }
 
     public function testChooserIsCreatedProperly()
@@ -279,7 +307,7 @@ class DistillTest extends TestCase
 
     public function testCannotExtractWithoutRootDirectoryNoDirectoryZipFiles()
     {
-        $this->setExpectedException('Distill\\Exception\\NotSingleDirectoryException');
+        $this->setExpectedException('Distill\\Exception\\IO\\Output\\NotSingleDirectoryException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
@@ -289,7 +317,7 @@ class DistillTest extends TestCase
 
     public function testFormatIsNotSupportedAfterDisablingFormat()
     {
-        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedException');
+        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileFormatNotSupportedException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
@@ -301,7 +329,7 @@ class DistillTest extends TestCase
 
     public function testFormatNotSupportedAfterDisablingAllMethods()
     {
-        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedException');
+        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileFormatNotSupportedException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();

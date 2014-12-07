@@ -45,7 +45,7 @@ class PharTest extends AbstractMethodTest
 
     public function testExtractNoPharFile()
     {
-        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedInMethodException');
+        $this->setExpectedException('Distill\\Exception\\Method\\FormatNotSupportedInMethodException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();

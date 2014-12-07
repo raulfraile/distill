@@ -12,6 +12,7 @@
 namespace Distill\Method;
 
 use Distill\Format\FormatInterface;
+use Distill\Exception;
 use Symfony\Component\Filesystem\Filesystem;
 
 abstract class AbstractMethod implements MethodInterface
@@ -112,6 +113,17 @@ abstract class AbstractMethod implements MethodInterface
     public static function getUncompressionSpeedLevel(FormatInterface $format = null)
     {
         return MethodInterface::SPEED_LEVEL_MIDDLE;
+    }
+
+    protected function checkSupport(FormatInterface $format)
+    {
+        if (!$this->isSupported()) {
+            throw new Exception\Method\MethodNotSupportedException($this);
+        }
+
+        if (false === $this->isFormatSupported($format)) {
+            throw new Exception\Method\FormatNotSupportedInMethodException($this, $format);
+        }
     }
 
 

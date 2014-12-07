@@ -11,9 +11,7 @@
 
 namespace Distill\Method\Extension;
 
-use Distill\Exception\CorruptedFileException;
-use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\Exception\MethodNotSupportedException;
+use Distill\Exception;
 use Distill\Format;
 use Distill\Method\AbstractMethod;
 use Distill\Method\MethodInterface;
@@ -31,13 +29,7 @@ class Zip extends AbstractMethod
      */
     public function extract($file, $target, Format\FormatInterface $format)
     {
-        if (!$this->isSupported()) {
-            throw new MethodNotSupportedException($this);
-        }
-
-        if (false === $this->isFormatSupported($format)) {
-            throw new FormatNotSupportedInMethodException($this, $format);
-        }
+        $this->checkSupport($format);
 
         $archive = new \ZipArchive();
 
@@ -46,7 +38,7 @@ class Zip extends AbstractMethod
                 case \ZipArchive::ER_NOZIP :
                 case \ZipArchive::ER_INCONS :
                 case \ZipArchive::ER_CRC :
-                throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
+                throw new Exception\IO\Input\FileCorruptedException($file, Exception\IO\Input\FileCorruptedException::SEVERITY_HIGH);
                     break;
             }
 

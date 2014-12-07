@@ -9,12 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Exception;
+namespace Distill\Exception\Method;
 
-use Distill\Format\FormatInterface;
 use Distill\Method\MethodInterface;
 
-class FormatNotSupportedInMethodException extends \Exception
+class MethodNotSupportedException extends Exception
 {
 
     /**
@@ -24,34 +23,18 @@ class FormatNotSupportedInMethodException extends \Exception
     protected $method;
 
     /**
-     * Format.
-     * @var FormatInterface
-     */
-    protected $format;
-
-    /**
      * Constructor.
      * @param MethodInterface $method    Method
-     * @param FormatInterface $format    Format
      * @param int             $code      Exception code
      * @param \Exception      $previous  Previous exception
      */
-    public function __construct(MethodInterface $method, FormatInterface $format, $code = 0, \Exception $previous = null)
+    public function __construct(MethodInterface $method, $code = 0, \Exception $previous = null)
     {
         $this->method = $method;
-        $this->format = $format;
 
-        $message = sprintf('Method "%s" is not supported for format %s', $method->getName(), $format->getName());
+        $message = sprintf('Method "%s" is not supported', $method->getName());
 
         parent::__construct($message, $code, $previous);
-    }
-
-    /**
-     * @return FormatInterface
-     */
-    public function getFormat()
-    {
-        return $this->format;
     }
 
     /**

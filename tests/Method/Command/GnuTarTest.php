@@ -34,7 +34,7 @@ class GnuTarTest extends AbstractMethodTest
 
     public function testExtractFakeTarFile()
     {
-        $this->setExpectedException('Distill\\Exception\\CorruptedFileException');
+        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileCorruptedException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
@@ -58,7 +58,7 @@ class GnuTarTest extends AbstractMethodTest
 
     public function testExtractFakeTarBz2File()
     {
-        $this->setExpectedException('Distill\\Exception\\CorruptedFileException');
+        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileCorruptedException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
@@ -82,7 +82,7 @@ class GnuTarTest extends AbstractMethodTest
 
     public function testExtractFakeTarGzFile()
     {
-        $this->setExpectedException('Distill\\Exception\\CorruptedFileException');
+        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileCorruptedException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
@@ -106,7 +106,7 @@ class GnuTarTest extends AbstractMethodTest
 
     public function testExtractFakeTarXzFile()
     {
-        $this->setExpectedException('Distill\\Exception\\CorruptedFileException');
+        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileCorruptedException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
@@ -118,7 +118,7 @@ class GnuTarTest extends AbstractMethodTest
 
     public function testExtractNoTarFile()
     {
-        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedInMethodException');
+        $this->setExpectedException('Distill\\Exception\\Method\\FormatNotSupportedInMethodException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();

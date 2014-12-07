@@ -11,7 +11,7 @@
 
 namespace Distill;
 
-use Distill\Exception\ExtensionNotSupportedException;
+use Distill\Exception;
 use Distill\Format\FormatInterface;
 
 class FormatGuesser implements FormatGuesserInterface
@@ -57,7 +57,7 @@ class FormatGuesser implements FormatGuesserInterface
         $extension = $this->getExtension($file);
 
         if (false === array_key_exists($extension, $this->extensionMap)) {
-            throw new ExtensionNotSupportedException($extension);
+            throw new Exception\IO\Input\FileUnknownFormatException($file);
         }
 
         return $this->extensionMap[$extension];

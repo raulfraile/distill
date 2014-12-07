@@ -28,13 +28,7 @@ class GnuGzip extends AbstractCommandMethod
      */
     public function extract($file, $target, Format\FormatInterface $format)
     {
-        if (!$this->isSupported()) {
-            throw new MethodNotSupportedException($this);
-        }
-
-        if (false === $this->isFormatSupported($format)) {
-            throw new FormatNotSupportedInMethodException($this, $format);
-        }
+        $this->checkSupport($format);
 
         $command = sprintf("gzip -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
 

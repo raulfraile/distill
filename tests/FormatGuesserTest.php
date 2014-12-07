@@ -99,7 +99,7 @@ class FormatGuesserTest extends \PHPUnit_Framework_TestCase
 
     public function testUnknownFileGuesser()
     {
-        $this->setExpectedException('Distill\\Exception\\ExtensionNotSupportedException');
+        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileUnknownFormatException');
         $this->formatGuesser->guess($this->filesPath . 'empty.txt');
     }
 

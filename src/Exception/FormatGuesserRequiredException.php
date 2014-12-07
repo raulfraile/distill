@@ -11,7 +11,7 @@
 
 namespace Distill\Exception;
 
-class FormatGuesserRequiredException extends \Exception
+class FormatGuesserRequiredException extends \Exception implements ExceptionInterface
 {
 
     /**

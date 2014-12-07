@@ -11,9 +11,7 @@
 
 namespace Distill\Method\Command;
 
-use Distill\Exception\CorruptedFileException;
-use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\Exception\MethodNotSupportedException;
+use Distill\Exception;
 use Distill\Format;
 
 /**
@@ -33,13 +31,7 @@ class GnuTar extends AbstractCommandMethod
      */
     public function extract($file, $target, Format\FormatInterface $format)
     {
-        if (!$this->isSupported()) {
-            throw new MethodNotSupportedException($this);
-        }
-
-        if (false === $this->isFormatSupported($format)) {
-            throw new FormatNotSupportedInMethodException($this, $format);
-        }
+        $this->checkSupport($format);
 
         $this->getFilesystem()->mkdir($target);
 
@@ -58,7 +50,7 @@ class GnuTar extends AbstractCommandMethod
         $exitCode = $this->executeCommand($command);
 
         if (self::EXIT_CODE_FATAL_ERROR === $exitCode || self::EXIT_CODE_SOME_FILES_DIFFER === $exitCode) {
-            throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
+            throw new Exception\IO\Input\FileCorruptedException($file, Exception\IO\Input\FileCorruptedException::SEVERITY_HIGH);
         }
 
         return self::EXIT_CODE_OK === $exitCode;

@@ -11,7 +11,7 @@
 
 namespace Distill\Extractor;
 
-use Distill\Exception\FormatNotSupportedException;
+use Distill\Exception\IO\Input\FormatNotSupportedException;
 use Distill\Format\FormatInterface;
 use Distill\Method\MethodInterface;
 use Distill\SupportCheckerInterface;
@@ -31,8 +31,8 @@ class Extractor implements ExtractorInterface
 
     /**
      * Constructor.
-     * @param MethodInterface[] $methods
-     * @param SupportCheckerInterface
+     * @param MethodInterface[]       $methods
+     * @param SupportCheckerInterface $supportChecker
      */
     public function __construct(array $methods, SupportCheckerInterface $supportChecker)
     {

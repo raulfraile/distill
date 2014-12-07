@@ -11,9 +11,7 @@
 
 namespace Distill\Method\Command;
 
-use Distill\Exception\CorruptedFileException;
-use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\Exception\MethodNotSupportedException;
+use Distill\Exception;
 use Distill\Format;
 
 /**
@@ -33,13 +31,7 @@ class Unzip extends AbstractCommandMethod
      */
     public function extract($file, $target, Format\FormatInterface $format)
     {
-        if (!$this->isSupported()) {
-            throw new MethodNotSupportedException($this);
-        }
-
-        if (false === $this->isFormatSupported($format)) {
-            throw new FormatNotSupportedInMethodException($this, $format);
-        }
+        $this->checkSupport($format);
 
         $command = 'unzip '.escapeshellarg($file).' -d '.escapeshellarg($target);
 
@@ -48,9 +40,9 @@ class Unzip extends AbstractCommandMethod
         switch ($exitCode) {
             case self::EXIT_CODE_WARNING_ZIPFILE:
             case self::EXIT_CODE_GENERIC_ERROR_ZIPFILE:
-                throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_LOW);
+                throw new Exception\IO\Input\FileCorruptedException($file, Exception\IO\Input\FileCorruptedException::SEVERITY_LOW);
             case self::EXIT_CODE_SEVERE_ERROR_ZIPFILE:
-                throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
+                throw new Exception\IO\Input\FileCorruptedException($file, Exception\IO\Input\FileCorruptedException::SEVERITY_HIGH);
         }
 
         return $this->isExitCodeSuccessful($exitCode);

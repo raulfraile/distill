@@ -9,12 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Exception;
+namespace Distill\Exception\IO\Input;
 
+use Distill\Exception\IO\Exception as IOException;
 use Distill\Format\FormatInterface;
 
-class FormatNotSupportedException extends \Exception
+class FileFormatNotSupportedException extends IOException
 {
+
+    /**
+     * Filename.
+     * @var string
+     */
+    protected $filename;
 
     /**
      * Format.
@@ -23,18 +30,30 @@ class FormatNotSupportedException extends \Exception
     protected $format;
 
     /**
-     * Constructor.
+     * Constructor
+     * @param string          $filename  Filename
      * @param FormatInterface $format    Format
      * @param int             $code      Exception code
      * @param \Exception      $previous  Previous exception
      */
-    public function __construct(FormatInterface $format, $code = 0, \Exception $previous = null)
+    public function __construct($filename, FormatInterface $format, $code = 0, \Exception $previous = null)
     {
+        $this->filename = $filename;
         $this->format = $format;
 
-        $message = sprintf('Format "%s" is not supported', $format->getName());
+        $message = sprintf('There are no available methods to decompress format "%s"', $format->getName());
 
         parent::__construct($message, $code, $previous);
+    }
+
+    /**
+     * Gets the empty filename.
+     *
+     * @return string Filename.
+     */
+    public function getFilename()
+    {
+        return $this->filename;
     }
 
     /**

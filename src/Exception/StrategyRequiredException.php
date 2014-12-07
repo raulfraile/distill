@@ -11,11 +11,11 @@
 
 namespace Distill\Exception;
 
-class StrategyRequiredException extends \Exception
+class StrategyRequiredException extends \Exception implements ExceptionInterface
 {
 
     /**
-     * Constructor
+     * Constructor.
      * @param int        $code     Exception code
      * @param \Exception $previous Previous exception
      */

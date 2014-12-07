@@ -11,8 +11,7 @@
 
 namespace Distill;
 
-use Distill\Exception\FormatNotSupportedException;
-use Distill\Exception\NotSingleDirectoryException;
+use Distill\Exception;
 use Distill\Extractor\ExtractorInterface;
 use Distill\Strategy\StrategyInterface;
 use Distill\Format\FormatInterface;
@@ -104,25 +103,43 @@ class Distill
 
     /**
      * Extracts the compressed file into the given path.
-     * @param string                 $file   Compressed file
-     * @param string                 $path   Destination path
+     * @param string $file Compressed file
+     * @param string $target Destination path
      * @param Format\FormatInterface $format
-     *
      * @return bool Returns TRUE when successful, FALSE otherwise
+     * @throws Exception\IO\Input\FileFormatNotSupportedException
+     * @throws Exception\IO\Input\FileNotFoundException
+     * @throws Exception\IO\Input\FileNotReadableException
      */
-    public function extract($file, $path, FormatInterface $format = null)
+    public function extract($file, $target, FormatInterface $format = null)
     {
         $this->initializeIfNotInitialized();
+
+        if (false === file_exists($file)) {
+            throw new Exception\IO\Input\FileNotFoundException($file);
+        }
+
+        if (false === is_readable($file)) {
+            throw new Exception\IO\Input\FileNotReadableException($file);
+        }
+
+        if (0 === filesize($file)) {
+            throw new Exception\IO\Input\FileEmptyException($file);
+        }
+
+        if (true === file_exists($target) && false === is_writable($target)) {
+            throw new Exception\IO\Output\TargetDirectoryNotWritableException($target);
+        }
 
         if (null === $format) {
             $format = $this->container['distill.format_guesser']->guess($file);
         }
 
         if (false === $this->isFormatSupported($format)) {
-            throw new FormatNotSupportedException($format);
+            throw new Exception\IO\Input\FileFormatNotSupportedException($file, $format);
         }
 
-        return $this->container['distill.extractor.extractor']->extract($file, $path, $format);
+        return $this->container['distill.extractor.extractor']->extract($file, $target, $format);
     }
 
     /**
@@ -132,7 +149,7 @@ class Distill
      * @param string                 $path   Destination path.
      * @param Format\FormatInterface $format Format.
      *
-     * @throws NotSingleDirectoryException
+     * @throws Distill\Exception\IO\Output\NotSingleDirectoryException
      *
      * @return bool Returns TRUE when successful, FALSE otherwise
      */
@@ -174,7 +191,7 @@ class Distill
             // it is not a compressed file with a single directory
             $filesystem->remove($tempDirectory);
 
-            throw new NotSingleDirectoryException($file);
+            throw new Exception\IO\Output\NotSingleDirectoryException($file);
         }
 
         $filesystem->remove($path);

@@ -2,8 +2,6 @@
 
 namespace Distill\Tests;
 
-use Symfony\Component\Finder\Finder;
-
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
 

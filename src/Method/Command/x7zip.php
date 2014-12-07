@@ -11,9 +11,7 @@
 
 namespace Distill\Method\Command;
 
-use Distill\Exception\CorruptedFileException;
-use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\Exception\MethodNotSupportedException;
+use Distill\Exception;
 use Distill\Format;
 use Distill\Method\MethodInterface;
 
@@ -33,13 +31,7 @@ class x7zip extends AbstractCommandMethod
      */
     public function extract($file, $target, Format\FormatInterface $format)
     {
-        if (!$this->isSupported()) {
-            throw new MethodNotSupportedException($this);
-        }
-
-        if (false === $this->isFormatSupported($format)) {
-            throw new FormatNotSupportedInMethodException($this, $format);
-        }
+        $this->checkSupport($format);
 
         $this->getFilesystem()->mkdir($target);
         $command = '7z x -y '.escapeshellarg($file).' -o'.escapeshellarg($target);
@@ -47,7 +39,7 @@ class x7zip extends AbstractCommandMethod
         $exitCode = $this->executeCommand($command);
 
         if (self::EXIT_CODE_FATAL_ERROR === $exitCode) {
-            throw new CorruptedFileException($file, CorruptedFileException::SEVERITY_HIGH);
+            throw new Exception\IO\Input\FileCorruptedException($file, Exception\IO\Input\FileCorruptedException::SEVERITY_HIGH);
         }
 
         return self::EXIT_CODE_OK === $exitCode;

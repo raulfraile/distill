@@ -44,7 +44,7 @@ class Bzip2CommandMethodTest extends AbstractMethodTest
 
     public function testExtractNoBz2File()
     {
-        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedInMethodException');
+        $this->setExpectedException('Distill\\Exception\\Method\\FormatNotSupportedInMethodException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();

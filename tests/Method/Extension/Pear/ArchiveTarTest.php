@@ -44,7 +44,7 @@ class ArchiveTarTest extends AbstractMethodTest
 
     public function testExtractNoTarFile()
     {
-        $this->setExpectedException('Distill\\Exception\\FormatNotSupportedInMethodException');
+        $this->setExpectedException('Distill\\Exception\\Method\\FormatNotSupportedInMethodException');
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
