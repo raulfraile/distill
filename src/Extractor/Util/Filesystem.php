@@ -51,7 +51,7 @@ class Filesystem
      *
      * @throws \RuntimeException
      */
-    public function removeDirectory($directory)
+    private function removeDirectory($directory)
     {
         if ($this->isSymlinkedDirectory($directory)) {
             return $this->unlinkSymlinkedDirectory($directory);
@@ -97,7 +97,7 @@ class Filesystem
      * @param  string $directory
      * @return bool
      */
-    public function removeDirectoryPhp($directory)
+    private function removeDirectoryPhp($directory)
     {
         $it = new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::SKIP_DOTS);
         $ri = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
@@ -113,7 +113,7 @@ class Filesystem
         return $this->rmdir($directory);
     }
 
-    public function ensureDirectoryExists($directory)
+    private function ensureDirectoryExists($directory)
     {
         if (!is_dir($directory)) {
             if (file_exists($directory)) {
@@ -137,7 +137,7 @@ class Filesystem
      *
      * @throws \RuntimeException
      */
-    public function unlink($path)
+    private function unlink($path)
     {
         if (!@$this->unlinkImplementation($path)) {
             // retry after a bit on windows since it tends to be touchy with mass removals
@@ -163,7 +163,7 @@ class Filesystem
      *
      * @throws \RuntimeException
      */
-    public function rmdir($path)
+    private function rmdir($path)
     {
         if (!@rmdir($path)) {
             // retry after a bit on windows since it tends to be touchy with mass removals
@@ -190,7 +190,7 @@ class Filesystem
      * @param string $source
      * @param string $target
      */
-    public function copyThenRemove($source, $target)
+    private function copyThenRemove($source, $target)
     {
         if (!is_dir($source)) {
             copy($source, $target);
@@ -255,7 +255,7 @@ class Filesystem
         return $this->copyThenRemove($source, $target);
     }
 
-    protected function getProcess()
+    private function getProcess()
     {
         return new ProcessExecutor;
     }

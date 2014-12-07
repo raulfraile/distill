@@ -164,7 +164,7 @@ class Distill
     {
         $this->initializeIfNotInitialized();
 
-        // uses the special, internal filesystem due to a issues with Symfony's
+        // uses the special, internal filesystem due to an issue with Symfony's
         // rename across drives. This was adapted from Composer
         $filesystem = new Filesystem();
 
