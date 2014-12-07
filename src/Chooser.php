@@ -30,11 +30,13 @@ class Chooser
     protected $supportChecker;
 
     /**
-     * @var File[]
+     * Files to choose from.
+     * @var FileInterface[]
      */
     protected $files;
 
     /**
+     * Whether or not to exclude unsupported files.
      * @var boolean
      */
     protected $excludeUnsupported;
@@ -104,7 +106,7 @@ class Chooser
 
     /**
      * Sets the files to choose from.
-     * @param File[] $files Files
+     * @param FileInterface[] $files Files.
      *
      * @return Chooser
      */
@@ -179,7 +181,7 @@ class Chooser
     /**
      * Gets all the files.
      *
-     * @return File[] Files
+     * @return FileInterface[] Files
      */
     public function getFiles()
     {
@@ -214,7 +216,7 @@ class Chooser
      * Gets the preferred file based on the chosen strategy.
      * @throws Exception\StrategyRequiredException
      *
-     * @return string Preferred file
+     * @return FileInterface Preferred file
      */
     public function getPreferredFile()
     {
@@ -231,7 +233,7 @@ class Chooser
      * Gets an ordered collection of preferred files.
      * @throws StrategyRequiredException
      *
-     * @return File[]
+     * @return FileInterface[]
      */
     public function getPreferredFilesOrdered()
     {
@@ -242,7 +244,7 @@ class Chooser
         $preferredFiles = $this->strategy->getPreferredFilesOrdered($this->files, $this->methods);
 
         if (true === $this->excludeUnsupported) {
-            return array_values(array_filter($preferredFiles, function (File $file) {
+            return array_values(array_filter($preferredFiles, function (FileInterface $file) {
                 return $this->supportChecker->isFormatSupported($file->getFormat());
             }));
         }

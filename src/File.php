@@ -39,9 +39,7 @@ class File implements FileInterface
     }
 
     /**
-     * Converts a file object into an string.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function __toString()
     {
@@ -49,10 +47,7 @@ class File implements FileInterface
     }
 
     /**
-     * Sets the file path.
-     * @param string $path File path
-     *
-     * @return File
+     * {@inheritdoc}
      */
     public function setPath($path)
     {
@@ -62,9 +57,7 @@ class File implements FileInterface
     }
 
     /**
-     * Gets the file path.
-     *
-     * @return string File path
+     * {@inheritdoc}
      */
     public function getPath()
     {
@@ -72,10 +65,7 @@ class File implements FileInterface
     }
 
     /**
-     * Sets the file format.
-     * @param FormatInterface $format File format
-     *
-     * @return File
+     * {@inheritdoc}
      */
     public function setFormat(FormatInterface $format)
     {
@@ -85,9 +75,7 @@ class File implements FileInterface
     }
 
     /**
-     * Gets the file format.
-     *
-     * @return FormatInterface File format
+     * {@inheritdoc}
      */
     public function getFormat()
     {

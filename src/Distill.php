@@ -39,7 +39,7 @@ class Distill
 
     /**
      * Files.
-     * @var File[]
+     * @var FileInterface[]
      */
     protected $files;
 
@@ -102,13 +102,16 @@ class Distill
 
     /**
      * Extracts the compressed file into the given path.
-     * @param  string                                             $file   Compressed file
-     * @param  string                                             $target Destination path
-     * @param  Format\FormatInterface                             $format
-     * @return bool                                               Returns TRUE when successful, FALSE otherwise
+     * @param  string $file Compressed file
+     * @param  string $target Destination path
+     * @param  Format\FormatInterface $format
+     * @throws Exception\IO\Input\FileEmptyException
      * @throws Exception\IO\Input\FileFormatNotSupportedException
      * @throws Exception\IO\Input\FileNotFoundException
      * @throws Exception\IO\Input\FileNotReadableException
+     * @throws Exception\IO\Output\TargetDirectoryNotWritableException
+     *
+     * @return bool Returns TRUE when successful, FALSE otherwise
      */
     public function extract($file, $target, FormatInterface $format = null)
     {

@@ -11,7 +11,7 @@
 
 namespace Distill\Strategy;
 
-use Distill\File;
+use Distill\FileInterface;
 use Distill\Method\MethodInterface;
 
 /**
@@ -25,10 +25,10 @@ interface StrategyInterface
 {
     /**
      * Returns the preferred files in order.
-     * @param File[]            $files
+     * @param FileInterface[]   $files
      * @param MethodInterface[] $methods
      *
-     * @return File[]
+     * @return FileInterface[]
      */
     public function getPreferredFilesOrdered(array $files, array $methods = []);
 

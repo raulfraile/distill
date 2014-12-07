@@ -26,14 +26,14 @@ interface FileInterface
      * Sets the file path.
      * @param string $path File path
      *
-     * @return File
+     * @return FileInterface
      */
     public function setPath($path);
 
     /**
      * Gets the file path.
      *
-     * @return string File path
+     * @return string File path.
      */
     public function getPath();
 
@@ -41,7 +41,7 @@ interface FileInterface
      * Sets the file format.
      * @param FormatInterface $format File format
      *
-     * @return File
+     * @return FileInterface
      */
     public function setFormat(FormatInterface $format);
 
