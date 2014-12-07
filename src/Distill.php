@@ -15,7 +15,7 @@ use Distill\Extractor\ExtractorInterface;
 use Distill\Strategy\StrategyInterface;
 use Distill\Format\FormatInterface;
 use Pimple\Container;
-use Symfony\Component\Filesystem\Filesystem;
+use Distill\Extractor\Util\Filesystem;
 
 class Distill
 {
@@ -164,6 +164,8 @@ class Distill
     {
         $this->initializeIfNotInitialized();
 
+        // uses the special, internal filesystem due to a issues with Symfony's
+        // rename across drives. This was adapted from Composer
         $filesystem = new Filesystem();
 
         // extract to a temporary place

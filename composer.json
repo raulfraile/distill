@@ -22,7 +22,8 @@
     "require": {
         "php": ">=5.4.0",
         "pimple/pimple": "~3.0",
-        "symfony/filesystem": ">=2.4, <3.0"
+        "symfony/filesystem": ">=2.4, <3.0",
+        "symfony/process": ">=2.4, <3.0"
     },
     "require-dev": {
         "raulfraile/ladybug": "~1.0",
