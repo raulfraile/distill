@@ -11,7 +11,7 @@
 
 namespace Distill\Strategy;
 
-use Distill\File;
+use Distill\FileInterface;
 use Distill\Format\FormatInterface;
 use Distill\Method\MethodInterface;
 
@@ -22,7 +22,7 @@ abstract class AbstractStrategy implements StrategyInterface
      */
     public function getPreferredFilesOrdered(array $files, array $methods = [])
     {
-        usort($files, function (File $file1, File $file2) use ($methods) {
+        usort($files, function (FileInterface $file1, FileInterface $file2) use ($methods) {
             return static::order($file1, $file2, $methods);
         });
 
@@ -50,11 +50,30 @@ abstract class AbstractStrategy implements StrategyInterface
 
     /**
      * Order files based on the strategy.
-     * @param File              $file1   File 1
-     * @param File              $file2   File 2
+     * @param FileInterface     $file1   File 1.
+     * @param FileInterface     $file2   File 2.
      * @param MethodInterface[] $methods
      *
      * @return int
      */
-    abstract protected function order(File $file1, File $file2, array $methods);
+    protected function order(FileInterface $file1, FileInterface $file2, array $methods)
+    {
+        $priority1 = $this->getPriorityValueForFile($file1, $methods);
+        $priority2 = $this->getPriorityValueForFile($file2, $methods);
+
+        if ($priority1 == $priority2) {
+            return 0;
+        }
+
+        return ($priority1 > $priority2) ? -1 : 1;
+    }
+
+    /**
+     * Gets the priority value for a format.
+     * @param FileInterface     $format  File.
+     * @param MethodInterface[] $methods Available methods.
+     *
+     * @return float
+     */
+    abstract protected function getPriorityValueForFile(FileInterface $file, array $methods);
 }

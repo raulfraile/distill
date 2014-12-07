@@ -11,7 +11,7 @@
 
 namespace Distill\Strategy;
 
-use Distill\File;
+use Distill\FileInterface;
 
 /**
  * Uncompression speed strategy.
@@ -36,15 +36,10 @@ class UncompressionSpeed extends AbstractStrategy
     /**
      * {@inheritdoc}
      */
-    protected function order(File $file1, File $file2, array $methods)
+    protected function getPriorityValueForFile(FileInterface $file, array $methods)
     {
-        $priority1 = $this->getMaxUncompressionSpeedFormat($file1->getFormat(), $methods);
-        $priority2 = $this->getMaxUncompressionSpeedFormat($file2->getFormat(), $methods);
+        $format = $file->getFormat();
 
-        if ($priority1 == $priority2) {
-            return 0;
-        }
-
-        return ($priority1 > $priority2) ? -1 : 1;
+        return $this->getMaxUncompressionSpeedFormat($format, $methods) + ($format->getCompressionRatioLevel() / 10);
     }
 }
