@@ -13,7 +13,6 @@ namespace Distill\Exception;
 
 class StrategyRequiredException extends \Exception implements ExceptionInterface
 {
-
     /**
      * Constructor.
      * @param int        $code     Exception code
@@ -23,5 +22,4 @@ class StrategyRequiredException extends \Exception implements ExceptionInterface
     {
         parent::__construct('Strategy required', $code, $previous);
     }
-
 }

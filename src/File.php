@@ -13,9 +13,8 @@ namespace Distill;
 
 use Distill\Format\FormatInterface;
 
-class File
+class File implements FileInterface
 {
-
     /**
      * File path.
      * @var string
@@ -94,5 +93,4 @@ class File
     {
         return $this->format;
     }
-
 }

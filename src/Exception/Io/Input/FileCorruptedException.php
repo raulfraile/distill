@@ -21,7 +21,6 @@ use Distill\Exception\IO\Exception as IOException;
  */
 class FileCorruptedException extends IOException
 {
-
     const SEVERITY_LOW = 0;
     const SEVERITY_HIGH = 1;
 
@@ -39,9 +38,9 @@ class FileCorruptedException extends IOException
 
     /**
      * Constructor
-     * @param string     $filename  Filename
-     * @param int        $code      Exception code
-     * @param \Exception $previous  Previous exception
+     * @param string     $filename Filename
+     * @param int        $code     Exception code
+     * @param \Exception $previous Previous exception
      */
     public function __construct($filename, $severity = self::SEVERITY_HIGH, $code = 0, \Exception $previous = null)
     {
@@ -72,5 +71,4 @@ class FileCorruptedException extends IOException
     {
         return $this->severity;
     }
-
 }

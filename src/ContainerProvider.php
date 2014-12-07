@@ -18,7 +18,6 @@ use Pimple\ServiceProviderInterface;
 
 class ContainerProvider implements ServiceProviderInterface
 {
-
     /**
      * Available formats.
      * @var string[]
@@ -85,8 +84,6 @@ class ContainerProvider implements ServiceProviderInterface
                 $this->methods[] = $methodClass::getClass();
             }
         }
-
-
     }
 
     /**
@@ -155,7 +152,7 @@ class ContainerProvider implements ServiceProviderInterface
         }
 
         // order methods
-        usort($orderedMethods, function($methodName1, $methodName2) use ($container) {
+        usort($orderedMethods, function ($methodName1, $methodName2) use ($container) {
             $value1 = ((int) $container[$methodName1]->isSupported()) + ($container[$methodName1]->getUncompressionSpeedLevel() / 10);
             $value2 = ((int) $container[$methodName2]->isSupported()) + ($container[$methodName2]->getUncompressionSpeedLevel() / 10);
 

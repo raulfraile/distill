@@ -15,5 +15,4 @@ use Distill\Exception\ExceptionInterface as BaseExceptionInterface;
 
 interface ExceptionInterface extends BaseExceptionInterface
 {
-
 }

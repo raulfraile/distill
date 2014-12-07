@@ -15,7 +15,6 @@ use Distill\Method;
 
 class TarBz2 extends AbstractFormat
 {
-
     /**
      * {@inheritdoc}
      */
@@ -52,5 +51,4 @@ class TarBz2 extends AbstractFormat
     {
         return get_class();
     }
-
 }

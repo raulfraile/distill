@@ -13,7 +13,6 @@ namespace Distill\Exception;
 
 class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
 {
-
     /**
      * Invalid argument name.
      * @var string
@@ -28,10 +27,10 @@ class InvalidArgumentException extends \InvalidArgumentException implements Exce
 
     /**
      * Constructor
-     * @param string     $argument  Argument.
-     * @param string     $error     Error.
-     * @param int        $code      Exception code
-     * @param \Exception $previous  Previous exception
+     * @param string     $argument Argument.
+     * @param string     $error    Error.
+     * @param int        $code     Exception code
+     * @param \Exception $previous Previous exception
      */
     public function __construct($argument, $error, $code = 0, \Exception $previous = null)
     {
@@ -59,7 +58,4 @@ class InvalidArgumentException extends \InvalidArgumentException implements Exce
     {
         return $this->error;
     }
-
-
-
 }

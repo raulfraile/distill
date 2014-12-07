@@ -13,7 +13,6 @@ namespace Distill\Format;
 
 interface FormatInterface
 {
-
     const RATIO_LEVEL_LOWEST = 0;
     const RATIO_LEVEL_LOW = 2;
     const RATIO_LEVEL_MIDDLE = 5;

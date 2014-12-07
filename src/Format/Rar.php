@@ -25,7 +25,6 @@ use Distill\Method;
  */
 class Rar extends AbstractFormat
 {
-
     /**
      * {@inheritdoc}
      */

@@ -17,13 +17,12 @@ use Distill\Method\MethodInterface;
 
 abstract class AbstractStrategy implements StrategyInterface
 {
-
     /**
      * {@inheritdoc}
      */
     public function getPreferredFilesOrdered(array $files, array $methods = [])
     {
-        usort($files, function(File $file1, File $file2) use ($methods) {
+        usort($files, function (File $file1, File $file2) use ($methods) {
             return static::order($file1, $file2, $methods);
         });
 
@@ -31,7 +30,7 @@ abstract class AbstractStrategy implements StrategyInterface
     }
 
     /**
-     * @param FormatInterface $format
+     * @param FormatInterface   $format
      * @param MethodInterface[] $methods
      *
      * @return int
@@ -51,12 +50,11 @@ abstract class AbstractStrategy implements StrategyInterface
 
     /**
      * Order files based on the strategy.
-     * @param File $file1 File 1
-     * @param File $file2 File 2
+     * @param File              $file1   File 1
+     * @param File              $file2   File 2
      * @param MethodInterface[] $methods
      *
      * @return int
      */
     abstract protected function order(File $file1, File $file2, array $methods);
-
 }

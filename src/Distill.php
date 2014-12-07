@@ -11,7 +11,6 @@
 
 namespace Distill;
 
-use Distill\Exception;
 use Distill\Extractor\ExtractorInterface;
 use Distill\Strategy\StrategyInterface;
 use Distill\Format\FormatInterface;
@@ -103,10 +102,10 @@ class Distill
 
     /**
      * Extracts the compressed file into the given path.
-     * @param string $file Compressed file
-     * @param string $target Destination path
-     * @param Format\FormatInterface $format
-     * @return bool Returns TRUE when successful, FALSE otherwise
+     * @param  string                                             $file   Compressed file
+     * @param  string                                             $target Destination path
+     * @param  Format\FormatInterface                             $format
+     * @return bool                                               Returns TRUE when successful, FALSE otherwise
      * @throws Exception\IO\Input\FileFormatNotSupportedException
      * @throws Exception\IO\Input\FileNotFoundException
      * @throws Exception\IO\Input\FileNotReadableException
@@ -149,9 +148,14 @@ class Distill
      * @param string                 $path   Destination path.
      * @param Format\FormatInterface $format Format.
      *
-     * @throws Distill\Exception\IO\Output\NotSingleDirectoryException
+     * @throws Exception\IO\Input\FileEmptyException
+     * @throws Exception\IO\Input\FileFormatNotSupportedException
+     * @throws Exception\IO\Input\FileNotFoundException
+     * @throws Exception\IO\Input\FileNotReadableException
+     * @throws Exception\IO\Output\NotSingleDirectoryException
+     * @throws Exception\IO\Output\TargetDirectoryNotWritableException
      *
-     * @return bool Returns TRUE when successful, FALSE otherwise
+     * @return bool
      */
     public function extractWithoutRootDirectory($file, $path, FormatInterface $format = null)
     {
@@ -241,7 +245,7 @@ class Distill
 
     /**
      * Disables a format.
-     * @param string $formatName Format name (e.g. Format\Zip::getName()).
+     * @param  string  $formatName Format name (e.g. Format\Zip::getName()).
      * @return Distill
      */
     public function disableFormat($formatName)
@@ -263,5 +267,4 @@ class Distill
 
         return $this->container['distill.support_checker'];
     }
-
 }

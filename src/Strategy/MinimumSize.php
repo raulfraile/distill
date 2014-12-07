@@ -24,7 +24,6 @@ use Distill\Method\MethodInterface;
  */
 class MinimumSize extends AbstractStrategy
 {
-
     /**
      * {@inheritdoc}
      */
@@ -35,8 +34,8 @@ class MinimumSize extends AbstractStrategy
 
     /**
      * Order files based on the strategy.
-     * @param File $file1 File 1
-     * @param File $file2 File 2
+     * @param File              $file1   File 1
+     * @param File              $file2   File 2
      * @param MethodInterface[] $methods
      *
      * @return int

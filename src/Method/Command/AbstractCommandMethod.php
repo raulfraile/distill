@@ -13,12 +13,10 @@ namespace Distill\Method\Command;
 
 use Distill\Format\FormatInterface;
 use Distill\Method\MethodInterface;
-use Symfony\Component\Process\Process;
 use Distill\Method\AbstractMethod;
 
 abstract class AbstractCommandMethod extends AbstractMethod
 {
-
     /**
      * Checks whether the command exists in the system.
      * @param string $command Command to be checked.
@@ -35,7 +33,7 @@ abstract class AbstractCommandMethod extends AbstractMethod
             return false;
         }
 
-        exec('command -v ' . $command . ' > /dev/null', $output, $code);
+        exec('command -v '.$command.' > /dev/null', $output, $code);
 
         return 0 === $code;// && count($output) > 0;
     }
@@ -49,7 +47,7 @@ abstract class AbstractCommandMethod extends AbstractMethod
      */
     protected function executeCommand($command, & $output = null)
     {
-        exec($command . ' 2>&1', $output, $code);
+        exec($command.' 2>&1', $output, $code);
 
         return $code;
     }
@@ -61,5 +59,4 @@ abstract class AbstractCommandMethod extends AbstractMethod
     {
         return MethodInterface::SPEED_LEVEL_HIGH;
     }
-
 }

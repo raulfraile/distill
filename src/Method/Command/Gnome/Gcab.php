@@ -11,8 +11,6 @@
 
 namespace Distill\Method\Command\Gnome;
 
-use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\Exception\MethodNotSupportedException;
 use Distill\Format;
 use Distill\Method\Command\AbstractCommandMethod;
 
@@ -23,7 +21,6 @@ use Distill\Method\Command\AbstractCommandMethod;
  */
 class Gcab extends AbstractCommandMethod
 {
-
     /**
      * {@inheritdoc}
      */
@@ -63,5 +60,4 @@ class Gcab extends AbstractCommandMethod
     {
         return $format instanceof Format\Cab;
     }
-
 }

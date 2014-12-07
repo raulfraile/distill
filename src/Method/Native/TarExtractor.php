@@ -24,7 +24,6 @@ use Distill\Method\MethodInterface;
  */
 class TarExtractor extends AbstractMethod
 {
-
     const TYPE_FILE = 0;
     const TYPE_HARD_LINK = 1;
     const TYPE_SYMBOLIC_LINK = 2;
@@ -99,7 +98,7 @@ class TarExtractor extends AbstractMethod
                 'group_name' => trim(substr($data, 297, 32)),
                 'device_major' => trim(substr($data, 329, 8)),
                 'device_minor' => trim(substr($data, 237, 8)),
-                'filename_prefix' => trim(substr($data, 345, 155))
+                'filename_prefix' => trim(substr($data, 345, 155)),
             ];
         }
 
@@ -172,13 +171,12 @@ class TarExtractor extends AbstractMethod
                 }
 
                 // create the file
-                file_put_contents($target . '/' . $name, $this->readBlockData($fileHandler, $size));
+                file_put_contents($target.'/'.$name, $this->readBlockData($fileHandler, $size));
 
                 continue;
             } elseif (self::TYPE_DIRECTORY === $type) {
-                @mkdir($target . '/' . $name, 0777, true);
+                @mkdir($target.'/'.$name, 0777, true);
             }
-
         }
 
         fclose($fileHandler);
@@ -198,6 +196,4 @@ class TarExtractor extends AbstractMethod
     {
         return $format instanceof Tar;
     }
-
-
 }

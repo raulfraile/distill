@@ -11,8 +11,6 @@
 
 namespace Distill\Format;
 
-use Distill\Method;
-
 /**
  * A BZIP2 file.
  *
@@ -26,7 +24,6 @@ use Distill\Method;
  */
 class Bz2 extends AbstractFormat
 {
-
     /**
      * {@inheritdoc}
      */
@@ -50,5 +47,4 @@ class Bz2 extends AbstractFormat
     {
         return get_class();
     }
-
 }

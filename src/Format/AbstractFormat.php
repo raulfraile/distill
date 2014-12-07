@@ -11,11 +11,8 @@
 
 namespace Distill\Format;
 
-use Distill\Method;
-
 abstract class AbstractFormat implements FormatInterface
 {
-
     /**
      * {@inheritdoc}
      */
@@ -28,5 +25,4 @@ abstract class AbstractFormat implements FormatInterface
 
         return $className;
     }
-
 }

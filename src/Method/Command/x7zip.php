@@ -22,7 +22,6 @@ use Distill\Method\MethodInterface;
  */
 class x7zip extends AbstractCommandMethod
 {
-
     const EXIT_CODE_OK = 0;
     const EXIT_CODE_FATAL_ERROR = 2;
 
@@ -87,5 +86,4 @@ class x7zip extends AbstractCommandMethod
             || $format instanceof Format\Xz
             || $format instanceof Format\Zip;
     }
-
 }

@@ -23,7 +23,6 @@ use Distill\Method\MethodInterface;
  */
 class Zip extends AbstractMethod
 {
-
     /**
      * {@inheritdoc}
      */
@@ -34,7 +33,7 @@ class Zip extends AbstractMethod
         $archive = new \ZipArchive();
 
         if (true !== $response = $archive->open($file)) {
-            switch($response) {
+            switch ($response) {
                 case \ZipArchive::ER_NOZIP :
                 case \ZipArchive::ER_INCONS :
                 case \ZipArchive::ER_CRC :
@@ -83,5 +82,4 @@ class Zip extends AbstractMethod
     {
         return $format instanceof Format\Zip;
     }
-
 }

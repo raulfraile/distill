@@ -11,8 +11,6 @@
 
 namespace Distill\Method\Extension;
 
-use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\Exception\MethodNotSupportedException;
 use Distill\File;
 use Distill\Format;
 use Distill\Method\AbstractMethod;
@@ -25,7 +23,6 @@ use Distill\Method\MethodInterface;
  */
 class Rar extends AbstractMethod
 {
-
     /**
      * {@inheritdoc}
      */

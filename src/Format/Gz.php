@@ -10,8 +10,6 @@
  */
 namespace Distill\Format;
 
-use Distill\Method;
-
 /**
  * A GZIP file.
  *
@@ -23,7 +21,6 @@ use Distill\Method;
  */
 class Gz extends AbstractFormat
 {
-
     /**
      * {@inheritdoc}
      */
@@ -47,5 +44,4 @@ class Gz extends AbstractFormat
     {
         return get_class();
     }
-
 }

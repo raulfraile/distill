@@ -11,19 +11,17 @@
 
 namespace Distill;
 
-use Distill\Exception\ExtensionNotSupportedException;
 use Distill\Format\FormatInterface;
+use Distill\Exception\IO\Input\FileUnknownFormatException;
 
 interface FormatGuesserInterface
 {
-
     /**
      * Guesses the file format based on features of the path (e.g. extension)
-     * @param  string                         $path File path
-     * @throws ExtensionNotSupportedException
+     * @param  string                     $path File path
+     * @throws FileUnknownFormatException
      *
-     * @return FormatInterface File format
+     * @return FormatInterface File format.
      */
     public function guess($path);
-
 }

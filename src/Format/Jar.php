@@ -11,11 +11,8 @@
 
 namespace Distill\Format;
 
-use Distill\Method;
-
 class Jar extends Zip
 {
-
     /**
      * {@inheritdoc}
      */
@@ -31,5 +28,4 @@ class Jar extends Zip
     {
         return get_class();
     }
-
 }

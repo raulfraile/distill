@@ -16,17 +16,22 @@ use Distill\Method\MethodInterface;
 
 class SupportChecker implements SupportCheckerInterface
 {
-
     /**
-     * @var MethodInterface[]
+     * Available methods.
+     * @var MethodInterface[] $methods
      */
     protected $methods;
 
     /**
+     * Available formats.
      * @var FormatInterface[]
      */
     protected $formats;
 
+    /**
+     * List of format classes.
+     * @var string[]
+     */
     protected $formatsMap;
 
     /**
@@ -55,7 +60,7 @@ class SupportChecker implements SupportCheckerInterface
         }
 
         $supported = false;
-        for ($i=0, $methodsCount = count($this->methods); $i<$methodsCount && false === $supported; $i++) {
+        for ($i = 0, $methodsCount = count($this->methods); $i<$methodsCount && false === $supported; $i++) {
             $method = $this->methods[$i];
 
             $supported = $method->isSupported() && $method->isFormatSupported($format);
@@ -63,5 +68,4 @@ class SupportChecker implements SupportCheckerInterface
 
         return $supported;
     }
-
 }

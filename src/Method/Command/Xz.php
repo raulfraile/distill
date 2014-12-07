@@ -11,8 +11,6 @@
 
 namespace Distill\Method\Command;
 
-use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\Exception\MethodNotSupportedException;
 use Distill\Format;
 
 /**
@@ -22,7 +20,6 @@ use Distill\Format;
  */
 class Xz extends AbstractCommandMethod
 {
-
     /**
      * {@inheritdoc}
      */
@@ -64,5 +61,4 @@ class Xz extends AbstractCommandMethod
     {
         return $format instanceof Format\Xz;
     }
-
 }

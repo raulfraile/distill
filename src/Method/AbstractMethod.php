@@ -17,7 +17,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 abstract class AbstractMethod implements MethodInterface
 {
-
     const OS_TYPE_UNIX = 1;
     const OS_TYPE_DARWIN = 2;
     const OS_TYPE_CYGWIN = 3;
@@ -80,7 +79,8 @@ abstract class AbstractMethod implements MethodInterface
      *
      * @return bool Returns TRUE when running on HHVM, FALSE otherwise
      */
-    protected function isHhvm() {
+    protected function isHhvm()
+    {
         return defined('HHVM_VERSION');
     }
 
@@ -104,6 +104,7 @@ abstract class AbstractMethod implements MethodInterface
         if (0 === strpos($os, 'win')) {
             return self::OS_TYPE_WINDOWS;
         }
+
         return self::OS_TYPE_UNIX;
     }
 
@@ -125,6 +126,4 @@ abstract class AbstractMethod implements MethodInterface
             throw new Exception\Method\FormatNotSupportedInMethodException($this, $format);
         }
     }
-
-
 }

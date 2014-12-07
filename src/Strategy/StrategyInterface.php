@@ -23,7 +23,6 @@ use Distill\Method\MethodInterface;
  */
 interface StrategyInterface
 {
-
     /**
      * Returns the preferred files in order.
      * @param File[]            $files
@@ -40,5 +39,4 @@ interface StrategyInterface
      * @return string Method name
      */
     public static function getName();
-
 }

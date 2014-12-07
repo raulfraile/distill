@@ -16,7 +16,6 @@ use Distill\Method\MethodInterface;
 
 class FormatNotSupportedInMethodException extends Exception
 {
-
     /**
      * Method.
      * @var MethodInterface
@@ -31,10 +30,10 @@ class FormatNotSupportedInMethodException extends Exception
 
     /**
      * Constructor.
-     * @param MethodInterface $method    Method
-     * @param FormatInterface $format    Format
-     * @param int             $code      Exception code
-     * @param \Exception      $previous  Previous exception
+     * @param MethodInterface $method   Method
+     * @param FormatInterface $format   Format
+     * @param int             $code     Exception code
+     * @param \Exception      $previous Previous exception
      */
     public function __construct(MethodInterface $method, FormatInterface $format, $code = 0, \Exception $previous = null)
     {
@@ -61,5 +60,4 @@ class FormatNotSupportedInMethodException extends Exception
     {
         return $this->method;
     }
-
 }

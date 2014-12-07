@@ -17,7 +17,6 @@ use Distill\Exception\IO\Exception as IOException;
 
 class NotSingleDirectoryException extends IOException
 {
-
     /**
      * Compressed file path.
      * @var string
@@ -48,5 +47,4 @@ class NotSingleDirectoryException extends IOException
     {
         return $this->filename;
     }
-
 }

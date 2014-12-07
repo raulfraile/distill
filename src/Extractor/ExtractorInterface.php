@@ -15,7 +15,6 @@ use Distill\Format\FormatInterface;
 
 interface ExtractorInterface
 {
-
     /**
      * Extracts the compressed file into the given path.
      * @param string          $file   Compressed file
@@ -25,5 +24,4 @@ interface ExtractorInterface
      * @return bool Returns TRUE when successful, FALSE otherwise
      */
     public function extract($file, $path, FormatInterface $format);
-
 }

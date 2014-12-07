@@ -15,13 +15,11 @@ use Distill\Format\FormatInterface;
 
 interface SupportCheckerInterface
 {
-
     /**
      * Checks if there are supported methods for the given format.
-     * @param  FormatInterface $format Format.
+     * @param FormatInterface $format Format.
      *
      * @return boolean TRUE if it is supported, FALSE otherwise.
      */
     public function isFormatSupported(FormatInterface $format);
-
 }

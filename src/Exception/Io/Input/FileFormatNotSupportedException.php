@@ -16,7 +16,6 @@ use Distill\Format\FormatInterface;
 
 class FileFormatNotSupportedException extends IOException
 {
-
     /**
      * Filename.
      * @var string
@@ -31,10 +30,10 @@ class FileFormatNotSupportedException extends IOException
 
     /**
      * Constructor
-     * @param string          $filename  Filename
-     * @param FormatInterface $format    Format
-     * @param int             $code      Exception code
-     * @param \Exception      $previous  Previous exception
+     * @param string          $filename Filename
+     * @param FormatInterface $format   Format
+     * @param int             $code     Exception code
+     * @param \Exception      $previous Previous exception
      */
     public function __construct($filename, FormatInterface $format, $code = 0, \Exception $previous = null)
     {
@@ -63,5 +62,4 @@ class FileFormatNotSupportedException extends IOException
     {
         return $this->format;
     }
-
 }

@@ -11,12 +11,10 @@
 
 namespace Distill;
 
-use Distill\Exception;
 use Distill\Format\FormatInterface;
 
 class FormatGuesser implements FormatGuesserInterface
 {
-
     /**
      * Maps extensions and formats
      * @var string[]
@@ -86,5 +84,4 @@ class FormatGuesser implements FormatGuesserInterface
 
         return $extension;
     }
-
 }

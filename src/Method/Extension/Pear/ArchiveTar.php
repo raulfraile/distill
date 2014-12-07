@@ -11,8 +11,6 @@
 
 namespace Distill\Method\Extension\Pear;
 
-use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\Exception\MethodNotSupportedException;
 use Distill\Format;
 use Distill\Method\AbstractMethod;
 use Distill\Method\MethodInterface;
@@ -24,7 +22,6 @@ use Distill\Method\MethodInterface;
  */
 class ArchiveTar extends AbstractMethod
 {
-
     /**
      * {@inheritdoc}
      */
@@ -74,5 +71,4 @@ class ArchiveTar extends AbstractMethod
         || $format instanceof Format\TarBz2
         || $format instanceof Format\TarGz;
     }
-
 }

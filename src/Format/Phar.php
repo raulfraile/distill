@@ -15,7 +15,6 @@ use Distill\Method;
 
 class Phar extends AbstractFormat
 {
-
     /**
      * {@inheritdoc}
      */

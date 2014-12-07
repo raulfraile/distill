@@ -7,12 +7,10 @@ use Distill\Exception\InvalidArgumentException;
 use Distill\Exception\StrategyRequiredException;
 use Distill\Format\FormatInterface;
 use Distill\Strategy\StrategyInterface;
-use Distill\SupportCheckerInterface;
 use Distill\Method\MethodInterface;
 
 class Chooser
 {
-
     /**
      * Strategy.
      * @var StrategyInterface
@@ -50,9 +48,9 @@ class Chooser
     /**
      * Constructor.
      * @param SupportCheckerInterface $supportChecker
-     * @param StrategyInterface $strategy
-     * @param FormatGuesserInterface $formatGuesser
-     * @param MethodInterface[] $methods
+     * @param StrategyInterface       $strategy
+     * @param FormatGuesserInterface  $formatGuesser
+     * @param MethodInterface[]       $methods
      */
     public function __construct(
         SupportCheckerInterface $supportChecker,
@@ -123,8 +121,8 @@ class Chooser
 
     /**
      * Adds a new file.
-     * @param string $filename File name
-     * @param FormatInterface|null $format Format
+     * @param string               $filename File name
+     * @param FormatInterface|null $format   Format
      *
      * @throws Exception\FormatGuesserRequiredException
      * @return Chooser
@@ -146,9 +144,9 @@ class Chooser
 
     /**
      * Adds new files that have the same name but different extensions.
-     * @param string            $basename Basename (e.g. 'my_file')
+     * @param string            $basename   Basename (e.g. 'my_file')
      * @param string[]          $extensions Extensions (e.g. ['zip', 'rar'])
-     * @param FormatInterface[] $formats Formats for each of the exceptions. Supports indexed and associative arrays.
+     * @param FormatInterface[] $formats    Formats for each of the exceptions. Supports indexed and associative arrays.
      *
      * @throws FormatGuesserRequiredException
      *
@@ -172,7 +170,7 @@ class Chooser
                 $format = $formats[$extension];
             }
 
-            $this->addFile($basename . '.' . $extension, $format);
+            $this->addFile($basename.'.'.$extension, $format);
         }
 
         return $this;
@@ -251,5 +249,4 @@ class Chooser
 
         return $preferredFiles;
     }
-
 }

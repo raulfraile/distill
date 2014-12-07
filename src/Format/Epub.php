@@ -11,11 +11,8 @@
 
 namespace Distill\Format;
 
-use Distill\Method;
-
 class Epub extends Zip
 {
-
     /**
      * {@inheritdoc}
      */
@@ -31,5 +28,4 @@ class Epub extends Zip
     {
         return get_class();
     }
-
 }

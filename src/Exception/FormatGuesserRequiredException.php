@@ -13,7 +13,6 @@ namespace Distill\Exception;
 
 class FormatGuesserRequiredException extends \Exception implements ExceptionInterface
 {
-
     /**
      * Constructor
      * @param int        $code     Exception code
@@ -23,5 +22,4 @@ class FormatGuesserRequiredException extends \Exception implements ExceptionInte
     {
         parent::__construct('Format guesser required', $code, $previous);
     }
-
 }

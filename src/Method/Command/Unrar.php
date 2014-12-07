@@ -11,8 +11,6 @@
 
 namespace Distill\Method\Command;
 
-use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\Exception\MethodNotSupportedException;
 use Distill\Format;
 
 /**
@@ -22,7 +20,6 @@ use Distill\Format;
  */
 class Unrar extends AbstractCommandMethod
 {
-
     /**
      * {@inheritdoc}
      */
@@ -65,5 +62,4 @@ class Unrar extends AbstractCommandMethod
     {
         return $format instanceof Format\Rar;
     }
-
 }

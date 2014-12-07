@@ -11,8 +11,6 @@
 
 namespace Distill\Method\Extension;
 
-use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\Exception\MethodNotSupportedException;
 use Distill\Format;
 use Distill\Method\AbstractMethod;
 use Distill\Method\MethodInterface;
@@ -24,7 +22,6 @@ use Distill\Method\MethodInterface;
  */
 class Phar extends AbstractMethod
 {
-
     /**
      * {@inheritdoc}
      */
@@ -79,5 +76,4 @@ class Phar extends AbstractMethod
     {
         return $format instanceof Format\Phar;
     }
-
 }

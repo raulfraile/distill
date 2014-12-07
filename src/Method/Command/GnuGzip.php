@@ -11,8 +11,6 @@
 
 namespace Distill\Method\Command;
 
-use Distill\Exception\FormatNotSupportedInMethodException;
-use Distill\Exception\MethodNotSupportedException;
 use Distill\Format;
 
 /**
@@ -22,7 +20,6 @@ use Distill\Format;
  */
 class GnuGzip extends AbstractCommandMethod
 {
-
     /**
      * {@inheritdoc}
      */
@@ -61,5 +58,4 @@ class GnuGzip extends AbstractCommandMethod
     {
         return $format instanceof Format\Gz;
     }
-
 }

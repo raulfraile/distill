@@ -21,7 +21,6 @@ use Distill\Format;
  */
 class Unzip extends AbstractCommandMethod
 {
-
     const EXIT_CODE_WARNING_ZIPFILE = 1;
     const EXIT_CODE_GENERIC_ERROR_ZIPFILE = 2;
     const EXIT_CODE_SEVERE_ERROR_ZIPFILE = 3;
@@ -75,5 +74,4 @@ class Unzip extends AbstractCommandMethod
     {
         return $format instanceof Format\Zip;
     }
-
 }

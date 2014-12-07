@@ -15,7 +15,6 @@ use Distill\Format\FormatInterface;
 
 interface MethodInterface
 {
-
     const SPEED_LEVEL_LOWEST = 0;
     const SPEED_LEVEL_LOW = 2;
     const SPEED_LEVEL_MIDDLE = 5;
@@ -90,6 +89,4 @@ interface MethodInterface
      * @return bool TRUE if it is registered, FALSE otherwise.
      */
     public function isFormatSupported(FormatInterface $format);
-
-
 }

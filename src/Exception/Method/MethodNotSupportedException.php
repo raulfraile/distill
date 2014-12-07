@@ -15,7 +15,6 @@ use Distill\Method\MethodInterface;
 
 class MethodNotSupportedException extends Exception
 {
-
     /**
      * Method.
      * @var MethodInterface
@@ -24,9 +23,9 @@ class MethodNotSupportedException extends Exception
 
     /**
      * Constructor.
-     * @param MethodInterface $method    Method
-     * @param int             $code      Exception code
-     * @param \Exception      $previous  Previous exception
+     * @param MethodInterface $method   Method
+     * @param int             $code     Exception code
+     * @param \Exception      $previous Previous exception
      */
     public function __construct(MethodInterface $method, $code = 0, \Exception $previous = null)
     {
@@ -44,5 +43,4 @@ class MethodNotSupportedException extends Exception
     {
         return $this->method;
     }
-
 }

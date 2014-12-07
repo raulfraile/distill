@@ -25,7 +25,6 @@ use Distill\Method;
  */
 class Zip extends AbstractFormat
 {
-
     /**
      * {@inheritdoc}
      */
@@ -61,5 +60,4 @@ class Zip extends AbstractFormat
     {
         return get_class();
     }
-
 }

@@ -21,7 +21,6 @@ use Distill\Format;
  */
 class GnuTar extends AbstractCommandMethod
 {
-
     const EXIT_CODE_OK = 0;
     const EXIT_CODE_SOME_FILES_DIFFER = 1;
     const EXIT_CODE_FATAL_ERROR = 2;
@@ -86,5 +85,4 @@ class GnuTar extends AbstractCommandMethod
         || $format instanceof Format\TarGz
         || $format instanceof Format\TarXz;
     }
-
 }

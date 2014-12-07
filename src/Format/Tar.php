@@ -26,8 +26,8 @@ use Distill\Method;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class Tar extends AbstractFormat {
-
+class Tar extends AbstractFormat
+{
     /**
      * {@inheritdoc}
      */

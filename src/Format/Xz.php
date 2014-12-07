@@ -15,7 +15,6 @@ use Distill\Method;
 
 class Xz extends AbstractFormat
 {
-
     /**
      * {@inheritdoc}
      */

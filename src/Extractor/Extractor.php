@@ -18,7 +18,6 @@ use Distill\SupportCheckerInterface;
 
 class Extractor implements ExtractorInterface
 {
-
     /**
      * @var MethodInterface[]
      */
@@ -51,7 +50,7 @@ class Extractor implements ExtractorInterface
 
         $success = false;
 
-        for ($i=0, $methodsCount = count($this->methods); $i<$methodsCount && false === $success; $i++) {
+        for ($i = 0, $methodsCount = count($this->methods); $i<$methodsCount && false === $success; $i++) {
             $method = $this->methods[$i];
             if ($method->isSupported() && $method->isFormatSupported($format)) {
                 $success = $method->extract($file, $path, $format);
@@ -60,5 +59,4 @@ class Extractor implements ExtractorInterface
 
         return $success;
     }
-
 }

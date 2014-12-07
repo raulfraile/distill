@@ -15,7 +15,6 @@ use Distill\Exception\IO\Exception as IOException;
 
 class TargetDirectoryNotWritableException extends IOException
 {
-
     /**
      * Filename.
      * @var string
@@ -24,9 +23,9 @@ class TargetDirectoryNotWritableException extends IOException
 
     /**
      * Constructor
-     * @param string     $filename  Filename
-     * @param int        $code      Exception code
-     * @param \Exception $previous  Previous exception
+     * @param string     $filename Filename
+     * @param int        $code     Exception code
+     * @param \Exception $previous Previous exception
      */
     public function __construct($filename, $code = 0, \Exception $previous = null)
     {
@@ -46,5 +45,4 @@ class TargetDirectoryNotWritableException extends IOException
     {
         return $this->filename;
     }
-
 }

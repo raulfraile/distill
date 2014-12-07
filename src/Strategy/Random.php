@@ -20,7 +20,6 @@ namespace Distill\Strategy;
  */
 class Random implements StrategyInterface
 {
-
     /**
      * {@inheritdoc}
      */
@@ -42,5 +41,4 @@ class Random implements StrategyInterface
 
         return $files;
     }
-
 }

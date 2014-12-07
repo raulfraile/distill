@@ -11,7 +11,6 @@
 
 namespace Distill\Method\Command;
 
-use Distill\Exception;
 use Distill\Format;
 
 /**
@@ -21,7 +20,6 @@ use Distill\Format;
  */
 class Bzip2 extends AbstractCommandMethod
 {
-
     /**
      * {@inheritdoc}
      */
@@ -59,5 +57,4 @@ class Bzip2 extends AbstractCommandMethod
     {
         return $format instanceof Format\Bz2;
     }
-
 }

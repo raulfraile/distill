@@ -11,8 +11,6 @@
 
 namespace Distill\Format;
 
-use Distill\Method;
-
 /**
  * A Cabinet file.
  *
@@ -27,7 +25,6 @@ use Distill\Method;
  */
 class Cab extends AbstractFormat
 {
-
     /**
      * {@inheritdoc}
      */
@@ -51,5 +48,4 @@ class Cab extends AbstractFormat
     {
         return get_class();
     }
-
 }

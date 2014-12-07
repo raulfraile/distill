@@ -23,7 +23,6 @@ use Distill\File;
  */
 class UncompressionSpeed extends AbstractStrategy
 {
-
     const STRATEGY_NAME = 'uncompression_speed';
 
     /**

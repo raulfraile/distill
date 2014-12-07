@@ -15,7 +15,6 @@ use Distill\Method;
 
 class TarXz extends AbstractFormat
 {
-
     /**
      * {@inheritdoc}
      */
@@ -49,5 +48,4 @@ class TarXz extends AbstractFormat
     {
         return get_class();
     }
-
 }
