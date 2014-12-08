@@ -11,8 +11,6 @@
 
 namespace Distill\Format;
 
-use Distill\Method;
-
 class x7z extends AbstractFormat
 {
     /**

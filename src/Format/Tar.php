@@ -11,7 +11,6 @@
 
 namespace Distill\Format;
 
-use Distill\Method;
 
 /**
  * A TAR file.

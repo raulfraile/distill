@@ -11,8 +11,6 @@
 
 namespace Distill\Format;
 
-use Distill\Method;
-
 class TarBz2 extends AbstractFormat
 {
     /**

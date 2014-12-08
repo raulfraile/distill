@@ -11,7 +11,6 @@
 
 namespace Distill\Method\Extension;
 
-use Distill\File;
 use Distill\Format;
 use Distill\Method\AbstractMethod;
 use Distill\Method\MethodInterface;

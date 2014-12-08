@@ -12,8 +12,6 @@
 namespace Distill\Strategy;
 
 use Distill\FileInterface;
-use Distill\Method\MethodInterface;
-use Distill\Format\FormatInterface;
 
 /**
  * Minimum size strategy.
