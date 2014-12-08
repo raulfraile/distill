@@ -60,6 +60,7 @@ class ContainerProvider implements ServiceProviderInterface
             Format\Cab::getClass(),
             Format\Epub::getClass(),
             Format\Gz::getClass(),
+            Format\Jar::getClass(),
             Format\Phar::getClass(),
             Format\Rar::getClass(),
             Format\Tar::getClass(),

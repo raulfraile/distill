@@ -15,34 +15,37 @@ use Distill\Exception\IO\Exception as IOException;
 
 class TargetDirectoryNotWritableException extends IOException
 {
+
     /**
-     * Filename.
+     * Target directory.
      * @var string
      */
-    protected $filename;
+    protected $target;
 
     /**
-     * Constructor
-     * @param string     $filename Filename
-     * @param int        $code     Exception code
-     * @param \Exception $previous Previous exception
+     * Constructor.
+     * @param string     $target   Target directory.
+     * @param int        $code     Exception code.
+     * @param \Exception $previous Previous exception.
      */
-    public function __construct($filename, $code = 0, \Exception $previous = null)
+    public function __construct($target, $code = 0, \Exception $previous = null)
     {
-        $this->filename = $filename;
+        $this->target = $target;
 
-        $message = sprintf('Target directory "%s" is not writable', $filename);
+        $message = sprintf('Target directory "%s" is not writable', $target);
 
         parent::__construct($message, $code, $previous);
     }
 
     /**
-     * Gets the non-readable filename.
+     * Gets the target directory.
      *
-     * @return string Filename.
+     * @return string
      */
-    public function getFilename()
+    public function getTarget()
     {
-        return $this->filename;
+        return $this->target;
     }
+
+
 }

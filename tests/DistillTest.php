@@ -24,6 +24,19 @@ class DistillTest extends TestCase
         parent::setUp();
     }
 
+    public function testCorruptedInputFileThrowsException()
+    {
+        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileCorruptedException');
+
+        try {
+            $this->distill->extract($this->filesPath . 'file_fake.zip', $this->getTemporaryPath());
+        } catch (Exception\IO\Input\FileCorruptedException $e) {
+            $this->assertEquals($this->filesPath . 'file_fake.zip', $e->getFilename());
+            $this->assertEquals(Exception\IO\Input\FileCorruptedException::SEVERITY_HIGH, $e->getSeverity());
+            throw $e;
+        }
+    }
+
     public function testNotFoundInputFileThrowsException()
     {
         $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileNotFoundException');
@@ -82,7 +95,21 @@ class DistillTest extends TestCase
             $this->assertEquals($unknownFormatFile, $e->getFilename());
             throw $e;
         }
+    }
 
+    public function testOutputDirectoryNotWritableThrowsException()
+    {
+        $this->setExpectedException('Distill\\Exception\\IO\\Output\\TargetDirectoryNotWritableException');
+
+        $target = sys_get_temp_dir() . '/' . uniqid();
+        mkdir($target, 0000);
+
+        try {
+            $this->distill->extract($this->filesPath . 'file_ok.zip', $target);
+        } catch (Exception\IO\Output\TargetDirectoryNotWritableException $e) {
+            $this->assertEquals($target, $e->getTarget());
+            throw $e;
+        }
     }
 
     public function testChooserIsCreatedProperly()
@@ -349,7 +376,12 @@ class DistillTest extends TestCase
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->distill->extractWithoutRootDirectory($this->filesPath . 'file_ok.zip', $target, new Format\Zip());
+        try {
+            $this->distill->extractWithoutRootDirectory($this->filesPath . 'file_ok.zip', $target, new Format\Zip());
+        } catch (Exception\IO\Output\NotSingleDirectoryException $e) {
+            $this->assertEquals($this->filesPath . 'file_ok.zip', $e->getFilename());
+            throw $e;
+        }
     }
 
     public function testFormatIsNotSupportedAfterDisablingFormat()
@@ -359,9 +391,15 @@ class DistillTest extends TestCase
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->distill
-            ->disableFormat(Format\Zip::getName())
-            ->extract($this->filesPath . 'file_ok.zip', $target, new Format\Zip());
+        try {
+            $this->distill
+                ->disableFormat(Format\Zip::getName())
+                ->extract($this->filesPath . 'file_ok.zip', $target, new Format\Zip());
+        } catch (Exception\IO\Input\FileFormatNotSupportedException $e) {
+            $this->assertEquals($this->filesPath . 'file_ok.zip', $e->getFilename());
+            $this->assertInstanceOf('Distill\\Format\\Zip', $e->getFormat());
+            throw $e;
+        }
     }
 
     public function testFormatNotSupportedAfterDisablingAllMethods()
