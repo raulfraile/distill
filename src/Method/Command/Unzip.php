@@ -34,7 +34,7 @@ class Unzip extends AbstractCommandMethod
 
         $command = 'unzip '.escapeshellarg($file).' -d '.escapeshellarg($target);
 
-        $exitCode = $this->executeCommand($command);
+        $exitCode = $this->executeCommand($command, $a);
 
         switch ($exitCode) {
             case self::EXIT_CODE_WARNING_ZIPFILE:

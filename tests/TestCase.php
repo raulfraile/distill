@@ -56,19 +56,19 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         return hash_final($hash);
     }
 
-    protected function assertUncompressed($directory, $originalFile, $isSingleFile = false)
+    protected function assertUncompressed($directory, $originalFile, $isSingleFile = false, $prefixRemove = '')
     {
-        self::assertThat(self::compareUncompressed($directory, $originalFile, $isSingleFile), new \PHPUnit_Framework_Constraint_IsTrue, 'uncompressed fail');
+        self::assertThat(self::compareUncompressed($directory, $originalFile, $isSingleFile, $prefixRemove), new \PHPUnit_Framework_Constraint_IsTrue, 'uncompressed fail');
     }
 
-    protected function compareUncompressed($directory, $originalFile, $isSingleFile = false)
+    protected function compareUncompressed($directory, $originalFile, $isSingleFile = false, $prefixRemove = '')
     {
         $keys = [];
         $lines = explode("\n", file_get_contents($this->filesPath . $originalFile . '.key'));
         foreach ($lines as $line) {
             $lineParts = explode('|', $line);
 
-            $keys[$lineParts[0]] = $lineParts[1] . "\n";
+            $keys[preg_replace('#^'.preg_quote($prefixRemove).'#', '', $lineParts[0])] = $lineParts[1] . "\n";
         }
 
         if (empty($keys)) {

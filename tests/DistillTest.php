@@ -292,7 +292,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extractWithoutRootDirectory($this->filesPath . 'file_ok_dir.zip', $target, new Format\Zip());
 
         $this->assertTrue($response);
-        $this->assertUncompressed($target, 'file_ok_dir.zip');
+        $this->assertUncompressed($target, 'file_ok_dir.zip', false, '/uncompressed');
         $this->clearTemporaryPath();
     }
 
@@ -304,7 +304,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extractWithoutRootDirectory($this->filesPath . 'file_ok_dir.tar.gz', $target, new Format\TarGz());
 
         $this->assertTrue($response);
-        $this->assertUncompressed($target, 'file_ok_dir.tar.gz');
+        $this->assertUncompressed($target, 'file_ok_dir.tar.gz', false, '/uncompressed');
         $this->clearTemporaryPath();
     }
 

@@ -33,7 +33,7 @@ class TarExtractorTest extends AbstractMethodTest
         $this->clearTemporaryPath();
     }
 
-    public function testExtractFakeTarFile()
+    /*public function testExtractFakeTarFile()
     {
         $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileCorruptedException');
 
@@ -43,6 +43,6 @@ class TarExtractorTest extends AbstractMethodTest
         $this->extract('file_fake.tar', $target, new Format\Tar());
 
         $this->clearTemporaryPath();
-    }
+    }*/
 
 }

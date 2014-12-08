@@ -26,12 +26,12 @@ printf "/1.txt|1.txt file\n/2.txt|2.txt file\n/3.txt|3.txt file\n/level2/4.txt|4
 # zip: single dir file
 cd ..
 rm -f file_ok_dir.zip
-zip -T file_ok_dir.zip uncompressed/*
-printf "/uncompressed/1.txt|1.txt file\n/uncompressed/2.txt|2.txt file\n/uncompressed/3.txt|3.txt file\n/uncompressed/level2/4.txt|4.txt file\n/uncompressed/level2\level3\5.txt|5.txt file" > file_ok_dir.zip.key
+zip -T -r file_ok_dir.zip uncompressed/*
+printf "/uncompressed/1.txt|1.txt file\n/uncompressed/2.txt|2.txt file\n/uncompressed/3.txt|3.txt file\n/uncompressed/level2/4.txt|4.txt file\n/uncompressed/level2/level3/5.txt|5.txt file" > file_ok_dir.zip.key
 cd uncompressed
 
 # zip: encrypted file
 cd $FILES_DIR/uncompressed
 rm -f ../file_encrypted_ok.zip
 zip -r -e -P 123456 ../file_ok_encrypted.zip *
-printf "1.txt|1.txt file\n2.txt|2.txt file\n3.txt|3.txt file\nlevel2/4.txt|4.txt file\nlevel2\level3\5.txt|5.txt file" > ../file_ok_encrypted.zip.key
+printf "1.txt|1.txt file\n2.txt|2.txt file\n3.txt|3.txt file\nlevel2/4.txt|4.txt file\nlevel2/level3/5.txt|5.txt file" > ../file_ok_encrypted.zip.key

@@ -27,4 +27,4 @@ printf "/1.txt|1.txt file\n/2.txt|2.txt file\n/3.txt|3.txt file\n/level2/4.txt|4
 cd ..
 rm -f ../file_ok_dir.tar.gz
 tar -zcvf file_ok_dir.tar.gz uncompressed/*
-printf "/uncompressed/1.txt|1.txt file\n/uncompressed/2.txt|2.txt file\n/uncompressed/3.txt|3.txt file\n/uncompressed/level2/4.txt|4.txt file\n/uncompressed/level2\level3\5.txt|5.txt file" > file_ok_dir.tar.gz.key
+printf "/uncompressed/1.txt|1.txt file\n/uncompressed/2.txt|2.txt file\n/uncompressed/3.txt|3.txt file\n/uncompressed/level2/4.txt|4.txt file\n/uncompressed/level2/level3/5.txt|5.txt file" > file_ok_dir.tar.gz.key

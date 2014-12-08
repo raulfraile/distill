@@ -52,6 +52,7 @@ class Extractor implements ExtractorInterface
 
         for ($i = 0, $methodsCount = count($this->methods); $i<$methodsCount && false === $success; $i++) {
             $method = $this->methods[$i];
+
             if ($method->isSupported() && $method->isFormatSupported($format)) {
                 $success = $method->extract($file, $path, $format);
             }
