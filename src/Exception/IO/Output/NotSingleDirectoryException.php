@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-namespace Distill\Exception;
-
 namespace Distill\Exception\IO\Output;
 
 use Distill\Exception\IO\Exception as IOException;
