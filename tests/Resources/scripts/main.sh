@@ -27,3 +27,4 @@ $DIR/phar.sh
 $DIR/7z.sh
 $DIR/zip.sh
 $DIR/cab.sh
+$DIR/epub.sh

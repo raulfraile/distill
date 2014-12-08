@@ -16,7 +16,7 @@ rm -f $FILES_DIR/file_ok.cab $FILES_DIR/file_fake.cab
 ################################################################################
 
 # cab: fake file
-dd if=/dev/urandom of=$FILES_DIR/file_fake.rar bs=1 count=1240
+dd if=/dev/urandom of=$FILES_DIR/file_fake.cab bs=1 count=1240
 
 # cab: regular file
 cd $FILES_DIR/uncompressed

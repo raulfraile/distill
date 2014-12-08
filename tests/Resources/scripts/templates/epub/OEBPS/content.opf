@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<package version="2.0" xmlns="http://www.idpf.org/2007/opf"
+         unique-identifier="BookId">
+ <metadata xmlns:dc="http://purl.org/dc/elements/1.1/"
+           xmlns:opf="http://www.idpf.org/2007/opf">
+   <dc:title>Test book</dc:title>
+   <dc:creator opf:role="aut" opf:file-as="Raul Fraile">Raul Fraile</dc:creator>
+   <dc:language>en</dc:language>
+   <dc:publisher>example.com</dc:publisher>
+   <dc:identifier id="BookId">urn:uuid:example.com-example</dc:identifier>
+   <dc:date opf:event="publication">2014-07-23</dc:date>
+   <dc:date opf:event="modification">2014-07-23</dc:date>
+
+   <meta name="cover" content="cover_image" />
+ </metadata>
+ <manifest>
+  <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+  <item id="style" href="stylesheet.css" media-type="text/css" />
+  <item id="titlepage" href="title_page.xhtml" media-type="application/xhtml+xml" />
+  <item id="versopage" href="verso_page.xhtml" media-type="application/xhtml+xml" />
+  <item id="toc" href="toc.xhtml" media-type="application/xhtml+xml" />
+  <item id="chapter00" href="chap00.xhtml" media-type="application/xhtml+xml" />
+  <item id="chapter01" href="chap01.xhtml" media-type="application/xhtml+xml" />
+  <item id="chapter02" href="chap02.xhtml" media-type="application/xhtml+xml" />
+  <item id="chapter03" href="chap03.xhtml" media-type="application/xhtml+xml" />
+ </manifest>
+ <spine toc="ncx">
+  <itemref idref="titlepage" />
+  <itemref idref="versopage" />
+  <itemref idref="toc" />
+  <itemref idref="chapter00" />
+  <itemref idref="chapter01" />
+  <itemref idref="chapter02" />
+  <itemref idref="chapter03" />
+ </spine>
+
+<guide>
+  <reference href="title_page.xhtml" type="cover" title="Cover" />
+  <reference href="toc.xhtml" type="toc" title="Table of Contents" />
+  <reference href="chap00.xhtml" type="text" title="Start" />
+</guide>
+</package>
