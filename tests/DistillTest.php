@@ -44,11 +44,18 @@ class DistillTest extends TestCase
 
     public function testEmptyInputFileThrowsException()
     {
-        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileNotFoundException');
+        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileEmptyException');
 
-        $notFoundFile = sys_get_temp_dir() . '/' . uniqid();
+        $emptyFile = sys_get_temp_dir() . '/' . uniqid();
+        file_put_contents($emptyFile, '');
 
-        $this->distill->extract($notFoundFile, $this->getTemporaryPath());
+        try {
+            $this->distill->extract($emptyFile, $this->getTemporaryPath());
+        } catch (Exception\IO\Input\FileEmptyException $e) {
+            $this->assertEquals($emptyFile, $e->getFilename());
+            throw $e;
+        }
+
     }
 
     public function testChooserIsCreatedProperly()
