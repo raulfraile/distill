@@ -14,7 +14,6 @@ echo '3.txt file' > $DIR/../files/uncompressed/3.txt
 echo '4.txt file' > $DIR/../files/uncompressed/level2/4.txt
 echo '5.txt file' > $DIR/../files/uncompressed/level2/level3/5.txt
 
-
 $DIR/tar.sh
 $DIR/tar_gz.sh
 $DIR/tar_bz2.sh
@@ -28,3 +27,4 @@ $DIR/7z.sh
 $DIR/zip.sh
 $DIR/cab.sh
 $DIR/epub.sh
+$DIR/jar.sh

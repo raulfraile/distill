@@ -26,23 +26,30 @@ class DistillTest extends TestCase
 
     public function testNotFoundInputFileThrowsException()
     {
-        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileEmptyException');
-
-        $emptyFile = tempnam(sys_get_temp_dir(), 'distill_test');
-
-        $this->distill->extract($emptyFile, $this->getTemporaryPath());
-    }
-
-    public function testInputFileNotReadableThrowsException()
-    {
         $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileNotFoundException');
 
         $notFoundFile = sys_get_temp_dir() . '/' . uniqid();
-        
+
         try {
             $this->distill->extract($notFoundFile, $this->getTemporaryPath());
         } catch (Exception\IO\Input\FileNotFoundException $e) {
             $this->assertEquals($notFoundFile, $e->getFilename());
+            throw $e;
+        }
+    }
+
+    public function testInputFileNotReadableThrowsException()
+    {
+        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileNotReadableException');
+
+        $notReadableFile = sys_get_temp_dir() . '/' . uniqid();
+        file_put_contents($notReadableFile, 'test');
+        chmod($notReadableFile, 0000);
+
+        try {
+            $this->distill->extract($notReadableFile, $this->getTemporaryPath());
+        } catch (Exception\IO\Input\FileNotReadableException $e) {
+            $this->assertEquals($notReadableFile, $e->getFilename());
             throw $e;
         }
     }
@@ -58,6 +65,21 @@ class DistillTest extends TestCase
             $this->distill->extract($emptyFile, $this->getTemporaryPath());
         } catch (Exception\IO\Input\FileEmptyException $e) {
             $this->assertEquals($emptyFile, $e->getFilename());
+            throw $e;
+        }
+    }
+
+    public function testUnknownInputFormatThrowsException()
+    {
+        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileUnknownFormatException');
+
+        $unknownFormatFile = sys_get_temp_dir() . '/' . uniqid() . '.xxx';
+        file_put_contents($unknownFormatFile, 'test');
+
+        try {
+            $this->distill->extract($unknownFormatFile, $this->getTemporaryPath());
+        } catch (Exception\IO\Input\FileUnknownFormatException $e) {
+            $this->assertEquals($unknownFormatFile, $e->getFilename());
             throw $e;
         }
 

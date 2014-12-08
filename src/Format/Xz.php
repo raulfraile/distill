@@ -34,17 +34,6 @@ class Xz extends AbstractFormat
     /**
      * {@inheritdoc}
      */
-    public static function getUncompressionMethods()
-    {
-        return [
-            Method\Command\Xz::getName(),
-            Method\Command\x7zip::getName()
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public static function getClass()
     {
         return get_class();

@@ -34,16 +34,6 @@ class Phar extends AbstractFormat
     /**
      * {@inheritdoc}
      */
-    public static function getUncompressionMethods()
-    {
-        return [
-            Method\Extension\Phar::getName()
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public static function getClass()
     {
         return get_class();

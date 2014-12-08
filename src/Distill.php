@@ -231,7 +231,7 @@ class Distill
     {
         $this->initializeIfNotInitialized();
 
-        return $this->container['distill.support_checker']->isFormatSupported($format);
+        return $this->getSupportChecker()->isFormatSupported($format);
     }
 
     /**

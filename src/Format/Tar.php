@@ -47,20 +47,6 @@ class Tar extends AbstractFormat
     /**
      * {@inheritdoc}
      */
-    public static function getUncompressionMethods()
-    {
-        return [
-            Method\Command\GnuTar::getName(),
-            Method\Command\x7zip::getName(),
-            Method\Extension\PharData::getName(),
-            Method\Extension\Pear\ArchiveTar::getName(),
-            Method\Native\TarExtractor::getName()
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public static function getClass()
     {
         return get_class();

@@ -68,7 +68,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         foreach ($lines as $line) {
             $lineParts = explode('|', $line);
 
-            $keys[preg_replace('#^'.preg_quote($prefixRemove).'#', '', $lineParts[0])] = $lineParts[1] . "\n";
+            $keys[preg_replace('#^'.preg_quote($prefixRemove).'#', '', $lineParts[0])] = str_replace('__nl__', "\n", $lineParts[1]) . "\n";
         }
 
         if (empty($keys)) {
@@ -97,7 +97,10 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
                 return false;
             }
 
-            if ($keys[$key] != file_get_contents($object->getRealPath())) {
+            $contents = file_get_contents($object->getRealPath());
+            $contents = str_replace("\r\n", "\n", $contents);
+
+            if ($keys[$key] != $contents) {
                 return false;
             }
 

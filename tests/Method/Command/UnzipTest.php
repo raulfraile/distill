@@ -77,4 +77,16 @@ class UnzipCommandMethodTest extends AbstractMethodTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractCorrectJarFile()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $response = $this->extract('file_ok.jar', $target, new Format\Jar());
+
+        $this->assertTrue($response);
+        $this->assertUncompressed($target, 'file_ok.jar');
+        $this->clearTemporaryPath();
+    }
+
 }

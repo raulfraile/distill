@@ -34,16 +34,6 @@ class TarXz extends AbstractFormat
     /**
      * {@inheritdoc}
      */
-    public static function getUncompressionMethods()
-    {
-        return [
-            Method\Command\GnuTar::getName()
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public static function getClass()
     {
         return get_class();

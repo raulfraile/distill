@@ -44,18 +44,6 @@ class Zip extends AbstractFormat
     /**
      * {@inheritdoc}
      */
-    public static function getUncompressionMethods()
-    {
-        return [
-            Method\Command\Unzip::getName(),
-            Method\Command\x7zip::getName(),
-            Method\Extension\Zip::getName()
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public static function getClass()
     {
         return get_class();
