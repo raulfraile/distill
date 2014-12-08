@@ -28,6 +28,7 @@ class GnuGzipTest extends AbstractMethodTest
         $response = $this->extract('file_ok.gz', $target, new Format\Gz());
 
         $this->assertTrue($response);
+        $this->assertUncompressed($target, 'file_ok.gz', true);
         $this->clearTemporaryPath();
     }
 

@@ -28,7 +28,7 @@ class UnzipCommandMethodTest extends AbstractMethodTest
         $response = $this->extract('file_ok.zip', $target, new Format\Zip());
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.zip');
         $this->clearTemporaryPath();
     }
 
@@ -65,7 +65,7 @@ class UnzipCommandMethodTest extends AbstractMethodTest
         $this->extract('file_corrupt.zip', $target, new Format\Zip());
     }
 
-    public function testExtractCorrectEpubFile()
+    /*public function testExtractCorrectEpubFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
@@ -75,6 +75,6 @@ class UnzipCommandMethodTest extends AbstractMethodTest
         $this->assertTrue($response);
         $this->checkDirectoryFiles($target, $this->filesPath . '/epub');
         $this->clearTemporaryPath();
-    }
+    }*/
 
 }

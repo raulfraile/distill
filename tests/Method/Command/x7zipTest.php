@@ -28,6 +28,7 @@ class x7zipTest extends AbstractMethodTest
         $response = $this->extract('file_ok.7z', $target, new Format\x7z());
 
         $this->assertTrue($response);
+        $this->assertUncompressed($target, 'file_ok.7z');
         $this->clearTemporaryPath();
     }
 

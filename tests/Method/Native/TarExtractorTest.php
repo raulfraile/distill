@@ -28,7 +28,8 @@ class TarExtractorTest extends AbstractMethodTest
         $response = $this->extract('file_ok.tar', $target, new Format\Tar());
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.tar');
+
         $this->clearTemporaryPath();
     }
 

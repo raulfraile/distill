@@ -28,7 +28,7 @@ class CabextractTest extends AbstractMethodTest
         $response = $this->extract('file_ok.cab', $target, new Format\Cab());
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.cab');
         $this->clearTemporaryPath();
     }
 

@@ -28,6 +28,7 @@ class Bzip2CommandMethodTest extends AbstractMethodTest
         $response = $this->extract('file_ok.bz2', $target, new Format\Bz2());
 
         $this->assertTrue($response);
+        $this->assertUncompressed($target, 'file_ok.bz2', true);
         $this->clearTemporaryPath();
     }
 

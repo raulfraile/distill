@@ -27,7 +27,11 @@ class GnuGzip extends AbstractCommandMethod
     {
         $this->checkSupport($format);
 
-        $command = sprintf("gzip -d -c %s >> %s", escapeshellarg($file), escapeshellarg($target));
+        $this->getFilesystem()->mkdir($target);
+
+        $outputPath = sprintf('%s/%s', $target, pathinfo($file, PATHINFO_FILENAME));
+
+        $command = sprintf("gzip -d -c %s >> %s", escapeshellarg($file), escapeshellarg($outputPath));
 
         $exitCode = $this->executeCommand($command);
 

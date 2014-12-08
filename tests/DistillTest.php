@@ -70,6 +70,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extract($this->filesPath . 'file_ok.bz2', $target, $format);
 
         $this->assertTrue($response);
+        $this->assertUncompressed($target, 'file_ok.bz2', true);
         $this->clearTemporaryPath();
     }
 
@@ -87,7 +88,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extract($this->filesPath . 'file_ok.cab', $target, $format);
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.cab');
         $this->clearTemporaryPath();
     }
 
@@ -105,6 +106,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extract($this->filesPath . 'file_ok.gz', $target, $format);
 
         $this->assertTrue($response);
+        $this->assertUncompressed($target, 'file_ok.gz', true);
         $this->clearTemporaryPath();
     }
 
@@ -122,7 +124,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extract($this->filesPath . 'file_ok.phar', $target, $format);
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.phar');
         $this->clearTemporaryPath();
     }
 
@@ -140,7 +142,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extract($this->filesPath . 'file_ok.rar', $target, $format);
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.rar');
         $this->clearTemporaryPath();
     }
 
@@ -158,7 +160,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extract($this->filesPath . 'file_ok.tar', $target, $format);
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.tar');
         $this->clearTemporaryPath();
     }
 
@@ -176,7 +178,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extract($this->filesPath . 'file_ok.tar.bz2', $target, $format);
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.tar.bz2');
         $this->clearTemporaryPath();
     }
 
@@ -194,7 +196,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extract($this->filesPath . 'file_ok.tar.gz', $target, $format);
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.tar.gz');
         $this->clearTemporaryPath();
     }
 
@@ -212,7 +214,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extract($this->filesPath . 'file_ok.tar.xz', $target, $format);
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.tar.xz');
         $this->clearTemporaryPath();
     }
 
@@ -230,7 +232,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extract($this->filesPath . 'file_ok.7z', $target, $format);
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.7z');
         $this->clearTemporaryPath();
     }
 
@@ -248,6 +250,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extract($this->filesPath . 'file_ok.xz', $target, $format);
 
         $this->assertTrue($response);
+        $this->assertUncompressed($target, 'file_ok.xz', true);
         $this->clearTemporaryPath();
     }
 
@@ -265,7 +268,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extract($this->filesPath . 'file_ok.zip', $target, $format);
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.zip');
         $this->clearTemporaryPath();
     }
 
@@ -277,7 +280,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extract($this->filesPath . 'file_ok.zip', $target);
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.zip');
         $this->clearTemporaryPath();
     }
 
@@ -289,7 +292,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extractWithoutRootDirectory($this->filesPath . 'file_ok_dir.zip', $target, new Format\Zip());
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok_dir.zip');
         $this->clearTemporaryPath();
     }
 
@@ -301,7 +304,7 @@ class DistillTest extends TestCase
         $response = $this->distill->extractWithoutRootDirectory($this->filesPath . 'file_ok_dir.tar.gz', $target, new Format\TarGz());
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok_dir.tar.gz');
         $this->clearTemporaryPath();
     }
 

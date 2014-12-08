@@ -28,7 +28,7 @@ class PharDataTest extends AbstractMethodTest
         $response = $this->extract('file_ok.tar', $target, new Format\Tar());
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.tar');
         $this->clearTemporaryPath();
     }
 
@@ -51,7 +51,7 @@ class PharDataTest extends AbstractMethodTest
         $response = $this->extract('file_ok.tar.bz2', $target, new Format\TarBz2());
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.tar.bz2');
         $this->clearTemporaryPath();
     }
 
@@ -74,7 +74,7 @@ class PharDataTest extends AbstractMethodTest
         $response = $this->extract('file_ok.tar.gz', $target, new Format\TarGz());
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.tar.gz');
         $this->clearTemporaryPath();
     }
 

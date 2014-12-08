@@ -28,7 +28,7 @@ class PharTest extends AbstractMethodTest
         $response = $this->extract('file_ok.phar', $target, new Format\Phar());
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->assertUncompressed($target, 'file_ok.phar');
         $this->clearTemporaryPath();
     }
 
