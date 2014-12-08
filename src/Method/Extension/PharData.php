@@ -30,29 +30,13 @@ class PharData extends AbstractMethod
         $this->checkSupport($format);
 
         try {
-            $pharFormat = $this->getPharFormat($format);
-            $archive = new \PharData($file/*, null, null, $pharFormat*/);
+            $archive = new \PharData($file);
             $archive->extractTo($target, null, true);
         } catch (\Exception $e) {
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * Gets the format of the phar file.
-     * @param FormatInterface $format
-     *
-     * @return int|null
-     */
-    protected function getPharFormat(Format\FormatInterface $format)
-    {
-        if ($format instanceof Format\Tar || $format instanceof Format\TarBz2 || $format instanceof Format\TarGz) {
-            return \Phar::TAR;
-        }
-
-        return null;
     }
 
     /**
