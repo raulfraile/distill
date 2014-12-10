@@ -50,6 +50,7 @@ class x7zip extends AbstractCommandMethod
     public function isSupported()
     {
         if (null === $this->supported) {
+            $output = '';
             $this->supported = $this->existsCommand('7z');
         }
 

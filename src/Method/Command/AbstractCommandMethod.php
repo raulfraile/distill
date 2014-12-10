@@ -23,7 +23,7 @@ abstract class AbstractCommandMethod extends AbstractMethod
      *
      * @return bool Returns TRUE when successful, FALSE otherwise
      */
-    protected function existsCommand($command)
+    protected function existsCommand($command, & $output = null, & $binaryPath = null)
     {
         if (!function_exists('exec')) {
             return false;
@@ -33,9 +33,15 @@ abstract class AbstractCommandMethod extends AbstractMethod
             return false;
         }
 
-        exec('command -v '.$command.' > /dev/null', $output, $code);
+        exec('command -v '.$command.' 2>&1', $output, $code);
 
-        return 0 === $code;// && count($output) > 0;
+        if (0 != $code) {
+            return false;
+        }
+
+        $binaryPath = $output[0];
+
+        return 0 === $code;
     }
 
     /**
