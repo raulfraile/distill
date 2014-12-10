@@ -16,14 +16,18 @@ use Distill\Format;
 use Distill\Method\MethodInterface;
 
 /**
- * Extracts files from bzip2 archives.
+ * Extracts compressed files using the 7zip/p7zip tool.
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
 class x7zip extends AbstractCommandMethod
 {
     const EXIT_CODE_OK = 0;
+    const EXIT_CODE_WARNING = 1;
     const EXIT_CODE_FATAL_ERROR = 2;
+    const EXIT_CODE_BAD_COMMAND_LINE_ARGUMENTS = 7;
+    const EXIT_CODE_NOT_ENOUGH_MEMORY = 8;
+    const EXIT_CODE_PROCESS_STOPPED = 255;
 
     /**
      * {@inheritdoc}
@@ -99,6 +103,12 @@ class x7zip extends AbstractCommandMethod
         return false;
     }
 
+    /**
+     * Checks the support for a format.
+     * @param Format\FormatInterface $format Format
+     *
+     * @return bool Returns TRUE if the format is supported, FALSE otherwise.
+     */
     protected function checkFormatSupport(Format\FormatInterface $format)
     {
         $samples = $format->getSamples();
