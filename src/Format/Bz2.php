@@ -47,4 +47,14 @@ class Bz2 extends AbstractFormat
     {
         return get_class();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSamples()
+    {
+        return [
+            self::SAMPLE_REGULAR => self::getSampleFullPath('file.bz2')
+        ];
+    }
 }

@@ -19,11 +19,12 @@ abstract class AbstractCommandMethod extends AbstractMethod
 {
     /**
      * Checks whether the command exists in the system.
-     * @param string $command Command to be checked.
+     * @param string $command    Command to be checked.
+     * @param string $binaryPath Binary path.
      *
      * @return bool Returns TRUE when successful, FALSE otherwise
      */
-    protected function existsCommand($command, & $output = null, & $binaryPath = null)
+    protected function existsCommand($command, & $binaryPath = null)
     {
         if (!function_exists('exec')) {
             return false;

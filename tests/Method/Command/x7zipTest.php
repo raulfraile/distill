@@ -79,4 +79,16 @@ class x7zipTest extends AbstractMethodTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractCorrectRarFile()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $response = $this->extract('file_ok.rar', $target, new Format\Rar());
+
+        $this->assertTrue($response);
+        $this->assertUncompressed($target, 'file_ok.rar');
+        $this->clearTemporaryPath();
+    }
+
 }

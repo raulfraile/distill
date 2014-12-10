@@ -50,7 +50,6 @@ class x7zip extends AbstractCommandMethod
     public function isSupported()
     {
         if (null === $this->supported) {
-            $output = '';
             $this->supported = $this->existsCommand('7z');
         }
 
@@ -78,13 +77,38 @@ class x7zip extends AbstractCommandMethod
      */
     public function isFormatSupported(Format\FormatInterface $format)
     {
-        return $format instanceof Format\Bz2
-            || $format instanceof Format\Cab
-            || $format instanceof Format\Gz
-            || $format instanceof Format\Rar
-            || $format instanceof Format\Tar
-            || $format instanceof Format\x7z
-            || $format instanceof Format\Xz
-            || $format instanceof Format\Zip;
+        // In Unix systems, a port of 7-Zip is used: p7zip, and is divided in 3 packages:
+        //  - p7zip: Only provides support for 7z files
+        //  - p7zip-full: Provides support for many other formats (rar not included)
+        //  - p7zip-rar: Provides support for rar files
+
+        if ($format instanceof Format\x7z) {
+            return true;
+        }
+
+        if ($format instanceof Format\Bz2 ||
+            $format instanceof Format\Cab ||
+            $format instanceof Format\Gz  ||
+            $format instanceof Format\Rar ||
+            $format instanceof Format\Tar ||
+            $format instanceof Format\Xz  ||
+            $format instanceof Format\Zip) {
+            return $this->checkFormatSupport($format);
+        }
+
+        return false;
+    }
+
+    protected function checkFormatSupport(Format\FormatInterface $format)
+    {
+        $samples = $format->getSamples();
+
+        if (false === array_key_exists(Format\FormatInterface::SAMPLE_REGULAR, $samples)) {
+            return false;
+        }
+
+        $exitCode = $this->executeCommand('7z t ' . $samples[Format\FormatInterface::SAMPLE_REGULAR]);
+
+        return 0 === $exitCode;
     }
 }

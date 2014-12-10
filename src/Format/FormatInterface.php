@@ -19,6 +19,8 @@ interface FormatInterface
     const RATIO_LEVEL_HIGH = 7;
     const RATIO_LEVEL_HIGHEST = 10;
 
+    const SAMPLE_REGULAR = 0;
+
     /**
      * Gets the format key name.
      * @static
@@ -48,4 +50,11 @@ interface FormatInterface
      * @return array List of extensions
      */
     public static function getExtensions();
+
+    /**
+     * Gets the list of samples that methods can used to test its support.
+     *
+     * @return array List of samples
+     */
+    public static function getSamples();
 }

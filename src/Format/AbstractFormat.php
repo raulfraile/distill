@@ -25,4 +25,18 @@ abstract class AbstractFormat implements FormatInterface
 
         return $className;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSamples()
+    {
+        return [];
+    }
+
+    public static function getSampleFullPath($sampleFilename)
+    {
+        return __DIR__ . DIRECTORY_SEPARATOR . 'Samples' . DIRECTORY_SEPARATOR . $sampleFilename;
+    }
+
 }
