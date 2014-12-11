@@ -90,13 +90,22 @@ class x7zip extends AbstractCommandMethod
             return true;
         }
 
-        if ($format instanceof Format\Bz2 ||
-            $format instanceof Format\Cab ||
-            $format instanceof Format\Dmg ||
-            $format instanceof Format\Gz  ||
-            $format instanceof Format\Rar ||
-            $format instanceof Format\Tar ||
-            $format instanceof Format\Xz  ||
+        if ($format instanceof Format\Arj  ||
+            $format instanceof Format\Bz2  ||
+            $format instanceof Format\Cab  ||
+            $format instanceof Format\Chm  ||
+            $format instanceof Format\Deb  ||
+            $format instanceof Format\Dmg  ||
+            $format instanceof Format\Gz   ||
+            $format instanceof Format\Iso  ||
+            $format instanceof Format\Lzh  ||
+            $format instanceof Format\Lzma ||
+            $format instanceof Format\Msi  ||
+            $format instanceof Format\Rar  ||
+            $format instanceof Format\Rpm  ||
+            $format instanceof Format\Tar  ||
+            $format instanceof Format\Wim  ||
+            $format instanceof Format\Xz   ||
             $format instanceof Format\Zip) {
             return $this->checkFormatSupport($format);
         }

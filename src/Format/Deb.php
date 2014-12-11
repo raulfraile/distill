@@ -26,7 +26,7 @@ class Deb extends AbstractFormat
      */
     public static function getExtensions()
     {
-        return ['deb'];
+        return ['deb', 'udeb'];
     }
 
     /**
