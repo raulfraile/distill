@@ -94,6 +94,7 @@ class x7zip extends AbstractCommandMethod
             $format instanceof Format\Bz2  ||
             $format instanceof Format\Cab  ||
             $format instanceof Format\Chm  ||
+            $format instanceof Format\Cpio ||
             $format instanceof Format\Deb  ||
             $format instanceof Format\Dmg  ||
             $format instanceof Format\Gz   ||
