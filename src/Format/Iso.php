@@ -18,7 +18,7 @@ class Iso extends AbstractFormat
      */
     public static function getCompressionRatioLevel()
     {
-        return FormatInterface::RATIO_LEVEL_MIDDLE;
+        return FormatInterface::RATIO_LEVEL_LOWEST;
     }
 
     /**
@@ -35,5 +35,15 @@ class Iso extends AbstractFormat
     public static function getClass()
     {
         return get_class();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSamples()
+    {
+        return [
+            self::SAMPLE_REGULAR => self::getSampleFullPath('file.iso')
+        ];
     }
 }

@@ -96,11 +96,22 @@ class x7zipTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.dmg', $target, new Format\Rar());
+        $response = $this->extract('file_ok.dmg', $target, new Format\Dmg());
 
         $this->assertTrue($response);
         //$this->assertUncompressed($target, 'file_ok.dmg');
         $this->clearTemporaryPath();
     }
 
+    public function testExtractCorrectIsoFile()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $response = $this->extract('file_ok.iso', $target, new Format\Iso());
+
+        $this->assertTrue($response);
+        //$this->assertUncompressed($target, 'file_ok.dmg');
+        $this->clearTemporaryPath();
+    }
 }

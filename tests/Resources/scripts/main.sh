@@ -29,3 +29,4 @@ $DIR/cab.sh
 $DIR/epub.sh
 $DIR/jar.sh
 $DIR/dmg.sh
+$DIR/iso.sh
