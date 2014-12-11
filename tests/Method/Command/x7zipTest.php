@@ -91,4 +91,16 @@ class x7zipTest extends AbstractMethodTest
         $this->clearTemporaryPath();
     }
 
+    public function testExtractCorrectDmgFile()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $response = $this->extract('file_ok.dmg', $target, new Format\Rar());
+
+        $this->assertTrue($response);
+        //$this->assertUncompressed($target, 'file_ok.dmg');
+        $this->clearTemporaryPath();
+    }
+
 }

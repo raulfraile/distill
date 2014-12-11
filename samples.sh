@@ -2,13 +2,15 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-echo 'sample file' > $DIR/sample.txt
+mkdir $DIR/sample
+echo 'sample file' > $DIR/sample/sample.txt
 
-bzip2 -z -c $DIR/sample.txt >> $DIR/src/Format/Samples/file.bz2
-gcab -c $DIR/src/Format/Samples/file.cab $DIR/sample.txt
-gzip -c $DIR/sample.txt >> $DIR/src/Format/Samples/file.gz
-xz -z -c $DIR/sample.txt >> $DIR/src/Format/Samples/file.xz
-rar a $DIR/src/Format/Samples/file.rar $DIR/sample.txt
-zip -T $DIR/src/Format/Samples/file.zip $DIR/sample.txt
+bzip2 -z -c $DIR/sample/sample.txt >> $DIR/src/Format/Samples/file.bz2
+gcab -c $DIR/src/Format/Samples/file.cab $DIR/sample/sample.txt
+gzip -c $DIR/sample/sample.txt >> $DIR/src/Format/Samples/file.gz
+xz -z -c $DIR/sample/sample.txt >> $DIR/src/Format/Samples/file.xz
+rar a $DIR/src/Format/Samples/file.rar $DIR/sample/sample.txt
+zip -T $DIR/src/Format/Samples/file.zip $DIR/sample/sample.txt
+hdiutil create $DIR/src/Format/Samples/file.dmg -volname "test" -srcfolder $DIR/sample/
 
-rm -f $DIR/sample.txt
+rm -rf $DIR/sample

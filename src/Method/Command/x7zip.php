@@ -92,6 +92,7 @@ class x7zip extends AbstractCommandMethod
 
         if ($format instanceof Format\Bz2 ||
             $format instanceof Format\Cab ||
+            $format instanceof Format\Dmg ||
             $format instanceof Format\Gz  ||
             $format instanceof Format\Rar ||
             $format instanceof Format\Tar ||
