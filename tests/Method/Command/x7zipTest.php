@@ -81,6 +81,10 @@ class x7zipTest extends AbstractMethodTest
 
     public function testExtractCorrectRarFile()
     {
+        if (!$this->method->isFormatSupported(new Format\Rar())) {
+            $this->markTestSkipped('rar supported is not enabled for the x7 command method.');
+        }
+
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
