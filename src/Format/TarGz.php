@@ -36,4 +36,23 @@ class TarGz extends AbstractFormat
     {
         return get_class();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isComposed()
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getComposedFormats()
+    {
+        return [
+            Gz::getClass(),
+            Tar::getClass(),
+        ];
+    }
 }

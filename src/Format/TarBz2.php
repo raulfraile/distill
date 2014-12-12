@@ -36,4 +36,24 @@ class TarBz2 extends AbstractFormat
     {
         return get_class();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isComposed()
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getComposedFormats()
+    {
+        return [
+            Bz2::getClass(),
+            Tar::getClass(),
+        ];
+    }
+
 }

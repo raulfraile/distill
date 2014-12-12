@@ -11,7 +11,7 @@
 
 namespace Distill\Extractor;
 
-use Distill\Exception\IO\Input\FormatNotSupportedException;
+use Distill\Exception\IO\Input\FileFormatNotSupportedException;
 use Distill\Format\FormatInterface;
 use Distill\Method\MethodInterface;
 use Distill\SupportCheckerInterface;
@@ -45,7 +45,7 @@ class Extractor implements ExtractorInterface
     public function extract($file, $path, FormatInterface $format)
     {
         if (false === $this->supportChecker->isFormatSupported($format)) {
-            throw new FormatNotSupportedException($format);
+            throw new FileFormatNotSupportedException($file, $format);
         }
 
         $success = false;

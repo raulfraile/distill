@@ -39,4 +39,21 @@ abstract class AbstractFormat implements FormatInterface
         return __DIR__ . DIRECTORY_SEPARATOR . 'Samples' . DIRECTORY_SEPARATOR . $sampleFilename;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function isComposed()
+    {
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getComposedFormats()
+    {
+        return [];
+    }
+
+
 }

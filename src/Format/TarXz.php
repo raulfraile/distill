@@ -36,4 +36,23 @@ class TarXz extends AbstractFormat
     {
         return get_class();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isComposed()
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getComposedFormats()
+    {
+        return [
+            Xz::getClass(),
+            Tar::getClass(),
+        ];
+    }
 }

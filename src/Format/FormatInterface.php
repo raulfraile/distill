@@ -57,4 +57,8 @@ interface FormatInterface
      * @return array List of samples
      */
     public static function getSamples();
+
+    public function isComposed();
+
+    public function getComposedFormats();
 }
