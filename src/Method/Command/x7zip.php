@@ -13,6 +13,7 @@ namespace Distill\Method\Command;
 
 use Distill\Exception;
 use Distill\Format;
+use Distill\Method\AbstractMethod;
 use Distill\Method\MethodInterface;
 
 /**
@@ -81,6 +82,10 @@ class x7zip extends AbstractCommandMethod
      */
     public function isFormatSupported(Format\FormatInterface $format)
     {
+        // Windows systems:
+        //  - Supports:
+        //     - Packing / unpacking: 7z, xz, bz2, gz, tar, zip and wim.
+        //     - Unpacking only: arj, cab, chm, cpio, CramFS, deb, dmg, fat, hfs, iso, lzh, lzma, mbr, msi, nsis, ntfs, rar, rpm, SquashFS, udf, vhd, wim, xar and z.
         // In Unix systems, a port of 7-Zip is used: p7zip, and is divided in 3 packages:
         //  - p7zip: Only provides support for 7z files
         //  - p7zip-full: Provides support for many other formats (rar not included)
@@ -90,28 +95,53 @@ class x7zip extends AbstractCommandMethod
             return true;
         }
 
-        if ($format instanceof Format\Arj  ||
-            $format instanceof Format\Bz2  ||
-            $format instanceof Format\Cab  ||
-            $format instanceof Format\Chm  ||
-            $format instanceof Format\Cpio ||
-            $format instanceof Format\Deb  ||
-            $format instanceof Format\Dmg  ||
-            $format instanceof Format\Gz   ||
-            $format instanceof Format\Iso  ||
-            $format instanceof Format\Lzh  ||
-            $format instanceof Format\Lzma ||
-            $format instanceof Format\Msi  ||
-            $format instanceof Format\Rar  ||
-            $format instanceof Format\Rpm  ||
-            $format instanceof Format\Tar  ||
-            $format instanceof Format\Wim  ||
-            $format instanceof Format\Xz   ||
-            $format instanceof Format\Zip) {
-            return $this->checkFormatSupport($format);
+        $osType = $this->getOsType();
+
+        if ($this->couldBeSupported($format)) {
+            if (AbstractMethod::OS_TYPE_WINDOWS === $osType) {
+                return true;
+            }
+
+            if (AbstractMethod::OS_TYPE_UNIX === $osType || AbstractMethod::OS_TYPE_DARWIN === $osType) {
+
+                if ($format instanceof Format\Rar) {
+                    return $this->checkFormatSupport(new Format\Rar());
+                }
+
+                return $this->checkFormatSupport(new Format\Zip());
+            }
         }
 
         return false;
+    }
+
+    /**
+     * Checks whether the format could be supported by 7zip. Further checks should
+     * be perform if the format could be supported.
+     * @param Format\FormatInterface $format Format.
+     *
+     * @return bool Returns TRUE if the format could be supported, FALSE otherwise.
+     */
+    protected function couldBeSupported(Format\FormatInterface $format)
+    {
+        return $format instanceof Format\Arj ||
+            $format instanceof Format\Bz2    ||
+            $format instanceof Format\Cab    ||
+            $format instanceof Format\Chm    ||
+            $format instanceof Format\Cpio   ||
+            $format instanceof Format\Deb    ||
+            $format instanceof Format\Dmg    ||
+            $format instanceof Format\Gz     ||
+            $format instanceof Format\Iso    ||
+            $format instanceof Format\Lzh    ||
+            $format instanceof Format\Lzma   ||
+            $format instanceof Format\Msi    ||
+            $format instanceof Format\Rar    ||
+            $format instanceof Format\Rpm    ||
+            $format instanceof Format\Tar    ||
+            $format instanceof Format\Wim    ||
+            $format instanceof Format\Xz     ||
+            $format instanceof Format\Zip;
     }
 
     /**
@@ -132,4 +162,5 @@ class x7zip extends AbstractCommandMethod
 
         return 0 === $exitCode;
     }
+
 }
