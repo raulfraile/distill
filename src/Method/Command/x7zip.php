@@ -158,6 +158,10 @@ class x7zip extends AbstractCommandMethod
             return false;
         }
 
+        if (false === file_exists($samples[Format\FormatInterface::SAMPLE_REGULAR])) {
+            return false;
+        }
+
         $exitCode = $this->executeCommand('7z t ' . $samples[Format\FormatInterface::SAMPLE_REGULAR]);
 
         return 0 === $exitCode;
