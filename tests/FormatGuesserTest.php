@@ -39,6 +39,17 @@ class FormatGuesserTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf($formatClass, $formatChain[0]);
     }
 
+    protected function guessFormatChain($file, array $formatClasses)
+    {
+        $formatChain = $this->formatGuesser->guess($file);
+
+        $this->assertEquals(count($formatChain), count($formatClasses));
+
+        for ($i=0, $total = count($formatChain); $i < $total; $i++) {
+            $this->assertInstanceOf($formatClasses[$i], $formatChain[$i]);
+        }
+    }
+
     public function testBzip2FileGuesser()
     {
         $this->guessFormat($this->filesPath . 'file_ok.bz2', '\\Distill\\Format\\Simple\\Bz2');
@@ -105,7 +116,8 @@ class FormatGuesserTest extends \PHPUnit_Framework_TestCase
 
     public function testFileComposedExtensionGuesser()
     {
-        $this->guessFormat('test.txt.gz', '\\Distill\\Format\\Simple\\Gz');
+        $this->guessFormatChain('test.txt.gz', ['\\Distill\\Format\\Simple\\Gz']);
+        $this->guessFormatChain('test.zip.gz', ['\\Distill\\Format\\Simple\\Gz', '\\Distill\\Format\\Simple\\Zip']);
     }
 
 }

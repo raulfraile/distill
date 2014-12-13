@@ -68,17 +68,19 @@ class FormatGuesser implements FormatGuesserInterface
             throw new Exception\IO\Input\FileUnknownFormatException($file);
         }
 
-        $formatChain = new FormatChain();
+        $formats = [];
         for ($i=0, $extensionsNumber = count($extensions); $i < $extensionsNumber; $i++) {
             // check for combined
             $combinedExtension = implode('.', array_slice($extensions, $i, 2));
             if ((($i+1) < $extensionsNumber) && array_key_exists($combinedExtension, $this->extensionMap)) {
-                $formatChain->add($this->extensionMap[$combinedExtension]);
+                $formats[] = $this->extensionMap[$combinedExtension];
                 $i++;
             } else {
-                $formatChain->add($this->extensionMap[$extensions[$i]]);
+                $formats[] = $this->extensionMap[$extensions[$i]];
             }
         }
+
+        $formatChain = new FormatChain(array_reverse($formats));
 
         return $formatChain;
     }

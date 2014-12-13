@@ -73,16 +73,17 @@ class Extractor implements ExtractorInterface
             }
         }
 
-
         $success = true;
         $lastFile = $file;
+        $tempDirectories = [];
         for ($i = 0, $formatsCount = count($chainFormats); $i<$formatsCount && true === $success; $i++) {
 
             if (($i+1) === $formatsCount) {
                 // last
                 $success = $this->extractFormat($lastFile, $path, $chainFormats[$i]);
             } else {
-                $tempDirectory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . '/temp_' . uniqid();
+                $tempDirectory = $path . DIRECTORY_SEPARATOR . 'step_' . $i;
+                $tempDirectories[] = $tempDirectory;
                 $success = $this->extractFormat($lastFile, $tempDirectory, $chainFormats[$i]);
 
                 $iterator = new \FilesystemIterator($tempDirectory, \FilesystemIterator::SKIP_DOTS);
@@ -90,14 +91,16 @@ class Extractor implements ExtractorInterface
                 while ($iterator->valid()) {
                     $extractedFile = $iterator->current();
 
-
                     $iterator->next();
                 }
 
                 $lastFile = $extractedFile->getRealPath();
             }
+        }
 
-
+        // clean temp directories
+        foreach ($tempDirectories as $directory) {
+            $this->filesystem->remove($directory);
         }
 
         return $success;

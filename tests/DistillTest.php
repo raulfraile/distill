@@ -333,6 +333,29 @@ class DistillTest extends TestCase
         $this->clearTemporaryPath();
     }
 
+    public function testCanExtractChainedFiles()
+    {
+        $format1 = new Format\Simple\Zip();
+        $format2 = new Format\Simple\Xz();
+
+        if (false === $this->distill->isFormatSupported($format1)) {
+            $this->markTestSkipped('zip files are not supported');
+        }
+
+        if (false === $this->distill->isFormatSupported($format2)) {
+            $this->markTestSkipped('xz files are not supported');
+        }
+
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+
+        $response = $this->distill->extract($this->filesPath . 'file_ok.zip.xz', $target);
+
+        $this->assertTrue($response);
+        $this->assertUncompressed($target, 'file_ok.zip.xz');
+        $this->clearTemporaryPath();
+    }
+
     public function testCanExtractGuessedFiles()
     {
         $target = $this->getTemporaryPath();
