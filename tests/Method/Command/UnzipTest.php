@@ -25,7 +25,7 @@ class UnzipCommandMethodTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.zip', $target, new Format\Zip());
+        $response = $this->extract('file_ok.zip', $target, new Format\Simple\Zip());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.zip');
@@ -37,7 +37,7 @@ class UnzipCommandMethodTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.zip', $target, new Format\Zip());
+        $response = $this->extract('file_fake.zip', $target, new Format\Simple\Zip());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
@@ -50,7 +50,7 @@ class UnzipCommandMethodTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_ok.rar', $target, new Format\Rar());
+        $this->extract('file_ok.rar', $target, new Format\Simple\Rar());
 
         $this->clearTemporaryPath();
     }
@@ -62,7 +62,7 @@ class UnzipCommandMethodTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_corrupt.zip', $target, new Format\Zip());
+        $this->extract('file_corrupt.zip', $target, new Format\Simple\Zip());
     }
 
     public function testExtractCorrectEpubFile()
@@ -70,7 +70,7 @@ class UnzipCommandMethodTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.epub', $target, new Format\Epub());
+        $response = $this->extract('file_ok.epub', $target, new Format\Simple\Epub());
 
         $this->assertTrue($response);
         //$this->checkDirectoryFiles($target, $this->filesPath . '/epub');
@@ -82,7 +82,7 @@ class UnzipCommandMethodTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.jar', $target, new Format\Jar());
+        $response = $this->extract('file_ok.jar', $target, new Format\Simple\Jar());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.jar');

@@ -12,6 +12,7 @@
 namespace Distill;
 
 use Distill\Extractor\Extractor;
+use Distill\Format\Simple\Hfs;
 use Distill\Method\MethodInterface;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -56,31 +57,40 @@ class ContainerProvider implements ServiceProviderInterface
         ];
 
         $formatsClasses = [
-            Format\Ace::getClass(),
-            Format\Arc::getClass(),
-            Format\Arj::getClass(),
-            Format\Bin::getClass(),
-            Format\Bz2::getClass(),
-            Format\Cab::getClass(),
-            Format\Deb::getClass(),
-            Format\Dmg::getClass(),
-            Format\Epub::getClass(),
-            Format\Exe::getClass(),
-            Format\Gz::getClass(),
-            Format\Img::getClass(),
-            Format\Iso::getClass(),
-            Format\Jar::getClass(),
-            Format\Msi::getClass(),
-            Format\Phar::getClass(),
-            Format\Rar::getClass(),
-            Format\Rpm::getClass(),
-            Format\Tar::getClass(),
-            Format\TarBz2::getClass(),
-            Format\TarGz::getClass(),
-            Format\TarXz::getClass(),
-            Format\x7z::getClass(),
-            Format\Xz::getClass(),
-            Format\Zip::getClass(),
+            Format\Simple\Ace::getClass(),
+            Format\Simple\Arc::getClass(),
+            Format\Simple\Arj::getClass(),
+            Format\Simple\Bin::getClass(),
+            Format\Simple\Bz2::getClass(),
+            Format\Simple\Cab::getClass(),
+            Format\Simple\Chm::getClass(),
+            Format\Simple\Cpio::getClass(),
+            Format\Simple\Deb::getClass(),
+            Format\Simple\Dmg::getClass(),
+            Format\Simple\Epub::getClass(),
+            Format\Simple\Exe::getClass(),
+            Format\Simple\Gz::getClass(),
+            Format\Simple\Hfs::getClass(),
+            Format\Simple\Img::getClass(),
+            Format\Simple\Iso::getClass(),
+            Format\Simple\Jar::getClass(),
+            Format\Simple\Lzh::getClass(),
+            Format\Simple\Lzma::getClass(),
+            Format\Simple\Msi::getClass(),
+            Format\Simple\Phar::getClass(),
+            Format\Simple\Rar::getClass(),
+            Format\Simple\Rpm::getClass(),
+            Format\Simple\Shar::getClass(),
+            Format\Simple\Tar::getClass(),
+            Format\Simple\Wim::getClass(),
+            Format\Simple\x7z::getClass(),
+            Format\Simple\Xz::getClass(),
+            Format\Simple\Zip::getClass(),
+
+            Format\Composed\TarBz2::getClass(),
+            Format\Composed\TarGz::getClass(),
+            Format\Composed\TarXz::getClass(),
+
         ];
 
         $this->formats = [];

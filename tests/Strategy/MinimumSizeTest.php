@@ -27,36 +27,36 @@ class MinimumSizeTest extends TestCase
     public function testGzShouldBePreferredOverZip()
     {
         $files = [
-            new File('test.zip', new Format\Zip()),
-            new File('test.tgz', new Format\TarGz())
+            new File('test.zip', new Format\Simple\Zip()),
+            new File('test.tgz', new Format\Composed\TarGz())
         ];
 
         $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, []);
-        $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFiles[0]->getFormat());
+        $this->assertInstanceOf('\\Distill\\Format\\Composed\\TarGz', $preferredFiles[0]->getFormat());
         $this->assertEquals('test.tgz', $preferredFiles[0]->getPath());
 
         array_reverse($files);
 
         $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, []);
-        $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFiles[0]->getFormat());
+        $this->assertInstanceOf('\\Distill\\Format\\Composed\\TarGz', $preferredFiles[0]->getFormat());
         $this->assertEquals('test.tgz', $preferredFiles[0]->getPath());
     }
 
     public function testGzShouldBePreferredOverZipEvenWhenRepeated()
     {
         $files = [
-            new File('test.zip', new Format\Zip()),
-            new File('test.tgz', new Format\TarGz()),
-            new File('test.tar.gz', new Format\TarGz()),
+            new File('test.zip', new Format\Simple\Zip()),
+            new File('test.tgz', new Format\Composed\TarGz()),
+            new File('test.tar.gz', new Format\Composed\TarGz()),
         ];
 
         $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, []);
-        $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFiles[0]->getFormat());
+        $this->assertInstanceOf('\\Distill\\Format\\Composed\\TarGz', $preferredFiles[0]->getFormat());
 
         array_reverse($files);
 
         $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, []);
-        $this->assertInstanceOf('\\Distill\\Format\\TarGz', $preferredFiles[0]->getFormat());
+        $this->assertInstanceOf('\\Distill\\Format\\Composed\\TarGz', $preferredFiles[0]->getFormat());
     }
 
 

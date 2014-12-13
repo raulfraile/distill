@@ -25,7 +25,7 @@ class GnuTarTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.tar', $target, new Format\Tar());
+        $response = $this->extract('file_ok.tar', $target, new Format\Simple\Tar());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.tar');
@@ -39,7 +39,7 @@ class GnuTarTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_fake.tar', $target, new Format\Tar());
+        $this->extract('file_fake.tar', $target, new Format\Simple\Tar());
 
         $this->clearTemporaryPath();
     }
@@ -49,7 +49,7 @@ class GnuTarTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.tar.bz2', $target, new Format\TarBz2());
+        $response = $this->extract('file_ok.tar.bz2', $target, new Format\Composed\TarBz2());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.tar.bz2');
@@ -63,7 +63,7 @@ class GnuTarTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_fake.tar.bz2', $target, new Format\TarBz2());
+        $this->extract('file_fake.tar.bz2', $target, new Format\Composed\TarBz2());
 
         $this->clearTemporaryPath();
     }
@@ -73,7 +73,7 @@ class GnuTarTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.tar.gz', $target, new Format\TarGz());
+        $response = $this->extract('file_ok.tar.gz', $target, new Format\Composed\TarGz());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.tar.gz');
@@ -87,7 +87,7 @@ class GnuTarTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_fake.tar.gz', $target, new Format\TarGz());
+        $this->extract('file_fake.tar.gz', $target, new Format\Composed\TarGz());
 
         $this->clearTemporaryPath();
     }
@@ -97,7 +97,7 @@ class GnuTarTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.tar.xz', $target, new Format\TarXz());
+        $response = $this->extract('file_ok.tar.xz', $target, new Format\Composed\TarXz());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.tar.xz');
@@ -111,7 +111,7 @@ class GnuTarTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_fake.tar.xz', $target, new Format\TarXz());
+        $this->extract('file_fake.tar.xz', $target, new Format\Composed\TarXz());
 
         $this->clearTemporaryPath();
     }
@@ -123,7 +123,7 @@ class GnuTarTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_ok.phar', $target, new Format\Phar());
+        $this->extract('file_ok.phar', $target, new Format\Simple\Phar());
 
         $this->clearTemporaryPath();
     }

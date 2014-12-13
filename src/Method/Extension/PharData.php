@@ -73,8 +73,8 @@ class PharData extends AbstractMethod
      */
     public function isFormatSupported(Format\FormatInterface $format)
     {
-        return $format instanceof Format\Tar
-            || $format instanceof Format\TarBz2
-            || $format instanceof Format\TarGz;
+        return $format instanceof Format\Simple\Tar
+            || $format instanceof Format\Composed\TarBz2
+            || $format instanceof Format\Composed\TarGz;
     }
 }

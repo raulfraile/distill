@@ -12,6 +12,8 @@
 namespace Distill;
 
 use Distill\Extractor\ExtractorInterface;
+use Distill\Format\FormatChain;
+use Distill\Format\FormatChainInterface;
 use Distill\Strategy\StrategyInterface;
 use Distill\Format\FormatInterface;
 use Pimple\Container;
@@ -68,6 +70,12 @@ class Distill
     protected $disabledFormats;
 
     /**
+     * Filesystem object to perform fs operations.
+     * @var Filesystem
+     */
+    protected $filesystem;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -75,6 +83,10 @@ class Distill
         $this->initialized = false;
         $this->disabledMethods = [];
         $this->disabledFormats = [];
+
+        // uses the special, internal filesystem due to an issue with Symfony's
+        // rename across drives. This was adapted from Composer
+        $this->filesystem = new Filesystem();
     }
 
     /**
@@ -105,13 +117,15 @@ class Distill
      * @param  string $file Compressed file
      * @param  string $target Destination path
      * @param  Format\FormatInterface $format
+     *
      * @throws Exception\IO\Input\FileEmptyException
      * @throws Exception\IO\Input\FileFormatNotSupportedException
      * @throws Exception\IO\Input\FileNotFoundException
      * @throws Exception\IO\Input\FileNotReadableException
+     * @throws Exception\IO\Input\FileUnknownFormatException
      * @throws Exception\IO\Output\TargetDirectoryNotWritableException
      *
-     * @return bool Returns TRUE when successful, FALSE otherwise
+     * @return bool
      */
     public function extract($file, $target, FormatInterface $format = null)
     {
@@ -134,14 +148,21 @@ class Distill
         }
 
         if (null === $format) {
-            $format = $this->container['distill.format_guesser']->guess($file);
+            $formatChain = $this->container['distill.format_guesser']->guess($file);
+
+            if (0 === count($formatChain)) {
+                throw new Exception\IO\Input\FileUnknownFormatException($file);
+            }
+        } else {
+            $formatChain = new FormatChain([$format]);
         }
 
-        if (false === $this->isFormatSupported($format)) {
-            throw new Exception\IO\Input\FileFormatNotSupportedException($file, $format);
+        if (false === $this->isFormatChainSupported($formatChain)) {
+            $unsupportedFormats = $this->getSupportChecker()->getUnsupportedFormatsFromChain($formatChain);
+            throw new Exception\IO\Input\FileFormatNotSupportedException($file, $unsupportedFormats[0]);
         }
 
-        return $this->container['distill.extractor.extractor']->extract($file, $target, $format);
+        return $this->container['distill.extractor.extractor']->extract($file, $target, $formatChain);
     }
 
     /**
@@ -163,10 +184,6 @@ class Distill
     public function extractWithoutRootDirectory($file, $path, FormatInterface $format = null)
     {
         $this->initializeIfNotInitialized();
-
-        // uses the special, internal filesystem due to an issue with Symfony's
-        // rename across drives. This was adapted from Composer
-        $filesystem = new Filesystem();
 
         // extract to a temporary place
         $tempDirectory = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid(time()).DIRECTORY_SEPARATOR;
@@ -198,13 +215,13 @@ class Distill
 
         if (false === $hasSingleRootDirectory) {
             // it is not a compressed file with a single directory
-            $filesystem->remove($tempDirectory);
+            $this->filesystem->remove($tempDirectory);
 
             throw new Exception\IO\Output\NotSingleDirectoryException($file);
         }
 
-        $filesystem->remove($path);
-        $filesystem->rename($singleRootDirectoryName, $path);
+        $this->filesystem->remove($path);
+        $this->filesystem->rename($singleRootDirectoryName, $path);
 
         return true;
     }
@@ -232,6 +249,13 @@ class Distill
         $this->initializeIfNotInitialized();
 
         return $this->getSupportChecker()->isFormatSupported($format);
+    }
+
+    protected function isFormatChainSupported(FormatChainInterface $formatChain)
+    {
+        $this->initializeIfNotInitialized();
+
+        return $this->getSupportChecker()->isFormatChainSupported($formatChain);
     }
 
     /**

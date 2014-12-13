@@ -35,3 +35,9 @@ cd $FILES_DIR/uncompressed
 rm -f ../file_encrypted_ok.zip
 zip -r -e -P 123456 ../file_ok_encrypted.zip *
 printf "1.txt|1.txt file\n2.txt|2.txt file\n3.txt|3.txt file\nlevel2/4.txt|4.txt file\nlevel2/level3/5.txt|5.txt file" > ../file_ok_encrypted.zip.key
+
+cd $FILES_DIR/uncompressed
+xz -z -c ../file_ok.zip >> ../file_ok.zip.xz
+printf "*|1.txt file" > ../file_ok.zip.xz.key
+xz -z -c ../file_ok.zip.xz >> ../file_ok.zip.xz.xz
+printf "*|1.txt file" > ../file_ok.zip.xz.xz.key

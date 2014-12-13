@@ -11,7 +11,7 @@
 
 namespace Distill;
 
-use Distill\Format\FormatInterface;
+use Distill\Format\FormatChainInterface;
 use Distill\Exception\IO\Input\FileUnknownFormatException;
 
 interface FormatGuesserInterface
@@ -21,7 +21,7 @@ interface FormatGuesserInterface
      * @param  string                     $path File path
      * @throws FileUnknownFormatException
      *
-     * @return FormatInterface File format.
+     * @return FormatChainInterface File format.
      */
     public function guess($path);
 }

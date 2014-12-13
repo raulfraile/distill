@@ -59,6 +59,6 @@ class Bzip2 extends AbstractCommandMethod
 
     public function isFormatSupported(Format\FormatInterface $format = null)
     {
-        return $format instanceof Format\Bz2;
+        return $format instanceof Format\Simple\Bz2;
     }
 }

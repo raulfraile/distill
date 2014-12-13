@@ -63,6 +63,6 @@ class Xz extends AbstractCommandMethod
      */
     public function isFormatSupported(Format\FormatInterface $format = null)
     {
-        return $format instanceof Format\Xz;
+        return $format instanceof Format\Simple\Xz;
     }
 }

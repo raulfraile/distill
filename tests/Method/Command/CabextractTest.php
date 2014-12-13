@@ -25,7 +25,7 @@ class CabextractTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.cab', $target, new Format\Cab());
+        $response = $this->extract('file_ok.cab', $target, new Format\Simple\Cab());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.cab');
@@ -37,7 +37,7 @@ class CabextractTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.cab', $target, new Format\Cab());
+        $response = $this->extract('file_fake.cab', $target, new Format\Simple\Cab());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
@@ -50,7 +50,7 @@ class CabextractTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_ok.phar', $target, new Format\Phar());
+        $this->extract('file_ok.phar', $target, new Format\Simple\Phar());
 
         $this->clearTemporaryPath();
     }

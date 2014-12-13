@@ -25,7 +25,7 @@ class Bzip2CommandMethodTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.bz2', $target, new Format\Bz2());
+        $response = $this->extract('file_ok.bz2', $target, new Format\Simple\Bz2());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.bz2', true);
@@ -37,7 +37,7 @@ class Bzip2CommandMethodTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.bz2', $target, new Format\Bz2());
+        $response = $this->extract('file_fake.bz2', $target, new Format\Simple\Bz2());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
@@ -50,7 +50,7 @@ class Bzip2CommandMethodTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_ok.cab', $target, new Format\Cab());
+        $this->extract('file_ok.cab', $target, new Format\Simple\Cab());
     }
 
 }

@@ -36,11 +36,11 @@ class GnuTar extends AbstractCommandMethod
 
         $tarOptions = ['x', 'v', 'f'];
 
-        if ($format instanceof Format\TarBz2) {
+        if ($format instanceof Format\Composed\TarBz2) {
             array_unshift($tarOptions, 'j');
-        } elseif ($format instanceof Format\TarGz) {
+        } elseif ($format instanceof Format\Composed\TarGz) {
             array_unshift($tarOptions, 'z');
-        } elseif ($format instanceof Format\TarXz) {
+        } elseif ($format instanceof Format\Composed\TarXz) {
             array_unshift($tarOptions, 'J');
         }
 
@@ -80,9 +80,9 @@ class GnuTar extends AbstractCommandMethod
      */
     public function isFormatSupported(Format\FormatInterface $format = null)
     {
-        return $format instanceof Format\Tar
-        || $format instanceof Format\TarBz2
-        || $format instanceof Format\TarGz
-        || $format instanceof Format\TarXz;
+        return $format instanceof Format\Simple\Tar
+        || $format instanceof Format\Composed\TarBz2
+        || $format instanceof Format\Composed\TarGz
+        || $format instanceof Format\Composed\TarXz;
     }
 }

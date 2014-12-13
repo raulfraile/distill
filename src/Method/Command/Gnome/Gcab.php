@@ -58,6 +58,6 @@ class Gcab extends AbstractCommandMethod
 
     public function isFormatSupported(Format\FormatInterface $format = null)
     {
-        return $format instanceof Format\Cab;
+        return $format instanceof Format\Simple\Cab;
     }
 }

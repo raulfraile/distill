@@ -13,7 +13,7 @@ namespace Distill\Method\Native;
 
 use Distill\Exception;
 use Distill\Format\FormatInterface;
-use Distill\Format\Tar;
+use Distill\Format\Simple\Tar;
 use Distill\Method\AbstractMethod;
 use Distill\Method\MethodInterface;
 

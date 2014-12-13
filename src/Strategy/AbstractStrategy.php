@@ -45,6 +45,14 @@ abstract class AbstractStrategy implements StrategyInterface
             }
         }
 
+        if ($format->isComposed()) {
+            $maxSpeedComposed = MethodInterface::SPEED_LEVEL_LOWEST;
+            $subformats = $format->getComposedFormats();
+            foreach ($subformats as $subformat) {
+                $maxSpeedComposed = max($maxSpeedComposed, $this->getMaxUncompressionSpeedFormat($subformat, $methods) / count($subformats));
+            }
+        }
+
         return $maxSpeed;
     }
 

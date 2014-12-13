@@ -36,7 +36,9 @@ abstract class AbstractFormat implements FormatInterface
 
     public static function getSampleFullPath($sampleFilename)
     {
-        return __DIR__ . DIRECTORY_SEPARATOR . 'Samples' . DIRECTORY_SEPARATOR . $sampleFilename;
+        $parts = [__DIR__, '..', 'Resources', 'Samples', $sampleFilename];
+
+        return implode(DIRECTORY_SEPARATOR, $parts);
     }
 
     /**

@@ -25,7 +25,7 @@ class RarExtensionMethodTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.rar', $target, new Format\Rar());
+        $response = $this->extract('file_ok.rar', $target, new Format\Simple\Rar());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.rar');
@@ -37,7 +37,7 @@ class RarExtensionMethodTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.rar', $target, new Format\Rar());
+        $response = $this->extract('file_fake.rar', $target, new Format\Simple\Rar());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
@@ -50,7 +50,7 @@ class RarExtensionMethodTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_ok.phar', $target, new Format\Phar());
+        $this->extract('file_ok.phar', $target, new Format\Simple\Phar());
 
         $this->clearTemporaryPath();
     }

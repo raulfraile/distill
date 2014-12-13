@@ -91,7 +91,7 @@ class x7zip extends AbstractCommandMethod
         //  - p7zip-full: Provides support for many other formats (rar not included)
         //  - p7zip-rar: Provides support for rar files
 
-        if ($format instanceof Format\x7z) {
+        if ($format instanceof Format\Simple\x7z) {
             return true;
         }
 
@@ -104,11 +104,11 @@ class x7zip extends AbstractCommandMethod
 
             if (AbstractMethod::OS_TYPE_UNIX === $osType || AbstractMethod::OS_TYPE_DARWIN === $osType) {
 
-                if ($format instanceof Format\Rar) {
-                    return $this->checkFormatSupport(new Format\Rar());
+                if ($format instanceof Format\Simple\Rar) {
+                    return $this->checkFormatSupport(new Format\Simple\Rar());
                 }
 
-                return $this->checkFormatSupport(new Format\Zip());
+                return $this->checkFormatSupport(new Format\Simple\Zip());
             }
         }
 
@@ -124,24 +124,24 @@ class x7zip extends AbstractCommandMethod
      */
     protected function couldBeSupported(Format\FormatInterface $format)
     {
-        return $format instanceof Format\Arj ||
-            $format instanceof Format\Bz2    ||
-            $format instanceof Format\Cab    ||
-            $format instanceof Format\Chm    ||
-            $format instanceof Format\Cpio   ||
-            $format instanceof Format\Deb    ||
-            $format instanceof Format\Dmg    ||
-            $format instanceof Format\Gz     ||
-            $format instanceof Format\Iso    ||
-            $format instanceof Format\Lzh    ||
-            $format instanceof Format\Lzma   ||
-            $format instanceof Format\Msi    ||
-            $format instanceof Format\Rar    ||
-            $format instanceof Format\Rpm    ||
-            $format instanceof Format\Tar    ||
-            $format instanceof Format\Wim    ||
-            $format instanceof Format\Xz     ||
-            $format instanceof Format\Zip;
+        return $format instanceof Format\Simple\Arj ||
+            $format instanceof Format\Simple\Bz2    ||
+            $format instanceof Format\Simple\Cab    ||
+            $format instanceof Format\Simple\Chm    ||
+            $format instanceof Format\Simple\Cpio   ||
+            $format instanceof Format\Simple\Deb    ||
+            $format instanceof Format\Simple\Dmg    ||
+            $format instanceof Format\Simple\Gz     ||
+            $format instanceof Format\Simple\Iso    ||
+            $format instanceof Format\Simple\Lzh    ||
+            $format instanceof Format\Simple\Lzma   ||
+            $format instanceof Format\Simple\Msi    ||
+            $format instanceof Format\Simple\Rar    ||
+            $format instanceof Format\Simple\Rpm    ||
+            $format instanceof Format\Simple\Tar    ||
+            $format instanceof Format\Simple\Wim    ||
+            $format instanceof Format\Simple\Xz     ||
+            $format instanceof Format\Simple\Zip;
     }
 
     /**

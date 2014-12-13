@@ -11,6 +11,8 @@
 
 namespace Distill;
 
+use Distill\Format\ComposedFormatInterface;
+use Distill\Format\FormatChainInterface;
 use Distill\Format\FormatInterface;
 use Distill\Method\MethodInterface;
 
@@ -66,6 +68,54 @@ class SupportChecker implements SupportCheckerInterface
             $supported = $method->isSupported() && $method->isFormatSupported($format);
         }
 
+        if (false === $supported && $format instanceof ComposedFormatInterface) {
+            $subformats = $format->getComposedFormats();
+            $supportedSubformats = 0;
+            for ($i = 0, $subformatsCount = count($subformats); $i<$subformatsCount; $i++) {
+                if ($this->isFormatSupported($subformats[$i])) {
+                    $supportedSubformats++;
+                }
+            }
+
+            $supported = $supported || ($supportedSubformats === $subformatsCount);
+        }
+
         return $supported;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isFormatChainSupported(FormatChainInterface $formatChain)
+    {
+        if ($formatChain->isEmpty()) {
+            return false;
+        }
+
+        foreach ($formatChain as $format) {
+            if (false === $this->isFormatSupported($format)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUnsupportedFormatsFromChain(FormatChainInterface $formatChain)
+    {
+        $formats = [];
+
+        foreach ($formatChain as $format) {
+            if (false === $this->isFormatSupported($format)) {
+                $formats[] = $format;
+            }
+        }
+
+        return $formats;
+    }
+
+
 }

@@ -74,6 +74,6 @@ class Phar extends AbstractMethod
      */
     public function isFormatSupported(Format\FormatInterface $format)
     {
-        return $format instanceof Format\Phar;
+        return $format instanceof Format\Simple\Phar;
     }
 }

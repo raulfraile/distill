@@ -11,13 +11,15 @@
 
 namespace Distill;
 
+use Distill\Format\ComposedFormatInterface;
+use Distill\Format\FormatChain;
 use Distill\Format\FormatInterface;
 
 class FormatGuesser implements FormatGuesserInterface
 {
     /**
      * Maps extensions and formats
-     * @var string[]
+     * @var FormatInterface[]
      */
     protected $extensionMap;
 
@@ -35,16 +37,24 @@ class FormatGuesser implements FormatGuesserInterface
     {
         $this->extensionMap = [];
         foreach ($formats as $format) {
+
+            if ($format instanceof ComposedFormatInterface) {
+                $extensions = $format->getExtensions();
+                $canonicalExtension = $format->getCanonicalExtension();
+
+                foreach ($extensions as $extension) {
+                    $this->composedExtensions[$extension] = $canonicalExtension;
+                }
+
+            }
+
             $extensions = $format->getExtensions();
 
             foreach ($extensions as $extension) {
                 $this->extensionMap[$extension] = $format;
-
-                if (false !== $positionDot = strpos($extension, '.')) {
-                    $this->composedExtensions[] = substr($extension, $positionDot + 1);
-                }
             }
         }
+
     }
 
     /**
@@ -52,36 +62,55 @@ class FormatGuesser implements FormatGuesserInterface
      */
     public function guess($file)
     {
-        $extension = $this->getExtension($file);
+        $extensions = $this->getExtensions($file);
 
-        if (false === array_key_exists($extension, $this->extensionMap)) {
+        if (empty($extensions)) {
             throw new Exception\IO\Input\FileUnknownFormatException($file);
         }
 
-        return $this->extensionMap[$extension];
-    }
-
-    /**
-     * Gets the extension of a file.
-     * @param string $file File path
-     *
-     * @return string File extension
-     */
-    protected function getExtension($file)
-    {
-        $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-
-        if (in_array($extension, $this->composedExtensions)) {
-            $filename  = pathinfo($file, PATHINFO_FILENAME);
-            $subextension = pathinfo($filename, PATHINFO_EXTENSION);
-
-            $completeExtension = sprintf('%s.%s', $subextension, $extension);
-
-            if (array_key_exists($completeExtension, $this->extensionMap)) {
-                $extension = $completeExtension;
+        $formatChain = new FormatChain();
+        for ($i=0, $extensionsNumber = count($extensions); $i < $extensionsNumber; $i++) {
+            // check for combined
+            $combinedExtension = implode('.', array_slice($extensions, $i, 2));
+            if ((($i+1) < $extensionsNumber) && array_key_exists($combinedExtension, $this->extensionMap)) {
+                $formatChain->add($this->extensionMap[$combinedExtension]);
+                $i++;
+            } else {
+                $formatChain->add($this->extensionMap[$extensions[$i]]);
             }
         }
 
-        return $extension;
+        return $formatChain;
+    }
+
+    /**
+     * Gets the chain of recognized extensions of a file.
+     * @param string $file File path.
+     *
+     * @return string[] Recognized extensions.
+     */
+    protected function getExtensions($file)
+    {
+        $basename = strtolower(pathinfo($file, PATHINFO_BASENAME));
+
+        // normalize
+        foreach ($this->composedExtensions as $composedExtension => $canonicalExtension) {
+            $basename = preg_replace('/\.' . preg_quote($composedExtension) . '(\.|$)/', '.'.$canonicalExtension . '\\1', $basename);
+        }
+
+        $extensions = explode('.', $basename);
+        $extensions = array_reverse(array_slice($extensions,1));
+
+        $recognizedExtensions = [];
+
+        $i = 0;
+        $extensionsNumber = count($extensions);
+
+        while ($i < $extensionsNumber && array_key_exists($extensions[$i], $this->extensionMap)) {
+            $recognizedExtensions[] = $extensions[$i];
+            $i++;
+        }
+
+        return array_reverse($recognizedExtensions);
     }
 }

@@ -25,7 +25,7 @@ class TarExtractorTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.tar', $target, new Format\Tar());
+        $response = $this->extract('file_ok.tar', $target, new Format\Simple\Tar());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.tar');
@@ -40,7 +40,7 @@ class TarExtractorTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_fake.tar', $target, new Format\Tar());
+        $this->extract('file_fake.tar', $target, new Format\Simple\Tar());
 
         $this->clearTemporaryPath();
     }*/

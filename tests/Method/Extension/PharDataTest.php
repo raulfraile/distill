@@ -25,7 +25,7 @@ class PharDataTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.tar', $target, new Format\Tar());
+        $response = $this->extract('file_ok.tar', $target, new Format\Simple\Tar());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.tar');
@@ -37,7 +37,7 @@ class PharDataTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.tar', $target, new Format\Tar());
+        $response = $this->extract('file_fake.tar', $target, new Format\Simple\Tar());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
@@ -48,7 +48,7 @@ class PharDataTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.tar.bz2', $target, new Format\TarBz2());
+        $response = $this->extract('file_ok.tar.bz2', $target, new Format\Composed\TarBz2());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.tar.bz2');
@@ -60,7 +60,7 @@ class PharDataTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.tar.bz2', $target, new Format\TarBz2());
+        $response = $this->extract('file_fake.tar.bz2', $target, new Format\Composed\TarBz2());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
@@ -71,7 +71,7 @@ class PharDataTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.tar.gz', $target, new Format\TarGz());
+        $response = $this->extract('file_ok.tar.gz', $target, new Format\Composed\TarGz());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.tar.gz');
@@ -83,7 +83,7 @@ class PharDataTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.tar.gz', $target, new Format\TarGz());
+        $response = $this->extract('file_fake.tar.gz', $target, new Format\Composed\TarGz());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
@@ -96,7 +96,7 @@ class PharDataTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_ok.cab', $target, new Format\Cab());
+        $this->extract('file_ok.cab', $target, new Format\Simple\Cab());
 
         $this->clearTemporaryPath();
     }
@@ -108,7 +108,7 @@ class PharDataTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_ok.tar', $target, new Format\Bz2());
+        $this->extract('file_ok.tar', $target, new Format\Simple\Bz2());
 
         $this->clearTemporaryPath();
     }

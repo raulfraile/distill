@@ -60,6 +60,6 @@ class GnuGzip extends AbstractCommandMethod
 
     public function isFormatSupported(Format\FormatInterface $format = null)
     {
-        return $format instanceof Format\Gz;
+        return $format instanceof Format\Simple\Gz;
     }
 }

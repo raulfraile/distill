@@ -42,14 +42,14 @@ interface FormatInterface
      *
      * @return integer Compression ratio level (0: low, 10: high)
      */
-    public static function getCompressionRatioLevel();
+    public function getCompressionRatioLevel();
 
     /**
      * Gets the list of extensions associated to the format.
      *
      * @return array List of extensions
      */
-    public static function getExtensions();
+    public function getExtensions();
 
     /**
      * Gets the list of samples that methods can used to test its support.
@@ -58,7 +58,6 @@ interface FormatInterface
      */
     public static function getSamples();
 
-    public function isComposed();
 
-    public function getComposedFormats();
+
 }

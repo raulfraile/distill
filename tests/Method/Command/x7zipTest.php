@@ -25,7 +25,7 @@ class x7zipTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.7z', $target, new Format\x7z());
+        $response = $this->extract('file_ok.7z', $target, new Format\Simple\x7z());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.7z');
@@ -39,7 +39,7 @@ class x7zipTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_fake.7z', $target, new Format\x7z());
+        $this->extract('file_fake.7z', $target, new Format\Simple\x7z());
 
         $this->clearTemporaryPath();
     }
@@ -51,7 +51,7 @@ class x7zipTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.phar', $target, new Format\Phar());
+        $response = $this->extract('file_ok.phar', $target, new Format\Simple\Phar());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
@@ -64,7 +64,7 @@ class x7zipTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_corrupt.zip', $target, new Format\Zip());
+        $this->extract('file_corrupt.zip', $target, new Format\Simple\Zip());
     }
 
     public function testExtractCorrectJarFile()
@@ -72,7 +72,7 @@ class x7zipTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.jar', $target, new Format\Jar());
+        $response = $this->extract('file_ok.jar', $target, new Format\Simple\Jar());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.jar');
@@ -81,14 +81,14 @@ class x7zipTest extends AbstractMethodTest
 
     public function testExtractCorrectRarFile()
     {
-        if (!$this->method->isFormatSupported(new Format\Rar())) {
+        if (!$this->method->isFormatSupported(new Format\Simple\Rar())) {
             $this->markTestSkipped('rar supported is not enabled for the x7 command method.');
         }
 
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.rar', $target, new Format\Rar());
+        $response = $this->extract('file_ok.rar', $target, new Format\Simple\Rar());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.rar');
@@ -100,7 +100,7 @@ class x7zipTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.dmg', $target, new Format\Dmg());
+        $response = $this->extract('file_ok.dmg', $target, new Format\Simple\Dmg());
 
         $this->assertTrue($response);
         //$this->assertUncompressed($target, 'file_ok.dmg');
@@ -112,7 +112,7 @@ class x7zipTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.iso', $target, new Format\Iso());
+        $response = $this->extract('file_ok.iso', $target, new Format\Simple\Iso());
 
         $this->assertTrue($response);
         //$this->assertUncompressed($target, 'file_ok.dmg');

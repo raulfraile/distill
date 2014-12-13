@@ -30,7 +30,7 @@ class ChooserTest extends TestCase
         $this->setExpectedException('Distill\\Exception\\StrategyRequiredException');
 
         $formatGuesser = m::mock('Distill\FormatGuesserInterface');
-        $formatGuesser->shouldReceive('guess')->andReturn(new Format\TarGz(), new Format\Zip())->getMock();
+        $formatGuesser->shouldReceive('guess')->andReturn(new Format\Composed\TarGz(), new Format\Simple\Zip())->getMock();
 
         $this->chooser
             ->setFormatGuesser($formatGuesser)

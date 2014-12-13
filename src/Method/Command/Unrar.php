@@ -60,6 +60,6 @@ class Unrar extends AbstractCommandMethod
      */
     public function isFormatSupported(Format\FormatInterface $format = null)
     {
-        return $format instanceof Format\Rar;
+        return $format instanceof Format\Simple\Rar;
     }
 }

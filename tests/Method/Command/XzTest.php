@@ -25,7 +25,7 @@ class XzTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.xz', $target, new Format\Xz());
+        $response = $this->extract('file_ok.xz', $target, new Format\Simple\Xz());
 
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.xz', true);
@@ -37,7 +37,7 @@ class XzTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.xz', $target, new Format\Xz());
+        $response = $this->extract('file_fake.xz', $target, new Format\Simple\Xz());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
@@ -50,7 +50,7 @@ class XzTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_ok.zip', $target, new Format\Zip());
+        $this->extract('file_ok.zip', $target, new Format\Simple\Zip());
 
         $this->clearTemporaryPath();
     }

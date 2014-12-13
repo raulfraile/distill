@@ -80,6 +80,6 @@ class Zip extends AbstractMethod
 
     public function isFormatSupported(Format\FormatInterface $format)
     {
-        return $format instanceof Format\Zip;
+        return $format instanceof Format\Simple\Zip;
     }
 }

@@ -13,7 +13,6 @@ $preferredFile = $distill
     ->setStrategy($strategy)
     ->addFile('http://get.symfony.com/Symfony_Standard_Vendors_2.5.3.tgz')
     ->addFile('http://get.symfony.com/Symfony_Standard_Vendors_2.5.3.zip')
-
     ->getPreferredFile();
 echo $preferredFile . \PHP_EOL;
 

@@ -76,6 +76,6 @@ class Rar extends AbstractMethod
 
     public function isFormatSupported(Format\FormatInterface $format)
     {
-        return $format instanceof Format\Rar;
+        return $format instanceof Format\Simple\Rar;
     }
 }

@@ -24,7 +24,7 @@ class ArchiveTarTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_ok.tar', $target, new Format\Tar());
+        $response = $this->extract('file_ok.tar', $target, new Format\Simple\Tar());
 
         $this->assertTrue($response);
         $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
@@ -36,7 +36,7 @@ class ArchiveTarTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $response = $this->extract('file_fake.tar', $target, new Format\Tar());
+        $response = $this->extract('file_fake.tar', $target, new Format\Simple\Tar());
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
@@ -49,7 +49,7 @@ class ArchiveTarTest extends AbstractMethodTest
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
 
-        $this->extract('file_ok.cab', $target, new Format\Cab());
+        $this->extract('file_ok.cab', $target, new Format\Simple\Cab());
 
         $this->clearTemporaryPath();
     }
