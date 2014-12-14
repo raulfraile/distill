@@ -31,3 +31,5 @@ $DIR/jar.sh
 $DIR/dmg.sh
 $DIR/iso.sh
 $DIR/ar+deb.sh
+$DIR/cpio.sh
+$DIR/shar.sh

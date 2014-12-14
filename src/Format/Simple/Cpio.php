@@ -21,7 +21,7 @@ class Cpio extends AbstractFormat
      */
     public function getCompressionRatioLevel()
     {
-        return FormatInterface::RATIO_LEVEL_MIDDLE;
+        return FormatInterface::RATIO_LEVEL_LOWEST;
     }
 
     /**

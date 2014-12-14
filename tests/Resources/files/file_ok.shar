@@ -1,0 +1,25 @@
+# This is a shell archive.  Save it in a file, remove anything before
+# this line, and then unpack it by entering "sh file".  Note, it may
+# create directories; files and directories will be owned by you and
+# have default permissions.
+#
+# This archive contains:
+#
+#	1.txt
+#	2.txt
+#	3.txt
+#
+echo x - 1.txt
+sed 's/^X//' >1.txt << 'END-of-1.txt'
+X1.txt file
+END-of-1.txt
+echo x - 2.txt
+sed 's/^X//' >2.txt << 'END-of-2.txt'
+X2.txt file
+END-of-2.txt
+echo x - 3.txt
+sed 's/^X//' >3.txt << 'END-of-3.txt'
+X3.txt file
+END-of-3.txt
+exit
+
