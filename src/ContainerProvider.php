@@ -12,7 +12,6 @@
 namespace Distill;
 
 use Distill\Extractor\Extractor;
-use Distill\Format\Simple\Hfs;
 use Distill\Method\MethodInterface;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -53,6 +52,7 @@ class ContainerProvider implements ServiceProviderInterface
             Method\Extension\PharData::getClass(),
             Method\Extension\Rar::getClass(),
             Method\Extension\Zip::getClass(),
+            Method\Extension\Zlib::getClass(),
             Method\Native\TarExtractor::getClass(),
         ];
 
