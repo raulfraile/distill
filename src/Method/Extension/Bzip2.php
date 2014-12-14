@@ -17,11 +17,11 @@ use Distill\Method\AbstractMethod;
 use Distill\Method\MethodInterface;
 
 /**
- * Extracts files from gz archives using the zlib extension.
+ * Extracts files from bz2 archives using the bzip2 extension.
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class Zlib extends AbstractMethod
+class Bzip2 extends AbstractMethod
 {
     /**
      * {@inheritdoc}
@@ -36,14 +36,14 @@ class Zlib extends AbstractMethod
             throw new Exception\IO\Input\FileCorruptedException($file, Exception\IO\Input\FileCorruptedException::SEVERITY_HIGH);
         }
 
-        $source = gzopen($file, 'rb');
+        $source = bzopen($file, 'r');
 
         @mkdir($target);
         $destination = fopen($target . DIRECTORY_SEPARATOR . $basename, 'w');
 
         $bytes = stream_copy_to_stream($source, $destination);
 
-        gzclose($source);
+        bzclose($source);
         fclose($destination);
 
         return $bytes > 0;
@@ -55,7 +55,7 @@ class Zlib extends AbstractMethod
     public function isSupported()
     {
         if (null === $this->supported) {
-            $this->supported = extension_loaded('zlib');
+            $this->supported = extension_loaded('bz2');
         }
 
         return $this->supported;
@@ -79,7 +79,7 @@ class Zlib extends AbstractMethod
 
     public function isFormatSupported(Format\FormatInterface $format)
     {
-        return $format instanceof Format\Simple\Gz;
+        return $format instanceof Format\Simple\Bz2;
     }
 
     protected function isValid($file)
@@ -92,6 +92,6 @@ class Zlib extends AbstractMethod
         $magicNumber = bin2hex(fread($fileHandler, 2));
         fclose($fileHandler);
 
-        return '1f8b' === $magicNumber;
+        return '425a' === $magicNumber;
     }
 }
