@@ -7,7 +7,6 @@ use Distill\Tests\Format\AbstractFormatTest;
 
 class CabTest extends AbstractFormatTest
 {
-
     public function setUp()
     {
         $this->format = new Cab();
@@ -17,5 +16,4 @@ class CabTest extends AbstractFormatTest
     {
         $this->assertLevelValid($this->format->getCompressionRatioLevel());
     }
-
 }

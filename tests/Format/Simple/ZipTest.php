@@ -7,7 +7,6 @@ use Distill\Tests\Format\AbstractFormatTest;
 
 class ZipTest extends AbstractFormatTest
 {
-
     public function setUp()
     {
         $this->format = new Zip();
@@ -17,5 +16,4 @@ class ZipTest extends AbstractFormatTest
     {
         $this->assertLevelValid($this->format->getCompressionRatioLevel());
     }
-
 }

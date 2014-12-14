@@ -103,7 +103,6 @@ class x7zip extends AbstractCommandMethod
             }
 
             if (AbstractMethod::OS_TYPE_UNIX === $osType || AbstractMethod::OS_TYPE_DARWIN === $osType) {
-
                 if ($format instanceof Format\Simple\Rar) {
                     return $this->checkFormatSupport(new Format\Simple\Rar());
                 }
@@ -162,9 +161,8 @@ class x7zip extends AbstractCommandMethod
             return false;
         }
 
-        $exitCode = $this->executeCommand('7z t ' . $samples[Format\FormatInterface::SAMPLE_REGULAR]);
+        $exitCode = $this->executeCommand('7z t '.$samples[Format\FormatInterface::SAMPLE_REGULAR]);
 
         return 0 === $exitCode;
     }
-
 }

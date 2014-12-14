@@ -8,7 +8,6 @@ use Distill\Tests\Method\AbstractMethodTest;
 
 class GnuGzipTest extends AbstractMethodTest
 {
-
     public function setUp()
     {
         $this->method = new Method\Command\GnuGzip();
@@ -54,5 +53,4 @@ class GnuGzipTest extends AbstractMethodTest
 
         $this->clearTemporaryPath();
     }
-
 }

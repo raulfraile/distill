@@ -15,7 +15,6 @@ use Distill\Exception\IO\Exception as IOException;
 
 class TargetDirectoryNotWritableException extends IOException
 {
-
     /**
      * Target directory.
      * @var string
@@ -46,6 +45,4 @@ class TargetDirectoryNotWritableException extends IOException
     {
         return $this->target;
     }
-
-
 }

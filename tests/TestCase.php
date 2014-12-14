@@ -4,7 +4,6 @@ namespace Distill\Tests;
 
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Test files path
      * @var string
@@ -13,7 +12,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->filesPath = __DIR__ . '/Resources/files/';
+        $this->filesPath = __DIR__.'/Resources/files/';
     }
 
     protected function getTemporaryPath()
@@ -23,7 +22,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
     protected function clearTemporaryPath()
     {
-        exec('rm -fr ' . $this->getTemporaryPath());
+        exec('rm -fr '.$this->getTemporaryPath());
     }
 
     protected function checkDirectoryFiles($origin, $target)
@@ -38,10 +37,9 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         $directoryIterator = new \RecursiveDirectoryIterator($directory, \FilesystemIterator::CURRENT_AS_FILEINFO | \FilesystemIterator::SKIP_DOTS);
 
         $objects = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::SELF_FIRST);
-        foreach($objects as $name => $object){
-
+        foreach ($objects as $name => $object) {
             /** @var \SplFileInfo $object */
-            $key = preg_replace('#^'.preg_quote($directory) . '#', '', $object->getPathName());
+            $key = preg_replace('#^'.preg_quote($directory).'#', '', $object->getPathName());
 
             $files[$key] = $object->getRealPath();
         }
@@ -50,7 +48,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
         $hash = hash_init('sha512');
         foreach ($files as $fileRelativePath => $fileFullPath) {
-            hash_update($hash, $fileRelativePath . file_get_contents($fileFullPath));
+            hash_update($hash, $fileRelativePath.file_get_contents($fileFullPath));
         }
 
         return hash_final($hash);
@@ -58,17 +56,17 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
     protected function assertUncompressed($directory, $originalFile, $isSingleFile = false, $prefixRemove = '')
     {
-        self::assertThat(self::compareUncompressed($directory, $originalFile, $isSingleFile, $prefixRemove), new \PHPUnit_Framework_Constraint_IsTrue, 'uncompressed fail');
+        self::assertThat(self::compareUncompressed($directory, $originalFile, $isSingleFile, $prefixRemove), new \PHPUnit_Framework_Constraint_IsTrue(), 'uncompressed fail');
     }
 
     protected function compareUncompressed($directory, $originalFile, $isSingleFile = false, $prefixRemove = '')
     {
         $keys = [];
-        $lines = explode("\n", file_get_contents($this->filesPath . $originalFile . '.key'));
+        $lines = explode("\n", file_get_contents($this->filesPath.$originalFile.'.key'));
         foreach ($lines as $line) {
             $lineParts = explode('|', $line);
 
-            $keys[preg_replace('#^'.preg_quote($prefixRemove).'#', '', $lineParts[0])] = str_replace('__nl__', "\n", $lineParts[1]) . "\n";
+            $keys[preg_replace('#^'.preg_quote($prefixRemove).'#', '', $lineParts[0])] = str_replace('__nl__', "\n", $lineParts[1])."\n";
         }
 
         if (empty($keys)) {
@@ -79,8 +77,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
         $objects = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::SELF_FIRST);
 
-        foreach($objects as $name => $object){
-
+        foreach ($objects as $name => $object) {
             /** @var \SplFileInfo $object */
 
             if ($object->isDir()) {
@@ -91,7 +88,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
                 return implode('', $keys) === file_get_contents($object->getRealPath());
             }
 
-            $key = preg_replace('#^'.preg_quote($directory) . '#', '', $object->getPathName());
+            $key = preg_replace('#^'.preg_quote($directory).'#', '', $object->getPathName());
 
             if (false === array_key_exists($key, $keys)) {
                 return false;
@@ -109,8 +106,4 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
         return empty($keys);
     }
-
-
 }
-
-

@@ -7,7 +7,6 @@ use Distill\Tests\Format\AbstractFormatTest;
 
 class JarTest extends AbstractFormatTest
 {
-
     public function setUp()
     {
         $this->format = new Jar();
@@ -17,5 +16,4 @@ class JarTest extends AbstractFormatTest
     {
         $this->assertLevelValid($this->format->getCompressionRatioLevel());
     }
-
 }

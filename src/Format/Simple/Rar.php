@@ -59,5 +59,4 @@ class Rar extends AbstractFormat
             self::SAMPLE_REGULAR => self::getSampleFullPath('file.rar')
         ];
     }
-
 }

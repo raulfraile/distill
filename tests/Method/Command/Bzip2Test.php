@@ -6,9 +6,8 @@ use Distill\Method;
 use Distill\Format;
 use Distill\Tests\Method\AbstractMethodTest;
 
-class Bzip2CommandMethodTest extends AbstractMethodTest
+class Bzip2Test extends AbstractMethodTest
 {
-
     public function setUp()
     {
         $this->method = new Method\Command\Bzip2();
@@ -52,5 +51,4 @@ class Bzip2CommandMethodTest extends AbstractMethodTest
 
         $this->extract('file_ok.cab', $target, new Format\Simple\Cab());
     }
-
 }

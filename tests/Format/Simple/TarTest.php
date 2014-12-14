@@ -7,7 +7,6 @@ use Distill\Tests\Format\AbstractFormatTest;
 
 class TarTest extends AbstractFormatTest
 {
-
     public function setUp()
     {
         $this->format = new Tar();
@@ -17,5 +16,4 @@ class TarTest extends AbstractFormatTest
     {
         $this->assertLevelValid($this->format->getCompressionRatioLevel());
     }
-
 }

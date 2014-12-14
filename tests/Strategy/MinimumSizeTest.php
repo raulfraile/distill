@@ -9,7 +9,6 @@ use Distill\Tests\TestCase;
 
 class MinimumSizeTest extends TestCase
 {
-
     /** @var MinimumSize $strategy  */
     protected $strategy;
 
@@ -28,7 +27,7 @@ class MinimumSizeTest extends TestCase
     {
         $files = [
             new File('test.zip', new Format\Simple\Zip()),
-            new File('test.tgz', new Format\Composed\TarGz())
+            new File('test.tgz', new Format\Composed\TarGz()),
         ];
 
         $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, []);
@@ -58,6 +57,4 @@ class MinimumSizeTest extends TestCase
         $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, []);
         $this->assertInstanceOf('\\Distill\\Format\\Composed\\TarGz', $preferredFiles[0]->getFormat());
     }
-
-
 }

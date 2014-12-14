@@ -7,7 +7,6 @@ use Distill\FormatGuesser;
 
 class FormatGuesserTest extends \PHPUnit_Framework_TestCase
 {
-
     /** @var FormatGuesser $formatGuesser */
     protected $formatGuesser;
 
@@ -27,9 +26,9 @@ class FormatGuesserTest extends \PHPUnit_Framework_TestCase
             new Format\Composed\TarXz(),
             new Format\Simple\x7z(),
             new Format\Simple\Xz(),
-            new Format\Simple\Zip()
+            new Format\Simple\Zip(),
         ]);
-        $this->filesPath = __DIR__ . '/../../../../files/';
+        $this->filesPath = __DIR__.'/../../../../files/';
     }
 
     protected function guessFormat($file, $formatClass)
@@ -45,41 +44,41 @@ class FormatGuesserTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(count($formatChain), count($formatClasses));
 
-        for ($i=0, $total = count($formatChain); $i < $total; $i++) {
+        for ($i = 0, $total = count($formatChain); $i < $total; $i++) {
             $this->assertInstanceOf($formatClasses[$i], $formatChain[$i]);
         }
     }
 
     public function testBzip2FileGuesser()
     {
-        $this->guessFormat($this->filesPath . 'file_ok.bz2', '\\Distill\\Format\\Simple\\Bz2');
-        $this->guessFormat($this->filesPath . 'file_ok.bz', '\\Distill\\Format\\Simple\\Bz2');
-        $this->guessFormat($this->filesPath . 'file_ok.BZ2', '\\Distill\\Format\\Simple\\Bz2');
+        $this->guessFormat($this->filesPath.'file_ok.bz2', '\\Distill\\Format\\Simple\\Bz2');
+        $this->guessFormat($this->filesPath.'file_ok.bz', '\\Distill\\Format\\Simple\\Bz2');
+        $this->guessFormat($this->filesPath.'file_ok.BZ2', '\\Distill\\Format\\Simple\\Bz2');
     }
 
     public function testGzipFileGuesser()
     {
-        $this->guessFormat($this->filesPath . 'file_ok.gz', '\\Distill\\Format\\Simple\\Gz');
+        $this->guessFormat($this->filesPath.'file_ok.gz', '\\Distill\\Format\\Simple\\Gz');
     }
 
     public function testPharFileGuesser()
     {
-        $this->guessFormat($this->filesPath . 'file_ok.phar', '\\Distill\\Format\\Simple\\Phar');
+        $this->guessFormat($this->filesPath.'file_ok.phar', '\\Distill\\Format\\Simple\\Phar');
     }
 
     public function testRarFileGuesser()
     {
-        $this->guessFormat($this->filesPath . 'file_ok.rar', '\\Distill\\Format\\Simple\\Rar');
+        $this->guessFormat($this->filesPath.'file_ok.rar', '\\Distill\\Format\\Simple\\Rar');
     }
 
     public function testTarFileGuesser()
     {
-        $this->guessFormat($this->filesPath . 'file_ok.tar', '\\Distill\\Format\\Simple\\Tar');
+        $this->guessFormat($this->filesPath.'file_ok.tar', '\\Distill\\Format\\Simple\\Tar');
     }
 
     public function testTarBz2FileGuesser()
     {
-        $this->guessFormat($this->filesPath . 'file_ok.tar.bz2', '\\Distill\\Format\\Composed\\TarBz2');
+        $this->guessFormat($this->filesPath.'file_ok.tar.bz2', '\\Distill\\Format\\Composed\\TarBz2');
     }
 
     public function testTarGzFileGuesser()
@@ -90,12 +89,12 @@ class FormatGuesserTest extends \PHPUnit_Framework_TestCase
 
     public function testTarXzFileGuesser()
     {
-        $this->guessFormat($this->filesPath . 'file_ok.tar.xz', '\\Distill\\Format\\Composed\\TarXz');
+        $this->guessFormat($this->filesPath.'file_ok.tar.xz', '\\Distill\\Format\\Composed\\TarXz');
     }
 
     public function testTar7zFileGuesser()
     {
-        $this->guessFormat($this->filesPath . 'file_ok.7z', '\\Distill\\Format\\Simple\\x7z');
+        $this->guessFormat($this->filesPath.'file_ok.7z', '\\Distill\\Format\\Simple\\x7z');
     }
 
     public function testXzFileGuesser()
@@ -105,13 +104,13 @@ class FormatGuesserTest extends \PHPUnit_Framework_TestCase
 
     public function testZipFileGuesser()
     {
-        $this->guessFormat($this->filesPath . 'file_ok.zip', '\\Distill\\Format\\Simple\\Zip');
+        $this->guessFormat($this->filesPath.'file_ok.zip', '\\Distill\\Format\\Simple\\Zip');
     }
 
     public function testUnknownFileGuesser()
     {
         $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileUnknownFormatException');
-        $this->formatGuesser->guess($this->filesPath . 'empty.txt');
+        $this->formatGuesser->guess($this->filesPath.'empty.txt');
     }
 
     public function testFileComposedExtensionGuesser()
@@ -119,5 +118,4 @@ class FormatGuesserTest extends \PHPUnit_Framework_TestCase
         $this->guessFormatChain('test.txt.gz', ['\\Distill\\Format\\Simple\\Gz']);
         $this->guessFormatChain('test.zip.gz', ['\\Distill\\Format\\Simple\\Gz', '\\Distill\\Format\\Simple\\Zip']);
     }
-
 }

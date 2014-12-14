@@ -7,7 +7,6 @@ use Distill\Format;
 
 class FileTest extends TestCase
 {
-
     public function testConstructorParameters()
     {
         $file = new File('test.zip', new Format\Simple\Zip());
@@ -33,5 +32,4 @@ class FileTest extends TestCase
 
         $this->assertEquals('test.zip', (string) $file);
     }
-
 }

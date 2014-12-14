@@ -6,9 +6,8 @@ use Distill\Method;
 use Distill\Format;
 use Distill\Tests\Method\AbstractMethodTest;
 
-class UnzipCommandMethodTest extends AbstractMethodTest
+class UnzipTest extends AbstractMethodTest
 {
-
     public function setUp()
     {
         $this->method = new Method\Command\Unzip();
@@ -88,5 +87,4 @@ class UnzipCommandMethodTest extends AbstractMethodTest
         $this->assertUncompressed($target, 'file_ok.jar');
         $this->clearTemporaryPath();
     }
-
 }

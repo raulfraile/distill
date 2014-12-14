@@ -11,8 +11,6 @@
 
 namespace Distill\Format\Simple;
 
-use Distill\Format\AbstractFormat;
-use Distill\Format\FormatInterface;
 
 class Jar extends Zip
 {

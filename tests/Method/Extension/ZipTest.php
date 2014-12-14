@@ -6,9 +6,8 @@ use Distill\Method;
 use Distill\Format;
 use Distill\Tests\Method\AbstractMethodTest;
 
-class ZipMethodTest extends AbstractMethodTest
+class ZipTest extends AbstractMethodTest
 {
-
     public function setUp()
     {
         $this->method = new Method\Extension\Zip();
@@ -89,5 +88,4 @@ class ZipMethodTest extends AbstractMethodTest
         $this->assertUncompressed($target, 'file_ok.jar');
         $this->clearTemporaryPath();
     }
-
 }

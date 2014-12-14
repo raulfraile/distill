@@ -8,7 +8,6 @@ use Distill\Tests\Method\AbstractMethodTest;
 
 class x7zipTest extends AbstractMethodTest
 {
-
     public function setUp()
     {
         $this->method = new Method\Command\x7zip();

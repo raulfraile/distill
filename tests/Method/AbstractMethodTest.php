@@ -9,13 +9,12 @@ use Symfony\Component\Process\Process;
 
 abstract class AbstractMethodTest extends TestCase
 {
-
     /** @var MethodInterface $method */
     protected $method;
 
     protected function extract($file, $target, FormatInterface $format)
     {
-        return $this->method->extract($this->filesPath . $file, $target, $format);
+        return $this->method->extract($this->filesPath.$file, $target, $format);
     }
 
     /**
@@ -30,7 +29,7 @@ abstract class AbstractMethodTest extends TestCase
             return false;
         }
 
-        $process = new Process('command -v ' . $command . ' > /dev/null');
+        $process = new Process('command -v '.$command.' > /dev/null');
         $process->run();
 
         return $process->isSuccessful();
@@ -45,5 +44,4 @@ abstract class AbstractMethodTest extends TestCase
     {
         return defined('PHP_WINDOWS_VERSION_BUILD');
     }
-
 }

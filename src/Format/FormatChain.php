@@ -13,7 +13,6 @@ namespace Distill\Format;
 
 class FormatChain implements FormatChainInterface, \Countable, \ArrayAccess, \IteratorAggregate
 {
-
     /** @var FormatInterface[] $formats */
     protected $formats;
 
@@ -27,7 +26,6 @@ class FormatChain implements FormatChainInterface, \Countable, \ArrayAccess, \It
         return $this->formats;
     }
 
-
     public function count()
     {
         return count($this->formats);
@@ -37,8 +35,6 @@ class FormatChain implements FormatChainInterface, \Countable, \ArrayAccess, \It
     {
         $this->formats[] = $format;
     }
-
-
 
     /**
      * Gets the compression ratio level for the whole chain.
@@ -62,7 +58,6 @@ class FormatChain implements FormatChainInterface, \Countable, \ArrayAccess, \It
         return isset($this->formats[$offset]);
     }
 
-
     public function offsetGet($offset)
     {
         return $this->formats[$offset];
@@ -73,12 +68,10 @@ class FormatChain implements FormatChainInterface, \Countable, \ArrayAccess, \It
         $this->formats[$offset] = $value;
     }
 
-
     public function offsetUnset($offset)
     {
         unset($this->formats[$offset]);
     }
-
 
     public function getIterator()
     {

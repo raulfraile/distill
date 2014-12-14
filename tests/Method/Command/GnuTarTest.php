@@ -8,7 +8,6 @@ use Distill\Tests\Method\AbstractMethodTest;
 
 class GnuTarTest extends AbstractMethodTest
 {
-
     public function setUp()
     {
         $this->method = new Method\Command\GnuTar();
@@ -127,5 +126,4 @@ class GnuTarTest extends AbstractMethodTest
 
         $this->clearTemporaryPath();
     }
-
 }

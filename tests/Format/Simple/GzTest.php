@@ -7,7 +7,6 @@ use Distill\Tests\Format\AbstractFormatTest;
 
 class GzTest extends AbstractFormatTest
 {
-
     public function setUp()
     {
         $this->format = new Gz();
@@ -17,5 +16,4 @@ class GzTest extends AbstractFormatTest
     {
         $this->assertLevelValid($this->format->getCompressionRatioLevel());
     }
-
 }

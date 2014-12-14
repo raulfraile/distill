@@ -16,8 +16,8 @@ use Distill\Format\FormatChain;
 use Distill\Format\FormatChainInterface;
 use Distill\Strategy\StrategyInterface;
 use Distill\Format\FormatInterface;
-use Pimple\Container;
 use Distill\Extractor\Util\Filesystem;
+use Pimple\Container;
 
 class Distill
 {
@@ -114,9 +114,9 @@ class Distill
 
     /**
      * Extracts the compressed file into the given path.
-     * @param  string $file Compressed file
-     * @param  string $target Destination path
-     * @param  Format\FormatInterface $format
+     * @param string                 $file   Compressed file
+     * @param string                 $target Destination path
+     * @param Format\FormatInterface $format
      *
      * @throws Exception\IO\Input\FileEmptyException
      * @throws Exception\IO\Input\FileFormatNotSupportedException
@@ -148,7 +148,7 @@ class Distill
         }
 
         if (null === $format) {
-            $formatChain = $this->container['distill.format_guesser']->guess($file);
+            $formatChain = $this->container['format_guesser']->guess($file);
 
             if (0 === count($formatChain)) {
                 throw new Exception\IO\Input\FileUnknownFormatException($file);
@@ -162,7 +162,7 @@ class Distill
             throw new Exception\IO\Input\FileFormatNotSupportedException($file, $unsupportedFormats[0]);
         }
 
-        return $this->container['distill.extractor.extractor']->extract($file, $target, $formatChain);
+        return $this->container['extractor.extractor']->extract($file, $target, $formatChain);
     }
 
     /**
@@ -235,7 +235,7 @@ class Distill
     {
         $this->initializeIfNotInitialized();
 
-        return $this->container['distill.chooser'];
+        return $this->container['chooser'];
     }
 
     /**
@@ -294,6 +294,6 @@ class Distill
     {
         $this->initializeIfNotInitialized();
 
-        return $this->container['distill.support_checker'];
+        return $this->container['support_checker'];
     }
 }

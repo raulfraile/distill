@@ -8,7 +8,6 @@ use Distill\Tests\Method\AbstractMethodTest;
 
 class XzTest extends AbstractMethodTest
 {
-
     public function setUp()
     {
         $this->method = new Method\Command\Xz();
@@ -54,5 +53,4 @@ class XzTest extends AbstractMethodTest
 
         $this->clearTemporaryPath();
     }
-
 }

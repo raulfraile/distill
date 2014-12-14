@@ -57,7 +57,4 @@ interface FormatInterface
      * @return array List of samples
      */
     public static function getSamples();
-
-
-
 }

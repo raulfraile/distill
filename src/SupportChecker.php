@@ -116,6 +116,4 @@ class SupportChecker implements SupportCheckerInterface
 
         return $formats;
     }
-
-
 }

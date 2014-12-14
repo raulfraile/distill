@@ -17,8 +17,8 @@ interface ExtractorInterface
 {
     /**
      * Extracts the compressed file into the given path.
-     * @param string          $file   Compressed file
-     * @param string          $path   Destination path
+     * @param string               $file   Compressed file
+     * @param string               $path   Destination path
      * @param FormatChainInterface $format Format
      *
      * @return bool Returns TRUE when successful, FALSE otherwise

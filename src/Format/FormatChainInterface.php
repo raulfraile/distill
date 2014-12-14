@@ -13,8 +13,6 @@ namespace Distill\Format;
 
 interface FormatChainInterface// extends FormatInterface
 {
-
-
     public function getChainFormats();
 
     public function isEmpty();

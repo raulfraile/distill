@@ -17,7 +17,6 @@ use Distill\Format\Simple\Xz;
 
 class TarXz extends AbstractComposedFormat
 {
-
     public function __construct()
     {
         $this->formats = [
@@ -46,5 +45,4 @@ class TarXz extends AbstractComposedFormat
     {
         return get_class();
     }
-
 }

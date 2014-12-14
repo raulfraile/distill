@@ -8,7 +8,6 @@ use Distill\Tests\Method\AbstractMethodTest;
 
 class PharDataTest extends AbstractMethodTest
 {
-
     public function setUp()
     {
         $this->method = new Method\Extension\PharData();
@@ -112,5 +111,4 @@ class PharDataTest extends AbstractMethodTest
 
         $this->clearTemporaryPath();
     }
-
 }

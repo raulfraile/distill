@@ -15,6 +15,5 @@ interface ComposedFormatInterface extends FormatInterface
 {
     public function getComposedFormats();
 
-
     public function getCanonicalExtension();
 }

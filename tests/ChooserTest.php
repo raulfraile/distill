@@ -5,13 +5,10 @@ namespace Distill\Tests;
 use Distill\Chooser;
 use Distill\Format;
 use Distill\FormatGuesser;
-use Distill\Strategy\MinimumSize;
-use Distill\Strategy\UncompressionSpeed;
 use \Mockery as m;
 
 class ChooserTest extends TestCase
 {
-
     /**
      * @var Chooser
      */
@@ -46,5 +43,4 @@ class ChooserTest extends TestCase
             ->setFiles(['test.tgz', 'test.zip'])
             ->getPreferredFile();
     }
-
 }

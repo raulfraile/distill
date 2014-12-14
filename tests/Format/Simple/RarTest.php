@@ -7,7 +7,6 @@ use Distill\Tests\Format\AbstractFormatTest;
 
 class RarTest extends AbstractFormatTest
 {
-
     public function setUp()
     {
         $this->format = new Rar();
@@ -17,5 +16,4 @@ class RarTest extends AbstractFormatTest
     {
         $this->assertLevelValid($this->format->getCompressionRatioLevel());
     }
-
 }

@@ -37,7 +37,6 @@ class FormatGuesser implements FormatGuesserInterface
     {
         $this->extensionMap = [];
         foreach ($formats as $format) {
-
             if ($format instanceof ComposedFormatInterface) {
                 $extensions = $format->getExtensions();
                 $canonicalExtension = $format->getCanonicalExtension();
@@ -45,7 +44,6 @@ class FormatGuesser implements FormatGuesserInterface
                 foreach ($extensions as $extension) {
                     $this->composedExtensions[$extension] = $canonicalExtension;
                 }
-
             }
 
             $extensions = $format->getExtensions();
@@ -54,7 +52,6 @@ class FormatGuesser implements FormatGuesserInterface
                 $this->extensionMap[$extension] = $format;
             }
         }
-
     }
 
     /**
@@ -69,7 +66,7 @@ class FormatGuesser implements FormatGuesserInterface
         }
 
         $formats = [];
-        for ($i=0, $extensionsNumber = count($extensions); $i < $extensionsNumber; $i++) {
+        for ($i = 0, $extensionsNumber = count($extensions); $i < $extensionsNumber; $i++) {
             // check for combined
             $combinedExtension = implode('.', array_slice($extensions, $i, 2));
             if ((($i+1) < $extensionsNumber) && array_key_exists($combinedExtension, $this->extensionMap)) {
@@ -97,11 +94,11 @@ class FormatGuesser implements FormatGuesserInterface
 
         // normalize
         foreach ($this->composedExtensions as $composedExtension => $canonicalExtension) {
-            $basename = preg_replace('/\.' . preg_quote($composedExtension) . '(\.|$)/', '.'.$canonicalExtension . '\\1', $basename);
+            $basename = preg_replace('/\.'.preg_quote($composedExtension).'(\.|$)/', '.'.$canonicalExtension.'\\1', $basename);
         }
 
         $extensions = explode('.', $basename);
-        $extensions = array_reverse(array_slice($extensions,1));
+        $extensions = array_reverse(array_slice($extensions, 1));
 
         $recognizedExtensions = [];
 

@@ -8,7 +8,6 @@ use Distill\Tests\Method\AbstractMethodTest;
 
 class GcabTest extends AbstractMethodTest
 {
-
     public function setUp()
     {
         $this->method = new Method\Command\Cabextract();
@@ -54,5 +53,4 @@ class GcabTest extends AbstractMethodTest
 
         $this->clearTemporaryPath();
     }
-
 }

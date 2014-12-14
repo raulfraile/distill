@@ -6,9 +6,8 @@ use Distill\Method;
 use Distill\Format;
 use Distill\Tests\Method\AbstractMethodTest;
 
-class RarExtensionMethodTest extends AbstractMethodTest
+class RarTest extends AbstractMethodTest
 {
-
     public function setUp()
     {
         $this->method = new Method\Extension\Rar();
@@ -54,5 +53,4 @@ class RarExtensionMethodTest extends AbstractMethodTest
 
         $this->clearTemporaryPath();
     }
-
 }

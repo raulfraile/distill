@@ -7,7 +7,6 @@ use Distill\Tests\Format\AbstractFormatTest;
 
 class TarBz2Test extends AbstractFormatTest
 {
-
     public function setUp()
     {
         $this->format = new TarBz2();
@@ -17,5 +16,4 @@ class TarBz2Test extends AbstractFormatTest
     {
         $this->assertLevelValid($this->format->getCompressionRatioLevel());
     }
-
 }

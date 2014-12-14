@@ -117,25 +117,25 @@ class ContainerProvider implements ServiceProviderInterface
         $this->registerMethods($container);
         $this->registerStrategies($container);
 
-        $container['distill.format_guesser'] = $container->factory(function ($c) {
+        $container['format_guesser'] = $container->factory(function ($c) {
             return new FormatGuesser($this->getFormatsFromContainer($c));
         });
 
-        $container['distill.support_checker'] = $container->factory(function ($c) {
+        $container['support_checker'] = $container->factory(function ($c) {
             return new SupportChecker($this->getMethodsFromContainer($c), $this->getFormatsFromContainer($c));
         });
 
-        $container['distill.chooser'] = $container->factory(function ($c) {
+        $container['chooser'] = $container->factory(function ($c) {
             return new Chooser(
-                $c['distill.support_checker'],
-                $c['distill.strategy.minimum_size'],
-                $c['distill.format_guesser'],
+                $c['support_checker'],
+                $c['strategy.minimum_size'],
+                $c['format_guesser'],
                 $this->getMethodsFromContainer($c)
             );
         });
 
-        $container['distill.extractor.extractor'] = $container->factory(function ($c) {
-            return new Extractor($this->getMethodsFromContainer($c), $c['distill.support_checker']);
+        $container['extractor.extractor'] = $container->factory(function ($c) {
+            return new Extractor($this->getMethodsFromContainer($c), $c['support_checker']);
         });
     }
 
@@ -146,7 +146,7 @@ class ContainerProvider implements ServiceProviderInterface
     protected function registerFormats(Container $container)
     {
         foreach ($this->formats as $formatClass) {
-            $container['distill.format.'.$formatClass::getName()] = $container->factory(function ($c) use ($formatClass) {
+            $container['format.'.$formatClass::getName()] = $container->factory(function ($c) use ($formatClass) {
                 return new $formatClass();
             });
         }
@@ -165,11 +165,11 @@ class ContainerProvider implements ServiceProviderInterface
             $method = new $methodClass();
 
             if ($method->isSupported()) {
-                $container['distill.method.'.$method->getName()] = function ($c) use ($methodClass) {
+                $container['method.'.$method->getName()] = function ($c) use ($methodClass) {
                     return new $methodClass();
                 };
 
-                $orderedMethods[] = 'distill.method.'.$method->getName();
+                $orderedMethods[] = 'method.'.$method->getName();
             }
         }
 
@@ -185,18 +185,18 @@ class ContainerProvider implements ServiceProviderInterface
             return ($value1 > $value2) ? -1 : 1;
         });
 
-        $container['distill.method.__ordered'] = $orderedMethods;
+        $container['method.__ordered'] = $orderedMethods;
     }
 
     protected function registerStrategies(Container $container)
     {
-        $container['distill.strategy.'.Strategy\MinimumSize::getName()] = $container->factory(function ($c) {
+        $container['strategy.'.Strategy\MinimumSize::getName()] = $container->factory(function ($c) {
             return new Strategy\MinimumSize();
         });
-        $container['distill.strategy.'.Strategy\UncompressionSpeed::getName()] = $container->factory(function ($c) {
+        $container['strategy.'.Strategy\UncompressionSpeed::getName()] = $container->factory(function ($c) {
             return new Strategy\UncompressionSpeed();
         });
-        $container['distill.strategy.'.Strategy\Random::getName()] = $container->factory(function ($c) {
+        $container['strategy.'.Strategy\Random::getName()] = $container->factory(function ($c) {
             return new Strategy\Random();
         });
     }
@@ -205,7 +205,7 @@ class ContainerProvider implements ServiceProviderInterface
     {
         $formats = [];
         foreach ($container->keys() as $key) {
-            if (0 === strpos($key, 'distill.format.')) {
+            if (0 === strpos($key, 'format.')) {
                 $formats[] = $container[$key];
             }
         }
@@ -216,7 +216,7 @@ class ContainerProvider implements ServiceProviderInterface
     protected function getMethodsFromContainer(Container $container)
     {
         $methods = [];
-        foreach ($container['distill.method.__ordered'] as $key) {
+        foreach ($container['method.__ordered'] as $key) {
             $methods[] = $container[$key];
         }
 

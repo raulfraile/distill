@@ -7,7 +7,6 @@ use Distill\Tests\Format\AbstractFormatTest;
 
 class X7zTest extends AbstractFormatTest
 {
-
     public function setUp()
     {
         $this->format = new x7z();
@@ -17,5 +16,4 @@ class X7zTest extends AbstractFormatTest
     {
         $this->assertLevelValid($this->format->getCompressionRatioLevel());
     }
-
 }

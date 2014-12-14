@@ -8,7 +8,6 @@ use Distill\Tests\Method\AbstractMethodTest;
 
 class UnrarTest extends AbstractMethodTest
 {
-
     public function setUp()
     {
         $this->method = new Method\Command\Unrar();
@@ -54,5 +53,4 @@ class UnrarTest extends AbstractMethodTest
 
         $this->clearTemporaryPath();
     }
-
 }

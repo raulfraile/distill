@@ -17,7 +17,6 @@ use Distill\Format\Simple\Tar;
 
 class TarGz extends AbstractComposedFormat
 {
-
     /**
      * Constructor.
      */

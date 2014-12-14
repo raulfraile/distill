@@ -7,7 +7,6 @@ use Distill\Tests\Format\AbstractFormatTest;
 
 class PharTest extends AbstractFormatTest
 {
-
     public function setUp()
     {
         $this->format = new Phar();
@@ -17,5 +16,4 @@ class PharTest extends AbstractFormatTest
     {
         $this->assertLevelValid($this->format->getCompressionRatioLevel());
     }
-
 }

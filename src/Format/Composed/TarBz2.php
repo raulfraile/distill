@@ -17,7 +17,6 @@ use Distill\Format\Simple\Tar;
 
 class TarBz2 extends AbstractComposedFormat
 {
-
     /**
      * Constructor.
      */
@@ -52,5 +51,4 @@ class TarBz2 extends AbstractComposedFormat
     {
         return get_class();
     }
-
 }

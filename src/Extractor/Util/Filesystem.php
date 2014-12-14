@@ -143,7 +143,7 @@ class Filesystem
             // retry after a bit on windows since it tends to be touchy with mass removals
             if (!defined('PHP_WINDOWS_VERSION_BUILD') || (usleep(350000) && !@$this->unlinkImplementation($path))) {
                 $error = error_get_last();
-                $message = 'Could not delete '.$path.': ' . @$error['message'];
+                $message = 'Could not delete '.$path.': '.@$error['message'];
                 if (defined('PHP_WINDOWS_VERSION_BUILD')) {
                     $message .= "\nThis can be due to an antivirus or the Windows Search Indexer locking the file while they are analyzed";
                 }
@@ -169,7 +169,7 @@ class Filesystem
             // retry after a bit on windows since it tends to be touchy with mass removals
             if (!defined('PHP_WINDOWS_VERSION_BUILD') || (usleep(350000) && !@rmdir($path))) {
                 $error = error_get_last();
-                $message = 'Could not delete '.$path.': ' . @$error['message'];
+                $message = 'Could not delete '.$path.': '.@$error['message'];
                 if (defined('PHP_WINDOWS_VERSION_BUILD')) {
                     $message .= "\nThis can be due to an antivirus or the Windows Search Indexer locking the file while they are analyzed";
                 }
@@ -204,7 +204,7 @@ class Filesystem
         $this->ensureDirectoryExists($target);
 
         foreach ($ri as $file) {
-            $targetPath = $target . DIRECTORY_SEPARATOR . $ri->getSubPathName();
+            $targetPath = $target.DIRECTORY_SEPARATOR.$ri->getSubPathName();
             if ($file->isDir()) {
                 $this->ensureDirectoryExists($targetPath);
             } else {
@@ -257,7 +257,7 @@ class Filesystem
 
     private function getProcess()
     {
-        return new ProcessExecutor;
+        return new ProcessExecutor();
     }
 
     /**

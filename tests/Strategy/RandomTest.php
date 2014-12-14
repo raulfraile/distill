@@ -9,10 +9,8 @@ use Distill\Tests\TestCase;
 
 class RandomTest extends TestCase
 {
-
     /** @var Random $strategy  */
     protected $strategy;
-
 
     public function setUp()
     {
@@ -28,7 +26,7 @@ class RandomTest extends TestCase
     public function testGetSameWhenHasOneElement()
     {
         $files = [
-            new File('test.zip', new Format\Simple\Zip())
+            new File('test.zip', new Format\Simple\Zip()),
         ];
 
         $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
@@ -40,12 +38,10 @@ class RandomTest extends TestCase
     {
         $files = [
             new File('test.zip', new Format\Simple\Zip()),
-            new File('test.phar', new Format\Simple\Phar())
+            new File('test.phar', new Format\Simple\Phar()),
         ];
 
         $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
         $this->assertInstanceOf('\\Distill\\Format\\FormatInterface', $preferredFiles[0]->getFormat());
     }
-
-
 }

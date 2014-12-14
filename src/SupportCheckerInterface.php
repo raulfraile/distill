@@ -39,5 +39,4 @@ interface SupportCheckerInterface
      * @return FormatInterface[]
      */
     public function getUnsupportedFormatsFromChain(FormatChainInterface $formatChain);
-
 }

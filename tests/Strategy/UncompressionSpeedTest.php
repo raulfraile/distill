@@ -11,10 +11,8 @@ use \Mockery as m;
 
 class UncompressionSpeedTest extends TestCase
 {
-
     /** @var UncompressionSpeed $strategy  */
     protected $strategy;
-
 
     public function setUp()
     {
@@ -31,14 +29,14 @@ class UncompressionSpeedTest extends TestCase
     {
         $files = [
             new File('test.zip', new Format\Simple\Zip()),
-            new File('test.phar', new Format\Simple\Phar())
+            new File('test.phar', new Format\Simple\Phar()),
         ];
 
         $methodMock = m::mock('Distill\Method\MethodInterface');
         $methodMock->shouldReceive('isSupported')->andReturn(true);
         $methodMock->shouldReceive('isFormatSupported')->andReturn(true);
         $methodMock->shouldReceive('getUncompressionSpeedLevel')->withAnyArgs()
-            ->andReturnUsing(function($format){
+            ->andReturnUsing(function ($format) {
                 if ($format instanceof Format\Simple\Zip) {
                     return MethodInterface::SPEED_LEVEL_HIGHEST;
                 } else {
@@ -69,7 +67,7 @@ class UncompressionSpeedTest extends TestCase
         $methodMock->shouldReceive('isSupported')->andReturn(true);
         $methodMock->shouldReceive('isFormatSupported')->andReturn(true);
         $methodMock->shouldReceive('getUncompressionSpeedLevel')->withAnyArgs()
-            ->andReturnUsing(function($format){
+            ->andReturnUsing(function ($format) {
                 if ($format instanceof Format\Simple\Zip) {
                     return MethodInterface::SPEED_LEVEL_HIGHEST;
                 } else {
@@ -85,6 +83,4 @@ class UncompressionSpeedTest extends TestCase
         $preferredFiles = $this->strategy->getPreferredFilesOrdered($files, [$methodMock]);
         $this->assertInstanceOf('\\Distill\\Format\\Simple\\Zip', $preferredFiles[0]->getFormat());
     }
-
-
 }

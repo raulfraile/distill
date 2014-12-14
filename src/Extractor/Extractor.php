@@ -77,12 +77,11 @@ class Extractor implements ExtractorInterface
         $lastFile = $file;
         $tempDirectories = [];
         for ($i = 0, $formatsCount = count($chainFormats); $i<$formatsCount && true === $success; $i++) {
-
             if (($i+1) === $formatsCount) {
                 // last
                 $success = $this->extractFormat($lastFile, $path, $chainFormats[$i]);
             } else {
-                $tempDirectory = $path . DIRECTORY_SEPARATOR . 'step_' . $i;
+                $tempDirectory = $path.DIRECTORY_SEPARATOR.'step_'.$i;
                 $tempDirectories[] = $tempDirectory;
                 $success = $this->extractFormat($lastFile, $tempDirectory, $chainFormats[$i]);
 

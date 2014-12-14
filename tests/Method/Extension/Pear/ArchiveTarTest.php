@@ -8,7 +8,6 @@ use Distill\Tests\Method\AbstractMethodTest;
 
 class ArchiveTarTest extends AbstractMethodTest
 {
-
     public function setUp()
     {
         if (!class_exists('\\ArchiveTar')) {
@@ -27,7 +26,7 @@ class ArchiveTarTest extends AbstractMethodTest
         $response = $this->extract('file_ok.tar', $target, new Format\Simple\Tar());
 
         $this->assertTrue($response);
-        $this->checkDirectoryFiles($target, $this->filesPath . '/uncompressed');
+        $this->checkDirectoryFiles($target, $this->filesPath.'/uncompressed');
         $this->clearTemporaryPath();
     }
 
@@ -53,5 +52,4 @@ class ArchiveTarTest extends AbstractMethodTest
 
         $this->clearTemporaryPath();
     }
-
 }

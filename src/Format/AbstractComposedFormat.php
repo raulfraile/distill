@@ -13,7 +13,6 @@ namespace Distill\Format;
 
 abstract class AbstractComposedFormat extends AbstractFormat implements ComposedFormatInterface
 {
-
     /** @var FormatInterface[] */
     protected $formats;
 
@@ -38,5 +37,4 @@ abstract class AbstractComposedFormat extends AbstractFormat implements Composed
 
         return $maxLevel;
     }
-
 }
