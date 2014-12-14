@@ -41,6 +41,7 @@ class ContainerProvider implements ServiceProviderInterface
             Method\Command\Ar::getClass(),
             Method\Command\Bzip2::getClass(),
             Method\Command\Cabextract::getClass(),
+            Method\Command\Cpio::getClass(),
             Method\Command\GnuGzip::getClass(),
             Method\Command\GnuTar::getClass(),
             Method\Command\Unrar::getClass(),
