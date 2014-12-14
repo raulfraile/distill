@@ -14,15 +14,22 @@ namespace Distill\Format\Simple;
 use Distill\Format\AbstractFormat;
 use Distill\Format\FormatInterface;
 
-class Deb extends Ar
+class Ar extends AbstractFormat
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getCompressionRatioLevel()
+    {
+        return FormatInterface::RATIO_LEVEL_MIDDLE;
+    }
 
     /**
      * {@inheritdoc}
      */
     public function getExtensions()
     {
-        return ['deb', 'udeb'];
+        return ['ar'];
     }
 
     /**

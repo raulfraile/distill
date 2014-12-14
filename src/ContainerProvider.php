@@ -38,6 +38,7 @@ class ContainerProvider implements ServiceProviderInterface
         array $disabledFormats = []
     ) {
         $methodsClasses = [
+            Method\Command\Ar::getClass(),
             Method\Command\Bzip2::getClass(),
             Method\Command\Cabextract::getClass(),
             Method\Command\GnuGzip::getClass(),
@@ -59,6 +60,7 @@ class ContainerProvider implements ServiceProviderInterface
 
         $formatsClasses = [
             Format\Simple\Ace::getClass(),
+            Format\Simple\Ar::getClass(),
             Format\Simple\Arc::getClass(),
             Format\Simple\Arj::getClass(),
             Format\Simple\Bin::getClass(),

@@ -30,3 +30,4 @@ $DIR/epub.sh
 $DIR/jar.sh
 $DIR/dmg.sh
 $DIR/iso.sh
+$DIR/ar+deb.sh
