@@ -9,7 +9,7 @@ Distill extracts files from compressed archives.
 
 Features:
 
-* Extract files from `bz2`, `cab`, `epub`, `gz`, `phar`, `rar`, `tar`, `tar.bz2`, `tar.gz`, `tar.xz`, `7z`, `xz` and `zip` archives.
+* Extract files from `ar`, `bz2`, `cab`, `chm`, `cpio`, `deb`, `dmg`, `epub`, `gz`, `phar`, `rar`, `shar`, `tar`, `tar.bz2`, `tar.gz`, `tar.xz`, `wim`, `7z`, `xz`, `Z` and `zip` archives.
 * Different decompression methods under the hood: PHP extensions, command line binaries, third-party libraries and even fallback methods in plain PHP.
 * Strategy to choose the right file in case there are more than one available format. Strategies can be
 based on minimizing bandwidth or optimizing decompression speed.
@@ -44,22 +44,6 @@ $distill->extract(__DIR__ . '/../tests/files/file_ok.zip', __DIR__ . '/extract')
 ```
 
 ## Formats
-
-### Format support
-
-* `bz2`: `bzip2` unix command and `7z` unix command.
-* `cab`: `7z` unix command.
-* `epub`: `zip` unix command.
-* `gz`: `gzip` unix command and `7z` unix command.
-* `phar`: `PHAR` extension.
-* `rar`: `unrar` unix command, `7z` unix command, and `rar` extension.
-* `tar`: `tar` unix command, `7z` unix command, `Archive_Tar` package and `PHAR` extension.
-* `tar.bz2`: `tar` unix command, `Archive_Tar` package and `PHAR` extension.
-* `tar.gz`: `tar` unix command, `Archive_Tar` package and `PHAR` extension.
-* `tar.xz`: `tar` unix command.
-* `7z`: `7z` unix command.
-* `xz`: `xz` unix command and `7z` unix command.
-* `zip`: `tar` unix command, `7z` unix command and `zip` extension.
 
 ## Strategies
 
