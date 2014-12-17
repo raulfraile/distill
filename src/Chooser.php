@@ -4,6 +4,7 @@ namespace Distill;
 
 use Distill\Exception\FormatGuesserRequiredException;
 use Distill\Exception\InvalidArgumentException;
+use Distill\Exception\IO\Input\FileUnknownFormatException;
 use Distill\Exception\StrategyRequiredException;
 use Distill\Format\FormatInterface;
 use Distill\Strategy\StrategyInterface;
@@ -126,7 +127,7 @@ class Chooser
      * @param string               $filename File name
      * @param FormatInterface|null $format   Format
      *
-     * @throws Exception\FormatGuesserRequiredException
+     * @throws Exception\FormatGuesserRequiredException|FileUnknownFormatException
      * @return Chooser
      */
     public function addFile($filename, FormatInterface $format = null)
@@ -136,7 +137,13 @@ class Chooser
                 throw new FormatGuesserRequiredException();
             }
 
-            $format = $this->formatGuesser->guess($filename);
+            $formatChain = $this->formatGuesser->guess($filename)->getChainFormats();
+
+            if (count($formatChain) === 0) {
+                throw new FileUnknownFormatException($filename);
+            }
+
+            $format = $formatChain[0];
         }
 
         $this->files[] = new File($filename, $format);
