@@ -20,11 +20,11 @@ $DIR/tar_bz2.sh
 $DIR/tar_xz.sh
 $DIR/gz.sh
 $DIR/bz2.sh
+$DIR/zip.sh
 $DIR/xz.sh
 $DIR/rar.sh
 $DIR/phar.sh
 $DIR/7z.sh
-$DIR/zip.sh
 $DIR/cab.sh
 $DIR/epub.sh
 $DIR/jar.sh

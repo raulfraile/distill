@@ -36,8 +36,8 @@ class MinimumSize extends AbstractStrategy
      */
     protected function getPriorityValueForFile(FileInterface $file, array $methods)
     {
-        $format = $file->getFormat();
+        $formatChain = $file->getFormatChain();
 
-        return $format->getCompressionRatioLevel() + ($this->getMaxUncompressionSpeedFormat($format, $methods) / 10);
+        return $formatChain->getCompressionRatioLevel() + ($this->getMaxUncompressionSpeedFormatChain($formatChain, $methods) / 10);
     }
 }

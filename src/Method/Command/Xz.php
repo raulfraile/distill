@@ -11,6 +11,7 @@
 
 namespace Distill\Method\Command;
 
+use Distill\Exception\IO\Input\FileCorruptedException;
 use Distill\Format;
 
 /**
@@ -29,11 +30,16 @@ class Xz extends AbstractCommandMethod
 
         $this->getFilesystem()->mkdir($target);
 
-        $outputPath = sprintf('%s/%s', $target, pathinfo($file, PATHINFO_FILENAME));
+        $copiedFile = $target . DIRECTORY_SEPARATOR . basename($file);
+        $this->getFilesystem()->copy($file, $copiedFile);
 
-        $command = sprintf("xz -d -c %s >> %s", escapeshellarg($file), escapeshellarg($outputPath));
+        $command = sprintf("xz -d %s", escapeshellarg($copiedFile));
 
         $exitCode = $this->executeCommand($command);
+
+        if (1 === $exitCode) {
+            throw new FileCorruptedException($file);
+        }
 
         return $this->isExitCodeSuccessful($exitCode);
     }

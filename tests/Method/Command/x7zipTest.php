@@ -19,7 +19,12 @@ class x7zipTest extends AbstractMethodTest
         parent::setUp();
     }
 
-    public function testExtractCorrect7zFile()
+    public function test7zFormatIn7zipMethod()
+    {
+        $this->checkFormatUsingMethod(new Format\Simple\x7z(), $this->method);
+    }
+
+    /*public function testExtractCorrect7zFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
@@ -29,9 +34,9 @@ class x7zipTest extends AbstractMethodTest
         $this->assertTrue($response);
         $this->assertUncompressed($target, 'file_ok.7z');
         $this->clearTemporaryPath();
-    }
+    }*/
 
-    public function testExtractFake7zFile()
+    /*public function testExtractFake7zFile()
     {
         $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileCorruptedException');
 
@@ -41,9 +46,9 @@ class x7zipTest extends AbstractMethodTest
         $this->extract('file_fake.7z', $target, new Format\Simple\x7z());
 
         $this->clearTemporaryPath();
-    }
+    }*/
 
-    public function testExtractNo7zFile()
+    /*public function testExtractNo7zFile()
     {
         $this->setExpectedException('Distill\\Exception\\Method\\FormatNotSupportedInMethodException');
 
@@ -54,7 +59,7 @@ class x7zipTest extends AbstractMethodTest
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
-    }
+    }*/
 
     public function testExtractCorruptZipFile()
     {

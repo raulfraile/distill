@@ -19,28 +19,4 @@ class TarExtractorTest extends AbstractMethodTest
         parent::setUp();
     }
 
-    public function testExtractCorrectTarFile()
-    {
-        $target = $this->getTemporaryPath();
-        $this->clearTemporaryPath();
-
-        $response = $this->extract('file_ok.tar', $target, new Format\Simple\Tar());
-
-        $this->assertTrue($response);
-        $this->assertUncompressed($target, 'file_ok.tar');
-
-        $this->clearTemporaryPath();
-    }
-
-    /*public function testExtractFakeTarFile()
-    {
-        $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileCorruptedException');
-
-        $target = $this->getTemporaryPath();
-        $this->clearTemporaryPath();
-
-        $this->extract('file_fake.tar', $target, new Format\Simple\Tar());
-
-        $this->clearTemporaryPath();
-    }*/
 }

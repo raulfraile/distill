@@ -19,38 +19,4 @@ class PharTest extends AbstractMethodTest
         parent::setUp();
     }
 
-    public function testExtractCorrectPharFile()
-    {
-        $target = $this->getTemporaryPath();
-        $this->clearTemporaryPath();
-
-        $response = $this->extract('file_ok.phar', $target, new Format\Simple\Phar());
-
-        $this->assertTrue($response);
-        $this->assertUncompressed($target, 'file_ok.phar');
-        $this->clearTemporaryPath();
-    }
-
-    public function testExtractFakePharFile()
-    {
-        $target = $this->getTemporaryPath();
-        $this->clearTemporaryPath();
-
-        $response = $this->extract('file_fake.phar', $target, new Format\Simple\Phar());
-
-        $this->assertFalse($response);
-        $this->clearTemporaryPath();
-    }
-
-    public function testExtractNoPharFile()
-    {
-        $this->setExpectedException('Distill\\Exception\\Method\\FormatNotSupportedInMethodException');
-
-        $target = $this->getTemporaryPath();
-        $this->clearTemporaryPath();
-
-        $this->extract('file_ok.cab', $target, new Format\Simple\Cab());
-
-        $this->clearTemporaryPath();
-    }
 }

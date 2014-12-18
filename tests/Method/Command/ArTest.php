@@ -19,7 +19,7 @@ class ArTest extends AbstractMethodTest
         parent::setUp();
     }
 
-    public function testExtractCorrectArFile()
+    /*public function testExtractCorrectArFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
@@ -73,5 +73,5 @@ class ArTest extends AbstractMethodTest
 
         $this->assertFalse($response);
         $this->clearTemporaryPath();
-    }
+    }*/
 }

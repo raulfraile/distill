@@ -27,7 +27,8 @@
     },
     "require-dev": {
         "raulfraile/ladybug": "~1.0",
-        "mockery/mockery": "0.9.1"
+        "mockery/mockery": "0.9.1",
+        "symfony/finder": "~2.4"
     },
     "suggest": {
         "ext-zip": "Allows to uncompress zip files using ZipArchive",

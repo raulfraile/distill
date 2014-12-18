@@ -1,0 +1,17 @@
+Source: hello-world
+Section: misc
+Priority: extra
+Maintainer: Hélder Silva <hsilva@keep.pt>
+Build-Depends: debhelper (>= 8.0.0), perl
+Standards-Version: 3.9.2
+Homepage: http://www.keep.pt/
+
+Package: hello-world
+Architecture: all 
+Depends: ${misc:Depends}
+Description: This is a dummy package with a hello world echo script 
+ This is the long description...
+ This is the long description...
+ This is the long description...
+ This is the long description...
+ This is the long description...

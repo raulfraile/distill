@@ -24,6 +24,7 @@ class Unzip extends AbstractCommandMethod
     const EXIT_CODE_WARNING_ZIPFILE = 1;
     const EXIT_CODE_GENERIC_ERROR_ZIPFILE = 2;
     const EXIT_CODE_SEVERE_ERROR_ZIPFILE = 3;
+    const EXIT_CODE_ZIPFILE_NOT_FOUND = 9;
 
     /**
      * {@inheritdoc}
@@ -41,6 +42,7 @@ class Unzip extends AbstractCommandMethod
             case self::EXIT_CODE_GENERIC_ERROR_ZIPFILE:
                 throw new Exception\IO\Input\FileCorruptedException($file, Exception\IO\Input\FileCorruptedException::SEVERITY_LOW);
             case self::EXIT_CODE_SEVERE_ERROR_ZIPFILE:
+            case self::EXIT_CODE_ZIPFILE_NOT_FOUND:
                 throw new Exception\IO\Input\FileCorruptedException($file, Exception\IO\Input\FileCorruptedException::SEVERITY_HIGH);
         }
 

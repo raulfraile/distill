@@ -11,6 +11,7 @@
 
 namespace Distill\Method\Extension;
 
+use Distill\Exception\IO\Input\FileCorruptedException;
 use Distill\Format;
 use Distill\Method\AbstractMethod;
 use Distill\Method\MethodInterface;
@@ -36,7 +37,7 @@ class Phar extends AbstractMethod
 
             return true;
         } catch (\Exception $e) {
-            return false;
+            throw new FileCorruptedException($file);
         }
     }
 

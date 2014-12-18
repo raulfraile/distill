@@ -12,6 +12,7 @@
 namespace Distill\Strategy;
 
 use Distill\FileInterface;
+use Distill\Format\FormatChainInterface;
 use Distill\Format\FormatInterface;
 use Distill\Method\MethodInterface;
 
@@ -51,6 +52,17 @@ abstract class AbstractStrategy implements StrategyInterface
             foreach ($subformats as $subformat) {
                 $maxSpeedComposed = max($maxSpeedComposed, $this->getMaxUncompressionSpeedFormat($subformat, $methods) / count($subformats));
             }
+        }
+
+        return $maxSpeed;
+    }
+
+    protected function getMaxUncompressionSpeedFormatChain(FormatChainInterface $formatChain, array $methods)
+    {
+        $maxSpeed = MethodInterface::SPEED_LEVEL_LOWEST;
+
+        foreach ($formatChain->getChainFormats() as $format) {
+            $maxSpeed = max($maxSpeed, $this->getMaxUncompressionSpeedFormat($format, $methods));
         }
 
         return $maxSpeed;

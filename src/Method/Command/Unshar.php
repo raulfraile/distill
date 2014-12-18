@@ -35,6 +35,10 @@ class Unshar extends AbstractCommandMethod
 
         $exitCode = $this->executeCommand($command);
 
+        if (2 === $exitCode) {
+            throw new Exception\IO\Input\FileCorruptedException($file);
+        }
+
         return $this->isExitCodeSuccessful($exitCode);
     }
 

@@ -3,33 +3,42 @@
 namespace Distill\Tests;
 
 use Distill\File;
+use Distill\FileInterface;
 use Distill\Format;
 
 class FileTest extends TestCase
 {
+
+    /**
+     * @var FileInterface
+     */
+    protected $file;
+
+    public function setUp()
+    {
+        $formatChain = new Format\FormatChain([new Format\Simple\Zip()]);
+        $this->file = new File('test.zip', $formatChain);
+
+        parent::setUp();
+    }
+
     public function testConstructorParameters()
     {
-        $file = new File('test.zip', new Format\Simple\Zip());
-
-        $this->assertEquals('test.zip', $file->getPath());
-        $this->assertInstanceOf('\\Distill\\Format\\Simple\\Zip', $file->getFormat());
+        $this->assertEquals('test.zip', $this->file->getPath());
+        $this->assertInstanceOf('\\Distill\\Format\\Simple\\Zip', $this->file->getFormatChain()->getChainFormats()[0]);
     }
 
     public function testSetters()
     {
-        $file = new File('test.zip', new Format\Simple\Zip());
+        $this->file->setPath('test.tgz');
+        $this->file->setFormatChain(new Format\FormatChain([new Format\Composed\TarGz()]));
 
-        $file->setPath('test.tgz');
-        $file->setFormat(new Format\Composed\TarGz());
-
-        $this->assertEquals('test.tgz', $file->getPath());
-        $this->assertInstanceOf('\\Distill\\Format\\Composed\\TarGz', $file->getFormat());
+        $this->assertEquals('test.tgz', $this->file->getPath());
+        $this->assertInstanceOf('\\Distill\\Format\\Composed\\TarGz', $this->file->getFormatChain()->getChainFormats()[0]);
     }
 
     public function testToStringReturnsPath()
     {
-        $file = new File('test.zip', new Format\Simple\Zip());
-
-        $this->assertEquals('test.zip', (string) $file);
+        $this->assertEquals('test.zip', (string) $this->file);
     }
 }

@@ -11,7 +11,7 @@
 
 namespace Distill;
 
-use Distill\Format\FormatInterface;
+use Distill\Format\FormatChainInterface;
 
 interface FileInterface
 {
@@ -39,16 +39,16 @@ interface FileInterface
 
     /**
      * Sets the file format.
-     * @param FormatInterface $format File format
+     * @param FormatChainInterface $format File format
      *
      * @return FileInterface
      */
-    public function setFormat(FormatInterface $format);
+    public function setFormatChain(FormatChainInterface $format);
 
     /**
      * Gets the file format.
      *
-     * @return FormatInterface File format
+     * @return FormatChainInterface File format
      */
-    public function getFormat();
+    public function getFormatChain();
 }

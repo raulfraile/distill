@@ -19,38 +19,4 @@ class XzTest extends AbstractMethodTest
         parent::setUp();
     }
 
-    public function testExtractCorrectXzFile()
-    {
-        $target = $this->getTemporaryPath();
-        $this->clearTemporaryPath();
-
-        $response = $this->extract('file_ok.xz', $target, new Format\Simple\Xz());
-
-        $this->assertTrue($response);
-        $this->assertUncompressed($target, 'file_ok.xz', true);
-        $this->clearTemporaryPath();
-    }
-
-    public function testExtractFakeXzFile()
-    {
-        $target = $this->getTemporaryPath();
-        $this->clearTemporaryPath();
-
-        $response = $this->extract('file_fake.xz', $target, new Format\Simple\Xz());
-
-        $this->assertFalse($response);
-        $this->clearTemporaryPath();
-    }
-
-    public function testExtractNoXzFile()
-    {
-        $this->setExpectedException('Distill\\Exception\\Method\\FormatNotSupportedInMethodException');
-
-        $target = $this->getTemporaryPath();
-        $this->clearTemporaryPath();
-
-        $this->extract('file_ok.zip', $target, new Format\Simple\Zip());
-
-        $this->clearTemporaryPath();
-    }
 }

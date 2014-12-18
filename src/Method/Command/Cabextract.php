@@ -11,6 +11,7 @@
 
 namespace Distill\Method\Command;
 
+use Distill\Exception\IO\Input\FileCorruptedException;
 use Distill\Format;
 
 /**
@@ -31,6 +32,10 @@ class Cabextract extends AbstractCommandMethod
         $command = 'cabextract -d '.escapeshellarg($target).' '.escapeshellarg($file);
 
         $exitCode = $this->executeCommand($command);
+
+        if ($exitCode > 0) {
+            throw new FileCorruptedException($file);
+        }
 
         return $this->isExitCodeSuccessful($exitCode);
     }

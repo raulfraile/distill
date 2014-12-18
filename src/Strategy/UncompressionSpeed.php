@@ -38,8 +38,8 @@ class UncompressionSpeed extends AbstractStrategy
      */
     protected function getPriorityValueForFile(FileInterface $file, array $methods)
     {
-        $format = $file->getFormat();
+        $formatChain = $file->getFormatChain();
 
-        return $this->getMaxUncompressionSpeedFormat($format, $methods) + ($format->getCompressionRatioLevel() / 10);
+        return $this->getMaxUncompressionSpeedFormatChain($formatChain, $methods) + ($formatChain->getCompressionRatioLevel() / 10);
     }
 }

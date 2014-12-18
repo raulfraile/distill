@@ -21,4 +21,4 @@ dd if=/dev/urandom of=$FILES_DIR/file_fake.bz2 bs=1 count=1240
 # bz2: regular file
 cd $FILES_DIR/uncompressed
 bzip2 -z -c 1.txt >> ../file_ok.bz2
-printf "*|1.txt file" > ../file_ok.bz2.key
+printf "/file_ok|1.txt file" > ../file_ok.bz2.key

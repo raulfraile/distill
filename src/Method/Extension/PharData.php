@@ -11,6 +11,7 @@
 
 namespace Distill\Method\Extension;
 
+use Distill\Exception\IO\Input\FileCorruptedException;
 use Distill\Format;
 use Distill\Method\AbstractMethod;
 use Distill\Method\MethodInterface;
@@ -33,7 +34,7 @@ class PharData extends AbstractMethod
             $archive = new \PharData($file);
             $archive->extractTo($target, null, true);
         } catch (\Exception $e) {
-            return false;
+            throw new FileCorruptedException($file);
         }
 
         return true;

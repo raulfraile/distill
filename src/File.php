@@ -11,7 +11,7 @@
 
 namespace Distill;
 
-use Distill\Format\FormatInterface;
+use Distill\Format\FormatChainInterface;
 
 class File implements FileInterface
 {
@@ -23,16 +23,16 @@ class File implements FileInterface
 
     /**
      * File format.
-     * @var FormatInterface
+     * @var FormatChainInterface
      */
     protected $format;
 
     /**
      * Constructor.
      * @param string          $path   File path
-     * @param FormatInterface $format File format
+     * @param FormatChainInterface $format File format
      */
-    public function __construct($path, FormatInterface $format)
+    public function __construct($path, FormatChainInterface $format)
     {
         $this->path = $path;
         $this->format = $format;
@@ -67,7 +67,7 @@ class File implements FileInterface
     /**
      * {@inheritdoc}
      */
-    public function setFormat(FormatInterface $format)
+    public function setFormatChain(FormatChainInterface $format)
     {
         $this->format = $format;
 
@@ -77,7 +77,7 @@ class File implements FileInterface
     /**
      * {@inheritdoc}
      */
-    public function getFormat()
+    public function getFormatChain()
     {
         return $this->format;
     }

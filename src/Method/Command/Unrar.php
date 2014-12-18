@@ -11,6 +11,7 @@
 
 namespace Distill\Method\Command;
 
+use Distill\Exception\IO\Input\FileCorruptedException;
 use Distill\Format;
 
 /**
@@ -31,6 +32,10 @@ class Unrar extends AbstractCommandMethod
         $command = 'unrar x '.escapeshellarg($file).' '.escapeshellarg($target);
 
         $exitCode = $this->executeCommand($command);
+
+        if (10 === $exitCode) {
+            throw new FileCorruptedException($file);
+        }
 
         return $this->isExitCodeSuccessful($exitCode);
     }

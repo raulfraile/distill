@@ -16,4 +16,11 @@ interface FormatChainInterface// extends FormatInterface
     public function getChainFormats();
 
     public function isEmpty();
+
+    /**
+     * Gets the compression ratio level for the whole chain.
+     *
+     * @return integer Compression ratio level (0: low, 10: high)
+     */
+    public function getCompressionRatioLevel();
 }

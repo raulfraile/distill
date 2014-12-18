@@ -1,0 +1,21 @@
+=head1 NAME
+
+hello-world - This is a dummy package with a hello world echo script.
+
+=head1 SYNOPSIS
+
+hello-world 
+
+=head1 DESCRIPTION
+ This is the long description...
+ This is the long description...
+ This is the long description...
+ This is the long description...
+ This is the long description...
+
+=head1 AUTHORS
+
+B<hello-world> was written by Helder Silva <hsilva@keep.pt>.
+
+This manual page was written by Helder Silva <hsilva@keep.pt>.
+=cut

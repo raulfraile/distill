@@ -102,6 +102,16 @@ class TarExtractor extends AbstractMethod
             ];
         }
 
+        $computedChecksum = 0;
+        for ($i=0; $i<500; $i++) {
+            if ($i < 148 || $i >= 156) {
+                $computedChecksum += ord($data[$i]);
+            }
+
+        }
+
+        $headers['checksum_ok'] = ($computedChecksum + 256) === octdec($headers['checksum']) || ('' === $headers['checksum']);
+
         return $headers;
     }
 
@@ -160,6 +170,10 @@ class TarExtractor extends AbstractMethod
 
         while (false === $this->isEof($fileHandler)) {
             $fields = $this->readBlockHeader($fileHandler, $filename);
+
+            if (false === $fields['checksum_ok']) {
+                throw new Exception\IO\Input\FileCorruptedException($filename);
+            }
 
             $name = $fields['name'];
             $type = $fields['type'];

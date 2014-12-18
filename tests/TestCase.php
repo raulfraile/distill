@@ -2,6 +2,11 @@
 
 namespace Distill\Tests;
 
+use Distill\Format\FormatInterface;
+use Distill\Method\MethodInterface;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
+
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -10,9 +15,57 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected $filesPath;
 
+    /**
+     * @var FormatInterface[]
+     */
+    protected $allFormats;
+
+    /**
+     * @var MethodInterface[]
+     */
+    protected $allMethods;
+
     public function setUp()
     {
-        $this->filesPath = __DIR__.'/Resources/files/';
+        $this->filesPath = __DIR__ . '/Resources/files/';
+
+        // formats
+        $this->allFormats = [];
+
+        $finder = new Finder();
+        $finder
+            ->files()
+            ->in(__DIR__ . '/../src/Format')
+            ->name('*.php')
+            ->depth('== 1');
+
+        foreach ($finder as $file) {
+            /** @var SplFileInfo $file */
+
+            $className = 'Distill\\Format\\' . str_replace('/', '\\', preg_replace('/\.php$/', '', $file->getRelativePathname()));
+
+            $this->allFormats[] = new $className();
+        }
+
+        // methods
+        $this->allMethods = [];
+
+        $finder = new Finder();
+        $finder
+            ->files()
+            ->in(__DIR__ . '/../src/Method')
+            ->name('*.php')
+            ->notName('Abstract*')
+            ->notName('*Interface*')
+            ->depth('>= 1');
+
+        foreach ($finder as $file) {
+            /** @var SplFileInfo $file */
+
+            $className = 'Distill\\Method\\' . str_replace('/', '\\', preg_replace('/\.php$/', '', $file->getRelativePathname()));
+
+            $this->allMethods[] = new $className();
+        }
     }
 
     protected function getTemporaryPath()
@@ -22,6 +75,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
     protected function clearTemporaryPath()
     {
+
         exec('rm -fr '.$this->getTemporaryPath());
     }
 
@@ -56,11 +110,15 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
     protected function assertUncompressed($directory, $originalFile, $isSingleFile = false, $prefixRemove = '')
     {
-        self::assertThat(self::compareUncompressed($directory, $originalFile, $isSingleFile, $prefixRemove), new \PHPUnit_Framework_Constraint_IsTrue(), 'uncompressed fail');
+        self::assertThat(self::compareUncompressed($directory, $originalFile, $isSingleFile, $prefixRemove), new \PHPUnit_Framework_Constraint_IsTrue(), 'uncompressed fail '.$originalFile);
     }
 
     protected function compareUncompressed($directory, $originalFile, $isSingleFile = false, $prefixRemove = '')
     {
+        if (false === file_exists($this->filesPath.$originalFile.'.key')) {
+            return true;
+        }
+
         $keys = [];
         $lines = explode("\n", file_get_contents($this->filesPath.$originalFile.'.key'));
         foreach ($lines as $line) {

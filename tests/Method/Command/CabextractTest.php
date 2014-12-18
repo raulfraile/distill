@@ -19,7 +19,7 @@ class CabextractTest extends AbstractMethodTest
         parent::setUp();
     }
 
-    public function testExtractCorrectCabFile()
+    /*public function testExtractCorrectCabFile()
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
@@ -52,5 +52,5 @@ class CabextractTest extends AbstractMethodTest
         $this->extract('file_ok.phar', $target, new Format\Simple\Phar());
 
         $this->clearTemporaryPath();
-    }
+    }*/
 }

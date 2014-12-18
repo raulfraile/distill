@@ -30,16 +30,16 @@ class Zlib extends AbstractMethod
     {
         $this->checkSupport($format);
 
-        $basename = pathinfo($file, PATHINFO_FILENAME);
-
         if (false === $this->isValid($file)) {
             throw new Exception\IO\Input\FileCorruptedException($file, Exception\IO\Input\FileCorruptedException::SEVERITY_HIGH);
         }
 
+        $originalFilename = $this->getOriginalFilename($file);
+
         $source = gzopen($file, 'rb');
 
         @mkdir($target);
-        $destination = fopen($target . DIRECTORY_SEPARATOR . $basename, 'w');
+        $destination = fopen($target . DIRECTORY_SEPARATOR . $originalFilename, 'w');
 
         $bytes = stream_copy_to_stream($source, $destination);
 
@@ -93,5 +93,29 @@ class Zlib extends AbstractMethod
         fclose($fileHandler);
 
         return '1f8b' === $magicNumber;
+    }
+
+    protected function getOriginalFilename($file)
+    {
+        $fileHandler = fopen($file, 'rb');
+        if (false === $fileHandler) {
+            return false;
+        }
+
+        fseek($fileHandler, 4);
+        $flags = bin2hex(fread($fileHandler, 1));
+
+        $mask = 0x10;
+        $name = '';
+        if (($flags & $mask) === $mask) {
+            fseek($fileHandler, 5, SEEK_CUR);
+            while (($char = fread($fileHandler, 1)) != "\0") {
+                $name .= $char;
+            }
+        }
+
+        fclose($fileHandler);
+
+        return $name;
     }
 }

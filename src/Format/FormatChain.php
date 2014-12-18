@@ -16,7 +16,7 @@ class FormatChain implements FormatChainInterface, \Countable, \ArrayAccess, \It
     /** @var FormatInterface[] $formats */
     protected $formats;
 
-    public function __construct($formats = [])
+    public function __construct(array $formats = [])
     {
         $this->formats = $formats;
     }

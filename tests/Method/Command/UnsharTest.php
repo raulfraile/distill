@@ -19,16 +19,4 @@ class UnsharTest extends AbstractMethodTest
         parent::setUp();
     }
 
-    public function testExtractCorrectSharFile()
-    {
-        $target = $this->getTemporaryPath();
-        $this->clearTemporaryPath();
-
-        $response = $this->extract('file_ok.shar', $target, new Format\Simple\Shar());
-
-        $this->assertTrue($response);
-        $this->assertUncompressed($target, 'file_ok.shar');
-        $this->clearTemporaryPath();
-    }
-
 }

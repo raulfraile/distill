@@ -26,22 +26,22 @@ class RandomTest extends TestCase
     public function testGetSameWhenHasOneElement()
     {
         $files = [
-            new File('test.zip', new Format\Simple\Zip()),
+            new File('test.zip', new Format\FormatChain([new Format\Simple\Zip()]))
         ];
 
         $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
-        $this->assertInstanceOf('\\Distill\\Format\\Simple\\Zip', $preferredFiles[0]->getFormat());
+        $this->assertInstanceOf('\\Distill\\Format\\Simple\\Zip', $preferredFiles[0]->getFormatChain()->getChainFormats()[0]);
         $this->assertEquals('test.zip', $preferredFiles[0]->getPath());
     }
 
     public function testGetAnyFileWhenHasTwoElements()
     {
         $files = [
-            new File('test.zip', new Format\Simple\Zip()),
-            new File('test.phar', new Format\Simple\Phar()),
+            new File('test.zip', new Format\FormatChain([new Format\Simple\Zip()])),
+            new File('test.phar', new Format\FormatChain([new Format\Simple\Phar()])),
         ];
 
         $preferredFiles = $this->strategy->getPreferredFilesOrdered($files);
-        $this->assertInstanceOf('\\Distill\\Format\\FormatInterface', $preferredFiles[0]->getFormat());
+        $this->assertInstanceOf('\\Distill\\Format\\FormatInterface', $preferredFiles[0]->getFormatChain()->getChainFormats()[0]);
     }
 }

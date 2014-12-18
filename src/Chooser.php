@@ -124,22 +124,22 @@ class Chooser
     /**
      * Adds a new file.
      * @param string               $filename File name
-     * @param FormatInterface|null $format   Format
+     * @param FormatInterface|null $formatChain   Format
      *
      * @throws Exception\FormatGuesserRequiredException
      * @return Chooser
      */
-    public function addFile($filename, FormatInterface $format = null)
+    public function addFile($filename, FormatInterface $formatChain = null)
     {
-        if (null === $format) {
+        if (null === $formatChain) {
             if (null === $this->formatGuesser) {
                 throw new FormatGuesserRequiredException();
             }
 
-            $format = $this->formatGuesser->guess($filename);
+            $formatChain = $this->formatGuesser->guess($filename);
         }
 
-        $this->files[] = new File($filename, $format);
+        $this->files[] = new File($filename, $formatChain);
 
         return $this;
     }
