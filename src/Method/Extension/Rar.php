@@ -11,6 +11,7 @@
 
 namespace Distill\Method\Extension;
 
+use Distill\Exception\IO\Input\FileCorruptedException;
 use Distill\Format;
 use Distill\Method\AbstractMethod;
 use Distill\Method\MethodInterface;
@@ -32,7 +33,7 @@ class Rar extends AbstractMethod
         $rar = @\RarArchive::open($file);
 
         if (false === $rar) {
-            return false;
+            throw new FileCorruptedException($file, FileCorruptedException::SEVERITY_HIGH);
         }
 
         $this->getFilesystem()->mkdir($target);

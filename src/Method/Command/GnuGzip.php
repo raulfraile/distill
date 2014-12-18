@@ -37,7 +37,7 @@ class GnuGzip extends AbstractCommandMethod
 
         $exitCode = $this->executeCommand($command);
 
-        if (1 === $exitCode) {
+        if ($exitCode > 0) {
             throw new FileCorruptedException($file);
         }
 
