@@ -17,7 +17,6 @@ before_script:
   - sudo apt-get install -y p7zip-full
   - sudo apt-get install -y p7zip-rar
   - sudo apt-get install -y cabextract
-  - sudo apt-get install -y msitools
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then pecl install zip; fi;'
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then pecl install rar; fi;'
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then echo "phar.readonly = 0" > travis.hhvm.ini; fi;'
