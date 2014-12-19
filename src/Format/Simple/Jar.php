@@ -11,7 +11,6 @@
 
 namespace Distill\Format\Simple;
 
-
 class Jar extends Zip
 {
     /**

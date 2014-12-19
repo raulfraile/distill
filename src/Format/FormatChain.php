@@ -13,33 +13,47 @@ namespace Distill\Format;
 
 class FormatChain implements FormatChainInterface, \Countable, \ArrayAccess, \IteratorAggregate
 {
-    /** @var FormatInterface[] $formats */
+    /**
+     * Ordered list of the formats composing the format chain.
+     * @var FormatInterface[] $formats
+     */
     protected $formats;
 
+    /**
+     * Constructor.
+     * @param FormatInterface[] $formats
+     */
     public function __construct(array $formats = [])
     {
         $this->formats = $formats;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getChainFormats()
     {
         return $this->formats;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function count()
     {
         return count($this->formats);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function add(FormatInterface $format)
     {
         $this->formats[] = $format;
     }
 
     /**
-     * Gets the compression ratio level for the whole chain.
-     *
-     * @return integer Compression ratio level (0: low, 10: high)
+     * {@inheritdoc}
      */
     public function getCompressionRatioLevel()
     {
@@ -53,31 +67,49 @@ class FormatChain implements FormatChainInterface, \Countable, \ArrayAccess, \It
         return $maxLevel;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetExists($offset)
     {
         return isset($this->formats[$offset]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetGet($offset)
     {
         return $this->formats[$offset];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetSet($offset, $value)
     {
         $this->formats[$offset] = $value;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetUnset($offset)
     {
         unset($this->formats[$offset]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getIterator()
     {
         return new \ArrayIterator($this->formats);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isEmpty()
     {
         return empty($this->formats);

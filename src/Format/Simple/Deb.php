@@ -11,12 +11,9 @@
 
 namespace Distill\Format\Simple;
 
-use Distill\Format\AbstractFormat;
-use Distill\Format\FormatInterface;
 
 class Deb extends Ar
 {
-
     /**
      * {@inheritdoc}
      */

@@ -28,6 +28,9 @@ class TarGz extends AbstractComposedFormat
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getCanonicalExtension()
     {
         return 'tar.gz';
@@ -47,24 +50,5 @@ class TarGz extends AbstractComposedFormat
     public static function getClass()
     {
         return get_class();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isComposed()
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getComposedFormats()
-    {
-        return [
-            new Gz(),
-            new Tar(),
-        ];
     }
 }

@@ -25,17 +25,17 @@ class File implements FileInterface
      * File format.
      * @var FormatChainInterface
      */
-    protected $format;
+    protected $formatChain;
 
     /**
      * Constructor.
-     * @param string          $path   File path
-     * @param FormatChainInterface $format File format
+     * @param string               $path        File path.
+     * @param FormatChainInterface $formatChain Format chain.
      */
-    public function __construct($path, FormatChainInterface $format)
+    public function __construct($path, FormatChainInterface $formatChain)
     {
         $this->path = $path;
-        $this->format = $format;
+        $this->formatChain = $formatChain;
     }
 
     /**
@@ -67,9 +67,9 @@ class File implements FileInterface
     /**
      * {@inheritdoc}
      */
-    public function setFormatChain(FormatChainInterface $format)
+    public function setFormatChain(FormatChainInterface $formatChain)
     {
-        $this->format = $format;
+        $this->formatChain = $formatChain;
 
         return $this;
     }
@@ -79,6 +79,6 @@ class File implements FileInterface
      */
     public function getFormatChain()
     {
-        return $this->format;
+        return $this->formatChain;
     }
 }

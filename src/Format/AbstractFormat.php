@@ -34,26 +34,16 @@ abstract class AbstractFormat implements FormatInterface
         return [];
     }
 
+    /**
+     * Gets the full path of the sample.
+     * @param string $sampleFilename Sample file name.
+     *
+     * @return string Sample full path.
+     */
     public static function getSampleFullPath($sampleFilename)
     {
         $parts = [__DIR__, '..', 'Resources', 'Samples', $sampleFilename];
 
         return implode(DIRECTORY_SEPARATOR, $parts);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isComposed()
-    {
-        return false;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getComposedFormats()
-    {
-        return [];
     }
 }

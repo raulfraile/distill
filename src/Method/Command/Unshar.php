@@ -21,7 +21,6 @@ use Distill\Format;
  */
 class Unshar extends AbstractCommandMethod
 {
-
     /**
      * {@inheritdoc}
      */

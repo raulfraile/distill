@@ -30,7 +30,7 @@ class GnuGzip extends AbstractCommandMethod
 
         $this->getFilesystem()->mkdir($target);
 
-        $copiedFile = $target . DIRECTORY_SEPARATOR . basename($file);
+        $copiedFile = $target.DIRECTORY_SEPARATOR.basename($file);
         $this->getFilesystem()->copy($file, $copiedFile);
 
         $command = sprintf("gzip -d -N %s", escapeshellarg($copiedFile));

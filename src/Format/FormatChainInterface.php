@@ -11,10 +11,20 @@
 
 namespace Distill\Format;
 
-interface FormatChainInterface// extends FormatInterface
+interface FormatChainInterface
 {
+    /**
+     * Gets the ordered list of chained formats.
+     *
+     * @return FormatInterface[]
+     */
     public function getChainFormats();
 
+    /**
+     * Checks whether the chain is empty or not.
+     *
+     * @return boolean TRUE when is empty, FALSE otherwise.
+     */
     public function isEmpty();
 
     /**
@@ -23,4 +33,19 @@ interface FormatChainInterface// extends FormatInterface
      * @return integer Compression ratio level (0: low, 10: high)
      */
     public function getCompressionRatioLevel();
+
+    /**
+     * Gets the number of formats contained in the chain.
+     *
+     * @return int Number of formats.
+     */
+    public function count();
+
+    /**
+     * Adds a new format to the chain.
+     * @param FormatInterface $format Format to be added.
+     *
+     * @return FormatChainInterface
+     */
+    public function add(FormatInterface $format);
 }

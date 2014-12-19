@@ -13,7 +13,16 @@ namespace Distill\Format;
 
 interface ComposedFormatInterface extends FormatInterface
 {
+    /**
+     * Gets the ordered list of the formats that belongs the composed format.
+     *
+     * @return FormatInterface[] List of formats.
+     */
     public function getComposedFormats();
 
+    /**
+     * Gets the canonical extension for the format.
+     * @return mixed
+     */
     public function getCanonicalExtension();
 }

@@ -12,6 +12,7 @@
 namespace Distill\Strategy;
 
 use Distill\FileInterface;
+use Distill\Format\ComposedFormatInterface;
 use Distill\Format\FormatChainInterface;
 use Distill\Format\FormatInterface;
 use Distill\Method\MethodInterface;
@@ -46,7 +47,7 @@ abstract class AbstractStrategy implements StrategyInterface
             }
         }
 
-        if ($format->isComposed()) {
+        if ($format instanceof ComposedFormatInterface) {
             $maxSpeedComposed = MethodInterface::SPEED_LEVEL_LOWEST;
             $subformats = $format->getComposedFormats();
             foreach ($subformats as $subformat) {

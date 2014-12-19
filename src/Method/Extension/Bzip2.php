@@ -39,7 +39,7 @@ class Bzip2 extends AbstractMethod
         $source = bzopen($file, 'r');
 
         @mkdir($target);
-        $destination = fopen($target . DIRECTORY_SEPARATOR . $basename, 'w');
+        $destination = fopen($target.DIRECTORY_SEPARATOR.$basename, 'w');
 
         $bytes = stream_copy_to_stream($source, $destination);
 

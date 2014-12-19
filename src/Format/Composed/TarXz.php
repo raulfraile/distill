@@ -17,6 +17,9 @@ use Distill\Format\Simple\Xz;
 
 class TarXz extends AbstractComposedFormat
 {
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->formats = [
@@ -25,6 +28,9 @@ class TarXz extends AbstractComposedFormat
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getCanonicalExtension()
     {
         return 'tar.xz';

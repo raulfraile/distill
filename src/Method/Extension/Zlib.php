@@ -39,7 +39,7 @@ class Zlib extends AbstractMethod
         $source = gzopen($file, 'rb');
 
         @mkdir($target);
-        $destination = fopen($target . DIRECTORY_SEPARATOR . $originalFilename, 'w');
+        $destination = fopen($target.DIRECTORY_SEPARATOR.$originalFilename, 'w');
 
         $bytes = stream_copy_to_stream($source, $destination);
 

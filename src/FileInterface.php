@@ -39,11 +39,11 @@ interface FileInterface
 
     /**
      * Sets the file format.
-     * @param FormatChainInterface $format File format
+     * @param FormatChainInterface $formatChain Format chain.
      *
      * @return FileInterface
      */
-    public function setFormatChain(FormatChainInterface $format);
+    public function setFormatChain(FormatChainInterface $formatChain);
 
     /**
      * Gets the file format.

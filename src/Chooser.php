@@ -65,7 +65,6 @@ class Chooser
         $this->formatGuesser = $formatGuesser;
         $this->supportChecker = $supportChecker;
         $this->excludeUnsupported = true;
-
         $this->methods = $methods;
     }
 
@@ -124,8 +123,8 @@ class Chooser
 
     /**
      * Adds a new file.
-     * @param string                    $filename    File name
-     * @param FormatChainInterface|null $formatChain Format
+     * @param string                    $filename    File name.
+     * @param FormatChainInterface|null $formatChain Format. If null, it is guessed.
      *
      * @throws Exception\FormatGuesserRequiredException
      * @return Chooser
@@ -149,7 +148,8 @@ class Chooser
      * Adds new files that have the same name but different extensions.
      * @param string            $basename   Basename (e.g. 'my_file')
      * @param string[]          $extensions Extensions (e.g. ['zip', 'rar'])
-     * @param FormatInterface[] $formats    Formats for each of the exceptions. Supports indexed and associative arrays.
+     * @param FormatInterface[] $formats    Formats for each of the exceptions. Supports indexed
+     *                                      and associative arrays. If null, they are guessed.
      *
      * @throws FormatGuesserRequiredException
      *

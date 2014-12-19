@@ -103,11 +103,10 @@ class TarExtractor extends AbstractMethod
         }
 
         $computedChecksum = 0;
-        for ($i=0; $i<500; $i++) {
+        for ($i = 0; $i<500; $i++) {
             if ($i < 148 || $i >= 156) {
                 $computedChecksum += ord($data[$i]);
             }
-
         }
 
         $headers['checksum_ok'] = ($computedChecksum + 256) === octdec($headers['checksum']) || ('' === $headers['checksum']);
