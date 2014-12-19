@@ -157,32 +157,32 @@ class Chooser
      * Adds new files that have the same name but different extensions.
      * @param string            $basename   Basename (e.g. 'my_file')
      * @param string[]          $extensions Extensions (e.g. ['zip', 'rar'])
-     * @param FormatInterface[] $formats    Formats for each of the exceptions. Supports indexed
+     * @param FormatChainInterface[] $formatChains    Formats for each of the extensions. Supports indexed
      *                                      and associative arrays. If null, they are guessed.
      *
      * @throws FormatGuesserRequiredException
      *
      * @return Chooser
      */
-    public function addFilesWithDifferentExtensions($basename, array $extensions, array $formats = [])
+    public function addFilesWithDifferentExtensions($basename, array $extensions, array $formatChains = [])
     {
-        if (!empty($formats) && count($extensions) != count($formats)) {
-            throw new InvalidArgumentException('formats', 'If present, it must contain the same number of elements as extensions passed');
+        if (!empty($formatChains) && count($extensions) != count($formatChains)) {
+            throw new InvalidArgumentException('formatChains', 'If present, it must contain the same number of elements as extensions passed');
         }
 
         $i = 0;
         foreach ($extensions as $extension) {
-            $format = null;
+            $formatChain = null;
 
-            if (array_key_exists($i, $formats)) {
-                $format = $formats[$i];
+            if (array_key_exists($i, $formatChains)) {
+                $formatChain = $formatChains[$i];
             }
 
-            if (array_key_exists($extension, $formats)) {
-                $format = $formats[$extension];
+            if (array_key_exists($extension, $formatChains)) {
+                $formatChain = $formatChains[$extension];
             }
 
-            $this->addFile($basename.'.'.$extension, $format);
+            $this->addFile($basename.'.'.$extension, $formatChain);
         }
 
         return $this;
