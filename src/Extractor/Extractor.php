@@ -11,6 +11,7 @@
 
 namespace Distill\Extractor;
 
+use Distill\Exception\IO\Input\FileCorruptedException;
 use Distill\Exception\IO\Input\FileFormatNotSupportedException;
 use Distill\Extractor\Util\Filesystem;
 use Distill\Format\FormatChainInterface;
@@ -93,12 +94,17 @@ class Extractor implements ExtractorInterface
                 $tempDirectories[] = $tempDirectory;
                 $success = $this->extractFormat($lastFile, $tempDirectory, $chainFormats[$i]);
 
+                // look for the uncompressed file
                 $iterator = new \FilesystemIterator($tempDirectory, \FilesystemIterator::SKIP_DOTS);
-
+                $extractedFile = null;
                 while ($iterator->valid()) {
                     $extractedFile = $iterator->current();
 
                     $iterator->next();
+                }
+
+                if (null === $extractedFile) {
+                    throw new FileCorruptedException($lastFile);
                 }
 
                 $lastFile = $extractedFile->getRealPath();
