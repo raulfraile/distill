@@ -77,18 +77,18 @@ abstract class AbstractMethodTest extends TestCase
 
     public function testAllFormatsSupportedByMethod()
     {
+        // check supported formats (ok and invalid data)
         foreach ($this->supportedFormats as $format) {
             if (file_exists($this->filesPath.'file_ok.' . $format->getExtensions()[0])) {
                 $this->checkSupportedValidFormatUsingMethod($format);
                 $this->checkSupportedInvalidFormatUsingMethod($format);
             }
-
         }
 
+        // check unsupported formats
         foreach ($this->unsupportedFormats as $format) {
             $this->checkUnsupportedFormatUsingMethod($format);
         }
-
     }
 
     public function checkSupportedValidFormatUsingMethod(FormatInterface $format)
@@ -140,26 +140,4 @@ abstract class AbstractMethodTest extends TestCase
         }
     }
 
-    public function checkNoFormatUsingMethod()
-    {
-        $target = $this->getTemporaryPath();
-        $this->clearTemporaryPath();
-
-
-
-        $format = m::mock('Distill\Format\FormatInterface');
-        $format->getMock();
-
-        try {
-            $response = $this->extract('file_ok.zip', $target, $format);
-        } catch (FormatNotSupportedInMethodException $e) {
-            $this->assertEquals($format, $e->getFormat());
-            $this->assertEquals($this->method, $e->getMethod());
-
-            return;
-        }
-
-        $this->assertFalse(true);
-        $this->clearTemporaryPath();
-    }
 }
