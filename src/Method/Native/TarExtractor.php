@@ -33,6 +33,8 @@ class TarExtractor extends AbstractMethod
     const TYPE_FIFO = 6;
     const TYPE_CONTIGUOUS_FILE = 7;
 
+    const SIZE_HEADER_BLOCK = 512;
+
     /**
      * {@inheritdoc}
      */
@@ -40,7 +42,7 @@ class TarExtractor extends AbstractMethod
     {
         $this->checkSupport($format);
 
-        @mkdir($target);
+        $this->getFilesystem()->mkdir($target);
 
         return $this->extractTarFile($file, $target);
     }
@@ -72,9 +74,9 @@ class TarExtractor extends AbstractMethod
      */
     protected function readBlockHeader($fileHandler, $filename)
     {
-        $data = fread($fileHandler, 512);
+        $data = fread($fileHandler, self::SIZE_HEADER_BLOCK);
 
-        if (strlen($data) !== 512) {
+        if (strlen($data) !== self::SIZE_HEADER_BLOCK) {
             throw new Exception\IO\Input\FileCorruptedException($filename);
         }
 
@@ -102,16 +104,42 @@ class TarExtractor extends AbstractMethod
             ];
         }
 
-        $computedChecksum = 0;
-        for ($i = 0; $i<500; $i++) {
+        if (0 === $headers['size'] && '' === $headers['name']) {
+            $headers['is_empty'] = true;
+
+            return $headers;
+        }
+
+        $headers['is_empty'] = false;
+
+        $computedChecksum = $this->calculateChecksum($data);
+        $headers['is_valid_checksum'] = $computedChecksum === octdec($headers['checksum']);
+
+        return $headers;
+    }
+
+    /**
+     * Calculates the checksum of the header block.
+     *
+     * The checksum is calculated by taking the sum of the unsigned byte values of the header
+     * record with the eight checksum bytes taken to be ascii spaces (decimal value 32).
+     *
+     * @param string $headerBlock
+     *
+     * @return int
+     */
+    protected function calculateChecksum($headerBlock)
+    {
+        $checksum = 0;
+        for ($i = 0; $i<self::SIZE_HEADER_BLOCK; $i++) {
             if ($i < 148 || $i >= 156) {
-                $computedChecksum += ord($data[$i]);
+                $checksum += ord($headerBlock[$i]);
+            } else {
+                $checksum += 32;
             }
         }
 
-        $headers['checksum_ok'] = ($computedChecksum + 256) === octdec($headers['checksum']) || ('' === $headers['checksum']);
-
-        return $headers;
+        return $checksum;
     }
 
     /**
@@ -170,7 +198,12 @@ class TarExtractor extends AbstractMethod
         while (false === $this->isEof($fileHandler)) {
             $fields = $this->readBlockHeader($fileHandler, $filename);
 
-            if (false === $fields['checksum_ok']) {
+            // deal with empty blocks in sparse files
+            if (true === $fields['is_empty']) {
+                continue;
+            }
+
+            if (false === $fields['is_valid_checksum']) {
                 throw new Exception\IO\Input\FileCorruptedException($filename);
             }
 
@@ -184,11 +217,11 @@ class TarExtractor extends AbstractMethod
                 }
 
                 // create the file
-                file_put_contents($target.'/'.$name, $this->readBlockData($fileHandler, $size));
+                file_put_contents($target . DIRECTORY_SEPARATOR . $name, $this->readBlockData($fileHandler, $size));
 
                 continue;
             } elseif (self::TYPE_DIRECTORY === $type) {
-                @mkdir($target.'/'.$name, 0777, true);
+                $this->getFilesystem()->mkdir($target . DIRECTORY_SEPARATOR . $name);
             }
         }
 
@@ -205,6 +238,9 @@ class TarExtractor extends AbstractMethod
         return MethodInterface::SPEED_LEVEL_LOWEST;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isFormatSupported(FormatInterface $format)
     {
         return $format instanceof Tar;
