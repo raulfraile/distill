@@ -5,6 +5,7 @@ namespace Distill;
 use Distill\Exception\FormatGuesserRequiredException;
 use Distill\Exception\InvalidArgumentException;
 use Distill\Exception\StrategyRequiredException;
+use Distill\Format\FormatChainInterface;
 use Distill\Format\FormatInterface;
 use Distill\Strategy\StrategyInterface;
 use Distill\Method\MethodInterface;
@@ -123,13 +124,13 @@ class Chooser
 
     /**
      * Adds a new file.
-     * @param string               $filename File name
-     * @param FormatInterface|null $formatChain   Format
+     * @param string                    $filename    File name
+     * @param FormatChainInterface|null $formatChain Format
      *
      * @throws Exception\FormatGuesserRequiredException
      * @return Chooser
      */
-    public function addFile($filename, FormatInterface $formatChain = null)
+    public function addFile($filename, FormatChainInterface $formatChain = null)
     {
         if (null === $formatChain) {
             if (null === $this->formatGuesser) {
@@ -245,7 +246,7 @@ class Chooser
 
         if (true === $this->excludeUnsupported) {
             return array_values(array_filter($preferredFiles, function (FileInterface $file) {
-                return $this->supportChecker->isFormatSupported($file->getFormat());
+                return $this->supportChecker->isFormatChainSupported($file->getFormatChain());
             }));
         }
 
