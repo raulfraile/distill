@@ -151,7 +151,7 @@ class ContainerProvider implements ServiceProviderInterface
     protected function registerFormats(Container $container)
     {
         foreach ($this->formats as $formatClass) {
-            $container['format.'.$formatClass::getName()] = $container->factory(function ($c) use ($formatClass) {
+            $container['format.'.$formatClass::getName()] = $container->factory(function() use ($formatClass) {
                 return new $formatClass();
             });
         }
@@ -170,7 +170,7 @@ class ContainerProvider implements ServiceProviderInterface
             $method = new $methodClass();
 
             if ($method->isSupported()) {
-                $container['method.'.$method->getName()] = function ($c) use ($methodClass) {
+                $container['method.'.$method->getName()] = function() use ($methodClass) {
                     return new $methodClass();
                 };
 
@@ -195,13 +195,13 @@ class ContainerProvider implements ServiceProviderInterface
 
     protected function registerStrategies(Container $container)
     {
-        $container['strategy.'.Strategy\MinimumSize::getName()] = $container->factory(function ($c) {
+        $container['strategy.'.Strategy\MinimumSize::getName()] = $container->factory(function() {
             return new Strategy\MinimumSize();
         });
-        $container['strategy.'.Strategy\UncompressionSpeed::getName()] = $container->factory(function ($c) {
+        $container['strategy.'.Strategy\UncompressionSpeed::getName()] = $container->factory(function() {
             return new Strategy\UncompressionSpeed();
         });
-        $container['strategy.'.Strategy\Random::getName()] = $container->factory(function ($c) {
+        $container['strategy.'.Strategy\Random::getName()] = $container->factory(function() {
             return new Strategy\Random();
         });
     }

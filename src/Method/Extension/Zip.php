@@ -37,8 +37,7 @@ class Zip extends AbstractMethod
                 case \ZipArchive::ER_NOZIP :
                 case \ZipArchive::ER_INCONS :
                 case \ZipArchive::ER_CRC :
-                throw new Exception\IO\Input\FileCorruptedException($file, Exception\IO\Input\FileCorruptedException::SEVERITY_HIGH);
-                    break;
+                    throw new Exception\IO\Input\FileCorruptedException($file, Exception\IO\Input\FileCorruptedException::SEVERITY_HIGH);
             }
 
             return false;

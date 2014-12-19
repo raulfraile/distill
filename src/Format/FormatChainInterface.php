@@ -11,7 +11,7 @@
 
 namespace Distill\Format;
 
-interface FormatChainInterface extends \IteratorAggregate
+interface FormatChainInterface
 {
     /**
      * Gets the ordered list of chained formats.
