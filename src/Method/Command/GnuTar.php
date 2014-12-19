@@ -11,7 +11,7 @@
 
 namespace Distill\Method\Command;
 
-use Distill\Exception;
+use Distill\Exception\IO\Input\FileCorruptedException;
 use Distill\Format;
 
 /**
@@ -49,7 +49,7 @@ class GnuTar extends AbstractCommandMethod
         $exitCode = $this->executeCommand($command);
 
         if (self::EXIT_CODE_FATAL_ERROR === $exitCode || self::EXIT_CODE_SOME_FILES_DIFFER === $exitCode) {
-            throw new Exception\IO\Input\FileCorruptedException($file, Exception\IO\Input\FileCorruptedException::SEVERITY_HIGH);
+            throw new FileCorruptedException($file, FileCorruptedException::SEVERITY_HIGH);
         }
 
         return self::EXIT_CODE_OK === $exitCode;

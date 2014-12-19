@@ -37,7 +37,7 @@ class Cpio extends AbstractCommandMethod
             throw new FileCorruptedException($file);
         }
 
-        return $this->isExitCodeSuccessful($exitCode);
+        return 0 === $exitCode;
     }
 
     /**
@@ -60,6 +60,9 @@ class Cpio extends AbstractCommandMethod
         return get_class();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isFormatSupported(Format\FormatInterface $format = null)
     {
         return $format instanceof Format\Simple\Cpio ||

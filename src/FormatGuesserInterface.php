@@ -11,8 +11,8 @@
 
 namespace Distill;
 
-use Distill\Format\FormatChainInterface;
 use Distill\Exception\IO\Input\FileUnknownFormatException;
+use Distill\Format\FormatChainInterface;
 
 interface FormatGuesserInterface
 {

@@ -80,8 +80,6 @@ interface MethodInterface
      */
     //public static function getStabilityLevel(FormatInterface $format);
 
-    //public function supportsFormat(FormatInterface $format);
-
     /**
      * Checks if the method is registered for the format.
      * @param FormatInterface $format Format.

@@ -47,14 +47,22 @@ class Extractor implements ExtractorInterface
         $this->filesystem = new Filesystem();
     }
 
-    protected function extractFormat($file, $path, FormatInterface $format)
+    /**
+     * Extracts a compressed file of a given format.
+     * @param string $source
+     * @param string $target
+     * @param FormatInterface $format
+     *
+     * @return bool
+     */
+    protected function extractFormat($source, $target, FormatInterface $format)
     {
         $success = false;
         for ($i = 0, $methodsCount = count($this->methods); $i<$methodsCount && false === $success; $i++) {
             $method = $this->methods[$i];
 
             if ($method->isSupported() && $method->isFormatSupported($format)) {
-                $success = $method->extract($file, $path, $format);
+                $success = $method->extract($source, $target, $format);
             }
         }
 
@@ -64,24 +72,24 @@ class Extractor implements ExtractorInterface
     /**
      * {@inheritdoc}
      */
-    public function extract($file, $path, FormatChainInterface $chainFormat)
+    public function extract($source, $target, FormatChainInterface $chainFormat)
     {
         $chainFormats = $chainFormat->getChainFormats();
         foreach ($chainFormats as $format) {
             if (false === $this->supportChecker->isFormatSupported($format)) {
-                throw new FileFormatNotSupportedException($file, $format);
+                throw new FileFormatNotSupportedException($source, $format);
             }
         }
 
         $success = true;
-        $lastFile = $file;
+        $lastFile = $source;
         $tempDirectories = [];
         for ($i = 0, $formatsCount = count($chainFormats); $i<$formatsCount && true === $success; $i++) {
             if (($i+1) === $formatsCount) {
                 // last
-                $success = $this->extractFormat($lastFile, $path, $chainFormats[$i]);
+                $success = $this->extractFormat($lastFile, $target, $chainFormats[$i]);
             } else {
-                $tempDirectory = $path.DIRECTORY_SEPARATOR.'step_'.$i;
+                $tempDirectory = $target.DIRECTORY_SEPARATOR.'step_'.$i;
                 $tempDirectories[] = $tempDirectory;
                 $success = $this->extractFormat($lastFile, $tempDirectory, $chainFormats[$i]);
 

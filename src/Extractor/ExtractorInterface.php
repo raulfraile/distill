@@ -17,11 +17,11 @@ interface ExtractorInterface
 {
     /**
      * Extracts the compressed file into the given path.
-     * @param string               $file   Compressed file
-     * @param string               $path   Destination path
-     * @param FormatChainInterface $format Format
+     * @param string               $source   Compressed file
+     * @param string               $target   Destination path
+     * @param FormatChainInterface $format   Format
      *
      * @return bool Returns TRUE when successful, FALSE otherwise
      */
-    public function extract($file, $path, FormatChainInterface $format);
+    public function extract($source, $target, FormatChainInterface $format);
 }

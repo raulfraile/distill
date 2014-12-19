@@ -14,9 +14,9 @@ namespace Distill;
 use Distill\Extractor\ExtractorInterface;
 use Distill\Format\FormatChain;
 use Distill\Format\FormatChainInterface;
-use Distill\Strategy\StrategyInterface;
 use Distill\Format\FormatInterface;
 use Distill\Extractor\Util\Filesystem;
+use Distill\Strategy\StrategyInterface;
 use Pimple\Container;
 
 class Distill
@@ -114,7 +114,7 @@ class Distill
 
     /**
      * Extracts the compressed file into the given path.
-     * @param string                 $file   Compressed file
+     * @param string                 $source Compressed file
      * @param string                 $target Destination path
      * @param Format\FormatInterface $format
      *
@@ -127,20 +127,20 @@ class Distill
      *
      * @return bool
      */
-    public function extract($file, $target, FormatInterface $format = null)
+    public function extract($source, $target, FormatInterface $format = null)
     {
         $this->initializeIfNotInitialized();
 
-        if (false === file_exists($file)) {
-            throw new Exception\IO\Input\FileNotFoundException($file);
+        if (false === file_exists($source)) {
+            throw new Exception\IO\Input\FileNotFoundException($source);
         }
 
-        if (false === is_readable($file)) {
-            throw new Exception\IO\Input\FileNotReadableException($file);
+        if (false === is_readable($source)) {
+            throw new Exception\IO\Input\FileNotReadableException($source);
         }
 
-        if (0 === filesize($file)) {
-            throw new Exception\IO\Input\FileEmptyException($file);
+        if (0 === filesize($source)) {
+            throw new Exception\IO\Input\FileEmptyException($source);
         }
 
         if (true === file_exists($target) && false === is_writable($target)) {
@@ -148,10 +148,10 @@ class Distill
         }
 
         if (null === $format) {
-            $formatChain = $this->container['format_guesser']->guess($file);
+            $formatChain = $this->container['format_guesser']->guess($source);
 
             if (0 === count($formatChain)) {
-                throw new Exception\IO\Input\FileUnknownFormatException($file);
+                throw new Exception\IO\Input\FileUnknownFormatException($source);
             }
         } else {
             $formatChain = new FormatChain([$format]);
@@ -159,10 +159,10 @@ class Distill
 
         if (false === $this->isFormatChainSupported($formatChain)) {
             $unsupportedFormats = $this->getSupportChecker()->getUnsupportedFormatsFromChain($formatChain);
-            throw new Exception\IO\Input\FileFormatNotSupportedException($file, $unsupportedFormats[0]);
+            throw new Exception\IO\Input\FileFormatNotSupportedException($source, $unsupportedFormats[0]);
         }
 
-        return $this->container['extractor.extractor']->extract($file, $target, $formatChain);
+        return $this->container['extractor.extractor']->extract($source, $target, $formatChain);
     }
 
     /**
@@ -251,6 +251,12 @@ class Distill
         return $this->getSupportChecker()->isFormatSupported($format);
     }
 
+    /**
+     * Checks whether the format chain is supported.
+     * @param FormatChainInterface $formatChain Format chain to be checked.
+     *
+     * @return boolean Returns TRUE If the chain is supported, FALSE otherwise.
+     */
     protected function isFormatChainSupported(FormatChainInterface $formatChain)
     {
         $this->initializeIfNotInitialized();

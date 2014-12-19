@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Distill package.
+ *
+ * (c) Raul Fraile <raulfraile@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Distill;
 
 use Distill\Exception\FormatGuesserRequiredException;
@@ -7,8 +16,8 @@ use Distill\Exception\InvalidArgumentException;
 use Distill\Exception\StrategyRequiredException;
 use Distill\Format\FormatChainInterface;
 use Distill\Format\FormatInterface;
-use Distill\Strategy\StrategyInterface;
 use Distill\Method\MethodInterface;
+use Distill\Strategy\StrategyInterface;
 
 class Chooser
 {
@@ -126,7 +135,7 @@ class Chooser
      * @param string                    $filename    File name.
      * @param FormatChainInterface|null $formatChain Format. If null, it is guessed.
      *
-     * @throws Exception\FormatGuesserRequiredException
+     * @throws FormatGuesserRequiredException
      * @return Chooser
      */
     public function addFile($filename, FormatChainInterface $formatChain = null)
@@ -215,7 +224,7 @@ class Chooser
 
     /**
      * Gets the preferred file based on the chosen strategy.
-     * @throws Exception\StrategyRequiredException
+     * @throws StrategyRequiredException
      *
      * @return FileInterface Preferred file
      */
