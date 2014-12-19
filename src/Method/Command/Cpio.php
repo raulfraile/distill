@@ -66,7 +66,6 @@ class Cpio extends AbstractCommandMethod
     public function isFormatSupported(Format\FormatInterface $format = null)
     {
         return $format instanceof Format\Simple\Cpio ||
-            $format instanceof Format\Simple\Tar     ||
-            $format instanceof Format\Simple\Ar;
+            $format instanceof Format\Simple\Tar;
     }
 }
