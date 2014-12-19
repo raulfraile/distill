@@ -11,6 +11,7 @@
 
 namespace Distill\Method\Command\Gnome;
 
+use Distill\Exception\IO\Input\FileCorruptedException;
 use Distill\Format;
 use Distill\Method\Command\AbstractCommandMethod;
 
@@ -29,9 +30,12 @@ class Gcab extends AbstractCommandMethod
         $this->checkSupport($format);
 
         $this->getFilesystem()->mkdir($target);
-        $command = 'gcab -x '.escapeshellarg($file).' -C '.escapeshellarg($file);
+        $command = 'gcab -x '.escapeshellarg($file).' -C '.escapeshellarg($target);
 
         $exitCode = $this->executeCommand($command);
+        if ($exitCode > 0) {
+            throw new FileCorruptedException($file);
+        }
 
         return $this->isExitCodeSuccessful($exitCode);
     }
@@ -56,6 +60,9 @@ class Gcab extends AbstractCommandMethod
         return get_class();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isFormatSupported(Format\FormatInterface $format = null)
     {
         return $format instanceof Format\Simple\Cab;
