@@ -21,6 +21,8 @@ class ChooserTest extends TestCase
         $supportChecker->shouldReceive('isFormatChainSupported')->andReturn(true, false)->getMock();
 
         $this->chooser = new Chooser($supportChecker);
+
+        parent::setUp();
     }
 
     public function testExceptionWhenNoStrategyIsDefined()

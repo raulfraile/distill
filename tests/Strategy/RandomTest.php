@@ -15,6 +15,8 @@ class RandomTest extends TestCase
     public function setUp()
     {
         $this->strategy = new Random();
+
+        parent::setUp();
     }
 
     public function testEmptyFilesGetEmpty()

@@ -21,7 +21,7 @@ dd if=/dev/urandom of=$FILES_DIR/file_fake.xz bs=1 count=1240
 # xz: regular file
 cd $FILES_DIR/uncompressed
 xz -z -c 1.txt >> ../file_ok.xz
-printf "*|1.txt file" > ../file_ok.xz.key
+printf "/file_ok|1.txt file" > ../file_ok.xz.key
 
 cd $FILES_DIR/uncompressed
 xz -z -c ../file_ok.zip >> ../file_ok.zip.xz

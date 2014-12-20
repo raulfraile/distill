@@ -17,6 +17,8 @@ class UncompressionSpeedTest extends TestCase
     public function setUp()
     {
         $this->strategy = new UncompressionSpeed();
+
+        parent::setUp();
     }
 
     public function testEmptyFilesGetEmpty()

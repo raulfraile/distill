@@ -35,11 +35,14 @@ class Zlib extends AbstractMethod
         }
 
         $originalFilename = $this->getOriginalFilename($file);
+        if (null === $originalFilename) {
+            $originalFilename = basename($file);
+        }
 
         $source = gzopen($file, 'rb');
 
         $this->getFilesystem()->mkdir($target);
-        $destination = fopen($target.DIRECTORY_SEPARATOR.$originalFilename, 'w');
+        $destination = fopen($target . DIRECTORY_SEPARATOR . $originalFilename, 'w');
 
         $bytes = stream_copy_to_stream($source, $destination);
 
@@ -102,13 +105,14 @@ class Zlib extends AbstractMethod
             return false;
         }
 
-        fseek($fileHandler, 4);
+        fseek($fileHandler, 3);
         $flags = bin2hex(fread($fileHandler, 1));
 
-        $mask = 0x10;
+        $mask = 0x08;
         $name = '';
+
         if (($flags & $mask) === $mask) {
-            fseek($fileHandler, 5, SEEK_CUR);
+            fseek($fileHandler, 6, SEEK_CUR);
             while (($char = fread($fileHandler, 1)) != "\0") {
                 $name .= $char;
             }

@@ -15,6 +15,8 @@ class MinimumSizeTest extends TestCase
     public function setUp()
     {
         $this->strategy = new MinimumSize();
+
+        parent::setUp();
     }
 
     public function testEmptyFilesGetEmptyArray()

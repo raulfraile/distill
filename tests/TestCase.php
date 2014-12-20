@@ -4,6 +4,7 @@ namespace Distill\Tests;
 
 use Distill\Format\FormatInterface;
 use Distill\Method\MethodInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -24,6 +25,13 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      * @var MethodInterface[]
      */
     protected $allMethods;
+
+    protected $temporaryPath;
+
+    /**
+     * @var Filesystem
+     */
+    protected $filesystem;
 
     public function setUp()
     {
@@ -66,17 +74,29 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
             $this->allMethods[] = new $className();
         }
+
+        $this->filesystem = new Filesystem();
+
+        $this->temporaryPath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . uniqid();
+
+    }
+
+    public function tearDown()
+    {
+        $this->filesystem = new Filesystem();
+        if ($this->filesystem->exists($this->temporaryPath)) {
+            $this->filesystem->remove($this->temporaryPath);
+        }
     }
 
     protected function getTemporaryPath()
     {
-        return sys_get_temp_dir().'/zip';
+        return $this->temporaryPath;
     }
 
     protected function clearTemporaryPath()
     {
-
-        exec('rm -fr '.$this->getTemporaryPath());
+        $this->filesystem->remove($this->temporaryPath);
     }
 
     protected function checkDirectoryFiles($origin, $target)
