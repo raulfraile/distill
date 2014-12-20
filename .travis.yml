@@ -23,5 +23,5 @@ before_script:
   - composer install --prefer-source
 
 script:
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then phpunit --verbose; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then phpunit --testdox --verbose; fi;'
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then hhvm -c travis.hhvm.ini ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit; fi;'
