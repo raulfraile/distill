@@ -24,7 +24,7 @@ class FormatGuesserTest extends \PHPUnit_Framework_TestCase
             new Format\Composed\TarBz2(),
             new Format\Composed\TarGz(),
             new Format\Composed\TarXz(),
-            new Format\Simple\x7z(),
+            new Format\Simple\X7z(),
             new Format\Simple\Xz(),
             new Format\Simple\Zip(),
         ]);

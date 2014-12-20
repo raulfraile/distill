@@ -6,11 +6,11 @@ use Distill\Method;
 use Distill\Format;
 use Distill\Tests\Method\AbstractMethodTest;
 
-class x7zipTest extends AbstractMethodTest
+class X7zipTest extends AbstractMethodTest
 {
     public function setUp()
     {
-        $this->method = new Method\Command\x7zip();
+        $this->method = new Method\Command\X7Zip();
 
         if (false === $this->method->isSupported()) {
             $this->markTestSkipped('The 7zip command is not installed');
@@ -21,7 +21,7 @@ class x7zipTest extends AbstractMethodTest
 
     public function test7zFormatIn7zipMethod()
     {
-        $this->checkFormatUsingMethod(new Format\Simple\x7z(), $this->method);
+        $this->checkFormatUsingMethod(new Format\Simple\X7z(), $this->method);
     }
 
 }

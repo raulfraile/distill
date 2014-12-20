@@ -14,7 +14,7 @@ namespace Distill\Format\Simple;
 use Distill\Format\AbstractFormat;
 use Distill\Format\FormatInterface;
 
-class x7z extends AbstractFormat
+class X7z extends AbstractFormat
 {
     /**
      * {@inheritdoc}

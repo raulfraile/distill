@@ -7,7 +7,7 @@ use Distill\Format;
 use Distill\Exception;
 use Distill\Method\Command\Cabextract;
 use Distill\Method\Command\Gnome\Gcab;
-use Distill\Method\Command\x7zip;
+use Distill\Method\Command\X7Zip;
 
 class DistillTest extends TestCase
 {
@@ -279,7 +279,7 @@ class DistillTest extends TestCase
 
     public function testCanExtract7zFiles()
     {
-        $format = new Format\Simple\x7z();
+        $format = new Format\Simple\X7z();
 
         if (false === $this->distill->isFormatSupported($format)) {
             $this->markTestSkipped('7z files are not supported');
@@ -432,7 +432,7 @@ class DistillTest extends TestCase
 
         $this->distill->disableMethod(Cabextract::getName());
         $this->distill->disableMethod(Gcab::getName());
-        $this->distill->disableMethod(x7zip::getName());
+        $this->distill->disableMethod(X7Zip::getName());
 
         $result = $this->distill
             ->extract($this->filesPath.'file_ok.cab', $target, new Format\Simple\Cab());

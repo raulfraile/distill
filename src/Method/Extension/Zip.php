@@ -34,9 +34,9 @@ class Zip extends AbstractMethod
 
         if (true !== $response = $archive->open($file)) {
             switch ($response) {
-                case \ZipArchive::ER_NOZIP :
-                case \ZipArchive::ER_INCONS :
-                case \ZipArchive::ER_CRC :
+                case \ZipArchive::ER_NOZIP:
+                case \ZipArchive::ER_INCONS:
+                case \ZipArchive::ER_CRC:
                     throw new Exception\IO\Input\FileCorruptedException($file, Exception\IO\Input\FileCorruptedException::SEVERITY_HIGH);
             }
 
@@ -77,6 +77,9 @@ class Zip extends AbstractMethod
         return MethodInterface::SPEED_LEVEL_MIDDLE;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isFormatSupported(Format\FormatInterface $format)
     {
         return $format instanceof Format\Simple\Zip;

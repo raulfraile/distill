@@ -15,7 +15,6 @@ use Distill\Exception\FormatGuesserRequiredException;
 use Distill\Exception\InvalidArgumentException;
 use Distill\Exception\StrategyRequiredException;
 use Distill\Format\FormatChainInterface;
-use Distill\Format\FormatInterface;
 use Distill\Method\MethodInterface;
 use Distill\Strategy\StrategyInterface;
 

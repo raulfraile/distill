@@ -21,7 +21,7 @@ use Distill\Method\MethodInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class x7zip extends AbstractCommandMethod
+class X7Zip extends AbstractCommandMethod
 {
     const EXIT_CODE_OK = 0;
     const EXIT_CODE_WARNING = 1;
@@ -91,7 +91,7 @@ class x7zip extends AbstractCommandMethod
         //  - p7zip-full: Provides support for many other formats (rar not included)
         //  - p7zip-rar: Provides support for rar files
 
-        if ($format instanceof Format\Simple\x7z) {
+        if ($format instanceof Format\Simple\X7z) {
             return true;
         }
 
