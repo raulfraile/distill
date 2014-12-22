@@ -92,7 +92,7 @@ class SupportChecker implements SupportCheckerInterface
             return false;
         }
 
-        foreach ($formatChain as $format) {
+        foreach ($formatChain->getChainFormats() as $format) {
             if (false === $this->isFormatSupported($format)) {
                 return false;
             }
@@ -108,7 +108,7 @@ class SupportChecker implements SupportCheckerInterface
     {
         $formats = [];
 
-        foreach ($formatChain as $format) {
+        foreach ($formatChain->getChainFormats() as $format) {
             if (false === $this->isFormatSupported($format)) {
                 $formats[] = $format;
             }
