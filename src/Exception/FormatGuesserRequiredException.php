@@ -11,6 +11,12 @@
 
 namespace Distill\Exception;
 
+/**
+ * Format guesser required exception.
+ *
+ * Exception thrown when a class depends on a format guesser (e.g. Chooser) and no
+ * guesser has been configured.
+ */
 class FormatGuesserRequiredException extends \Exception implements ExceptionInterface
 {
     /**

@@ -11,6 +11,12 @@
 
 namespace Distill\Exception;
 
+/**
+ * Strategy required exception.
+ *
+ * Exception thrown when a class depends on a strategy (e.g. Chooser) and no
+ * strategy has been configured.
+ */
 class StrategyRequiredException extends \Exception implements ExceptionInterface
 {
     /**

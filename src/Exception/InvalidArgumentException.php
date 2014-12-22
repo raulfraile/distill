@@ -11,6 +11,11 @@
 
 namespace Distill\Exception;
 
+/**
+ * Invalid argument exception.
+ *
+ * Exception thrown when the parameters passed to a method or function are not correct.
+ */
 class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
 {
     /**

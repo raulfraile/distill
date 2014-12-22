@@ -13,6 +13,11 @@ namespace Distill\Exception\Method;
 
 use Distill\Exception\ExceptionInterface as BaseExceptionInterface;
 
+/**
+ * Exception interface for all exceptions related to the methods.
+ *
+ * @api
+ */
 interface ExceptionInterface extends BaseExceptionInterface
 {
 }
