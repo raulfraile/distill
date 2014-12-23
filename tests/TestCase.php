@@ -130,7 +130,11 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
     protected function assertUncompressed($directory, $originalFile, $isSingleFile = false, $prefixRemove = '')
     {
-        self::assertThat(self::compareUncompressed($directory, $originalFile, $isSingleFile, $prefixRemove), new \PHPUnit_Framework_Constraint_IsTrue(), 'uncompressed fail '.$originalFile);
+        self::assertThat(
+            self::compareUncompressed($directory, $originalFile, $isSingleFile, $prefixRemove),
+            new \PHPUnit_Framework_Constraint_IsTrue(),
+            'uncompressed fail '.$originalFile
+        );
     }
 
     protected function compareUncompressed($directory, $originalFile, $isSingleFile = false, $prefixRemove = '')
@@ -144,7 +148,14 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         foreach ($lines as $line) {
             $lineParts = explode('|', $line);
 
-            $keys[preg_replace('#^'.preg_quote($prefixRemove).'#', '', $lineParts[0])] = str_replace('__nl__', "\n", $lineParts[1])."\n";
+            $key = preg_replace('#^'.preg_quote($prefixRemove).'#', '', $lineParts[0]);
+            $content = str_replace('__nl__', "\n", $lineParts[1]);
+
+            if ($content != '') {
+                $content .= "\n";
+            }
+
+            $keys[$key] = $content;
         }
 
         if (empty($keys)) {

@@ -94,7 +94,7 @@ abstract class AbstractMethodTest extends TestCase
 
     protected function getOkTestResources(FormatInterface $format)
     {
-        $valid = ['file_ok', 'file_ok_no_dirs'];
+        $valid = ['file_ok', 'file_ok_no_dirs', 'file_ok_empty_file'];
         $ext = $format->getExtensions()[0];
         $files = [];
         foreach ($valid as $base) {
