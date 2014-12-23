@@ -79,10 +79,11 @@ abstract class AbstractMethodTest extends TestCase
     {
         // check supported formats (ok and invalid data)
         foreach ($this->supportedFormats as $format) {
-            if (file_exists($this->filesPath.'file_ok.' . $format->getExtensions()[0])) {
-                $this->checkSupportedValidFormatUsingMethod($format);
-                $this->checkSupportedInvalidFormatUsingMethod($format);
+            foreach ($this->getOkTestResources($format) as $file) {
+                $this->checkSupportedValidFormatUsingMethod($file, $format);
             }
+
+            $this->checkSupportedInvalidFormatUsingMethod($format);
         }
 
         // check unsupported formats
@@ -91,12 +92,25 @@ abstract class AbstractMethodTest extends TestCase
         }
     }
 
-    public function checkSupportedValidFormatUsingMethod(FormatInterface $format)
+    protected function getOkTestResources(FormatInterface $format)
+    {
+        $valid = ['file_ok', 'file_ok_no_dirs'];
+        $ext = $format->getExtensions()[0];
+        $files = [];
+        foreach ($valid as $base) {
+            $filename = $base.'.'.$ext;
+            if (file_exists($this->filesPath.$filename)) {
+                $files[] = $filename;
+            }
+        }
+
+        return $files;
+    }
+
+    public function checkSupportedValidFormatUsingMethod($file, FormatInterface $format)
     {
         $target = $this->getTemporaryPath();
         $this->clearTemporaryPath();
-
-        $file = 'file_ok.' . $format->getExtensions()[0];
 
         $response = $this->extract($file, $target, $format);
 

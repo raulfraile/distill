@@ -210,18 +210,22 @@ class TarExtractor extends AbstractMethod
             $name = $fields['name'];
             $type = $fields['type'];
 
+            $location = $target . DIRECTORY_SEPARATOR . $name;
             if (self::TYPE_FILE === $type) {
                 $size = $fields['size'];
                 if (0 === $size) {
                     continue;
                 }
 
+                // create the dir
+                $this->getFilesystem()->mkdir(dirname($location));
+
                 // create the file
-                file_put_contents($target . DIRECTORY_SEPARATOR . $name, $this->readBlockData($fileHandler, $size));
+                file_put_contents($location, $this->readBlockData($fileHandler, $size));
 
                 continue;
             } elseif (self::TYPE_DIRECTORY === $type) {
-                $this->getFilesystem()->mkdir($target . DIRECTORY_SEPARATOR . $name);
+                $this->getFilesystem()->mkdir($location);
             }
         }
 
