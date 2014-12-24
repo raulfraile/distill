@@ -8,6 +8,10 @@ use Distill\Tests\Method\AbstractMethodTest;
 
 class TarExtractorTest extends AbstractMethodTest
 {
+    protected $validResources = [
+        'file_ok', 'file_ok_no_dirs', 'file_ok_empty_file', 'file_ok_links'
+    ];
+
     public function setUp()
     {
         $this->method = new Method\Native\TarExtractor();
