@@ -194,6 +194,7 @@ class TarExtractor extends AbstractMethod
     protected function extractTarFile($filename, $target)
     {
         $fileHandler = fopen($filename, 'r');
+        $hardlinks = [];
 
         while (false === $this->isEof($fileHandler)) {
             $fields = $this->readBlockHeader($fileHandler, $filename);
@@ -211,25 +212,69 @@ class TarExtractor extends AbstractMethod
             $type = $fields['type'];
 
             $location = $target . DIRECTORY_SEPARATOR . $name;
-            if (self::TYPE_FILE === $type) {
-                $this->getFilesystem()->mkdir(dirname($location));
-
-                $size = $fields['size'];
-                if (0 !== $size) {
-                    file_put_contents($location, $this->readBlockData($fileHandler, $size));
-                } else {
-                    $this->getFilesystem()->touch($location);
-                }
-
-                continue;
-            } elseif (self::TYPE_DIRECTORY === $type) {
-                $this->getFilesystem()->mkdir($location);
+            switch ($type) {
+                case self::TYPE_FILE:
+                    $this->doExtractFile($location, $fields, $fileHandler);
+                    break;
+                case self::TYPE_DIRECTORY:
+                    $this->doExtractDir($location);
+                    break;
+                case self::TYPE_HARD_LINK:
+                    $hardlinks[$location] = $fields;
+                    break;
+                case self::TYPE_SYMBOLIC_LINK:
+                    $this->doExtractSymLink($location, $fields);
+                    break;
             }
+        }
+
+        // This should be done after extract all the files
+        foreach ($hardlinks as $location => $fields) {
+            $this->doExtractHardLink($location, $fields, $target);
         }
 
         fclose($fileHandler);
 
         return true;
+    }
+
+    protected function doExtractFile($location, Array $fields, $fileHandler)
+    {
+        $this->getFilesystem()->mkdir(dirname($location));
+
+        $size = $fields['size'];
+        if (0 !== $size) {
+            file_put_contents($location, $this->readBlockData($fileHandler, $size));
+        } else {
+            $this->getFilesystem()->touch($location);
+        }
+    }
+
+    protected function doExtractDir($location)
+    {
+        $this->getFilesystem()->mkdir($location);
+    }
+
+    protected function doExtractHardLink($location, Array $fields, $target)
+    {
+        $origin = $target . DIRECTORY_SEPARATOR . $fields['link'];
+
+        $onWindows = strtoupper(substr(php_uname('s'), 0, 3)) === 'WIN';
+        if ($onWindows) {
+            $this->getFilesystem()->copy($origin, $location);
+            return;
+        }
+
+        if (true !== @link($origin, $location)) {
+            throw new \RuntimeException(sprintf(
+                'Failed to create link from "%s" to "%s".', $origin, $location)
+            );
+        }
+    }
+
+    protected function doExtractSymLink($location, Array $fields)
+    {
+        $this->getFilesystem()->symlink($fields['link'], $location, true);
     }
 
     /**

@@ -31,3 +31,11 @@ printf "/level2/4.txt|4.txt file\n/level2/level3/5.txt|5.txt file" > ../file_ok_
 touch empty.txt
 tar -cvf ../file_ok_empty_file.tar empty.txt
 printf "/empty.txt|" > ../file_ok_empty_file.tar.key
+
+# tar: links
+cd level2
+ln -s ../1.txt 1.txt
+ln ../2.txt 2.txt
+cd ..
+tar -cvf file_ok_links.tar 1.txt 2.txt  level2/1.txt level2/2.txt
+printf "/1.txt|1.txt file\n/2.txt|2.txt file\n/level2/1.txt|1.txt file\n/level2/2.txt|2.txt file" > ../file_ok_links.tar.key
