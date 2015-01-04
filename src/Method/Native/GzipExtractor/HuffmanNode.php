@@ -13,13 +13,23 @@ namespace Distill\Method\Native\GzipExtractor;
 
 class HuffmanNode
 {
-    /** @var HuffmanNode $leftNode */
+
+    /**
+     * Left node
+     * @var HuffmanNode
+     */
     protected $leftNode;
 
-    /** @var HuffmanNode $rightNode */
+    /**
+     * Right node
+     * @var HuffmanNode
+     */
     protected $rightNode;
 
-    /** @var int  */
+    /**
+     * Node value
+     * @var HuffmanNode
+     */
     protected $value;
 
     /**
@@ -29,6 +39,7 @@ class HuffmanNode
     {
         $this->leftNode = null;
         $this->rightNode = null;
+        $this->value = null;
     }
 
     /**
