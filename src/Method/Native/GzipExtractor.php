@@ -152,6 +152,12 @@ class GzipExtractor extends AbstractMethod
             }
         }
 
+        // check crc32
+        $footer = unpack('Vcrc/Visize', fread($fileHandler, 8));
+        if ($footer['crc'] !== crc32($result)) {
+            throw new Exception\IO\Input\FileCorruptedException($filename);
+        }
+        
         fclose($fileHandler);
 
         // write file

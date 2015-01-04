@@ -278,4 +278,5 @@ class FileHeader
     {
         $this->comment = $comment;
     }
+
 }
