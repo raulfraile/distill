@@ -27,12 +27,10 @@ use Distill\Method\Native\GzipExtractor\HuffmanTree;
  */
 class GzipExtractor extends AbstractMethod
 {
-    const MAGIC_NUMBER = '1f8b';
 
     const COMPRESSION_TYPE_NON_COMPRESSED = 0x00;
     const COMPRESSION_TYPE_FIXED_HUFFMAN = 0x01;
     const COMPRESSION_TYPE_DYNAMIC_HUFFMAN = 0x02;
-
 
     const HLIT_BITS = 5;
     const HDIST_BITS = 5;
@@ -42,19 +40,22 @@ class GzipExtractor extends AbstractMethod
     const HDIST_INITIAL_VALUE = 1;
     const HCLEN_INITIAL_VALUE = 4;
 
-    /**
-     * @var BitReader
-     */
-    protected $bitReader;
+    protected $codeLenghtsOrders = [
+        16, 17, 18, 0, 8, 7, 9, 6, 10, 5,
+        11, 4, 12, 3, 13, 2, 14, 1, 15
+    ];
 
-    protected $currentBitPosition = 0;
-    protected $currentByte = null;
+    protected $distanceBase = [
+        1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97,
+        129, 193, 257, 385, 513, 769, 1025, 1537, 2049,
+        3073, 4097, 6145, 8193, 12289, 16385, 24577
+    ];
 
-    protected $codeLenghtsOrders = [16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15];
-
-    protected $distanceBase = [1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577];
-
-    protected $lengthBase = [3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258];
+    protected $lengthBase = [
+        3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17,
+        19, 23, 27, 31, 35, 43, 51, 59, 67, 83,
+        99, 115, 131, 163, 195, 227, 258
+    ];
 
     /**
      * {@inheritdoc}
@@ -84,8 +85,20 @@ class GzipExtractor extends AbstractMethod
         return get_class();
     }
 
-    protected function readFileHeader($fileHandler)
+    /**
+     * {@inheritdoc}
+     */
+    public static function getUncompressionSpeedLevel(FormatInterface $format = null)
     {
+        return MethodInterface::SPEED_LEVEL_LOWEST;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isFormatSupported(FormatInterface $format)
+    {
+        return $format instanceof Gz;
     }
 
     /**
@@ -101,7 +114,7 @@ class GzipExtractor extends AbstractMethod
     {
         $fileHandler = fopen($filename, 'rb');
 
-        $this->bitReader = new BitReader($fileHandler);
+        $bitReader = new BitReader($fileHandler);
 
         // read file header
         try {
@@ -115,8 +128,8 @@ class GzipExtractor extends AbstractMethod
         $isBlockFinal = false;
 
         while (false === $isBlockFinal) {
-            $isBlockFinal = 1 === $this->bitReader->read(1);
-            $compressionType = $this->bitReader->read(2);
+            $isBlockFinal = 1 === $bitReader->read(1);
+            $compressionType = $bitReader->read(2);
 
             if (self::COMPRESSION_TYPE_NON_COMPRESSED === $compressionType) {
                 // no compression
@@ -130,12 +143,12 @@ class GzipExtractor extends AbstractMethod
                 if (self::COMPRESSION_TYPE_FIXED_HUFFMAN === $compressionType) {
                     list($literalsTree, $distancesTree) = $this->getFixedHuffmanTrees();
                 } elseif (self::COMPRESSION_TYPE_DYNAMIC_HUFFMAN === $compressionType) {
-                    list($literalsTree, $distancesTree) = $this->getDynamicHuffmanTrees($fileHandler);
+                    list($literalsTree, $distancesTree) = $this->getDynamicHuffmanTrees($bitReader);
                 } else {
                     throw new Exception\IO\Input\FileCorruptedException($filename);
                 }
 
-                $result .= $this->uncompressCompressedBlock($literalsTree, $distancesTree, $fileHandler);
+                $result .= $this->uncompressCompressedBlock($literalsTree, $distancesTree, $bitReader);
             }
         }
 
@@ -149,62 +162,52 @@ class GzipExtractor extends AbstractMethod
     }
 
 
-    protected function uncompressCompressedBlock(HuffmanTree $literalsTree, HuffmanTree $distancesTree, $fileHandler)
+    protected function uncompressCompressedBlock(HuffmanTree $literalsTree, HuffmanTree $distancesTree, BitReader $bitReader)
     {
         $endOfBlock = false;
-        $bits = '';
 
         $result = '';
         while (false === $endOfBlock) {
-            $bits .= decbin($this->bitReader->read(1));
 
-            $decoded = $literalsTree->decode($bits);
+            $decoded = $literalsTree->findNextSymbol($bitReader);
+            if (false === $decoded) {
+                return false;
+            }
 
-            if (false !== $decoded) {
-                if (256 === $decoded) {
-                    $endOfBlock = true;
-                } elseif ($decoded < 256) {
-                    $result .= chr($decoded);
-                } else {
-                    $distance = false;
-                    $distanceBits = '';
-                    //while (false === $distance) {
-                    //$distanceBits .= decbin($this->readBits2($fileHandler, 1));
-
-                    //}
-
-                    $lengthExtraBits = $this->getExtraLengthBits($decoded);
-                    $lengthExtra = 0;
-                    if ($lengthExtraBits > 0) {
-                        $lengthExtra = $this->bitReader->read($lengthExtraBits);
-                    }
-
-                    $distance = false;
-                    $distanceBits = '';
-                    while (false === $distance) {
-                        $distanceBits .= decbin($this->bitReader->read(1));
-                        $distance = $distancesTree->decode($distanceBits);
-                    }
-
-                    $distanceExtra = $this->bitReader->read($this->getExtraDistanceBits($distance));
-
-                    $d = $this->distanceBase[$distance] + $distanceExtra;
-                    $l = $this->lengthBase[$decoded - 257] + $lengthExtra;
-                    $concat = substr($result, -1 * $d, $l);
-                    if (strlen($concat) < $l) {
-                        $concat = substr(str_repeat($concat, $l / strlen($concat)), 0, $l);
-                    }
-
-                    $result .= $concat;
+            if (256 === $decoded) {
+                $endOfBlock = true;
+            } elseif ($decoded < 256) {
+                $result .= chr($decoded);
+            } else {
+                $lengthExtraBits = $this->getExtraLengthBits($decoded);
+                $lengthExtra = 0;
+                if ($lengthExtraBits > 0) {
+                    $lengthExtra = $bitReader->read($lengthExtraBits);
                 }
 
-                $bits = '';
+                $distance = $distancesTree->findNextSymbol($bitReader);
+                $distanceExtra = $bitReader->read($this->getExtraDistanceBits($distance));
+
+                $d = $this->distanceBase[$distance] + $distanceExtra;
+                $l = $this->lengthBase[$decoded - 257] + $lengthExtra;
+                $concat = substr($result, -1 * $d, $l);
+                if (strlen($concat) < $l) {
+                    $concat = substr(str_repeat($concat, $l / strlen($concat)), 0, $l);
+                }
+
+                $result .= $concat;
             }
+
         }
 
         return $result;
     }
 
+    /**
+     * Creates the Huffman codes for literals and distances for fixed Huffman compression.
+     *
+     * @return HuffmanTree[] Literals tree and distances tree.
+     */
     protected function getFixedHuffmanTrees()
     {
         return [
@@ -218,64 +221,64 @@ class GzipExtractor extends AbstractMethod
         ];
     }
 
-    protected function getDynamicHuffmanTrees($fileHandler)
+    /**
+     * Creates the Huffman codes for literals and distances for dynamic Huffman compression.
+     * @param BitReader $bitReader Bit reader.
+     *
+     * @return HuffmanTree[] Literals tree and distances tree.
+     */
+    protected function getDynamicHuffmanTrees(BitReader $bitReader)
     {
-        $literalsNumber = $this->bitReader->read(self::HLIT_BITS) + self::HLIT_INITIAL_VALUE;
-        $distancesNumber = $this->bitReader->read(self::HDIST_BITS) + self::HDIST_INITIAL_VALUE;
-        $codeLengthsNumber = $this->bitReader->read(self::HCLEN_BITS) + self::HCLEN_INITIAL_VALUE;
+        $literalsNumber = $bitReader->read(self::HLIT_BITS) + self::HLIT_INITIAL_VALUE;
+        $distancesNumber = $bitReader->read(self::HDIST_BITS) + self::HDIST_INITIAL_VALUE;
+        $codeLengthsNumber = $bitReader->read(self::HCLEN_BITS) + self::HCLEN_INITIAL_VALUE;
 
         // code lengths
         $codeLengths = [];
         for ($i = 0; $i < $codeLengthsNumber; $i++) {
-            $codeLengths[$this->codeLenghtsOrders[$i]] = $this->bitReader->read(3);
+            $codeLengths[$this->codeLenghtsOrders[$i]] = $bitReader->read(3);
         }
 
         // create code lengths huffman tree
-
         $codeLengthsTree = HuffmanTree::createFromLengths($codeLengths);
 
         $i = 0;
-        $bits = '';
-
         $literalAndDistanceLengths = [];
         $previousCodeLength = 0;
         while ($i < ($literalsNumber + $distancesNumber)) {
-            $bits .= decbin($this->bitReader->read(1));
+            $symbol = $codeLengthsTree->findNextSymbol($bitReader);
+            if (false === $symbol) {
+                return false;
+            }
 
-            $decoded = $codeLengthsTree->decode($bits);
+            if ($symbol >= 0 && $symbol <= 15) {
+                // "normal" length
+                $literalAndDistanceLengths[] = $symbol;
+                $previousCodeLength = $symbol;
 
-            if (false !== $decoded) {
-                if ($decoded >= 0 && $decoded <= 15) {
-                    // "normal" length
-                    $literalAndDistanceLengths[] = $decoded;
-                    $previousCodeLength = $decoded;
-
-                    $i++;
-                } elseif ($decoded >= 16 && $decoded <= 18) {
-                    // repeat
-                    switch ($decoded) {
-                        case 16:
-                            $times = $this->bitReader->read(2) + 3;
-                            $repeatedValue = $previousCodeLength;
-                            break;
-                        case 17:
-                            $times = $this->bitReader->read(3) + 3;
-                            $repeatedValue = 0;
-                            break;
-                        default:
-                            $times = $this->bitReader->read(7) + 11;
-                            $repeatedValue = 0;
-                            break;
-                    }
-
-                    for ($j = 0; $j < $times; $j++) {
-                        $literalAndDistanceLengths[] = $repeatedValue;
-                    }
-
-                    $i += $times;
+                $i++;
+            } elseif ($symbol >= 16 && $symbol <= 18) {
+                // repeat
+                switch ($symbol) {
+                    case 16:
+                        $times = $bitReader->read(2) + 3;
+                        $repeatedValue = $previousCodeLength;
+                        break;
+                    case 17:
+                        $times = $bitReader->read(3) + 3;
+                        $repeatedValue = 0;
+                        break;
+                    default:
+                        $times = $bitReader->read(7) + 11;
+                        $repeatedValue = 0;
+                        break;
                 }
 
-                $bits = '';
+                for ($j = 0; $j < $times; $j++) {
+                    $literalAndDistanceLengths[] = $repeatedValue;
+                }
+
+                $i += $times;
             }
         }
 
@@ -302,6 +305,12 @@ class GzipExtractor extends AbstractMethod
         }
     }
 
+    /**
+     * Gets the number of extra bits for the distance.
+     * @param int $value Distance value.
+     *
+     * @return int Number of bits.
+     */
     public function getExtraDistanceBits($value)
     {
         if ($value >= 0 && $value <= 1) {
@@ -313,19 +322,4 @@ class GzipExtractor extends AbstractMethod
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getUncompressionSpeedLevel(FormatInterface $format = null)
-    {
-        return MethodInterface::SPEED_LEVEL_LOWEST;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isFormatSupported(FormatInterface $format)
-    {
-        return $format instanceof Gz;
-    }
 }

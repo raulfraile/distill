@@ -51,19 +51,19 @@ class HuffmanTree
 
         // step 2
         $code = 0;
-        $next_code = [];
+        $nextCode = [];
         $bl_count[0] = 0;
         for ($bits = 1; $bits <= $maxBitLength; $bits++) {
             $code = ($code + $bl_count[$bits-1]) << 1;
-            $next_code[$bits] = $code;
+            $nextCode[$bits] = $code;
         }
 
         // step 3
         $i = 0;
         foreach ($lengths as $key => $length) {
             if ($length != 0) {
-                $codes[$key] = str_pad(decbin($next_code[$length]), $length, '0', STR_PAD_LEFT);
-                $next_code[$length]++;
+                $codes[$key] = str_pad(decbin($nextCode[$length]), $length, '0', STR_PAD_LEFT);
+                $nextCode[$length]++;
 
                 $i++;
             }
@@ -145,6 +145,18 @@ class HuffmanTree
         }
 
         return $currentNode->getValue();
+    }
+
+    public function findNextSymbol(BitReader $bitReader)
+    {
+        $symbol = false;
+        $bits = '';
+        while (false === $symbol) {
+            $bits .= decbin($bitReader->read(1));
+            $symbol = $this->decode($bits);
+        }
+
+        return $symbol;
     }
 
     /**
