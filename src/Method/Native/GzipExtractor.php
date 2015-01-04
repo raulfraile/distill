@@ -157,7 +157,7 @@ class GzipExtractor extends AbstractMethod
         if ($footer['crc'] !== crc32($result)) {
             throw new Exception\IO\Input\FileCorruptedException($filename);
         }
-        
+
         fclose($fileHandler);
 
         // write file

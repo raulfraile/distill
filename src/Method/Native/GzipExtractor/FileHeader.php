@@ -19,10 +19,13 @@ class FileHeader
 
     const COMPRESSION_METHOD_DEFLATE = 8;
 
+    const FLAGS_TEXT = 0x01;
     const FLAGS_HCRC = 0x02;
     const FLAGS_EXTRA = 0x04;
     const FLAGS_NAME = 0x08;
     const FLAGS_COMMENT = 0x10;
+
+    protected $reservedFlags = [0x20, 0x40, 0x80];
 
     /**
      * Compression method.
@@ -37,6 +40,12 @@ class FileHeader
     protected $flags;
 
     /**
+     * Extra flags.
+     * @var int
+     */
+    protected $extraFlags;
+
+    /**
      * Modification time.
      * @var \DateTime
      */
@@ -44,11 +53,18 @@ class FileHeader
 
     protected $operatingSystem;
 
-    protected $crc32;
+    protected $crc16;
 
     protected $originalFilename;
 
     protected $comment;
+
+    /**
+     * @var array
+     */
+    protected $extraSubfields;
+
+    protected $extraData;
 
     public static function createFromResource($filename, $fileHandler)
     {
@@ -56,6 +72,7 @@ class FileHeader
 
         $data = unpack("nmagicNumber/C1compressionMethod/C1flags/LmodificationTime/C1extraFlags/C1os", fread($fileHandler, 10));
 
+        // check magic number and compression method
         if (self::MAGIC_NUMBER !== $data['magicNumber'] ||
             self::COMPRESSION_METHOD_DEFLATE !== $data['compressionMethod']) {
             throw new FileCorruptedException($filename);
@@ -64,41 +81,53 @@ class FileHeader
         $header
             ->setCompressionMethod($data['compressionMethod'])
             ->setFlags($data['flags'])
+            ->setExtraFlags($data['extraFlags'])
             ->setModificationTimeFromUnixEpoch($data['modificationTime'])
             ->setOperatingSystem($data['os']);
 
         // if FLG.FEXTRA set
         if (($header->getFlags() & self::FLAGS_EXTRA) === self::FLAGS_EXTRA) {
-            $extraLength = fread($fileHandler, 2);
-            $extraField = fread($fileHandler, $extraLength);
+            $extraFieldData = unpack("C2subfield/vlength", fread($fileHandler, 10));
+
+            $header
+                ->setExtraSubfields($extraFieldData['subfield1'], $extraFieldData['subfield2'])
+                ->setExtraData(fread($fileHandler, $extraFieldData['length']));
         }
 
         // if FLG.FNAME set
         if (($header->getFlags() & self::FLAGS_NAME) === self::FLAGS_NAME) {
-            $originalFilename = '';
-            while (($char = fread($fileHandler, 1)) != "\0") {
-                $originalFilename .= $char;
-            }
-
-            $header->setOriginalFilename($originalFilename);
+            $header->setOriginalFilename(self::readString($fileHandler));
         }
 
         // if FLG.FCOMMENT set
         if (($header->getFlags() & self::FLAGS_COMMENT) === self::FLAGS_COMMENT) {
-            $comment = '';
-            while (($char = fread($fileHandler, 1)) != "\0") {
-                $comment .= $char;
-            }
-
-            $header->setComment($comment);
+            $header->setComment(self::readString($fileHandler));
         }
 
         // if FLG.FHCRC set
         if (($header->getFlags() & self::FLAGS_HCRC) === self::FLAGS_HCRC) {
-            $crc16 = fread($fileHandler, 2);
+            $crcData = unpack('vcrc', fread($fileHandler, 2));
+            $header->setCrc16($crcData['crc']);
+
         }
 
         return $header;
+    }
+
+    /**
+     * Reads a zero-terminated string.
+     * @param resource $fileHandler File handler.
+     *
+     * @return string Zero-terminated string.
+     */
+    public static function readString($fileHandler)
+    {
+        $result = '';
+        while (($char = fread($fileHandler, 1)) != "\0") {
+            $result .= $char;
+        }
+
+        return $result;
     }
 
     /**
@@ -230,19 +259,19 @@ class FileHeader
     /**
      * @return mixed
      */
-    public function getCrc32()
+    public function getCrc16()
     {
-        return $this->crc32;
+        return $this->crc16;
     }
 
     /**
-     * @param mixed $crc32
+     * @param mixed $crc16
      *
      * @return FileHeader
      */
-    public function setCrc32($crc32)
+    public function setCrc16($crc16)
     {
-        $this->crc32 = $crc32;
+        $this->crc16 = $crc16;
 
         return $this;
     }
@@ -278,5 +307,67 @@ class FileHeader
     {
         $this->comment = $comment;
     }
+
+    /**
+     * @return int
+     */
+    public function getExtraFlags()
+    {
+        return $this->extraFlags;
+    }
+
+    /**
+     * @param int $extraFlags
+     *
+     * @return FileHeader
+     */
+    public function setExtraFlags($extraFlags)
+    {
+        $this->extraFlags = $extraFlags;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExtraSubfields()
+    {
+        return $this->extraSubfields;
+    }
+
+    /**
+     * @param array $extraSubfields
+     *
+     * @return FileHeader
+     */
+    public function setExtraSubfields($extraSubfields)
+    {
+        $this->extraSubfields = $extraSubfields;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExtraData()
+    {
+        return $this->extraData;
+    }
+
+    /**
+     * @param mixed $extraData
+     *
+     * @return FileHeader
+     */
+    public function setExtraData($extraData)
+    {
+        $this->extraData = $extraData;
+
+        return $this;
+    }
+
+
 
 }
