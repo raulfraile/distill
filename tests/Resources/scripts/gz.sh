@@ -24,3 +24,7 @@ cd $FILES_DIR/uncompressed
 gzip -k 1.txt
 mv 1.txt.gz ../file_ok.gz
 printf "/1.txt|1.txt file" > ../file_ok.gz.key
+
+gzip -1 -k 1.txt
+mv 1.txt.gz ../file_ok_fast.gz
+printf "/1.txt|1.txt file" > ../file_ok_fast.gz.key
