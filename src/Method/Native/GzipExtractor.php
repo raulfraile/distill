@@ -159,7 +159,11 @@ class GzipExtractor extends AbstractMethod
         fclose($fileHandler);
 
         // write file
-        $location = $target.DIRECTORY_SEPARATOR.$fileHeader->getOriginalFilename();
+        $outputFilename = $fileHeader->getOriginalFilename();
+        if (empty($outputFilename)) {
+            $outputFilename = pathinfo($filename, PATHINFO_FILENAME);
+        }
+        $location = $target . DIRECTORY_SEPARATOR . $outputFilename;
         file_put_contents($location, $result);
 
         return true;
