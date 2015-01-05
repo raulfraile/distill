@@ -169,7 +169,14 @@ class GzipExtractor extends AbstractMethod
         return true;
     }
 
-
+    /**
+     * Uncompresses a compressed block (fixed or dynamic Huffman).
+     * @param HuffmanTree $literalsTree  Literals Huffman tree.
+     * @param HuffmanTree $distancesTree Distances Huffman tree.
+     * @param BitReader   $bitReader     Bit reader.
+     *
+     * @return bool|string
+     */
     protected function uncompressCompressedBlock(HuffmanTree $literalsTree, HuffmanTree $distancesTree, BitReader $bitReader)
     {
         $endOfBlock = false;

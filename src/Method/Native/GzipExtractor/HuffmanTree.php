@@ -17,11 +17,18 @@ class HuffmanTree
     protected $rootNode;
 
     /**
+     * Tree height.
+     * @var int
+     */
+    protected $height;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
         $this->rootNode = null;
+        $this->height = null;
     }
 
     /**
@@ -106,6 +113,8 @@ class HuffmanTree
             }
         }
 
+        $tree->setHeight($maxBitLength);
+
         return $tree;
     }
 
@@ -118,6 +127,10 @@ class HuffmanTree
     public function decode($value)
     {
         if (empty($value)) {
+            return false;
+        }
+
+        if (null !== $this->height && strlen($value) > $this->height) {
             return false;
         }
 
@@ -187,4 +200,28 @@ class HuffmanTree
 
         return $this;
     }
+
+    /**
+     * Gets the height of the tree.
+     *
+     * @return int Tree height.
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
+     * Sets the height of the tree.
+     * @param int $height Tree height.
+     *
+     * @return HuffmanTree
+     */
+    public function setHeight($height)
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
 }
