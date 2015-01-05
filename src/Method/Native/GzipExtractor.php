@@ -133,11 +133,9 @@ class GzipExtractor extends AbstractMethod
 
             if (self::COMPRESSION_TYPE_NON_COMPRESSED === $compressionType) {
                 // no compression
+                $data = unpack("vlength/vlengthOneComplement", fread($fileHandler, 4));
 
-                $lenght = fread($fileHandler, 2);
-                $lenghtOneComplement = fread($fileHandler, 2);
-
-                $result .= fread($fileHandler, $lenght);
+                $result .= fread($fileHandler, $data['length']);
             } else {
                 // compression
                 if (self::COMPRESSION_TYPE_FIXED_HUFFMAN === $compressionType) {
