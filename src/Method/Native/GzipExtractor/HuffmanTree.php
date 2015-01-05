@@ -40,21 +40,21 @@ class HuffmanTree
 
         // step 1
         $maxBitLength = max($lengths);
-        $bl_count = array_combine(range(1, $maxBitLength), array_fill(0, $maxBitLength, 0));
+        $blCount = array_combine(range(1, $maxBitLength), array_fill(0, $maxBitLength, 0));
         foreach ($lengths as $value) {
-            if (false === array_key_exists($value, $bl_count)) {
-                $bl_count[$value] = 0;
+            if (false === array_key_exists($value, $blCount)) {
+                $blCount[$value] = 0;
             }
 
-            $bl_count[$value]++;
+            $blCount[$value]++;
         }
 
         // step 2
         $code = 0;
         $nextCode = [];
-        $bl_count[0] = 0;
+        $blCount[0] = 0;
         for ($bits = 1; $bits <= $maxBitLength; $bits++) {
-            $code = ($code + $bl_count[$bits-1]) << 1;
+            $code = ($code + $blCount[$bits-1]) << 1;
             $nextCode[$bits] = $code;
         }
 
@@ -147,6 +147,12 @@ class HuffmanTree
         return $currentNode->getValue();
     }
 
+    /**
+     * Finds the next symbol that can be decoded by the tree and returns its value.
+     * @param BitReader $bitReader Bit reader.
+     *
+     * @return bool|int The decoded value, FALSE if no value could be decoded.
+     */
     public function findNextSymbol(BitReader $bitReader)
     {
         $symbol = false;

@@ -296,7 +296,7 @@ class GzipExtractor extends AbstractMethod
 
     /**
      * Gets the number of bits for the extra length.
-     * @param $value
+     * @param int $value Length value.
      *
      * @return int Number of bits.
      */

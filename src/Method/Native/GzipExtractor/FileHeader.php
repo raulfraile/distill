@@ -66,6 +66,15 @@ class FileHeader
 
     protected $extraData;
 
+    /**
+     * Creates an instance from a resource.
+     * @param string   $filename    File name.
+     * @param resource $fileHandler File handler.
+     *
+     * @throws FileCorruptedException
+     *
+     * @return FileHeader
+     */
     public static function createFromResource($filename, $fileHandler)
     {
         $header = new FileHeader();
@@ -141,7 +150,8 @@ class FileHeader
     }
 
     /**
-     * @param mixed $compressionMethod
+     * Sets the compression method.
+     * @param int $compressionMethod Compression method.
      *
      * @return FileHeader
      */
@@ -257,7 +267,9 @@ class FileHeader
     }
 
     /**
-     * @return mixed
+     * Gets the CRC16 value of the header.
+     *
+     * @return string CRC16 of the header.
      */
     public function getCrc16()
     {
@@ -265,7 +277,8 @@ class FileHeader
     }
 
     /**
-     * @param mixed $crc16
+     * Sets the CRC16 value of the header.
+     * @param string $crc16 CRC16 value
      *
      * @return FileHeader
      */
@@ -277,7 +290,9 @@ class FileHeader
     }
 
     /**
-     * @return mixed
+     * Gets the original name of the compressed file.
+     *
+     * @return string Original name.
      */
     public function getOriginalFilename()
     {
@@ -285,15 +300,22 @@ class FileHeader
     }
 
     /**
-     * @param mixed $originalFilename
+     * Sets the original name of the compresses file.
+     * @param string $originalFilename Original name.
+     *
+     * @return FileHeader
      */
     public function setOriginalFilename($originalFilename)
     {
         $this->originalFilename = $originalFilename;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * Gets the comment included in the file.
+     *
+     * @return string Comment.
      */
     public function getComment()
     {
@@ -301,15 +323,22 @@ class FileHeader
     }
 
     /**
-     * @param mixed $comment
+     * Sets the comment included in the file.
+     * @param string $comment Comment.
+     *
+     * @return FileHeader
      */
     public function setComment($comment)
     {
         $this->comment = $comment;
+
+        return $this;
     }
 
     /**
-     * @return int
+     * Gets the extra flags.
+     *
+     * @return int Extra flags.
      */
     public function getExtraFlags()
     {
@@ -317,7 +346,8 @@ class FileHeader
     }
 
     /**
-     * @param int $extraFlags
+     * Sets the extra flags.
+     * @param int $extraFlags Extra flags.
      *
      * @return FileHeader
      */
@@ -329,7 +359,9 @@ class FileHeader
     }
 
     /**
-     * @return array
+     * Gets the extra subfields (SI1 and SI2).
+     *
+     * @return array Extra subfields.
      */
     public function getExtraSubfields()
     {
@@ -337,19 +369,23 @@ class FileHeader
     }
 
     /**
-     * @param array $extraSubfields
+     * Sets the extra subfields (SI1 and SI2).
+     * @param string $si1 SI1 subfield.
+     * @param string $si2 SI2 subfield.
      *
      * @return FileHeader
      */
-    public function setExtraSubfields($extraSubfields)
+    public function setExtraSubfields($si1, $si2)
     {
-        $this->extraSubfields = $extraSubfields;
+        $this->extraSubfields = [$si1, $si2];
 
         return $this;
     }
 
     /**
-     * @return mixed
+     * Gets the extra data.
+     *
+     * @return string Extra data.
      */
     public function getExtraData()
     {
@@ -357,7 +393,8 @@ class FileHeader
     }
 
     /**
-     * @param mixed $extraData
+     * Sets extra data.
+     * @param string $extraData Extra data
      *
      * @return FileHeader
      */
