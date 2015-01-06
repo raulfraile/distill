@@ -146,8 +146,11 @@ class GzipExtractor extends AbstractMethod
                     throw new Exception\IO\Input\FileCorruptedException($filename);
                 }
 
-                $result .= $this->uncompressCompressedBlock($literalsTree, $distancesTree, $bitReader);
+                $result .= $this->uncompressCompressedBlock($literalsTree, $distancesTree, $bitReader, $result);
             }
+
+            $literalsTree = null;
+            $distancesTree = null;
         }
 
         // check crc32
@@ -170,18 +173,20 @@ class GzipExtractor extends AbstractMethod
     }
 
     /**
-     * Uncompresses a compressed block (fixed or dynamic Huffman).
+     * Uncompresses a compressed block (fixed or dynamic Huffman) and saves the result in the
+     * $result input variable.
      * @param HuffmanTree $literalsTree  Literals Huffman tree.
      * @param HuffmanTree $distancesTree Distances Huffman tree.
      * @param BitReader   $bitReader     Bit reader.
+     * @param string      $window        Window.
      *
      * @return bool|string
      */
-    protected function uncompressCompressedBlock(HuffmanTree $literalsTree, HuffmanTree $distancesTree, BitReader $bitReader)
+    protected function uncompressCompressedBlock(HuffmanTree $literalsTree, HuffmanTree $distancesTree, BitReader $bitReader, $window)
     {
         $endOfBlock = false;
-
         $result = '';
+        $resultLength = 0;
         while (false === $endOfBlock) {
 
             $decoded = $literalsTree->findNextSymbol($bitReader);
@@ -193,6 +198,7 @@ class GzipExtractor extends AbstractMethod
                 $endOfBlock = true;
             } elseif ($decoded < 256) {
                 $result .= chr($decoded);
+                $resultLength++;
             } else {
                 $lengthExtraBits = $this->getExtraLengthBits($decoded);
                 $lengthExtra = 0;
@@ -205,12 +211,22 @@ class GzipExtractor extends AbstractMethod
 
                 $d = $this->distanceBase[$distance] + $distanceExtra;
                 $l = $this->lengthBase[$decoded - 257] + $lengthExtra;
-                $concat = substr($result, -1 * $d, $l);
-                if (strlen($concat) < $l) {
-                    $concat = substr(str_repeat($concat, $l / strlen($concat)), 0, $l);
+
+
+                if ($d <= $resultLength) {
+                    $concat = substr($result, -1 * $d, $l);
+                } else {
+                    $concat = substr($window . $result, -1 * $d, $l);
+                }
+
+                $concatLength = strlen($concat);
+                if ($concatLength < $l) {
+                    // repeat last x character y times
+                    $concat .= substr(str_repeat($concat, $l - $concatLength), 0, $l - $concatLength);
                 }
 
                 $result .= $concat;
+                $resultLength += $concatLength;
             }
 
         }
@@ -262,6 +278,7 @@ class GzipExtractor extends AbstractMethod
         $previousCodeLength = 0;
         while ($i < ($literalsNumber + $distancesNumber)) {
             $symbol = $codeLengthsTree->findNextSymbol($bitReader);
+
             if (false === $symbol) {
                 return false;
             }

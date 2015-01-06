@@ -13,22 +13,32 @@ namespace Distill\Method\Native\GzipExtractor;
 
 class HuffmanTree
 {
-    /** @var HuffmanNode $rootNode */
-    protected $rootNode;
 
     /**
-     * Tree height.
+     * Length of the longest code.
      * @var int
      */
-    protected $height;
+    protected $maxLength;
+
+    /**
+     * Length of the shortest code.
+     * @var int
+     */
+    protected $minLength;
+
+    /**
+     * Values.
+     * @var array
+     */
+    protected $values;
 
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->rootNode = null;
-        $this->height = null;
+        $this->minLength = null;
+        $this->maxLength = null;
     }
 
     /**
@@ -43,14 +53,17 @@ class HuffmanTree
     {
         ksort($lengths);
 
-        $codes = [];
-
         // step 1
         $maxBitLength = max($lengths);
+        $minBitLength = $maxBitLength;
         $blCount = array_combine(range(1, $maxBitLength), array_fill(0, $maxBitLength, 0));
         foreach ($lengths as $value) {
             if (false === array_key_exists($value, $blCount)) {
                 $blCount[$value] = 0;
+            }
+
+            if ($value < $minBitLength && $value > 0) {
+                $minBitLength = $value;
             }
 
             $blCount[$value]++;
@@ -67,6 +80,7 @@ class HuffmanTree
 
         // step 3
         $i = 0;
+        $codes = [];
         foreach ($lengths as $key => $length) {
             if ($length != 0) {
                 $codes[$key] = str_pad(decbin($nextCode[$length]), $length, '0', STR_PAD_LEFT);
@@ -77,43 +91,13 @@ class HuffmanTree
         }
 
         // generate the tree
-        asort($codes);
+        //asort($codes);
+
         $tree = new HuffmanTree();
-        $tree->setRootNode(new HuffmanNode());
 
-        foreach ($codes as $key => $code) {
-            $currentNode = $tree->getRootNode();
-
-            for ($i = 0; $i < strlen($code); $i++) {
-                if ('0' === $code[$i]) {
-                    if (null === $currentNode->getLeftNode()) {
-                        $node = new HuffmanNode();
-
-                        if (($i+1) >= strlen($code)) {
-                            $node->setValue($key);
-                        }
-
-                        $currentNode->setLeftNode($node);
-                    }
-
-                    $currentNode = $currentNode->getLeftNode();
-                } else {
-                    if (null === $currentNode->getRightNode()) {
-                        $node = new HuffmanNode();
-
-                        if (($i+1) >= strlen($code)) {
-                            $node->setValue($key);
-                        }
-
-                        $currentNode->setRightNode($node);
-                    }
-
-                    $currentNode = $currentNode->getRightNode();
-                }
-            }
-        }
-
-        $tree->setHeight($maxBitLength);
+        $tree->setValues(array_combine(array_values($codes), array_keys($codes)));
+        $tree->setMinLength($minBitLength);
+        $tree->setMaxLength($maxBitLength);
 
         return $tree;
     }
@@ -126,38 +110,11 @@ class HuffmanTree
      */
     public function decode($value)
     {
-        if (empty($value)) {
+        if (false === array_key_exists($value, $this->values)) {
             return false;
         }
 
-        if (null !== $this->height && strlen($value) > $this->height) {
-            return false;
-        }
-
-        $currentNode = $this->rootNode;
-
-        $i = 0;
-        while ($i < strlen($value)) {
-            $currentValue = $value[$i];
-
-            if ($currentNode->isLeaf()) {
-                return false;
-            }
-
-            if ('0' === $currentValue) {
-                $currentNode = $currentNode->getLeftNode();
-            } else {
-                $currentNode = $currentNode->getRightNode();
-            }
-
-            $i++;
-        }
-
-        if (false === $currentNode->isLeaf()) {
-            return false;
-        }
-
-        return $currentNode->getValue();
+        return $this->values[$value];
     }
 
     /**
@@ -168,60 +125,91 @@ class HuffmanTree
      */
     public function findNextSymbol(BitReader $bitReader)
     {
-        $symbol = false;
-        $bits = '';
-        while (false === $symbol) {
-            $bits .= decbin($bitReader->read(1));
+        // initialize with minimum bits
+        $bits = strrev($bitReader->readBitStream($this->minLength));
+        $bitsLength = $this->minLength;
+
+        $symbol = $this->decode($bits);
+
+        while (false === $symbol && $bitsLength < $this->maxLength) {
+            $bits .= $bitReader->readBitStream(1);
             $symbol = $this->decode($bits);
+
+            $bitsLength++;
         }
 
         return $symbol;
     }
 
     /**
-     * Gets the root node.
+     * Gets the length of the longest code.
      *
-     * @return HuffmanNode Root node
+     * @return int Max length.
      */
-    public function getRootNode()
+    public function getMaxLength()
     {
-        return $this->rootNode;
+        return $this->maxLength;
     }
 
     /**
-     * Sets the root node.
-     * @param HuffmanNode $rootNode Root node.
+     * Sets the length of longest code.
+     * @param int $maxLength Max length.
      *
      * @return HuffmanTree
      */
-    public function setRootNode(HuffmanNode $rootNode)
+    public function setMaxLength($maxLength)
     {
-        $this->rootNode = $rootNode;
+        $this->maxLength = $maxLength;
 
         return $this;
     }
 
     /**
-     * Gets the height of the tree.
+     * Gets the length of the shortest code.
      *
-     * @return int Tree height.
+     * @return int Min length.
      */
-    public function getHeight()
+    public function getMinLength()
     {
-        return $this->height;
+        return $this->minLength;
     }
 
     /**
-     * Sets the height of the tree.
-     * @param int $height Tree height.
+     * Sets the length of the shortest code.
+     * @param int $minLength Min length.
      *
      * @return HuffmanTree
      */
-    public function setHeight($height)
+    public function setMinLength($minLength)
     {
-        $this->height = $height;
+        $this->minLength = $minLength;
 
         return $this;
     }
+
+    /**
+     * Gets the values.
+     *
+     * @return array Values.
+     */
+    public function getValues()
+    {
+        return $this->values;
+    }
+
+    /**
+     * Sets the values.
+     * @param array $values Values.
+     *
+     * @return HuffmanTree
+     */
+    public function setValues($values)
+    {
+        $this->values = $values;
+
+        return $this;
+    }
+
+
 
 }
