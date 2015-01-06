@@ -65,6 +65,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             ->name('*.php')
             ->notName('Abstract*')
             ->notName('*Interface*')
+            ->notPath('/.*\/GzipExtractor\/.*$/')
             ->depth('>= 1');
 
         foreach ($finder as $file) {

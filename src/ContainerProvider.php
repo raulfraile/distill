@@ -58,6 +58,7 @@ class ContainerProvider implements ServiceProviderInterface
             Method\Extension\Zip::getClass(),
             Method\Extension\Zlib::getClass(),
             Method\Native\TarExtractor::getClass(),
+            Method\Native\GzipExtractor::getClass(),
         ];
 
         $formatsClasses = [
