@@ -90,13 +90,12 @@ class HuffmanTree
         }
 
         // generate the tree
-        //asort($codes);
-
         $tree = new HuffmanTree();
 
-        $tree->setValues(array_combine(array_values($codes), array_keys($codes)));
-        $tree->setMinLength($minBitLength);
-        $tree->setMaxLength($maxBitLength);
+        $tree
+            ->setValues(array_combine(array_values($codes), array_keys($codes)))
+            ->setMinLength($minBitLength)
+            ->setMaxLength($maxBitLength);
 
         return $tree;
     }

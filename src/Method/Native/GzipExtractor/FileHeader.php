@@ -51,12 +51,28 @@ class FileHeader
      */
     protected $modificationTime;
 
+    /**
+     * Type of filesystem on which compression took place.
+     * @var int
+     */
     protected $operatingSystem;
 
+    /**
+     * CRC16 of the header.
+     * @var string
+     */
     protected $crc16;
 
+    /**
+     * Original filename
+     * @var string
+     */
     protected $originalFilename;
 
+    /**
+     * Comment.
+     * @var string
+     */
     protected $comment;
 
     /**
