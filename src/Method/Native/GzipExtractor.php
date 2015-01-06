@@ -27,7 +27,6 @@ use Distill\Method\Native\GzipExtractor\HuffmanTree;
  */
 class GzipExtractor extends AbstractMethod
 {
-
     const COMPRESSION_TYPE_NON_COMPRESSED = 0x00;
     const COMPRESSION_TYPE_FIXED_HUFFMAN = 0x01;
     const COMPRESSION_TYPE_DYNAMIC_HUFFMAN = 0x02;
@@ -42,19 +41,19 @@ class GzipExtractor extends AbstractMethod
 
     protected $codeLenghtsOrders = [
         16, 17, 18, 0, 8, 7, 9, 6, 10, 5,
-        11, 4, 12, 3, 13, 2, 14, 1, 15
+        11, 4, 12, 3, 13, 2, 14, 1, 15,
     ];
 
     protected $distanceBase = [
         1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97,
         129, 193, 257, 385, 513, 769, 1025, 1537, 2049,
-        3073, 4097, 6145, 8193, 12289, 16385, 24577
+        3073, 4097, 6145, 8193, 12289, 16385, 24577,
     ];
 
     protected $lengthBase = [
         3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17,
         19, 23, 27, 31, 35, 43, 51, 59, 67, 83,
-        99, 115, 131, 163, 195, 227, 258
+        99, 115, 131, 163, 195, 227, 258,
     ];
 
     /**
@@ -166,7 +165,7 @@ class GzipExtractor extends AbstractMethod
         if (empty($outputFilename)) {
             $outputFilename = pathinfo($filename, PATHINFO_FILENAME);
         }
-        $location = $target . DIRECTORY_SEPARATOR . $outputFilename;
+        $location = $target.DIRECTORY_SEPARATOR.$outputFilename;
         file_put_contents($location, $result);
 
         return true;
@@ -188,7 +187,6 @@ class GzipExtractor extends AbstractMethod
         $result = '';
         $resultLength = 0;
         while (false === $endOfBlock) {
-
             $decoded = $literalsTree->findNextSymbol($bitReader);
             if (false === $decoded) {
                 return false;
@@ -212,11 +210,10 @@ class GzipExtractor extends AbstractMethod
                 $d = $this->distanceBase[$distance] + $distanceExtra;
                 $l = $this->lengthBase[$decoded - 257] + $lengthExtra;
 
-
                 if ($d <= $resultLength) {
                     $concat = substr($result, -1 * $d, $l);
                 } else {
-                    $concat = substr($window . $result, -1 * $d, $l);
+                    $concat = substr($window.$result, -1 * $d, $l);
                 }
 
                 $concatLength = strlen($concat);
@@ -228,7 +225,6 @@ class GzipExtractor extends AbstractMethod
                 $result .= $concat;
                 $resultLength += $concatLength;
             }
-
         }
 
         return $result;
@@ -353,5 +349,4 @@ class GzipExtractor extends AbstractMethod
             throw new Exception\InvalidArgumentException('value', 'Invalid value');
         }
     }
-
 }

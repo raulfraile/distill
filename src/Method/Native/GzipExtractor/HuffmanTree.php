@@ -13,7 +13,6 @@ namespace Distill\Method\Native\GzipExtractor;
 
 class HuffmanTree
 {
-
     /**
      * Length of the longest code.
      * @var int
@@ -209,7 +208,4 @@ class HuffmanTree
 
         return $this;
     }
-
-
-
 }

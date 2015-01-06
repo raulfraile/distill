@@ -117,7 +117,6 @@ class FileHeader
         if (($header->getFlags() & self::FLAGS_HCRC) === self::FLAGS_HCRC) {
             $crcData = unpack('vcrc', fread($fileHandler, 2));
             $header->setCrc16($crcData['crc']);
-
         }
 
         return $header;
@@ -404,7 +403,4 @@ class FileHeader
 
         return $this;
     }
-
-
-
 }

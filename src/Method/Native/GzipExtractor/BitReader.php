@@ -13,7 +13,6 @@ namespace Distill\Method\Native\GzipExtractor;
 
 class BitReader
 {
-
     /**
      * Current byte.
      * @var int
@@ -67,7 +66,7 @@ class BitReader
         $result = '';
         for ($i = 0; $i < $bits; $i++) {
             $mask = pow(2, $this->currentBitPosition);
-            $result = ((($this->currentByte & $mask) === $mask) ? '1' : '0') . $result;
+            $result = ((($this->currentByte & $mask) === $mask) ? '1' : '0').$result;
 
             $this->currentBitPosition++;
             if (($i + 1) < $bits) {
@@ -115,5 +114,4 @@ class BitReader
 
         return true;
     }
-
 }
