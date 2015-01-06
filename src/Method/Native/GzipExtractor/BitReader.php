@@ -54,6 +54,12 @@ class BitReader
         return bindec($this->readBitStream($bits));
     }
 
+    /**
+     * Reads a given number of bits as a string.
+     * @param int $bits Number of bits.
+     *
+     * @return string Bits.
+     */
     public function readBitStream($bits)
     {
         $this->readByteIfNeeded();
