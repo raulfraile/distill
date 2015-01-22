@@ -21,7 +21,7 @@ use Distill\Method\MethodInterface;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class X7Zip extends AbstractCommandMethod
+class X7zip extends AbstractCommandMethod
 {
     const EXIT_CODE_OK = 0;
     const EXIT_CODE_WARNING = 1;

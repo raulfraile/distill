@@ -7,7 +7,7 @@ use Distill\Format;
 use Distill\Exception;
 use Distill\Method\Command\Cabextract;
 use Distill\Method\Command\Gnome\Gcab;
-use Distill\Method\Command\X7Zip;
+use Distill\Method\Command\X7zip;
 
 class DistillTest extends TestCase
 {
@@ -432,7 +432,7 @@ class DistillTest extends TestCase
 
         $this->distill->disableMethod(Cabextract::getName());
         $this->distill->disableMethod(Gcab::getName());
-        $this->distill->disableMethod(X7Zip::getName());
+        $this->distill->disableMethod(X7zip::getName());
 
         $result = $this->distill
             ->extract($this->filesPath.'file_ok.cab', $target, new Format\Simple\Cab());
