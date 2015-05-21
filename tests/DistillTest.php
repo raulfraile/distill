@@ -405,6 +405,20 @@ class DistillTest extends TestCase
         }
     }
 
+    public function testCanExtractWithoutRootDirectoryInCurrentDirectory()
+    {
+        $target = $this->getTemporaryPath();
+        $this->clearTemporaryPath();
+        mkdir($target);
+        chdir($target);
+
+        $response = $this->distill->extractWithoutRootDirectory($this->filesPath.'file_ok_dir.zip', '.', new Format\Simple\Zip());
+
+        $this->assertTrue($response);
+        $this->assertUncompressed($target, 'file_ok_dir.zip', false, '/uncompressed');
+        $this->clearTemporaryPath();
+    }
+
     public function testFormatIsNotSupportedAfterDisablingFormat()
     {
         $this->setExpectedException('Distill\\Exception\\IO\\Input\\FileFormatNotSupportedException');
