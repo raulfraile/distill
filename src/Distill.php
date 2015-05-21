@@ -223,6 +223,11 @@ class Distill
 
         $workingDirectory = getcwd();
         if ($workingDirectory === realpath($path)) {
+            if (dirname($workingDirectory) === $workingDirectory) {
+                // root directory
+                throw new TargetDirectoryNotWritableException($workingDirectory);
+            }
+            
             chdir(dirname($workingDirectory));
             $this->filesystem->remove($workingDirectory);
             $this->filesystem->rename($singleRootDirectoryName, $workingDirectory);
