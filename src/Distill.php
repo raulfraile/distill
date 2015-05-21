@@ -11,6 +11,7 @@
 
 namespace Distill;
 
+use Distill\Exception\IO\Output\TargetDirectoryNotWritableException;
 use Distill\Extractor\ExtractorInterface;
 use Distill\Format\FormatChain;
 use Distill\Format\FormatChainInterface;
@@ -220,8 +221,8 @@ class Distill
             throw new Exception\IO\Output\NotSingleDirectoryException($file);
         }
 
-        if ('.' === $path) {
-            $workingDirectory = getcwd();
+        $workingDirectory = getcwd();
+        if ($workingDirectory === realpath($path)) {
             chdir(dirname($workingDirectory));
             $this->filesystem->remove($workingDirectory);
             $this->filesystem->rename($singleRootDirectoryName, $workingDirectory);
