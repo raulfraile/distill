@@ -220,8 +220,16 @@ class Distill
             throw new Exception\IO\Output\NotSingleDirectoryException($file);
         }
 
-        $this->filesystem->remove($path);
-        $this->filesystem->rename($singleRootDirectoryName, $path);
+        if ('.' === $path) {
+            $workingDirectory = getcwd();
+            chdir(dirname($workingDirectory));
+            $this->filesystem->remove($workingDirectory);
+            $this->filesystem->rename($singleRootDirectoryName, $workingDirectory);
+            chdir($workingDirectory);
+        } else {
+            $this->filesystem->remove($path);
+            $this->filesystem->rename($singleRootDirectoryName, $path);
+        }
 
         return true;
     }
