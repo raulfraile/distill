@@ -17,6 +17,7 @@ use Distill\Format\FormatChain;
 use Distill\Format\FormatChainInterface;
 use Distill\Format\FormatInterface;
 use Distill\Extractor\Util\Filesystem;
+use Symfony\Component\Filesystem\Filesystem as SfFilesystem;
 use Distill\Strategy\StrategyInterface;
 use Pimple\Container;
 
@@ -229,8 +230,12 @@ class Distill
             }
             
             chdir(dirname($workingDirectory));
-            $this->filesystem->remove($workingDirectory);
-            $this->filesystem->rename($singleRootDirectoryName, $workingDirectory);
+
+            $sfFilesystem = new SfFilesystem();
+            $filesRemove = new \FilesystemIterator($workingDirectory, \FilesystemIterator::SKIP_DOTS);
+            $sfFilesystem->remove($filesRemove);
+            $sfFilesystem->mirror($singleRootDirectoryName, $workingDirectory);
+
             chdir($workingDirectory);
         } else {
             $this->filesystem->remove($path);
