@@ -4,11 +4,8 @@ php:
   - 5.4
   - 5.5
   - 5.6
-  - hhvm-nightly
-
-matrix:
-  allow_failures:
-    - php: hhvm-nightly
+  - hhvm
+  - 7.0
 
 before_script:
   - sudo apt-get update -qq
@@ -17,11 +14,12 @@ before_script:
   - sudo apt-get install -y p7zip-full
   - sudo apt-get install -y p7zip-rar
   - sudo apt-get install -y cabextract
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then pecl install zip; fi;'
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then pecl install rar; fi;'
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then echo "phar.readonly = 0" > travis.hhvm.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then pecl install zip; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then pecl install rar; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm" ]; then echo "phar.readonly = 0" > travis.hhvm.ini; fi;'
+  - /home/travis/.phpenv/versions/$(phpenv version-name)/bin/composer self-update
   - composer install --prefer-source
 
 script:
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then phpunit --verbose; fi;'
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then hhvm -c travis.hhvm.ini ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then phpunit --verbose; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm" ]; then hhvm -c travis.hhvm.ini ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit; fi;'
