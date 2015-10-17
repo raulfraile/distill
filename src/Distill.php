@@ -11,11 +11,13 @@
 
 namespace Distill;
 
+use Distill\Exception\IO\Output\TargetDirectoryNotWritableException;
 use Distill\Extractor\ExtractorInterface;
 use Distill\Format\FormatChain;
 use Distill\Format\FormatChainInterface;
 use Distill\Format\FormatInterface;
 use Distill\Extractor\Util\Filesystem;
+use Symfony\Component\Filesystem\Filesystem as SfFilesystem;
 use Distill\Strategy\StrategyInterface;
 use Pimple\Container;
 
@@ -220,8 +222,25 @@ class Distill
             throw new Exception\IO\Output\NotSingleDirectoryException($file);
         }
 
-        $this->filesystem->remove($path);
-        $this->filesystem->rename($singleRootDirectoryName, $path);
+        $workingDirectory = getcwd();
+        if ($workingDirectory === realpath($path)) {
+            if (dirname($workingDirectory) === $workingDirectory) {
+                // root directory
+                throw new TargetDirectoryNotWritableException($workingDirectory);
+            }
+            
+            chdir(dirname($workingDirectory));
+
+            $sfFilesystem = new SfFilesystem();
+            $filesRemove = new \FilesystemIterator($workingDirectory, \FilesystemIterator::SKIP_DOTS);
+            $sfFilesystem->remove($filesRemove);
+            $sfFilesystem->mirror($singleRootDirectoryName, $workingDirectory);
+
+            chdir($workingDirectory);
+        } else {
+            $this->filesystem->remove($path);
+            $this->filesystem->rename($singleRootDirectoryName, $path);
+        }
 
         return true;
     }

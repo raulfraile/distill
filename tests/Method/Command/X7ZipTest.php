@@ -6,7 +6,7 @@ use Distill\Method;
 use Distill\Format;
 use Distill\Tests\Method\AbstractMethodTest;
 
-class X7zipTest extends AbstractMethodTest
+class X7ZipTest extends AbstractMethodTest
 {
     public function setUp()
     {
